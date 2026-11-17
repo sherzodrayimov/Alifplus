@@ -31,7 +31,11 @@ jobs:
       - name: Build NSIS Installer (.exe)
         working-directory: windows
         run: |
-          makensis installer.nsi
+          $nsis = "C:\Program Files (x86)\NSIS\makensis.exe"
+          if (-not (Test-Path $nsis)) {
+            choco install nsis -y --no-progress
+          }
+          & $nsis installer.nsi
 
       - name: Upload Windows .exe Artifact
         uses: actions/upload-artifact@v4
