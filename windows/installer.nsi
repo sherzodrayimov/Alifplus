@@ -1,4 +1,4 @@
-Unicode true
+﻿Unicode true
 !include "MUI2.nsh"
 !include "x64.nsh"
 !include "nsDialogs.nsh"
@@ -33,7 +33,7 @@ Section "Alif+ Klaviatura Terilmasi (Majburiy)" SecLayout
         ${EnableX64FSRedirection}
     ${Else}
         SetOutPath "$SYSDIR"
-        File "build\x86\kbdalif.dll"
+        File "build\x64\kbdalif.dll"
     ${EndIf}
 
     SetOutPath "$INSTDIR"

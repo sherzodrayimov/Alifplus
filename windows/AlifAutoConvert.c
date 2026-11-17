@@ -2,6 +2,8 @@
 #define _UNICODE
 #include <windows.h>
 #include <shellapi.h>
+#include <wchar.h>
+#include <wctype.h>
 
 #define WM_TRAYICON (WM_USER + 1)
 #define ID_TRAY_TOGGLE 1001

@@ -53,9 +53,12 @@ Alif+ (v1.1.0) — O'zbekcha klaviatura terilmasi + Avto-o'girish
    (yuqori menyu panelida "ÖZ⇄" belgisi paydo bo'ladi).
 EOF
 
-hdiutil create -volname "${APP_NAME} ${VERSION}" \
-    -srcfolder "$STAGE_DIR" \
-    -ov -format UDZO \
-    "build/${DMG_NAME}"
+for attempt in 1 2 3; do
+    hdiutil create -volname "${APP_NAME} ${VERSION}" \
+        -srcfolder "$STAGE_DIR" \
+        -ov -format UDZO \
+        "build/${DMG_NAME}" && break
+    sleep 3
+done
 
 echo "✅ Yaratildi: build/${DMG_NAME}"
