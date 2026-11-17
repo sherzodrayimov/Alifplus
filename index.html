@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="uz" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alif+ — Zamonaviy O‘zbekcha Klaviatura Terilmasi va Avto-O‘girish</title>
+  <meta name="description" content="US QWERTY asosidagi qulay o‘zbekcha klaviatura terilmasi (ö, ğ, ş, ç, ’) hamda eski alifbodan real vaqtda avtomatik o‘girish dasturi — macOS va Windows uchun." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b0e14;
+      --bg-elevated: #121721;
+      --card: #151b26;
+      --card-hover: #1a2230;
+      --border: #232c3d;
+      --border-accent: rgba(46, 160, 67, 0.45);
+      --text: #f0f4f8;
+      --text-muted: #94a3b8;
+      --accent: #2ea043;
+      --accent-bright: #3fb950;
+      --accent-soft: rgba(46, 160, 67, 0.14);
+      --blue: #38bdf8;
+      --blue-soft: rgba(56, 189, 248, 0.14);
+      --amber: #f59e0b;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 18% 0%, rgba(46, 160, 67, 0.12), transparent 42%),
+        radial-gradient(circle at 85% 12%, rgba(56, 189, 248, 0.08), transparent 38%);
+    }
+
+    code, kbd, .mono { font-family: 'JetBrains Mono', monospace; }
+
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(14px);
+      background: rgba(11, 14, 20, 0.82);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #161b22;
+      border: 1.5px solid var(--accent);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.92rem;
+      box-shadow: 0 0 20px rgba(46, 160, 67, 0.25);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .version-pill {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-bright);
+      border: 1px solid var(--border-accent);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 72px 0 56px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+    .hero-eyebrow span.dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-bright);
+      box-shadow: 0 0 10px var(--accent-bright);
+    }
+    .hero h1 {
+      font-size: clamp(2.3rem, 5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      max-width: 820px;
+      margin: 0 auto 20px;
+    }
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, #4ade80 0%, #22c55e 45%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.12rem;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto 36px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .btn-download {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 15px 26px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      transition: all 0.22s ease;
+      text-align: left;
+    }
+    .btn-download:hover {
+      transform: translateY(-2px);
+      border-color: #3b4861;
+      background: var(--card-hover);
+    }
+    .btn-download.primary-os {
+      background: linear-gradient(135deg, #238636 0%, #2ea043 100%);
+      border-color: #3fb950;
+      color: #fff;
+      box-shadow: 0 12px 32px rgba(46, 160, 67, 0.28);
+    }
+    .btn-download.primary-os:hover {
+      background: linear-gradient(135deg, #2ea043 0%, #3fb950 100%);
+      box-shadow: 0 16px 38px rgba(46, 160, 67, 0.38);
+    }
+    .btn-download .os-meta {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+    }
+    .btn-download .os-sub {
+      font-size: 0.78rem;
+      opacity: 0.85;
+      font-weight: 500;
+    }
+    .os-recommended-tag {
+      position: absolute;
+      top: -10px;
+      right: 14px;
+      background: #0b0e14;
+      color: #4ade80;
+      border: 1px solid #3fb950;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .hero-note {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Section Headings */
+    section { padding: 56px 0; }
+    .section-header {
+      text-align: center;
+      max-width: 660px;
+      margin: 0 auto 40px;
+    }
+    .section-header h2 {
+      font-size: clamp(1.75rem, 3.2vw, 2.35rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      margin-bottom: 10px;
+    }
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* Live Playground + Auto-Convert */
+    .playground-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    }
+    .playground-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .toggle-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+    .toggle-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 10px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+    }
+    .toggle-pill.active {
+      background: var(--accent-soft);
+      border-color: var(--border-accent);
+      color: var(--accent-bright);
+    }
+    .toggle-pill .indicator {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #475569;
+    }
+    .toggle-pill.active .indicator {
+      background: var(--accent-bright);
+      box-shadow: 0 0 8px var(--accent-bright);
+    }
+    .action-btns {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-sm {
+      padding: 7px 13px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text);
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .btn-sm:hover {
+      border-color: #3b4861;
+      background: #1d2534;
+    }
+    .btn-sm.accent {
+      background: var(--accent-soft);
+      border-color: var(--border-accent);
+      color: var(--accent-bright);
+    }
+    .btn-sm.accent:hover {
+      background: rgba(46, 160, 67, 0.24);
+    }
+
+    .editor-wrap {
+      position: relative;
+      margin-bottom: 18px;
+    }
+    #playground-input {
+      width: 100%;
+      min-height: 145px;
+      resize: vertical;
+      background: #0d1117;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 1.15rem;
+      line-height: 1.65;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    #playground-input:focus {
+      border-color: var(--accent-bright);
+    }
+    .editor-statusbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .stat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--accent-bright);
+      font-weight: 600;
+    }
+
+    /* Visual Virtual Keyboard */
+    .vkb-container {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      overflow-x: auto;
+    }
+    .vkb-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 6px;
+      min-width: 720px;
+    }
+    .vkb-row:last-child { margin-bottom: 0; }
+    .vkey {
+      flex: 1;
+      height: 48px;
+      border-radius: 8px;
+      background: #161b26;
+      border: 1px solid #263042;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      transition: all 0.1s;
+    }
+    .vkey:hover {
+      background: #1e2636;
+      border-color: #3a4963;
+    }
+    .vkey.pressed {
+      transform: translateY(2px);
+      background: var(--accent);
+      border-color: var(--accent-bright);
+      color: #fff;
+    }
+    .vkey.special {
+      border-color: var(--border-accent);
+      background: rgba(46, 160, 67, 0.1);
+    }
+    .vkey .main-char {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .vkey.special .main-char { color: #4ade80; }
+    .vkey .sub-char {
+      position: absolute;
+      top: 4px;
+      right: 6px;
+      font-size: 0.66rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .vkey.w-15 { flex: 1.5; }
+    .vkey.w-18 { flex: 1.8; }
+    .vkey.w-22 { flex: 2.2; }
+    .vkey.w-60 { flex: 6; }
+
+    /* Bento Grid Keymap */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 18px;
+    }
+    .bento-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .bento-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-accent);
+    }
+    .bento-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .glyph-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: #1f2736;
+      border: 1px solid #303c52;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .bento-top h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .bento-top p {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+    }
+    .combo-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .combo-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+    kbd {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      padding: 0 8px;
+      border-radius: 7px;
+      background: #1e2634;
+      border: 1px solid #334155;
+      border-bottom-width: 2px;
+      color: #e2e8f0;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    kbd.out {
+      background: var(--accent-soft);
+      border-color: var(--border-accent);
+      color: #4ade80;
+      font-weight: 700;
+    }
+
+    /* Install Guides */
+    .install-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 22px;
+    }
+    .install-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
+    }
+    .install-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+    }
+    .step-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .step-list li {
+      display: flex;
+      gap: 12px;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+    .step-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      border: 1px solid var(--border-accent);
+      color: #4ade80;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-list strong { color: var(--text); }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 36px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 8, 13, 0.78);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      max-width: 520px;
+      width: 100%;
+      padding: 28px;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.65);
+    }
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .modal-close {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+    .modal-alert {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fcd34d;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      margin-bottom: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav-inner">
+      <a href="#" class="brand">
+        <span class="brand-badge">ÖZ</span>
+        <span>Alif+</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#playground">Jonli sinov</a>
+        <a href="#keymap">Tugmalar xaritasi</a>
+        <a href="#install">O‘rnatish</a>
+        <span class="version-pill mono">v1.1.0</span>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-eyebrow">
+          <span class="dot"></span>
+          <span>US QWERTY asosida • Real-vaqt Avto-o‘girish bilan</span>
+        </div>
+        <h1>
+          O‘zbekcha yozish endi <span class="highlight">bitta tugmada</span> va avtomatik.
+        </h1>
+        <p>
+          <strong>ö, ğ, ş, ç</strong> harflari va to‘g‘ri tutuq belgisi (<strong>’</strong>) alohida tugmalarda. Eski ko‘nikma bilan <code>o'</code>, <code>g'</code>, <code>sh</code>, <code>ch</code> yozsangiz ham — tizim o‘zi avtomatik yangi alifboga o‘girib ketadi.
+        </p>
+
+        <div class="hero-actions" id="hero-actions">
+          <button id="btn-download-mac" class="btn-download" onclick="startDownload('macos')">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.96 6.33c.67-.81 1.12-1.94 1-3.08-.96.04-2.13.64-2.82 1.45-.61.7-.115 1.85-1.01 2.97 1.07.08 2.16-.53 2.83-1.34z"/></svg>
+            <div class="os-meta">
+              <span>macOS uchun yuklab olish</span>
+              <span class="os-sub mono">AlifPlus-1.1.0.dmg • Apple Silicon & Intel</span>
+            </div>
+          </button>
+
+          <button id="btn-download-win" class="btn-download" onclick="startDownload('windows')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.45L10.94 4.36V11.5H3V5.45ZM3 18.55L10.94 19.64V12.5H3V18.55ZM11.82 4.24L21 3V11.5H11.82V4.24ZM11.82 19.76L21 21V12.5H11.82V19.76Z"/></svg>
+            <div class="os-meta">
+              <span>Windows uchun yuklab olish</span>
+              <span class="os-sub mono">AlifPlus-1.1.0-Setup.exe • Windows 10 / 11</span>
+            </div>
+          </button>
+        </div>
+        <div class="hero-note">
+          100% bepul va ochiq manbali • Dasturchilar uchun barcha ASCII belgilar <code>Option / AltGr</code> qatlamida saqlangan
+        </div>
+      </div>
+    </section>
+
+    <!-- LIVE PLAYGROUND -->
+    <section id="playground">
+      <div class="container">
+        <div class="section-header">
+          <h2>Jonli sinov va Avto-o‘girish maydoni</h2>
+          <p>Hech narsa o‘rnatmasdan hoziroq yozib ko‘ring: <code>[</code> → <strong>ö</strong>, <code>]</code> → <strong>ğ</strong>, <code>;</code> → <strong>ş</strong>, <code>'</code> → <strong>ç</strong> yoki eski usulda <code>o'zbekcha</code> deb yozing.</p>
+        </div>
+
+        <div class="playground-card">
+          <div class="playground-toolbar">
+            <div class="toggle-group">
+              <div id="toggle-autoconvert" class="toggle-pill active" onclick="toggleFeature('autoConvert')">
+                <span class="indicator"></span>
+                <span>Avto-o‘girish (o‘, g‘, sh, ch → ö, ğ, ş, ç)</span>
+              </div>
+              <div id="toggle-cyrillic" class="toggle-pill active" onclick="toggleFeature('cyrillic')">
+                <span class="indicator"></span>
+                <span>Kirill → Alif+ (ў, ғ, ш, ч)</span>
+              </div>
+            </div>
+
+            <div class="action-btns">
+              <button class="btn-sm accent" onclick="runDemoTyping()">▶ Eski matn namunasini sinash</button>
+              <button class="btn-sm" onclick="convertWholeTextarea()">Matnni o‘girish</button>
+              <button class="btn-sm" onclick="copyTextarea(this)">Nusxalash</button>
+              <button class="btn-sm" onclick="clearTextarea()">Tozalash</button>
+            </div>
+          </div>
+
+          <div class="editor-wrap">
+            <textarea id="playground-input" placeholder="Shu yerga yozing... Masalan: O'zbekiston kelajagi buyuk davlat! Yoki [ ] ; ' tugmalarini bosing."></textarea>
+            <div class="editor-statusbar">
+              <span>Maslahat: Kirill yoki eski lotin matnini nusxalab (<code>Ctrl+V</code> / <code>⌘+V</code>) tashlasangiz ham avtomatik o‘giriladi.</span>
+              <span class="stat-badge mono">O‘girilgan belgilar: <strong id="converted-count">0</strong></span>
+            </div>
+          </div>
+
+          <!-- Virtual Keyboard -->
+          <div class="vkb-container" aria-label="Alif+ virtual klaviaturasi">
+            <div class="vkb-row">
+              <div class="vkey special" data-code="Backquote" data-out="’" data-shift="~"><span class="sub-char">~</span><span class="main-char">’</span></div>
+              <div class="vkey" data-code="Digit1" data-out="1" data-shift="!"><span class="sub-char">!</span><span class="main-char">1</span></div>
+              <div class="vkey" data-code="Digit2" data-out="2" data-shift="@"><span class="sub-char">@</span><span class="main-char">2</span></div>
+              <div class="vkey" data-code="Digit3" data-out="3" data-shift="#"><span class="sub-char">#</span><span class="main-char">3</span></div>
+              <div class="vkey" data-code="Digit4" data-out="4" data-shift="$"><span class="sub-char">$</span><span class="main-char">4</span></div>
+              <div class="vkey" data-code="Digit5" data-out="5" data-shift="%"><span class="sub-char">%</span><span class="main-char">5</span></div>
+              <div class="vkey" data-code="Digit6" data-out="6" data-shift="^"><span class="sub-char">^</span><span class="main-char">6</span></div>
+              <div class="vkey" data-code="Digit7" data-out="7" data-shift="&"><span class="sub-char">&amp;</span><span class="main-char">7</span></div>
+              <div class="vkey" data-code="Digit8" data-out="8" data-shift="*"><span class="sub-char">*</span><span class="main-char">8</span></div>
+              <div class="vkey" data-code="Digit9" data-out="9" data-shift="("><span class="sub-char">(</span><span class="main-char">9</span></div>
+              <div class="vkey" data-code="Digit0" data-out="0" data-shift=")"><span class="sub-char">)</span><span class="main-char">0</span></div>
+              <div class="vkey" data-code="Minus" data-out="-" data-shift="_"><span class="sub-char">_</span><span class="main-char">-</span></div>
+              <div class="vkey" data-code="Equal" data-out="=" data-shift="+"><span class="sub-char">+</span><span class="main-char">=</span></div>
+              <div class="vkey w-18" data-code="Backspace"><span class="main-char">⌫</span></div>
+            </div>
+            <div class="vkb-row">
+              <div class="vkey w-15" data-code="Tab"><span class="main-char">Tab</span></div>
+              <div class="vkey" data-code="KeyQ" data-out="q" data-shift="Q"><span class="main-char">Q</span></div>
+              <div class="vkey" data-code="KeyW" data-out="w" data-shift="W"><span class="main-char">W</span></div>
+              <div class="vkey" data-code="KeyE" data-out="e" data-shift="E"><span class="main-char">E</span></div>
+              <div class="vkey" data-code="KeyR" data-out="r" data-shift="R"><span class="main-char">R</span></div>
+              <div class="vkey" data-code="KeyT" data-out="t" data-shift="T"><span class="main-char">T</span></div>
+              <div class="vkey" data-code="KeyY" data-out="y" data-shift="Y"><span class="main-char">Y</span></div>
+              <div class="vkey" data-code="KeyU" data-out="u" data-shift="U"><span class="main-char">U</span></div>
+              <div class="vkey" data-code="KeyI" data-out="i" data-shift="I"><span class="main-char">I</span></div>
+              <div class="vkey" data-code="KeyO" data-out="o" data-shift="O"><span class="main-char">O</span></div>
+              <div class="vkey" data-code="KeyP" data-out="p" data-shift="P"><span class="main-char">P</span></div>
+              <div class="vkey special" data-code="BracketLeft" data-out="ö" data-shift="Ö"><span class="sub-char">[</span><span class="main-char">Ö</span></div>
+              <div class="vkey special" data-code="BracketRight" data-out="ğ" data-shift="Ğ"><span class="sub-char">]</span><span class="main-char">Ğ</span></div>
+              <div class="vkey special w-15" data-code="Backslash" data-out=";" data-shift=":"><span class="sub-char">\</span><span class="main-char">;</span></div>
+            </div>
+            <div class="vkb-row">
+              <div class="vkey w-18" data-code="CapsLock"><span class="main-char">Caps</span></div>
+              <div class="vkey" data-code="KeyA" data-out="a" data-shift="A"><span class="main-char">A</span></div>
+              <div class="vkey" data-code="KeyS" data-out="s" data-shift="S"><span class="main-char">S</span></div>
+              <div class="vkey" data-code="KeyD" data-out="d" data-shift="D"><span class="main-char">D</span></div>
+              <div class="vkey" data-code="KeyF" data-out="f" data-shift="F"><span class="main-char">F</span></div>
+              <div class="vkey" data-code="KeyG" data-out="g" data-shift="G"><span class="main-char">G</span></div>
+              <div class="vkey" data-code="KeyH" data-out="h" data-shift="H"><span class="main-char">H</span></div>
+              <div class="vkey" data-code="KeyJ" data-out="j" data-shift="J"><span class="main-char">J</span></div>
+              <div class="vkey" data-code="KeyK" data-out="k" data-shift="K"><span class="main-char">K</span></div>
+              <div class="vkey" data-code="KeyL" data-out="l" data-shift="L"><span class="main-char">L</span></div>
+              <div class="vkey special" data-code="Semicolon" data-out="ş" data-shift="Ş"><span class="sub-char">;</span><span class="main-char">Ş</span></div>
+              <div class="vkey special" data-code="Quote" data-out="ç" data-shift="Ç"><span class="sub-char">'</span><span class="main-char">Ç</span></div>
+              <div class="vkey w-22" data-code="Enter"><span class="main-char">Enter</span></div>
+            </div>
+            <div class="vkb-row">
+              <div class="vkey w-22" data-code="ShiftLeft"><span class="main-char">Shift</span></div>
+              <div class="vkey" data-code="KeyZ" data-out="z" data-shift="Z"><span class="main-char">Z</span></div>
+              <div class="vkey" data-code="KeyX" data-out="x" data-shift="X"><span class="main-char">X</span></div>
+              <div class="vkey" data-code="KeyC" data-out="c" data-shift="C"><span class="main-char">C</span></div>
+              <div class="vkey" data-code="KeyV" data-out="v" data-shift="V"><span class="main-char">V</span></div>
+              <div class="vkey" data-code="KeyB" data-out="b" data-shift="B"><span class="main-char">B</span></div>
+              <div class="vkey" data-code="KeyN" data-out="n" data-shift="N"><span class="main-char">N</span></div>
+              <div class="vkey" data-code="KeyM" data-out="m" data-shift="M"><span class="main-char">M</span></div>
+              <div class="vkey special" data-code="Comma" data-out="," data-shift="“"><span class="sub-char">“ «</span><span class="main-char">,</span></div>
+              <div class="vkey special" data-code="Period" data-out="." data-shift="”"><span class="sub-char">” »</span><span class="main-char">.</span></div>
+              <div class="vkey" data-code="Slash" data-out="/" data-shift="?"><span class="sub-char">?</span><span class="main-char">/</span></div>
+              <div class="vkey w-22" data-code="ShiftRight"><span class="main-char">Shift</span></div>
+            </div>
+            <div class="vkb-row">
+              <div class="vkey w-15"><span class="main-char">Ctrl</span></div>
+              <div class="vkey w-15"><span class="main-char">Opt / Alt</span></div>
+              <div class="vkey w-60" data-code="Space" data-out=" " data-shift=" "><span class="main-char">Space</span></div>
+              <div class="vkey w-15"><span class="main-char">AltGr</span></div>
+              <div class="vkey w-15"><span class="main-char">Ctrl</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENTO KEYMAP -->
+    <section id="keymap">
+      <div class="container">
+        <div class="section-header">
+          <h2>Tugmalar xaritasi</h2>
+          <p>Har bir maxsus harf o‘ng qo‘l ostidagi eng tabiiy tugmalarga joylashtirilgan.</p>
+        </div>
+
+        <div class="bento-grid">
+          <div class="bento-card">
+            <div class="bento-top">
+              <div class="glyph-box">Ö</div>
+              <div>
+                <h3>Ö harfi bitta tugmada</h3>
+                <p>Oldin: o va ‘</p>
+              </div>
+            </div>
+            <div class="combo-list">
+              <div class="combo-row"><kbd>[</kbd> → <kbd class="out">ö</kbd> &nbsp;|&nbsp; <kbd>Shift</kbd> + <kbd>[</kbd> → <kbd class="out">Ö</kbd></div>
+              <div class="combo-row"><kbd>Option / AltGr</kbd> + <kbd>[</kbd> → <kbd class="out">[</kbd></div>
+            </div>
+          </div>
+
+          <div class="bento-card">
+            <div class="bento-top">
+              <div class="glyph-box">Ğ</div>
+              <div>
+                <h3>Ğ harfi ham bitta tugmada</h3>
+                <p>Oldin: g va ‘</p>
+              </div>
+            </div>
+            <div class="combo-list">
+              <div class="combo-row"><kbd>]</kbd> → <kbd class="out">ğ</kbd> &nbsp;|&nbsp; <kbd>Shift</kbd> + <kbd>]</kbd> → <kbd class="out">Ğ</kbd></div>
+              <div class="combo-row"><kbd>Option / AltGr</kbd> + <kbd>]</kbd> → <kbd class="out">]</kbd></div>
+            </div>
+          </div>
+
+          <div class="bento-card">
+            <div class="bento-top">
+              <div class="glyph-box">Ş</div>
+              <div>
+                <h3>Ş harfi asosiy qatorda</h3>
+                <p>Oldin: s va h</p>
+              </div>
+            </div>
+            <div class="combo-list">
+              <div class="combo-row"><kbd>;</kbd> → <kbd class="out">ş</kbd> &nbsp;|&nbsp; <kbd>Shift</kbd> + <kbd>;</kbd> → <kbd class="out">Ş</kbd></div>
+              <div class="combo-row"><kbd>Option / AltGr</kbd> + <kbd>;</kbd> → <kbd class="out">;</kbd></div>
+            </div>
+          </div>
+
+          <div class="bento-card">
+            <div class="bento-top">
+              <div class="glyph-box">Ç</div>
+              <div>
+                <h3>Ç harfi Ş ning yonida</h3>
+                <p>Oldin: c va h</p>
+              </div>
+            </div>
+            <div class="combo-list">
+              <div class="combo-row"><kbd>'</kbd> → <kbd class="out">ç</kbd> &nbsp;|&nbsp; <kbd>Shift</kbd> + <kbd>'</kbd> → <kbd class="out">Ç</kbd></div>
+              <div class="combo-row"><kbd>Option / AltGr</kbd> + <kbd>'</kbd> → <kbd class="out">'</kbd> <span>vertikal apostrof</span></div>
+            </div>
+          </div>
+
+          <div class="bento-card">
+            <div class="bento-top">
+              <div class="glyph-box">’</div>
+              <div>
+                <h3>To‘g‘ri tutuq belgisi</h3>
+                <p>Oldin: klaviaturadagi tikka apostrof '</p>
+              </div>
+            </div>
+            <div class="combo-list">
+              <div class="combo-row"><kbd>`</kbd> → <kbd class="out">’</kbd> <span>ma’no, e’tibor so‘zlari uchun</span></div>
+              <div class="combo-row"><kbd>Option / AltGr</kbd> + <kbd>`</kbd> → <kbd class="out">‘</kbd></div>
+            </div>
+          </div>
+
+          <div class="bento-card">
+            <div class="bento-top">
+              <div class="glyph-box">;</div>
+              <div>
+                <h3>Nuqtali vergul ko‘chirildi</h3>
+                <p>Tezkor kirish uchun qulay joyda</p>
+              </div>
+            </div>
+            <div class="combo-list">
+              <div class="combo-row"><kbd>\</kbd> → <kbd class="out">;</kbd> &nbsp;|&nbsp; <kbd>Shift</kbd> + <kbd>\</kbd> → <kbd class="out">:</kbd></div>
+              <div class="combo-row"><kbd>Option / AltGr</kbd> + <kbd>\</kbd> → <kbd class="out">\</kbd></div>
+            </div>
+          </div>
+
+          <div class="bento-card" style="grid-column: 1 / -1;">
+            <div class="bento-top">
+              <div class="glyph-box">“ ”</div>
+              <div>
+                <h3>Qo‘shtirnoqlar bir harakatda</h3>
+                <p>Matbaa va burchakli qo‘shtirnoqlar</p>
+              </div>
+            </div>
+            <div class="combo-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px;">
+              <div class="combo-row"><kbd>Shift</kbd> + <kbd>,</kbd> → <kbd class="out">“</kbd> <span>matbaa qo‘shtirnoqlari</span></div>
+              <div class="combo-row"><kbd>Shift</kbd> + <kbd>.</kbd> → <kbd class="out">”</kbd></div>
+              <div class="combo-row"><kbd>Option / AltGr</kbd> + <kbd>Shift</kbd> + <kbd>,</kbd> → <kbd class="out">«</kbd> <span>burchakli qo‘shtirnoqlar</span></div>
+              <div class="combo-row"><kbd>Option / AltGr</kbd> + <kbd>Shift</kbd> + <kbd>.</kbd> → <kbd class="out">»</kbd></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSTALLATION -->
+    <section id="install">
+      <div class="container">
+        <div class="section-header">
+          <h2>O‘rnatish yo‘riqnomasi</h2>
+          <p>Ikkala tizimda ham klaviatura terilmasi va real-vaqt avto-o‘girish yordamchisi birga o‘rnatiladi.</p>
+        </div>
+
+        <div class="install-grid">
+          <div class="install-card">
+            <h3>🍎 macOS uchun o‘rnatish</h3>
+            <ul class="step-list">
+              <li><span class="step-num">1</span><div><strong>AlifPlus-1.1.0.dmg</strong> faylini yuklab oling va ikki marta bosib oching.</div></li>
+              <li><span class="step-num">2</span><div><strong>Alif+.bundle</strong> faylini shu oynadagi <strong>Keyboard Layouts</strong> jildi ustiga sudrab tashlang (yoki <code>O'rnatish (1-klik).command</code> ni ishga tushiring).</div></li>
+              <li><span class="step-num">3</span><div><strong>System Settings → Keyboard → Text Input → Edit → +</strong> tugmasini bosib <strong>Uzbek → Alif+</strong> ni qo‘shing.</div></li>
+              <li><span class="step-num">4</span><div>Avto-o‘girish uchun <strong>Alif+ Avto-O'girish.app</strong> dasturini <code>Applications</code> ga ko‘chiring (yuqori panelda <code>ÖZ⇄</code> belgisi chiqadi).</div></li>
+            </ul>
+          </div>
+
+          <div class="install-card">
+            <h3>🪟 Windows 10 / 11 uchun o‘rnatish</h3>
+            <ul class="step-list">
+              <li><span class="step-num">1</span><div><strong>AlifPlus-1.1.0-Setup.exe</strong> o‘rnatuvchisini yuklab oling va ishga tushiring.</div></li>
+              <li><span class="step-num">2</span><div>Agar Windows SmartScreen oynasi chiqsa, <strong>More info → Run anyway</strong> tugmasini bosing.</div></li>
+              <li><span class="step-num">3</span><div>O‘rnatuvchi klaviatura drayverini (<code>kbdalif.dll</code>) va <strong>Avto-o‘girish</strong> yordamchisini avtomatik sozlaydi.</div></li>
+              <li><span class="step-num">4</span><div><strong>Win + Space</strong> tugmalari orqali <strong>O‘zbekcha (Alif+)</strong> terilmasiga o‘ting va yozishni boshlang.</div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p><strong>Alif+ (v1.1.0)</strong> — O‘zbek tili uchun zamonaviy klaviatura terilmasi va real-vaqt avto-o‘girish ekotizimi.</p>
+    </div>
+  </footer>
+
+  <!-- DOWNLOAD GUIDE MODAL -->
+  <div id="download-modal" class="modal-backdrop" onclick="if(event.target===this) closeDownloadModal()">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 id="modal-title" style="font-size: 1.2rem;">Yuklab olish boshlandi</h3>
+        <button class="modal-close" onclick="closeDownloadModal()">✕</button>
+      </div>
+      <div id="modal-alert" class="modal-alert"></div>
+      <ul id="modal-steps" class="step-list"></ul>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. GITHUB RELEASES & AUTOMATIC OS DETECTION CONFIG
+    // =========================================================================
+    const VERSION = "1.1.0";
+    // Agar shaxsiy domenda ishlatsangiz, quyidagi qiymatni o'z GitHub repo nomingizga almashtiring:
+    const FALLBACK_GITHUB_REPO = "SIZNING_USERNAME/alifplus";
+
+    function detectGitHubRepo() {
+      const host = window.location.hostname;
+      if (host.endsWith(".github.io")) {
+        const owner = host.replace(".github.io", "");
+        const parts = window.location.pathname.split("/").filter(Boolean);
+        const repo = parts.length > 0 ? parts[0] : `${owner}.github.io`;
+        return `${owner}/${repo}`;
+      }
+      return FALLBACK_GITHUB_REPO;
+    }
+
+    const ACTIVE_REPO = detectGitHubRepo();
+    const DOWNLOAD_URLS = {
+      macos: `https://github.com/${ACTIVE_REPO}/releases/download/v${VERSION}/AlifPlus-${VERSION}.dmg`,
+      windows: `https://github.com/${ACTIVE_REPO}/releases/download/v${VERSION}/AlifPlus-${VERSION}-Setup.exe`
+    };
+
+    function detectUserOS() {
+      const ua = (navigator.userAgentData?.platform || navigator.platform || navigator.userAgent || "").toLowerCase();
+      if (ua.includes("mac")) return "macos";
+      if (ua.includes("win")) return "windows";
+      return "other";
+    }
+
+    function startDownload(os) {
+      const url = DOWNLOAD_URLS[os];
+      if (url && !ACTIVE_REPO.includes("SIZNING_USERNAME")) {
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+      openDownloadModal(os);
+    }
+
+    function openDownloadModal(os) {
+      const modal = document.getElementById("download-modal");
+      const title = document.getElementById("modal-title");
+      const alertBox = document.getElementById("modal-alert");
+      const steps = document.getElementById("modal-steps");
+
+      if (os === "macos") {
+        title.textContent = "🍎 macOS uchun AlifPlus-1.1.0.dmg";
+        alertBox.innerHTML = "<strong>Gatekeeper eslatmasi:</strong> Birinchi marta ochganda macOS ogohlantirish bersa, fayl ustiga sichqoncha o‘ng tugmasini bosib <strong>Open</strong> ni tanlang (yoki <em>System Settings → Privacy & Security → Open Anyway</em>).";
+        steps.innerHTML = `
+          <li><span class="step-num">1</span><div>Yuklangan <strong>AlifPlus-1.1.0.dmg</strong> obrazini oching.</div></li>
+          <li><span class="step-num">2</span><div><strong>Alif+.bundle</strong> ni <strong>Keyboard Layouts</strong> jildiga tashlang.</div></li>
+          <li><span class="step-num">3</span><div><strong>System Settings → Keyboard → Text Input → Edit → +</strong> orqali <strong>Uzbek → Alif+</strong> ni qo‘shing.</div></li>
+        `;
+      } else {
+        title.textContent = "🪟 Windows uchun AlifPlus-1.1.0-Setup.exe";
+        alertBox.innerHTML = "<strong>SmartScreen eslatmasi:</strong> Windows himoya oynasi chiqsa, <strong>More info</strong> havolasini va keyin <strong>Run anyway</strong> tugmasini bosing.";
+        steps.innerHTML = `
+          <li><span class="step-num">1</span><div>Yuklangan <strong>AlifPlus-1.1.0-Setup.exe</strong> faylini ishga tushiring.</div></li>
+          <li><span class="step-num">2</span><div>O‘rnatish tugagach <strong>Win + Space</strong> orqali <strong>O‘zbekcha (Alif+)</strong> terilmasini tanlang.</div></li>
+          <li><span class="step-num">3</span><div>Tizim tray panelida <strong>Alif+ Avto-o‘girish</strong> avtomatik ishga tushadi.</div></li>
+        `;
+      }
+      modal.classList.add("open");
+    }
+
+    function closeDownloadModal() {
+      document.getElementById("download-modal").classList.remove("open");
+    }
+
+    // Highlight detected OS on load
+    document.addEventListener("DOMContentLoaded", () => {
+      const userOS = detectUserOS();
+      const actions = document.getElementById("hero-actions");
+      const macBtn = document.getElementById("btn-download-mac");
+      const winBtn = document.getElementById("btn-download-win");
+
+      if (userOS === "windows" && winBtn && actions) {
+        winBtn.classList.add("primary-os");
+        winBtn.insertAdjacentHTML("beforeend", '<span class="os-recommended-tag">Sizning tizimingiz</span>');
+        actions.prepend(winBtn);
+      } else if (macBtn) {
+        macBtn.classList.add("primary-os");
+        macBtn.insertAdjacentHTML("beforeend", '<span class="os-recommended-tag">Sizning tizimingiz</span>');
+      }
+    });
+
+    // =========================================================================
+    // 2. LIVE KEYBOARD PLAYGROUND & REAL-TIME AUTO-CONVERT ENGINE
+    // =========================================================================
+    const state = {
+      autoConvert: true,
+      cyrillic: true,
+      convertedCount: 0
+    };
+
+    const textarea = document.getElementById("playground-input");
+    const countEl = document.getElementById("converted-count");
+
+    const KEY_MAP = {
+      BracketLeft:  { base: "ö", shift: "Ö", alt: "[", altShift: "{" },
+      BracketRight: { base: "ğ", shift: "Ğ", alt: "]", altShift: "}" },
+      Semicolon:    { base: "ş", shift: "Ş", alt: ";", altShift: ":" },
+      Quote:        { base: "ç", shift: "Ç", alt: "'", altShift: '"' },
+      Backquote:    { base: "’", shift: "~", alt: "‘", altShift: "`" },
+      Backslash:    { base: ";", shift: ":", alt: "\\", altShift: "|" },
+      Comma:        { base: ",", shift: "“", alt: "<", altShift: "«" },
+      Period:       { base: ".", shift: "”", alt: ">", altShift: "»" }
+    };
+
+    const CYR_MAP = {
+      "ў": "ö", "Ў": "Ö",
+      "ғ": "ğ", "Ғ": "Ğ",
+      "ш": "ş", "Ш": "Ş",
+      "ч": "ç", "Ч": "Ç",
+      "ъ": "’", "Ъ": "’",
+      "а": "a", "А": "A", "б": "b", "Б": "B", "в": "v", "В": "V",
+      "г": "g", "Г": "G", "д": "d", "Д": "D", "е": "e", "Е": "E",
+      "ё": "yo", "Ё": "Yo", "ж": "j", "Ж": "J", "з": "z", "З": "Z",
+      "и": "i", "И": "I", "й": "y", "Й": "Y", "к": "k", "К": "K",
+      "қ": "q", "Қ": "Q", "л": "l", "Л": "L", "м": "m", "М": "M",
+      "н": "n", "Н": "N", "о": "o", "О": "O", "п": "p", "П": "P",
+      "р": "r", "Р": "R", "с": "s", "С": "S", "т": "t", "Т": "T",
+      "у": "u", "У": "U", "ф": "f", "Ф": "F", "х": "x", "Х": "X",
+      "ҳ": "h", "Ҳ": "H", "ц": "ts", "Ц": "Ts", "э": "e", "Э": "E",
+      "ю": "yu", "Ю": "Yu", "я": "ya", "Я": "Ya"
+    };
+
+    function addConvertedCount(n) {
+      if (n > 0) {
+        state.convertedCount += n;
+        countEl.textContent = state.convertedCount;
+      }
+    }
+
+    function insertAtCursor(text) {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const val = textarea.value;
+      textarea.value = val.slice(0, start) + text + val.slice(end);
+      textarea.selectionStart = textarea.selectionEnd = start + text.length;
+      applyRealtimeAutoConvert();
+    }
+
+    function flashVirtualKey(code) {
+      const el = document.querySelector(`.vkey[data-code="${code}"]`);
+      if (!el) return;
+      el.classList.add("pressed");
+      setTimeout(() => el.classList.remove("pressed"), 140);
+    }
+
+    textarea.addEventListener("keydown", (e) => {
+      flashVirtualKey(e.code);
+      if (e.ctrlKey || e.metaKey) return;
+
+      const mapping = KEY_MAP[e.code];
+      if (mapping) {
+        e.preventDefault();
+        let ch = mapping.base;
+        if (e.altKey && e.shiftKey) ch = mapping.altShift;
+        else if (e.altKey) ch = mapping.alt;
+        else if (e.shiftKey) ch = mapping.shift;
+        insertAtCursor(ch);
+        if (!e.altKey) addConvertedCount(1);
+      }
+    });
+
+    textarea.addEventListener("input", () => {
+      applyRealtimeAutoConvert();
+    });
+
+    function convertTextBlock(text) {
+      let out = text;
+      let changes = 0;
+
+      if (state.cyrillic) {
+        out = out.replace(/[ўЎғҒшШчЧъЪа-яА-ЯқҚҳҲёЁ]/g, (m) => {
+          if (CYR_MAP[m]) {
+            changes++;
+            return CYR_MAP[m];
+          }
+          return m;
+        });
+      }
+
+      if (state.autoConvert) {
+        const rules = [
+          [/O['‘’ʻʼ`]/g, "Ö"],
+          [/o['‘’ʻʼ`]/g, "ö"],
+          [/G['‘’ʻʼ`]/g, "Ğ"],
+          [/g['‘’ʻʼ`]/g, "ğ"],
+          [/SH/g, "Ş"],
+          [/Sh/g, "Ş"],
+          [/sh/g, "ş"],
+          [/CH/g, "Ç"],
+          [/Ch/g, "Ç"],
+          [/ch/g, "ç"],
+          [/(?<=[A-Za-zÖöĞğŞşÇç])['‘ʻʼ`](?=[A-Za-zÖöĞğŞşÇç])/g, "’"]
+        ];
+        for (const [regex, rep] of rules) {
+          out = out.replace(regex, (match) => {
+            if (match !== rep) changes++;
+            return rep;
+          });
+        }
+      }
+      return { text: out, changes };
+    }
+
+    function applyRealtimeAutoConvert() {
+      if (!state.autoConvert && !state.cyrillic) return;
+      const pos = textarea.selectionStart;
+      const before = textarea.value.slice(0, pos);
+      const after = textarea.value.slice(pos);
+
+      // Protect words like is'hoq / ashob before cursor
+      const protectedBefore = before
+        .replace(/\b(is)['‘’ʻʼ`]h/gi, "$1\u0001h")
+        .replace(/\b(as)h(ob)/gi, "$1\u0002$2");
+
+      const res = convertTextBlock(protectedBefore);
+      const restored = res.text
+        .replace(/\u0001/g, "’")
+        .replace(/\u0002/g, "h");
+
+      if (restored !== before) {
+        textarea.value = restored + after;
+        textarea.selectionStart = textarea.selectionEnd = restored.length;
+        addConvertedCount(res.changes);
+      }
+    }
+
+    function convertWholeTextarea() {
+      const res = convertTextBlock(textarea.value);
+      textarea.value = res.text;
+      addConvertedCount(res.changes);
+    }
+
+    function toggleFeature(key) {
+      state[key] = !state[key];
+      const el = document.getElementById(key === "autoConvert" ? "toggle-autoconvert" : "toggle-cyrillic");
+      el.classList.toggle("active", state[key]);
+      if (state[key]) convertWholeTextarea();
+    }
+
+    let demoTimer = null;
+    function runDemoTyping() {
+      if (demoTimer) clearInterval(demoTimer);
+      textarea.value = "";
+      textarea.focus();
+      const sample = "O'zbekiston — kelajagi buyuk davlat! G'ayrat va shijoat bilan chiroyli ma'noli satrlar yozamiz: «Alif+»!";
+      let i = 0;
+      demoTimer = setInterval(() => {
+        if (i >= sample.length) {
+          clearInterval(demoTimer);
+          demoTimer = null;
+          return;
+        }
+        insertAtCursor(sample[i]);
+        i++;
+      }, 36);
+    }
+
+    function copyTextarea(btn) {
+      navigator.clipboard.writeText(textarea.value);
+      const old = btn.textContent;
+      btn.textContent = "✓ Nusxalandi";
+      setTimeout(() => (btn.textContent = old), 1500);
+    }
+
+    function clearTextarea() {
+      textarea.value = "";
+      textarea.focus();
+    }
+
+    // Virtual key clicks
+    document.querySelectorAll(".vkey[data-out]").forEach((keyEl) => {
+      keyEl.addEventListener("click", () => {
+        textarea.focus();
+        flashVirtualKey(keyEl.dataset.code);
+        insertAtCursor(keyEl.dataset.out);
+      });
+    });
+  </script>
+</body>
+</html>

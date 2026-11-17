@@ -1,0 +1,4 @@
+LIBRARY kbdalif
+
+EXPORTS
+    KbdLayerDescriptor @1

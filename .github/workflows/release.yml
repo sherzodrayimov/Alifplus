@@ -1,0 +1,77 @@
+name: Build & Release Alif+ (Windows .exe + macOS .dmg)
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup MSVC x64
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: Compile kbdalif.dll & AlifAutoConvert.exe (x64)
+        working-directory: windows
+        run: |
+          mkdir build\x64
+          rc /fo build\x64\kbdalif.res kbdalif.rc
+          cl /O2 /LD /Fe:build\x64\kbdalif.dll kbdalif.c build\x64\kbdalif.res /DEF:kbdalif.def /link /NOENTRY /NODEFAULTLIB
+          cl /O2 /Fe:build\x64\AlifAutoConvert.exe AlifAutoConvert.c user32.lib shell32.lib /link /SUBSYSTEM:WINDOWS
+
+      - name: Build NSIS Installer (.exe)
+        working-directory: windows
+        run: |
+          makensis installer.nsi
+
+      - name: Upload Windows .exe Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-installer
+          path: windows/AlifPlus-1.1.0-Setup.exe
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build macOS .dmg
+        run: |
+          chmod +x macos/build_dmg.sh
+          ./macos/build_dmg.sh
+
+      - name: Upload macOS .dmg Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-dmg
+          path: build/AlifPlus-1.1.0.dmg
+
+  publish-release:
+    needs: [build-windows, build-macos]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/windows-installer/AlifPlus-1.1.0-Setup.exe
+            dist/macos-dmg/AlifPlus-1.1.0.dmg
+          body: |
+            ## Alif+ (v1.1.0) — O‘zbekcha klaviatura terilmasi + Avto-o‘girish
+
+            - **Windows:** `AlifPlus-1.1.0-Setup.exe` (klaviatura drayveri + real-vaqt avto-o‘girish yordamchisi).
+            - **macOS:** `AlifPlus-1.1.0.dmg` (`Alif+.bundle` + `Alif+ Avto-O'girish.app`).
