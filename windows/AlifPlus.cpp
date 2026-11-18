@@ -321,7 +321,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int) {
         return 0;
     }
 
-    g_iconOn = CreateBadgeIcon(true);
+    g_iconOn = (HICON)LoadImageW(hInstance, MAKEINTRESOURCEW(1), IMAGE_ICON, 32, 32, LR_DEFAULTCOLOR);
+    if (!g_iconOn) g_iconOn = CreateBadgeIcon(true);
     g_iconOff = CreateBadgeIcon(false);
 
     WNDCLASSW wc = {};

@@ -42,7 +42,9 @@ jobs:
         shell: msys2 {0}
         run: |
           mkdir -p dist
-          g++ -O2 -mwindows -municode -static AlifPlus.cpp -o dist/AlifPlus-x64.exe -luser32 -lshell32 -lgdi32
+          windres app.rc -O coff -o dist/app_x64.res
+          g++ -O2 -mwindows -municode -static AlifPlus.cpp dist/app_x64.res -o dist/AlifPlus-x64.exe -luser32 -lshell32 -lgdi32
+          rm -f dist/app_x64.res
       - name: Upload Windows x64 Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -65,7 +67,9 @@ jobs:
         shell: msys2 {0}
         run: |
           mkdir -p dist
-          g++ -O2 -mwindows -municode -static AlifPlus.cpp -o dist/AlifPlus-x32.exe -luser32 -lshell32 -lgdi32
+          windres app.rc -O coff -o dist/app_x32.res
+          g++ -O2 -mwindows -municode -static AlifPlus.cpp dist/app_x32.res -o dist/AlifPlus-x32.exe -luser32 -lshell32 -lgdi32
+          rm -f dist/app_x32.res
       - name: Upload Windows x32 Artifact
         uses: actions/upload-artifact@v4
         with:
