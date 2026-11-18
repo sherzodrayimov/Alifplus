@@ -11,14 +11,17 @@ mkdir -p "${BUNDLE_DIR}/Contents/Resources"
 
 cp Info.plist "${BUNDLE_DIR}/Contents/Info.plist"
 cp AlifPlus.icns "${BUNDLE_DIR}/Contents/Resources/AlifPlus.icns"
+if [ -f "../icon.png" ]; then
+  cp "../icon.png" "${BUNDLE_DIR}/Contents/Resources/icon.png"
+fi
 
 swiftc -O -target arm64-apple-macos11.0 AlifPlusApp.swift -o build/AlifPlus-arm64
 swiftc -O -target x86_64-apple-macos11.0 AlifPlusApp.swift -o build/AlifPlus-x86_64
 lipo -create -output "${BUNDLE_DIR}/Contents/MacOS/AlifPlus" build/AlifPlus-arm64 build/AlifPlus-x86_64
 chmod +x "${BUNDLE_DIR}/Contents/MacOS/AlifPlus"
 
-touch "${BUNDLE_DIR}"
-codesign --force --deep --sign - "${BUNDLE_DIR}"
+xattr -cr "${BUNDLE_DIR}"
+codesign --force --deep --sign - --identifier "uz.alifplus.macos" "${BUNDLE_DIR}"
 
 mkdir -p build/dmg_root
 cp -R "${BUNDLE_DIR}" build/dmg_root/

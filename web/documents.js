@@ -12,8 +12,7 @@
   }
 
   const elDirection = document.getElementById('alifDirection');
-  const elOptNg = document.getElementById('alifOptNg');
-  const elInput = document.getElementById('alifInput');
+    const elInput = document.getElementById('alifInput');
   const elOutput = document.getElementById('alifOutput');
   const elInputStats = document.getElementById('alifInputStats');
   const elOutputStats = document.getElementById('alifOutputStats');
@@ -89,7 +88,6 @@
     const src = elInput.value || '';
     const dir = elDirection.value;
     const out = window.Alif.convert(src, dir, {
-      ng: elOptNg && elOptNg.checked,
       exceptions: exceptions
     });
 
@@ -401,8 +399,7 @@
 
   elInput.addEventListener('input', runConversion);
   elDirection.addEventListener('change', runConversion);
-  if (elOptNg) elOptNg.addEventListener('change', runConversion);
-
+  
   elBtnSample.addEventListener('click', () => {
     elInput.value =
       "O'zbekiston Respublikasi — Markaziy Osiyodagi go'zal va jadal rivojlanayotgan davlat.\n" +

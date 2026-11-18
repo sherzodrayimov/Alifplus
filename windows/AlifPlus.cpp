@@ -19,7 +19,6 @@
 #define IDM_RULE_G         2003
 #define IDM_RULE_SH        2004
 #define IDM_RULE_CH        2005
-#define IDM_RULE_NG        2006
 #define IDM_INSTANT_UNDO   2007
 #define IDM_EXIT           2099
 
@@ -31,7 +30,6 @@ struct AppState {
     bool ruleG = true;
     bool ruleSh = true;
     bool ruleCh = true;
-    bool ruleNg = false;
     bool instantUndo = true;
 
     wchar_t prevChar = 0;
@@ -155,10 +153,6 @@ bool TryMatchPair(wchar_t prev, wchar_t curr, std::wstring& outReplacement) {
         outReplacement = (prev == L'C') ? L"\u00C7" : L"\u00E7";
         return true;
     }
-    if (g_state.ruleNg && (curr == L'g' || curr == L'G') && (prev == L'n' || prev == L'N')) {
-        outReplacement = (prev == L'N') ? L"\u00D1" : L"\u00F1";
-        return true;
-    }
     return false;
 }
 
@@ -268,7 +262,6 @@ void ShowTrayMenu(HWND hwnd) {
     AppendMenuW(menu, MF_STRING | (g_state.ruleG ? MF_CHECKED : 0), IDM_RULE_G, L"g' / G' -> \u011F / \u011E");
     AppendMenuW(menu, MF_STRING | (g_state.ruleSh ? MF_CHECKED : 0), IDM_RULE_SH, L"sh / Sh -> \u015F / \u015E");
     AppendMenuW(menu, MF_STRING | (g_state.ruleCh ? MF_CHECKED : 0), IDM_RULE_CH, L"ch / Ch -> \u00E7 / \u00C7");
-    AppendMenuW(menu, MF_STRING | (g_state.ruleNg ? MF_CHECKED : 0), IDM_RULE_NG, L"ng / Ng -> \u00F1 / \u00D1");
     AppendMenuW(menu, MF_SEPARATOR, 0, NULL);
     AppendMenuW(menu, MF_STRING | (g_state.instantUndo ? MF_CHECKED : 0), IDM_INSTANT_UNDO, L"Backspace bilan asl holiga qaytarish");
     AppendMenuW(menu, MF_SEPARATOR, 0, NULL);
@@ -298,7 +291,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
                 case IDM_RULE_G: g_state.ruleG = !g_state.ruleG; break;
                 case IDM_RULE_SH: g_state.ruleSh = !g_state.ruleSh; break;
                 case IDM_RULE_CH: g_state.ruleCh = !g_state.ruleCh; break;
-                case IDM_RULE_NG: g_state.ruleNg = !g_state.ruleNg; break;
                 case IDM_INSTANT_UNDO: g_state.instantUndo = !g_state.instantUndo; break;
                 case IDM_EXIT:
                     Shell_NotifyIconW(NIM_DELETE, &g_nid);

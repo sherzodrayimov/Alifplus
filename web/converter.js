@@ -31,7 +31,6 @@
   }
 
   function oldLatToNewLat(text, opts) {
-    const useNg = Boolean(opts && opts.ng);
     let s = normalizeApostrophes(text);
 
     s = s.replace(/O'/g, 'Ö').replace(/o'/g, 'ö');
@@ -39,10 +38,6 @@
     s = s.replace(/SH/g, 'Ş').replace(/Sh/g, 'Ş').replace(/sh/g, 'ş');
     s = s.replace(/S'H/g, 'SH').replace(/S'h/g, 'Sh').replace(/s'h/g, 'sh');
     s = s.replace(/CH/g, 'Ç').replace(/Ch/g, 'Ç').replace(/ch/g, 'ç');
-
-    if (useNg) {
-      s = s.replace(/NG/g, 'Ñ').replace(/Ng/g, 'Ñ').replace(/ng/g, 'ñ');
-    }
     return s;
   }
 
