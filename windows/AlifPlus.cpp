@@ -1,5 +1,9 @@
+#ifndef UNICODE
 #define UNICODE
+#endif
+#ifndef _UNICODE
 #define _UNICODE
+#endif
 #define WIN32_LEAN_AND_MEAN
 
 #include <windows.h>
@@ -94,9 +98,9 @@ void UpdateTrayIcon() {
     g_nid.uFlags = NIF_TIP | NIF_ICON;
     g_nid.hIcon = g_state.isEnabled ? g_iconOn : g_iconOff;
     if (g_state.isEnabled) {
-        wcscpy_s(g_nid.szTip, L"Alif+ YOQILGAN (Ctrl+Shift)");
+        lstrcpynW(g_nid.szTip, L"Alif+ YOQILGAN (Ctrl+Shift)", 128);
     } else {
-        wcscpy_s(g_nid.szTip, L"Alif+ O'CHIRILGAN (Ctrl+Shift)");
+        lstrcpynW(g_nid.szTip, L"Alif+ O'CHIRILGAN (Ctrl+Shift)", 128);
     }
     Shell_NotifyIconW(NIM_MODIFY, &g_nid);
 }
@@ -334,7 +338,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int) {
     g_nid.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
     g_nid.uCallbackMessage = WM_TRAYICON;
     g_nid.hIcon = g_iconOn;
-    wcscpy_s(g_nid.szTip, L"Alif+ YOQILGAN (Ctrl+Shift)");
+    lstrcpynW(g_nid.szTip, L"Alif+ YOQILGAN (Ctrl+Shift)", 128);
     Shell_NotifyIconW(NIM_ADD, &g_nid);
 
     g_hook = SetWindowsHookExW(WH_KEYBOARD_LL, LowLevelKeyboardProc, hInstance, 0);
