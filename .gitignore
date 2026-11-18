@@ -1,0 +1,9 @@
+.DS_Store
+build/
+dist/
+windows/build/
+windows/*.obj
+windows/*.lib
+windows/*.exp
+windows/*.exe
+__pycache__/
