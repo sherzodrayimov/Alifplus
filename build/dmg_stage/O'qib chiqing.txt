@@ -1,0 +1,24 @@
+Alif+ (v1.2.0) — O'zbekcha klaviatura terilmasi + Avto-o'girish
+
+Avval "Ornatish-yoriqnomasi.html" ni oching — internet talab qilinmaydi.
+macOS 12+, Apple Silicon yoki Intel. Avtomatik ishga tushirish: macOS 13+.
+
+1. "O'rnatish (1-klik).command" faylini oching. Terminal oynasi ochilishi odatiy.
+2. Noma’lum ishlab chiquvchi ogohlantirishi chiqsa, ishonchli nusxa uchun
+   System Settings → Privacy & Security → Open Anyway → Open. Qayta oching.
+3. Komponentlar faqat sizning hisobingizga o‘rnatiladi. Nusxalash uchun sudo kerak emas.
+4. Privacy & Security → Accessibility orqali o‘rnatilgan Alif+ yordamchisiga ruxsat bering.
+   Ro‘yxatda bo‘lmasa, + → Cmd+Shift+G → ~/Applications → ilovani tanlang.
+5. Keyboard → Text Input → Edit → + → Uzbek yoki Others → Alif+ → Add.
+   Ro‘yxatda ko‘rinmasa, ishlaringizni saqlab, hisobdan chiqing va qayta kiring.
+6. Menyu satridagi input sources ichidan Alif+ ni tanlang.
+7. Yordamchi dastlab pauzada. Ctrl+Shift ni bosib qo‘yib yuboring — “Faol”.
+   shahar → şahar, o'zbek → özbek. Darhol Delete/Backspace — asl yozuv.
+8. Ixtiyoriy: ÖZ menyusi → Kompyuterga kirganda ishga tushirish. So‘ng DMG’ni eject qiling.
+
+macOS 12: System Preferences → Security & Privacy → Privacy → Accessibility;
+klaviatura: System Preferences → Keyboard → Input Sources → +.
+Ilovani DMG ichidan alohida ochmang: yordamchi ~/Applications ichidan ishga tushishi kerak.
+Bu nusxa ad-hoc imzoli; Apple notarizatsiyasidan o‘tmagan.
+Xatolar va olib tashlash tartibi HTML yo‘riqnomada berilgan.
+

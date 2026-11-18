@@ -1,0 +1,31 @@
+Alif+ 1.2.0 — 2026-11-18
+
+TAYYOR:
+- AlifPlus-1.2.0.dmg: haqiqiy UDZO DMG, HFS+ fayl tizimi.
+- macOS 12+ uchun Intel + Apple Silicon universal, ad-hoc imzoli ilova.
+- Klaviatura bundle va foydalanuvchi hisobiga o‘rnatuvchi skript.
+- DMG ichida va ilovaning ÖZ menyusida ochiladigan to‘liq HTML yo‘riqnoma.
+- Saytda macOS yuklash/o‘rnatish bosqichlari, ruxsatlar va xatolar yechimi.
+- Windows 10 1607+/11 x86/x64 manba kodlari va yig‘ish skriptlari.
+- Matn/DOCX/PDF/TXT brauzer o‘giruvchisi, DOCX eksport va istisnolar.
+
+TEKSHIRILDI:
+- Universal binary: x86_64 arm64; codesign --verify --deep --strict.
+- DMG: hdiutil verify — checksum VALID.
+- DMG ichidagi HFS+ katalog va fayllar bevosita tekshirildi:
+  12 fayl staging bilan baytma-bayt bir xil, o‘rnatuvchi va yordamchi executable huquqlari saqlangan.
+- C/Swift/JavaScript konversiya, macOS tugmalar xaritasi, plist, shell va JS sintaksisi.
+- HTML yo‘riqnomada sakkizta o‘rnatish bosqichi bor, HTML ID takrorlanishi yo‘q.
+
+AMALIY SINOV CHEGARASI:
+- Ushbu muhit diskni ulashga ruxsat bermaydi; Finder’da DMG’ni ochib, toza Mac’da o‘rnatish hali sinalmadi.
+- Accessibility ruxsati, input source qo‘shish va haqiqiy muharrirdagi yozish amalda tekshirilishi kerak.
+- Apple notarizatsiyasi bajarilmagan; noma’lum ishlab chiquvchi ogohlantirishi chiqishi mumkin.
+- Windows .exe bu muhitda yig‘ilmadi va Windows’da sinalmadi.
+- GitHub push/release va jonli saytga joylash bajarilmadi.
+
+BOSHLASH:
+DMG’ni oching → Ornatish-yoriqnomasi.html → O'rnatish (1-klik).command.
+Ruxsat → klaviaturani qo‘shish → Alif+ ni tanlash → Ctrl+Shift.
+Sayt: index.html va web/ ni birga hostingga joylang.
+To‘liq ishlab chiquvchi yo‘riqnomasi: README.md.

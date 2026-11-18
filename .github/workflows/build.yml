@@ -1,0 +1,67 @@
+name: Build Alif+ Desktop (macOS & Windows)
+
+on:
+  push:
+    branches: [ main, master ]
+    tags: [ 'v*' ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-macos:
+    name: Build macOS Universal DMG
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Universal .dmg
+        working-directory: macos
+        run: |
+          chmod +x build_macos_dmg.sh
+          ./build_macos_dmg.sh
+      - name: Upload macOS Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AlifPlus-macOS-Universal
+          path: macos/AlifPlus-2.0-macOS.dmg
+
+  build-windows:
+    name: Build Windows x64 & x32
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup MSYS2 MinGW x64 and x32
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: false
+          install: >-
+            mingw-w64-x86_64-gcc
+            mingw-w64-i686-gcc
+      - name: Compile x64 and x32 binaries
+        working-directory: windows
+        shell: msys2 {0}
+        run: |
+          mkdir -p dist
+          /mingw64/bin/g++ -O2 -mwindows -municode -static AlifPlus.cpp -o dist/AlifPlus-x64.exe -luser32 -lshell32 -lgdi32
+          /mingw32/bin/g++ -O2 -mwindows -municode -static AlifPlus.cpp -o dist/AlifPlus-x32.exe -luser32 -lshell32 -lgdi32
+      - name: Upload Windows Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: AlifPlus-Windows-x64-x32
+          path: windows/dist/*.exe
+
+  release:
+    name: Publish GitHub Release
+    needs: [ build-macos, build-windows ]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*

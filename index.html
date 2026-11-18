@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alif+ — Matn va hujjatni yangi alifboga o'girish</title>
+  <meta name="description" content="Kirill yoki lotin yozuvidagi Word, PDF va oddiy matn — brauzerning o'zida, bepul va cheklovsiz." />
+  <link rel="stylesheet" href="web/converter.css" />
+</head>
+<body>
+  <header class="alif-topbar">
+    <div class="alif-container alif-topbar-inner">
+      <a href="index.html" class="alif-brand">
+        <span class="alif-logo">A+</span>
+        <span class="alif-brand-text">Alif+</span>
+      </a>
+      <nav class="alif-nav">
+        <a href="#converter" class="alif-nav-link active">Konverter</a>
+        <a href="#desktop" class="alif-nav-link">macOS va Windows dasturi</a>
+        <a href="web/macos-install.html" class="alif-nav-link">macOS qo‘llanma</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="alif-main">
+    <section class="alif-hero">
+      <div class="alif-container">
+        <div class="alif-badge">Yangi o‘zbek alifbosi • Ö ö, Ğ ğ, Ş ş, Ç ç</div>
+        <h1 class="alif-hero-title">Matn va hujjatni yangi alifboga o'girish</h1>
+        <p class="alif-hero-subtitle">
+          Kirill yoki lotin yozuvidagi Word, PDF va oddiy matn — brauzerning o'zida, bepul va cheklovsiz.
+        </p>
+      </div>
+    </section>
+
+    <section id="converter" class="alif-container">
+      <div class="alif-card">
+        <div class="alif-toolbar">
+          <div class="alif-dir-group">
+            <label for="alifDirection" class="alif-label-inline">Yo‘nalish:</label>
+            <select id="alifDirection" class="alif-select" aria-label="O'girish yo'nalishi">
+              <option value="auto2new" selected>Avtomatik (Kirill / Eski lotin → Yangi alifbo)</option>
+              <option value="oldlat2new">Eski lotin (o' g' sh ch) → Yangi alifbo (ö ğ ş ç)</option>
+              <option value="cyr2new">Kirill (ў ғ ш ч) → Yangi alifbo (ö ğ ş ç)</option>
+              <option value="new2oldlat">Yangi alifbo (ö ğ ş ç) → Eski lotin (o' g' sh ch)</option>
+              <option value="new2cyr">Yangi alifbo (ö ğ ş ç) → Kirill (ў ғ ш ч)</option>
+              <option value="cyr2oldlat">Kirill → Eski lotin</option>
+              <option value="oldlat2cyr">Eski lotin → Kirill</option>
+            </select>
+          </div>
+
+          <div class="alif-toolbar-actions">
+            <label class="alif-checkbox" title="ng / Ng harf birikmasini ñ / Ñ ga o'girish">
+              <input type="checkbox" id="alifOptNg" />
+              <span>ng → ñ</span>
+            </label>
+            <button type="button" id="alifBtnExceptions" class="alif-btn alif-btn-ghost" title="O'zgarmaydigan so'zlar ro'yxati">
+              ⚙ Istisnolar (<span id="alifExcCount">0</span>)
+            </button>
+          </div>
+        </div>
+
+        <div id="alifDropzone" class="alif-dropzone" tabindex="0" role="button" aria-label="Word, PDF yoki TXT fayl yuklash">
+          <input type="file" id="alifFileInput" accept=".txt,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden />
+          <div class="alif-dropzone-content">
+            <span class="alif-drop-icon">📄</span>
+            <div>
+              <strong>Hujjat yuklang (.docx, .pdf, .txt)</strong> yoki faylni shu yerga tashlang
+              <div class="alif-drop-hint">Barcha fayllar faqat sizning brauzeringizda qayta ishlanadi — serverga yuborilmaydi</div>
+            </div>
+            <button type="button" id="alifBtnUpload" class="alif-btn alif-btn-secondary">Fayl tanlash</button>
+          </div>
+        </div>
+
+        <div id="alifStatusBanner" class="alif-status" hidden></div>
+
+        <div class="alif-panes">
+          <div class="alif-pane">
+            <div class="alif-pane-head">
+              <span class="alif-pane-title">Asl matn (Kirill yoki Eski lotin)</span>
+              <div class="alif-pane-tools">
+                <button type="button" id="alifBtnSample" class="alif-mini-btn">Namuna</button>
+                <button type="button" id="alifBtnPaste" class="alif-mini-btn">Qo‘yish</button>
+                <button type="button" id="alifBtnClear" class="alif-mini-btn alif-mini-danger">Tozalash</button>
+              </div>
+            </div>
+            <textarea
+              id="alifInput"
+              class="alif-textarea"
+              placeholder="Matnni shu yerga yozing yoki nusxalab qo‘ying...&#10;Masalan: O'zbekiston Respublikasi — shahar va qishloqlar chiroyli."
+              spellcheck="false"
+            ></textarea>
+            <div class="alif-pane-foot">
+              <span id="alifInputStats">0 belgi • 0 so‘z</span>
+            </div>
+          </div>
+
+          <div class="alif-pane">
+            <div class="alif-pane-head">
+              <span class="alif-pane-title">Natija (Yangi alifbo: Ö, Ğ, Ş, Ç)</span>
+              <div class="alif-pane-tools">
+                <button type="button" id="alifBtnSwap" class="alif-mini-btn" title="Natijani chap oynaga o'tkazish">⇄ Almashtirish</button>
+                <button type="button" id="alifBtnCopy" class="alif-mini-btn alif-mini-primary">Nusxa olish</button>
+              </div>
+            </div>
+            <textarea
+              id="alifOutput"
+              class="alif-textarea alif-textarea-out"
+              placeholder="O'girilgan matn shu yerda avtomatik paydo bo'ladi..."
+              readonly
+            ></textarea>
+            <div class="alif-pane-foot alif-export-bar">
+              <span id="alifOutputStats">0 belgi • 0 o‘zgarish</span>
+              <div class="alif-export-btns">
+                <button type="button" id="alifExportTxt" class="alif-mini-btn">.TXT</button>
+                <button type="button" id="alifExportDocx" class="alif-mini-btn">.DOCX (Word)</button>
+                <button type="button" id="alifExportPdf" class="alif-mini-btn">.PDF</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="alif-alphabet-strip">
+          <div class="alif-char-chip"><span>O‘ / o‘</span> → <strong>Ö / ö</strong></div>
+          <div class="alif-char-chip"><span>G‘ / g‘</span> → <strong>Ğ / ğ</strong></div>
+          <div class="alif-char-chip"><span>Sh / sh</span> → <strong>Ş / ş</strong></div>
+          <div class="alif-char-chip"><span>Ch / ch</span> → <strong>Ç / ç</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="desktop" class="alif-container alif-desktop-section">
+      <div class="alif-card alif-desktop-card">
+        <div class="alif-desktop-info">
+          <h2>Istalgan dasturda real vaqtda yozing (macOS va Windows)</h2>
+          <p>
+            Word, Telegram, brauzer yoki istalgan oynada yozayotganingizda bosh va kichik harflar avtomatik o‘zgaradi:
+            <strong>O' → Ö</strong>, <strong>G' → Ğ</strong>, <strong>Sh → Ş</strong>, <strong>Ch → Ç</strong>.
+          </p>
+          <ol class="alif-feature-list">
+            <li>Yozishdan oldin <strong>Ctrl + Shift</strong> ni bosing — dastur <strong>YOQILADI</strong>.</li>
+            <li>Yozing: <code>shahar → şahar</code>, <code>o'zbek → özbek</code>.</li>
+            <li>Kerak bo‘lsa <strong>DARHOL Delete (⌫)</strong> bosing — asl holi qaytadi (<code>ş → sh</code>).</li>
+            <li><strong>Sozlamalar</strong> — menyu satridagi <strong>A+</strong> belgisini bosing.</li>
+          </ol>
+        </div>
+        <div class="alif-desktop-downloads">
+          <a href="https://github.com/sherzodrayimov/Alifplus/releases/latest/download/AlifPlus-2.0-macOS.dmg" class="alif-dl-btn alif-dl-mac">
+            <strong>macOS uchun yuklab olish (.dmg)</strong>
+            <span>Apple Silicon (M1–M4) va Intel • Universal</span>
+          </a>
+          <a href="https://github.com/sherzodrayimov/Alifplus/releases/latest/download/AlifPlus-x64.exe" class="alif-dl-btn alif-dl-win">
+            <strong>Windows 64-bit uchun yuklab olish (x64 .exe)</strong>
+            <span>Windows 7 / 8 / 10 / 11 (64-bit)</span>
+          </a>
+          <a href="https://github.com/sherzodrayimov/Alifplus/releases/latest/download/AlifPlus-x32.exe" class="alif-dl-btn alif-dl-win">
+            <strong>Windows 32-bit uchun yuklab olish (x32 .exe)</strong>
+            <span>Windows 7 / 8 / 10 (32-bit x86)</span>
+          </a>
+          <a href="web/macos-install.html" class="alif-guide-link">macOS o‘rnatish qo‘llanmasini ko‘rish →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="alifExcModal" class="alif-modal" hidden>
+    <div class="alif-modal-backdrop" id="alifExcCloseBg"></div>
+    <div class="alif-modal-box" role="dialog" aria-modal="true" aria-labelledby="alifExcTitle">
+      <div class="alif-modal-head">
+        <h3 id="alifExcTitle">Istisno so‘zlar ro‘yxati</h3>
+        <button type="button" id="alifExcClose" class="alif-mini-btn">✕</button>
+      </div>
+      <p class="alif-modal-desc">
+        O‘girilmasligi yoki maxsus ko‘rinishda qolishi kerak bo‘lgan so‘zlarni kiriting (masalan: <code>Windows → Windows</code>).
+      </p>
+      <form id="alifExcForm" class="alif-exc-form">
+        <input type="text" id="alifExcSrc" class="alif-input" placeholder="Asl so‘z (masalan: YouTube)" required />
+        <input type="text" id="alifExcDst" class="alif-input" placeholder="Natija (bo‘sh qolsa o‘zgarmaydi)" />
+        <button type="submit" class="alif-btn alif-btn-primary">Qo‘shish</button>
+      </form>
+      <div id="alifExcList" class="alif-exc-list"></div>
+    </div>
+  </div>
+
+  <footer class="alif-footer">
+    <div class="alif-container">
+      Alif+ — Barcha hisob-kitoblar 100% brauzeringiz ichida bajariladi. Hech qanday matn yoki hujjat tashqi serverga yuborilmaydi.
+    </div>
+  </footer>
+
+  <script src="web/converter.js"></script>
+  <script src="web/documents.js"></script>
+</body>
+</html>
