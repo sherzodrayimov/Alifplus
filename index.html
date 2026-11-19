@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Alif+ — Matn va hujjatni yangi alifboga ögiriş</title>
   <meta name="description" content="Kirill yoki lotin yozuvidagi Word, PDF va oddiy matn — brauzerning özida, bepul va çeklovsiz." />
-  <link rel="stylesheet" href="web/converter.css?v=7" />
+  <link rel="stylesheet" href="web/converter.css?v=8" />
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
@@ -72,9 +72,26 @@
             <span id="alifHeroTyped"></span><span class="alif-stage-caret">|</span>
           </div>
         </div>
-
-        <div class="alif-kbd" id="alifHeroKbd" aria-hidden="true">
+        <div class="alif-kbd alif-mac-kbd" id="alifHeroKbd" aria-hidden="true">
           <div class="alif-kbd-row">
+            <div class="alif-key alif-key-dual" data-key="`"><span>~</span><span>`</span></div>
+            <div class="alif-key alif-key-dual" data-key="1"><span>!</span><span>1</span></div>
+            <div class="alif-key alif-key-dual" data-key="2"><span>@</span><span>2</span></div>
+            <div class="alif-key alif-key-dual" data-key="3"><span>#</span><span>3</span></div>
+            <div class="alif-key alif-key-dual" data-key="4"><span>$</span><span>4</span></div>
+            <div class="alif-key alif-key-dual" data-key="5"><span>%</span><span>5</span></div>
+            <div class="alif-key alif-key-dual" data-key="6"><span>^</span><span>6</span></div>
+            <div class="alif-key alif-key-dual" data-key="7"><span>&amp;</span><span>7</span></div>
+            <div class="alif-key alif-key-dual" data-key="8"><span>*</span><span>8</span></div>
+            <div class="alif-key alif-key-dual" data-key="9"><span>(</span><span>9</span></div>
+            <div class="alif-key alif-key-dual" data-key="0"><span>)</span><span>0</span></div>
+            <div class="alif-key alif-key-dual" data-key="-"><span>_</span><span>-</span></div>
+            <div class="alif-key alif-key-dual" data-key="="><span>+</span><span>=</span></div>
+            <div class="alif-key alif-key-fn alif-key-right" style="flex:1.55" data-key="⌫">delete</div>
+          </div>
+
+          <div class="alif-kbd-row">
+            <div class="alif-key alif-key-fn alif-key-left" style="flex:1.55" data-key="Tab">tab</div>
             <div class="alif-key" data-key="Q">Q</div>
             <div class="alif-key" data-key="W">W</div>
             <div class="alif-key" data-key="E">E</div>
@@ -85,21 +102,29 @@
             <div class="alif-key" data-key="I">I</div>
             <div class="alif-key" data-key="O">O</div>
             <div class="alif-key" data-key="P">P</div>
+            <div class="alif-key alif-key-dual" data-key="["><span>{</span><span>[</span></div>
+            <div class="alif-key alif-key-dual" data-key="]"><span>}</span><span>]</span></div>
+            <div class="alif-key alif-key-dual" data-key="\"><span>|</span><span>\</span></div>
           </div>
+
           <div class="alif-kbd-row">
+            <div class="alif-key alif-key-fn alif-key-left alif-key-caps" style="flex:1.8" data-key="Caps"><i class="alif-caps-dot"></i>caps lock</div>
             <div class="alif-key" data-key="A">A</div>
             <div class="alif-key" data-key="S">S</div>
             <div class="alif-key" data-key="D">D</div>
-            <div class="alif-key" data-key="F">F</div>
+            <div class="alif-key alif-key-home" data-key="F">F</div>
             <div class="alif-key" data-key="G">G</div>
             <div class="alif-key" data-key="H">H</div>
-            <div class="alif-key" data-key="J">J</div>
+            <div class="alif-key alif-key-home" data-key="J">J</div>
             <div class="alif-key" data-key="K">K</div>
             <div class="alif-key" data-key="L">L</div>
-            <div class="alif-key alif-key-accent" data-key="'">'</div>
+            <div class="alif-key alif-key-dual" data-key=";"><span>:</span><span>;</span></div>
+            <div class="alif-key alif-key-dual alif-key-accent" data-key="'"><span>"</span><span>'</span></div>
+            <div class="alif-key alif-key-fn alif-key-right" style="flex:1.8" data-key="Enter">return</div>
           </div>
+
           <div class="alif-kbd-row">
-            <div class="alif-key alif-key-wide" data-key="Shift">⇧ Shift</div>
+            <div class="alif-key alif-key-fn alif-key-left" style="flex:2.35" data-key="Shift">shift</div>
             <div class="alif-key" data-key="Z">Z</div>
             <div class="alif-key" data-key="X">X</div>
             <div class="alif-key" data-key="C">C</div>
@@ -107,14 +132,20 @@
             <div class="alif-key" data-key="B">B</div>
             <div class="alif-key" data-key="N">N</div>
             <div class="alif-key" data-key="M">M</div>
-            <div class="alif-key" data-key=",">,</div>
-            <div class="alif-key" data-key=".">.</div>
+            <div class="alif-key alif-key-dual" data-key=","><span>&lt;</span><span>,</span></div>
+            <div class="alif-key alif-key-dual" data-key="."><span>&gt;</span><span>.</span></div>
+            <div class="alif-key alif-key-dual" data-key="/"><span>?</span><span>/</span></div>
+            <div class="alif-key alif-key-fn alif-key-right" style="flex:2.35" data-key="ShiftR">shift</div>
           </div>
+
           <div class="alif-kbd-row">
-            <div class="alif-key alif-key-mod" data-key="Ctrl">Ctrl</div>
-            <div class="alif-key alif-key-mod" data-key="-">—</div>
-            <div class="alif-key alif-key-space" data-key="SPACE">Böş joy (Space)</div>
-            <div class="alif-key alif-key-mod" data-key="⌫">⌫</div>
+            <div class="alif-key alif-key-mod" style="flex:1.25" data-key="Ctrl"><span class="alif-mod-sym alif-sym-l">^</span><span class="alif-mod-lbl">control</span></div>
+            <div class="alif-key alif-key-mod" style="flex:1.25" data-key="Opt"><span class="alif-mod-sym alif-sym-l">⌥</span><span class="alif-mod-lbl">option</span></div>
+            <div class="alif-key alif-key-mod" style="flex:1.5" data-key="Cmd"><span class="alif-mod-sym alif-sym-r">⌘</span><span class="alif-mod-lbl">command</span></div>
+            <div class="alif-key alif-key-space" style="flex:5.4" data-key="SPACE"></div>
+            <div class="alif-key alif-key-mod" style="flex:1.5" data-key="CmdR"><span class="alif-mod-sym alif-sym-l">⌘</span><span class="alif-mod-lbl">command</span></div>
+            <div class="alif-key alif-key-mod" style="flex:1.25" data-key="OptR"><span class="alif-mod-sym alif-sym-r">⌥</span><span class="alif-mod-lbl">option</span></div>
+            <div class="alif-key alif-key-mod" style="flex:1.25" data-key="CtrlR"><span class="alif-mod-sym alif-sym-r">^</span><span class="alif-mod-lbl">control</span></div>
           </div>
         </div>
       </div>
