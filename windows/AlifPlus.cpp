@@ -7,9 +7,13 @@
 #define WIN32_LEAN_AND_MEAN
 
 #include <windows.h>
+#include <wingdi.h>
+#ifdef _WIN32
 #include <shellapi.h>
+#endif
 #include <string>
 #include <vector>
+#include <cstdint>
 
 #define WM_TRAYICON (WM_USER + 1)
 #define ID_TRAY_ICON 1001
