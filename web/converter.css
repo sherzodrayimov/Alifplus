@@ -719,3 +719,113 @@ html, body {
 .alif-diff-pair strong { color: #059669; font-size: 16px; }
 .alif-diff-card small { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
 @media (max-width: 520px) { .alif-diff-grid { grid-template-columns: 1fr; } }
+
+/* ALIF-TYPING-START */
+.alif-typing-box { max-width: 580px; max-height: 90vh; overflow-y: auto; }
+.alif-method-list { display: flex; flex-direction: column; gap: 11px; }
+.alif-method-card {
+  padding: 13px 14px;
+  border-radius: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.alif-method-primary {
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+.alif-method-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.alif-method-top strong { font-size: 14.5px; color: var(--text); }
+.alif-method-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  color: #334155;
+}
+.alif-method-primary .alif-method-badge {
+  background: #059669;
+  color: #ffffff;
+}
+.alif-method-text {
+  margin: 0 0 9px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.alif-shortcut-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.alif-shortcut-pills span {
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text);
+}
+.alif-shortcut-pills b { color: #059669; }
+.alif-method-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(5, 150, 105, 0.18);
+  font-size: 12px;
+  color: var(--muted);
+}
+.alif-method-foot kbd {
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  font-family: inherit;
+  font-weight: 700;
+  color: var(--text);
+}
+.alif-inline-cta {
+  font-weight: 700;
+  color: #059669;
+  text-decoration: none;
+}
+.alif-inline-cta:hover { text-decoration: underline; }
+.alif-sandbox-input {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 9px;
+  background: #ffffff;
+}
+.alif-quick-copy-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.alif-key-btn {
+  min-width: 34px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.alif-key-btn:hover {
+  border-color: #059669;
+  background: #ecfdf5;
+  color: #059669;
+}
