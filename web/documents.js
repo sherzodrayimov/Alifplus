@@ -111,7 +111,7 @@
     if (elExcCount) elExcCount.textContent = String(exceptions.length);
     if (!elExcList) return;
     if (exceptions.length === 0) {
-      elExcList.innerHTML = '<div style="color:#64748b;font-size:13px;">Hozircha istisnolar qo‘shilmagan.</div>';
+      elExcList.innerHTML = '<div style="color:#64748b;font-size:13px;">Hozirça istisnolar qöşilmagan.</div>';
       return;
     }
     elExcList.innerHTML = exceptions
@@ -120,7 +120,7 @@
         return `
           <div class="alif-exc-pair">
             <span><strong>${escapeHtml(item.src)}</strong> → ${escapeHtml(dstText)}</span>
-            <button type="button" class="alif-mini-btn alif-mini-danger" data-del-exc="${idx}">O‘chirish</button>
+            <button type="button" class="alif-mini-btn alif-mini-danger" data-del-exc="${idx}">Öçiriş</button>
           </div>
         `;
       })
@@ -197,7 +197,7 @@
     const buf = await file.arrayBuffer();
     const zip = await JSZip.loadAsync(buf);
     const docEntry = zip.file('word/document.xml');
-    if (!docEntry) throw new Error('DOCX ichida word/document.xml topilmadi.');
+    if (!docEntry) throw new Error('DOCX içida word/document.xml topilmadi.');
 
     const xmlText = await docEntry.async('string');
     const parser = new DOMParser();
@@ -267,7 +267,7 @@
     const ext = name.split('.').pop().toLowerCase();
     currentFileName = name.replace(/\.[^.]+$/, '') + '-yangi-alifbo';
 
-    showStatus(`"${name}" o‘qilmoqda...`, false);
+    showStatus(`"${name}" öqilmoqda...`, false);
 
     try {
       let extracted = '';
@@ -278,12 +278,12 @@
       } else if (ext === 'pdf') {
         extracted = await readPdfFile(file);
       } else {
-        throw new Error('Faqat .docx, .pdf va .txt fayllar qo‘llab-quvvatlanadi.');
+        throw new Error('Faqat .docx, .pdf va .txt fayllar qöllab-quvvatlanadi.');
       }
 
       elInput.value = extracted;
       runConversion();
-      showStatus(`"${name}" muvaffaqiyatli yuklandi va yangi alifboga o‘girildi.`, false);
+      showStatus(`"${name}" muvaffaqiyatli yuklandi va yangi alifboga ögirildi.`, false);
     } catch (err) {
       showStatus(`Xatolik: ${err && err.message ? err.message : err}`, true);
     }
@@ -451,7 +451,7 @@
     elBtnCopy.textContent = 'Nusxa olindi ✓';
     clearTimeout(copyTimer);
     copyTimer = setTimeout(() => {
-      elBtnCopy.textContent = 'Nusxa olish';
+      elBtnCopy.textContent = 'Nusxa oliş';
     }, 1800);
   });
 
