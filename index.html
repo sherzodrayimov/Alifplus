@@ -497,6 +497,12 @@
     })();
   </script>
   <script src="web/converter.js"></script>
+    <script src="web/vendor/jszip.min.js"></script>
+  <script type="module">
+    import * as pdfjsLib from './web/vendor/pdf.min.mjs';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('web/vendor/pdf.worker.min.mjs', window.location.href).href;
+    window.pdfjsLib = pdfjsLib;
+  </script>
   <script src="web/documents.js"></script>
 </body>
 </html>

@@ -182,7 +182,7 @@
   function loadPdfJs() {
     if (pdfJsPromise) return pdfJsPromise;
     pdfJsPromise = import(resolveVendorUrl('pdf.min.mjs')).then((pdfjsLib) => {
-      pdfjsLib.GlobalWorkerOptions.workerSrc = resolveVendorUrl('pdf.worker.min.mjs');
+      pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('web/vendor/pdf.worker.min.mjs', window.location.href).href;
       return pdfjsLib;
     });
     return pdfJsPromise;
