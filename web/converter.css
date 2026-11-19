@@ -1187,6 +1187,7 @@ html, body {
   .alif-mod-lbl { font-size: 8px; }
 }
 
+
 /* ALIF-DARK-THEME-START */
 .alif-theme-btn {
   display: inline-flex;
@@ -1200,11 +1201,11 @@ html, body {
   color: var(--text);
   cursor: pointer;
   margin-left: 4px;
-  transition: background 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 .alif-theme-btn:hover {
-  border-color: #059669;
-  color: #059669;
+  border-color: #10b981;
+  color: #34d399;
 }
 .alif-icon-sun { display: none; }
 html[data-theme="dark"] .alif-icon-moon { display: none; }
@@ -1216,36 +1217,168 @@ html[data-theme="dark"] {
   --surface-2: #1e293b;
   --text: #f1f5f9;
   --muted: #94a3b8;
-  --border: #263244;
+  --border: #283548;
+  color-scheme: dark;
 }
+
 html[data-theme="dark"] body {
-  background: #0b1120;
-  color: #f1f5f9;
+  background-color: #0b1120 !important;
+  color: #f1f5f9 !important;
 }
+
+/* Yuqori menyu */
 html[data-theme="dark"] .alif-header {
-  background: rgba(11, 17, 32, 0.88);
-  border-bottom-color: #1e293b;
+  background: rgba(11, 17, 32, 0.9) !important;
+  border-bottom-color: #1e293b !important;
 }
+html[data-theme="dark"] .alif-nav-link,
+html[data-theme="dark"] .alif-brand-name {
+  color: #e2e8f0 !important;
+}
+html[data-theme="dark"] .alif-nav-link:hover,
+html[data-theme="dark"] .alif-nav-link.active {
+  color: #34d399 !important;
+}
+
+/* Kartochkalar, maydonlar va tugmalar */
+html[data-theme="dark"] .alif-card,
+html[data-theme="dark"] .alif-panel,
+html[data-theme="dark"] .alif-box,
+html[data-theme="dark"] .alif-section,
+html[data-theme="dark"] .alif-dropzone,
+html[data-theme="dark"] .alif-file-box {
+  background-color: #111827 !important;
+  border-color: #283548 !important;
+  color: #f1f5f9 !important;
+}
+
 html[data-theme="dark"] textarea,
 html[data-theme="dark"] input[type="text"],
+html[data-theme="dark"] input[type="search"],
 html[data-theme="dark"] select {
-  background: #0f172a;
-  color: #f8fafc;
-  border-color: #263244;
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
 }
-html[data-theme="dark"] .alif-hero-pill {
-  background: rgba(16, 185, 129, 0.14);
-  border-color: rgba(52, 211, 153, 0.3);
-  color: #6ee787;
+html[data-theme="dark"] textarea::placeholder,
+html[data-theme="dark"] input::placeholder {
+  color: #64748b !important;
+}
+
+html[data-theme="dark"] button:not(.alif-hero-btn-primary):not(.alif-diff-card):not(.alif-key):not(.alif-stage-status):not(.alif-theme-btn),
+html[data-theme="dark"] .alif-btn-secondary,
+html[data-theme="dark"] .alif-mini-btn {
+  background-color: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+html[data-theme="dark"] button:not(.alif-hero-btn-primary):not(.alif-diff-card):not(.alif-key):not(.alif-stage-status):not(.alif-theme-btn):hover {
+  background-color: #273549 !important;
+  border-color: #475569 !important;
+}
+
+/* Modal oynalar */
+html[data-theme="dark"] .alif-modal-box,
+html[data-theme="dark"] .alif-about-box,
+html[data-theme="dark"] .alif-typing-box {
+  background-color: #111827 !important;
+  color: #f1f5f9 !important;
+  border-color: #283548 !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65) !important;
+}
+html[data-theme="dark"] .alif-modal-head h3,
+html[data-theme="dark"] .alif-modal-desc,
+html[data-theme="dark"] .alif-method-top strong {
+  color: #f1f5f9 !important;
+}
+html[data-theme="dark"] .alif-modal-desc code,
+html[data-theme="dark"] .alif-hero-sub code,
+html[data-theme="dark"] .alif-rule-chip code,
+html[data-theme="dark"] .alif-shortcut-pills code {
+  background: #1e293b !important;
+  color: #6ee787 !important;
+  border-color: #334155 !important;
+}
+html[data-theme="dark"] .alif-method-card {
+  background-color: #172033 !important;
+  border-color: #283548 !important;
 }
 html[data-theme="dark"] .alif-method-primary {
-  background: rgba(16, 185, 129, 0.12);
-  border-color: rgba(52, 211, 153, 0.3);
+  background-color: rgba(16, 185, 129, 0.12) !important;
+  border-color: rgba(52, 211, 153, 0.35) !important;
+}
+html[data-theme="dark"] .alif-method-text,
+html[data-theme="dark"] .alif-method-foot,
+html[data-theme="dark"] .alif-about-subhead {
+  color: #94a3b8 !important;
 }
 html[data-theme="dark"] .alif-shortcut-pills span,
 html[data-theme="dark"] .alif-key-btn,
 html[data-theme="dark"] .alif-method-foot kbd {
-  background: #0f172a;
-  border-color: #334155;
-  color: #e2e8f0;
+  background-color: #0f172a !important;
+  border-color: #334155 !important;
+  color: #f1f5f9 !important;
+}
+html[data-theme="dark"] .alif-key-btn:hover {
+  background-color: rgba(16, 185, 129, 0.18) !important;
+  border-color: #34d399 !important;
+  color: #6ee787 !important;
+}
+html[data-theme="dark"] .alif-diff-card {
+  background-color: #172033 !important;
+  border-color: #283548 !important;
+}
+html[data-theme="dark"] .alif-diff-card:hover {
+  background-color: rgba(16, 185, 129, 0.14) !important;
+  border-color: #34d399 !important;
+}
+html[data-theme="dark"] .alif-diff-pair {
+  color: #e2e8f0 !important;
+}
+html[data-theme="dark"] .alif-diff-pair strong {
+  color: #34d399 !important;
+}
+html[data-theme="dark"] .alif-diff-card small {
+  color: #94a3b8 !important;
+}
+html[data-theme="dark"] .alif-copy-toast {
+  background-color: rgba(16, 185, 129, 0.2) !important;
+  color: #6ee787 !important;
+}
+
+/* Hero qismi */
+html[data-theme="dark"] .alif-hero-title {
+  color: #f8fafc !important;
+}
+html[data-theme="dark"] .alif-hero-sub {
+  color: #94a3b8 !important;
+}
+html[data-theme="dark"] .alif-rule-chip {
+  background-color: #111827 !important;
+  border-color: #283548 !important;
+  color: #e2e8f0 !important;
+  box-shadow: none !important;
+}
+html[data-theme="dark"] .alif-rule-chip b {
+  color: #34d399 !important;
+}
+html[data-theme="dark"] .alif-hero-btn-secondary {
+  background-color: #111827 !important;
+  border-color: #334155 !important;
+  color: #f1f5f9 !important;
+}
+html[data-theme="dark"] .alif-hero-btn-secondary:hover {
+  background-color: #1e293b !important;
+  border-color: #475569 !important;
+}
+html[data-theme="dark"] .alif-hero-pill {
+  background: rgba(16, 185, 129, 0.14) !important;
+  border-color: rgba(52, 211, 153, 0.3) !important;
+  color: #6ee787 !important;
+}
+
+/* Footer */
+html[data-theme="dark"] .alif-footer {
+  background: #070b14 !important;
+  border-top: 1px solid #1e293b;
 }
