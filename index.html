@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Alif+ — Matn va hujjatni yangi alifboga ögiriş</title>
   <meta name="description" content="Kirill yoki lotin yozuvidagi Word, PDF va oddiy matn — brauzerning özida, bepul va çeklovsiz." />
-  <link rel="stylesheet" href="web/converter.css?v=6" />
+  <link rel="stylesheet" href="web/converter.css?v=7" />
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
@@ -26,6 +26,100 @@
   </header>
 
   <main class="alif-main">
+
+  <section id="alifHeroShowcase" class="alif-hero">
+    <div class="alif-container">
+      <div class="alif-hero-intro">
+        <div class="alif-hero-pill">
+          <span class="alif-hero-pill-dot"></span>
+          <span>Yangi özbek lotin alifbosi · Ö, Ğ, Ş, Ç</span>
+        </div>
+        <h1 class="alif-hero-title">Yozayotganingizda harflar <span class="alif-hero-accent">özi töğrilanadi.</span></h1>
+        <p class="alif-hero-sub">
+          Oddiy klaviaturada eski lotin (<code>o‘</code>, <code>g‘</code>, <code>sh</code>, <code>ch</code>) yoki kirillda yozavering — <strong>Alif+</strong> matningizni real vaqtda yangi alifboga ögiradi.
+        </p>
+
+        <div class="alif-hero-rules">
+          <span class="alif-rule-chip"><code>o'</code> → <b>ö</b></span>
+          <span class="alif-rule-chip"><code>g'</code> → <b>ğ</b></span>
+          <span class="alif-rule-chip"><code>sh</code> → <b>ş</b></span>
+          <span class="alif-rule-chip"><code>ch</code> → <b>ç</b></span>
+        </div>
+
+        <div class="alif-hero-actions">
+          <a href="#converter" class="alif-hero-btn-primary">Matn ögirişni sinab köriş ↓</a>
+          <a href="#desktop" class="alif-hero-btn-secondary">Kompyuter uçun yuklab oliş</a>
+        </div>
+      </div>
+
+      <div class="alif-hero-stage" aria-label="Alif+ jonli yozuv va onlayn klaviatura namoyişi">
+        <div class="alif-stage-bar">
+          <div class="alif-stage-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="alif-stage-title">Alif+ Jonli Yozuv · Real vaqt konvertatsiya</div>
+          <button type="button" id="alifHeroToggleBtn" class="alif-stage-status" onclick="toggleAlifHeroDemo()" title="Pauza / Davom ettiriş">
+            <span class="alif-stage-live-dot"></span>
+            <span id="alifHeroToggleText">Jonli</span>
+          </button>
+        </div>
+
+        <div class="alif-stage-screen">
+          <div class="alif-stage-badge-row">
+            <span id="alifHeroTransformBadge" class="alif-stage-badge">Oddiy klaviaturada yozilmoqda...</span>
+          </div>
+          <div class="alif-stage-output">
+            <span id="alifHeroTyped"></span><span class="alif-stage-caret">|</span>
+          </div>
+        </div>
+
+        <div class="alif-kbd" id="alifHeroKbd" aria-hidden="true">
+          <div class="alif-kbd-row">
+            <div class="alif-key" data-key="Q">Q</div>
+            <div class="alif-key" data-key="W">W</div>
+            <div class="alif-key" data-key="E">E</div>
+            <div class="alif-key" data-key="R">R</div>
+            <div class="alif-key" data-key="T">T</div>
+            <div class="alif-key" data-key="Y">Y</div>
+            <div class="alif-key" data-key="U">U</div>
+            <div class="alif-key" data-key="I">I</div>
+            <div class="alif-key" data-key="O">O</div>
+            <div class="alif-key" data-key="P">P</div>
+          </div>
+          <div class="alif-kbd-row">
+            <div class="alif-key" data-key="A">A</div>
+            <div class="alif-key" data-key="S">S</div>
+            <div class="alif-key" data-key="D">D</div>
+            <div class="alif-key" data-key="F">F</div>
+            <div class="alif-key" data-key="G">G</div>
+            <div class="alif-key" data-key="H">H</div>
+            <div class="alif-key" data-key="J">J</div>
+            <div class="alif-key" data-key="K">K</div>
+            <div class="alif-key" data-key="L">L</div>
+            <div class="alif-key alif-key-accent" data-key="'">'</div>
+          </div>
+          <div class="alif-kbd-row">
+            <div class="alif-key alif-key-wide" data-key="Shift">⇧ Shift</div>
+            <div class="alif-key" data-key="Z">Z</div>
+            <div class="alif-key" data-key="X">X</div>
+            <div class="alif-key" data-key="C">C</div>
+            <div class="alif-key" data-key="V">V</div>
+            <div class="alif-key" data-key="B">B</div>
+            <div class="alif-key" data-key="N">N</div>
+            <div class="alif-key" data-key="M">M</div>
+            <div class="alif-key" data-key=",">,</div>
+            <div class="alif-key" data-key=".">.</div>
+          </div>
+          <div class="alif-kbd-row">
+            <div class="alif-key alif-key-mod" data-key="Ctrl">Ctrl</div>
+            <div class="alif-key alif-key-mod" data-key="-">—</div>
+            <div class="alif-key alif-key-space" data-key="SPACE">Böş joy (Space)</div>
+            <div class="alif-key alif-key-mod" data-key="⌫">⌫</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
     <section class="alif-hero">
       <div class="alif-container">
         <div class="alif-badge">Yangi özbek alifbosi • Ö ö, Ğ ğ, Ş ş, Ç ç</div>
@@ -493,6 +587,130 @@
             sb.setSelectionRange(Math.max(0, pos - diff), Math.max(0, pos - diff));
           }
         });
+      }
+    })();
+  </script>
+    <script id="alifHeroScript">
+    (function() {
+      var sentences = [
+        "O'zbekiston — go'zal shahar va chiroyli tog'lar yurti.",
+        "Yangi alifboda o'qish va to'g'ri yozish yanada oson.",
+        "Barcha matn va hujjatlar bir zumda yangi shaklda."
+      ];
+
+      var digraphs = {
+        "O'": { res: "Ö", badge: "O + '  →  Ö avtomatik ögirdi" },
+        "o'": { res: "ö", badge: "o + '  →  ö avtomatik ögirdi" },
+        "G'": { res: "Ğ", badge: "G + '  →  Ğ avtomatik ögirdi" },
+        "g'": { res: "ğ", badge: "g + '  →  ğ avtomatik ögirdi" },
+        "Sh": { res: "Ş", badge: "S + h  →  Ş avtomatik ögirdi" },
+        "sh": { res: "ş", badge: "s + h  →  ş avtomatik ögirdi" },
+        "Ch": { res: "Ç", badge: "C + h  →  Ç avtomatik ögirdi" },
+        "ch": { res: "ç", badge: "c + h  →  ç avtomatik ögirdi" }
+      };
+
+      function buildFrames(sentence) {
+        var frames = [];
+        var display = "";
+        var i = 0;
+        while (i < sentence.length) {
+          var ch = sentence[i];
+          var nxt = i + 1 < sentence.length ? sentence[i + 1] : "";
+          var pair = ch + nxt;
+          if (digraphs[pair]) {
+            var info = digraphs[pair];
+            var firstKeys = (ch >= "A" && ch <= "Z") ? ["Shift", ch] : [ch.toUpperCase()];
+            frames.push({ text: display + ch, keys: firstKeys, badge: null, delay: 115 });
+            display += info.res;
+            frames.push({ text: display, keys: [nxt.toUpperCase()], badge: info.badge, delay: 360 });
+            i += 2;
+          } else {
+            display += ch;
+            var k = [];
+            if (ch === " ") k = ["SPACE"];
+            else if (ch === "," || ch === ".") k = [ch];
+            else if (ch === "—") k = ["-"];
+            else if (ch >= "A" && ch <= "Z") k = ["Shift", ch];
+            else k = [ch.toUpperCase()];
+            frames.push({ text: display, keys: k, badge: null, delay: ch === " " ? 70 : 92 });
+            i += 1;
+          }
+        }
+        return frames;
+      }
+
+      var allFrames = sentences.map(buildFrames);
+      var sIdx = 0, fIdx = 0, timer = null, paused = false;
+
+      function formatTypedHtml(txt) {
+        return txt
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/([ÖöĞğŞşÇç])/g, '<span class="alif-hero-newchar">$1</span>');
+      }
+
+      function highlightKeys(keys, isTransform) {
+        var kbd = document.getElementById("alifHeroKbd");
+        if (!kbd) return;
+        var all = kbd.querySelectorAll(".alif-key");
+        for (var i = 0; i < all.length; i++) {
+          all[i].classList.remove("is-pressed", "is-transform-key");
+        }
+        for (var j = 0; j < keys.length; j++) {
+          var el = kbd.querySelector('.alif-key[data-key="' + keys[j] + '"]');
+          if (el) {
+            el.classList.add("is-pressed");
+            if (isTransform) el.classList.add("is-transform-key");
+          }
+        }
+      }
+
+      function stepDemo() {
+        if (paused) return;
+        var elTyped = document.getElementById("alifHeroTyped");
+        var elBadge = document.getElementById("alifHeroTransformBadge");
+        if (!elTyped || !elBadge) return;
+
+        var frames = allFrames[sIdx];
+        var fr = frames[fIdx];
+
+        elTyped.innerHTML = formatTypedHtml(fr.text);
+        highlightKeys(fr.keys, Boolean(fr.badge));
+
+        if (fr.badge) {
+          elBadge.textContent = "✓ " + fr.badge;
+          elBadge.classList.add("is-active");
+        } else if (fIdx === 0) {
+          elBadge.textContent = "Oddiy klaviaturada yozilmoqda...";
+          elBadge.classList.remove("is-active");
+        }
+
+        fIdx++;
+        if (fIdx < frames.length) {
+          timer = setTimeout(stepDemo, fr.delay);
+        } else {
+          setTimeout(function() { highlightKeys([], false); }, 350);
+          fIdx = 0;
+          sIdx = (sIdx + 1) % allFrames.length;
+          timer = setTimeout(stepDemo, 1900);
+        }
+      }
+
+      window.toggleAlifHeroDemo = function() {
+        paused = !paused;
+        var btn = document.getElementById("alifHeroToggleBtn");
+        var txt = document.getElementById("alifHeroToggleText");
+        if (btn) btn.classList.toggle("is-paused", paused);
+        if (txt) txt.textContent = paused ? "Pauza" : "Jonli";
+        if (!paused) stepDemo();
+        else clearTimeout(timer);
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", stepDemo);
+      } else {
+        stepDemo();
       }
     })();
   </script>
