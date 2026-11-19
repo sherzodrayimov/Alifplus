@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Alif+ — Matn va hujjatni yangi alifboga ögiriş</title>
   <meta name="description" content="Kirill yoki lotin yozuvidagi Word, PDF va oddiy matn — brauzerning özida, bepul va çeklovsiz." />
-  <link rel="stylesheet" href="web/converter.css" />
+  <link rel="stylesheet" href="web/converter.css?v=5" />
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
@@ -195,7 +195,7 @@
         <div class="alif-footer-col">
           <h4 class="alif-footer-heading">SAHIFA</h4>
           <ul class="alif-footer-links">
-            <li><a href="#converter">Yangi alifbo haqida</a></li>
+            <li><a href="#about-alphabet" onclick="openAlifAbout(); return false;">Yangi alifbo haqida</a></li>
             <li><a href="#desktop">Harflarni yoziş usullari</a></li>
             <li><a href="#converter">Hujjat ögiriş</a></li>
             <li><a href="#desktop">Yuklab oliş</a></li>
@@ -247,6 +247,140 @@
     </div>
   </div>
 
+    <div id="alifAboutModal" class="alif-modal" hidden>
+    <div class="alif-modal-backdrop" onclick="closeAlifAbout()"></div>
+    <div class="alif-modal-box alif-about-box" role="dialog" aria-modal="true" aria-labelledby="alifAboutTitle">
+      <div class="alif-modal-head">
+        <h3 id="alifAboutTitle">Yangi alifboda nimalar özgardi?</h3>
+        <button type="button" class="alif-mini-btn" onclick="closeAlifAbout()">✕</button>
+      </div>
+
+      <p class="alif-modal-desc" style="color:var(--text); line-height:1.55;">
+        Yangi özbek lotin alifbosida faqat <strong>4 ta harf</strong> yangi körinişga ötdi (<code>ng</code> birikmasi özgarmağan). <strong>Alif+</strong> esa eski usulda yozganingizda ularni avtomatik yangisiga ögiradi:
+      </p>
+
+      <div class="alif-demo-player">
+        <div class="alif-demo-topbar">
+          <div class="alif-demo-dots"><span></span><span></span><span></span></div>
+          <span class="alif-demo-badge">● Alif+ jonli namoyiş</span>
+        </div>
+        <div class="alif-demo-screen">
+          <div class="alif-demo-text-row">
+            <span id="alifDemoTyped"></span><span class="alif-demo-cursor">|</span>
+          </div>
+          <div class="alif-demo-hint" id="alifDemoHint">Eski alifboda yozilmoqda...</div>
+        </div>
+        <div class="alif-demo-keys">
+          <kbd id="alifKey1">O</kbd>
+          <span class="alif-demo-plus">+</span>
+          <kbd id="alifKey2">'</kbd>
+          <span class="alif-demo-arrow">→</span>
+          <kbd class="alif-demo-result" id="alifKeyRes">Ö</kbd>
+        </div>
+      </div>
+
+      <div class="alif-about-subhead" style="margin-top:16px;">
+        <span>Özgargan 4 ta harf (nusxalaş uçun bosing)</span>
+        <span id="alifCopyToast" class="alif-copy-toast" hidden>Nusxa olindi!</span>
+      </div>
+
+      <div class="alif-diff-grid">
+        <button type="button" class="alif-diff-card" onclick="copyAlifLetter('Ö ö')">
+          <div class="alif-diff-pair"><span>O‘ / o‘</span> → <strong>Ö / ö</strong></div>
+          <small>Özbekiston, qöşiq, töğri</small>
+        </button>
+        <button type="button" class="alif-diff-card" onclick="copyAlifLetter('Ğ ğ')">
+          <div class="alif-diff-pair"><span>G‘ / g‘</span> → <strong>Ğ / ğ</strong></div>
+          <small>ğalaba, toğ, ğamxör</small>
+        </button>
+        <button type="button" class="alif-diff-card" onclick="copyAlifLetter('Ş ş')">
+          <div class="alif-diff-pair"><span>Sh / sh</span> → <strong>Ş / ş</strong></div>
+          <small>şahar, qişloq, işonç</small>
+        </button>
+        <button type="button" class="alif-diff-card" onclick="copyAlifLetter('Ç ç')">
+          <div class="alif-diff-pair"><span>Ch / ch</span> → <strong>Ç / ç</strong></div>
+          <small>çiroyli, oçuq, keça</small>
+        </button>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function() {
+      var samples = [
+        { k1: "O", k2: "'", res: "Ö", steps: ["O", "O'", "Ö", "Öz", "Özb", "Özbe", "Özbek", "Özbeki", "Özbekis", "Özbekist", "Özbekisto", "Özbekiston"], note: "O + '  →  Ö avtomatik ögirdi" },
+        { k1: "g", k2: "'", res: "ğ", steps: ["t", "to", "tog", "tog'", "toğ"], note: "g + '  →  ğ avtomatik ögirdi" },
+        { k1: "s", k2: "h", res: "ş", steps: ["s", "sh", "ş", "şa", "şah", "şaha", "şahar"], note: "s + h  →  ş avtomatik ögirdi" },
+        { k1: "c", k2: "h", res: "ç", steps: ["c", "ch", "ç", "çi", "çir", "çiro", "çiroy", "çiroyl", "çiroyli"], note: "c + h  →  ç avtomatik ögirdi" }
+      ];
+      var timer = null, sIdx = 0, step = 0;
+
+      function tick() {
+        var modal = document.getElementById('alifAboutModal');
+        if (!modal || modal.hidden) return;
+        var s = samples[sIdx];
+        var elText = document.getElementById('alifDemoTyped');
+        var elHint = document.getElementById('alifDemoHint');
+        var elK1 = document.getElementById('alifKey1');
+        var elK2 = document.getElementById('alifKey2');
+        var elRes = document.getElementById('alifKeyRes');
+
+        if (step === 0) {
+          elK1.textContent = s.k1;
+          elK2.textContent = s.k2;
+          elRes.textContent = s.res;
+          elHint.textContent = "Eski alifboda yozilmoqda...";
+          elHint.classList.remove("is-converted");
+        }
+
+        var word = s.steps[step];
+        elText.textContent = word;
+
+        if (word.indexOf(s.res) !== -1) {
+          elHint.textContent = "✓ " + s.note;
+          elHint.classList.add("is-converted");
+          elRes.classList.add("is-active");
+        } else {
+          elRes.classList.remove("is-active");
+        }
+
+        step++;
+        if (step < s.steps.length) {
+          var nextHas = s.steps[step].indexOf(s.res) !== -1 && word.indexOf(s.res) === -1;
+          timer = setTimeout(tick, nextHas ? 420 : 170);
+        } else {
+          step = 0;
+          sIdx = (sIdx + 1) % samples.length;
+          timer = setTimeout(tick, 1350);
+        }
+      }
+
+      window.openAlifAbout = function() {
+        var modal = document.getElementById('alifAboutModal');
+        if (!modal) return;
+        modal.hidden = false;
+        clearTimeout(timer);
+        sIdx = 0; step = 0;
+        tick();
+      };
+
+      window.closeAlifAbout = function() {
+        var modal = document.getElementById('alifAboutModal');
+        if (modal) modal.hidden = true;
+        clearTimeout(timer);
+      };
+
+      window.copyAlifLetter = function(ch) {
+        if (navigator.clipboard) navigator.clipboard.writeText(ch);
+        var t = document.getElementById('alifCopyToast');
+        if (t) {
+          t.textContent = 'Nusxa olindi: ' + ch;
+          t.hidden = false;
+          clearTimeout(window._alifToastTimer);
+          window._alifToastTimer = setTimeout(function() { t.hidden = true; }, 1400);
+        }
+      };
+    })();
+  </script>
   <script src="web/converter.js"></script>
   <script src="web/documents.js"></script>
 </body>
