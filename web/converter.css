@@ -1047,11 +1047,11 @@ html, body {
   50%, 100% { opacity: 0; }
 }
 
-/* Real Vaqt Onlayn Klaviatura (MacBook ANSI joylashuvi) */
+/* Real Vaqt Onlayn Klaviatura (MacBook ANSI joylashuvi - Dark Navy Slate uyg'un) */
 .alif-mac-kbd {
-  padding: 12px;
-  background: linear-gradient(180deg, #cfd3d9 0%, #bcc1c9 100%);
-  border-top: 1px solid #aeb4bd;
+  padding: 13px;
+  background: #0a101d;
+  border-top: 1px solid rgba(148, 163, 184, 0.14);
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -1067,17 +1067,18 @@ html, body {
   flex: 1 1 0;
   min-width: 0;
   height: 46px;
-  border-radius: 6px;
-  background: linear-gradient(180deg, #25282e 0%, #1b1d22 100%);
-  border: 1px solid #111317;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.14) inset, 0 2px 3px rgba(0, 0, 0, 0.35);
-  color: #e5e7eb;
+  border-radius: 7px;
+  background: linear-gradient(180deg, #1e293b 0%, #151e2e 100%);
+  border: 1px solid #293548;
+  border-bottom: 2.5px solid #070b14;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  color: #e2e8f0;
   font-size: 13.5px;
   font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.06s ease, background 0.08s ease, box-shadow 0.08s ease;
+  transition: transform 0.06s ease, background 0.08s ease, border-color 0.08s ease, box-shadow 0.08s ease;
 }
 .alif-key-dual {
   flex-direction: column;
@@ -1087,15 +1088,18 @@ html, body {
   line-height: 1;
 }
 .alif-key-dual span:first-child {
-  color: #cbd5e1;
+  color: #64748b;
   font-size: 10.5px;
 }
 .alif-key-dual span:last-child {
-  color: #f1f5f9;
+  color: #e2e8f0;
   font-size: 12.5px;
 }
+.alif-key-accent {
+  border-color: rgba(52, 211, 153, 0.28);
+}
 .alif-key-accent span:last-child {
-  color: #6ee787;
+  color: #34d399;
   font-weight: 700;
 }
 .alif-key-home::after {
@@ -1105,11 +1109,12 @@ html, body {
   width: 11px;
   height: 1.5px;
   border-radius: 1px;
-  background: rgba(226, 232, 240, 0.55);
+  background: rgba(148, 163, 184, 0.45);
 }
 .alif-key-fn {
+  background: linear-gradient(180deg, #172033 0%, #111827 100%);
   font-size: 11px;
-  color: #d1d5db;
+  color: #94a3b8;
   align-items: flex-end;
   padding: 0 8px 6px;
 }
@@ -1126,13 +1131,14 @@ html, body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: rgba(226, 232, 240, 0.35);
+  background: rgba(148, 163, 184, 0.35);
 }
 .alif-key-mod {
+  background: linear-gradient(180deg, #172033 0%, #111827 100%);
   flex-direction: column;
   justify-content: space-between;
   padding: 5px 7px 6px;
-  color: #d1d5db;
+  color: #94a3b8;
 }
 .alif-mod-sym {
   width: 100%;
@@ -1150,15 +1156,17 @@ html, body {
 }
 .alif-key.is-pressed {
   transform: translateY(1.5px);
-  background: linear-gradient(180deg, #3b4252 0%, #2e3440 100%);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
+  background: linear-gradient(180deg, #334155 0%, #273449 100%);
+  border-color: #64748b;
+  border-bottom-width: 1px;
   color: #ffffff;
+  box-shadow: 0 0 14px rgba(148, 163, 184, 0.25);
 }
 .alif-key.is-transform-key {
   background: linear-gradient(180deg, #10b981 0%, #059669 100%);
   border-color: #34d399;
   color: #ffffff;
-  box-shadow: 0 0 18px rgba(16, 185, 129, 0.75);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.65);
 }
 .alif-key.is-transform-key span {
   color: #ffffff !important;
@@ -1169,7 +1177,7 @@ html, body {
   .alif-stage-screen { padding: 20px 12px 18px; min-height: 120px; }
   .alif-mac-kbd { padding: 7px; gap: 4px; }
   .alif-kbd-row { gap: 3.5px; }
-  .alif-key { height: 34px; font-size: 11px; border-radius: 4px; }
+  .alif-key { height: 34px; font-size: 11px; border-radius: 5px; }
   .alif-key-dual { padding: 3px 0; }
   .alif-key-dual span:first-child { font-size: 8.5px; }
   .alif-key-dual span:last-child { font-size: 10px; }
