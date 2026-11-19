@@ -547,9 +547,82 @@ html, body {
 }
 
 .alif-footer {
-  margin-top: 36px;
-  padding: 20px 0 32px;
+  margin-top: 56px;
+  padding: 52px 0 32px;
+  background: #121614;
+  color: #e5e7eb;
+  text-align: left;
+  font-size: 14px;
+}
+.alif-footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 36px;
+  padding-bottom: 36px;
+}
+.alif-footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.alif-footer-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+}
+.alif-footer-brand-name {
+  font-size: 22px;
+  font-weight: 800;
+  color: #6ee787;
+  letter-spacing: -0.02em;
+}
+.alif-footer-tagline {
+  margin: 14px 0 0;
+  max-width: 240px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #9ca3af;
+}
+.alif-footer-heading {
+  margin: 0 0 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+.alif-footer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+.alif-footer-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #f3f4f6;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  transition: color 0.15s ease;
+}
+.alif-footer-links a:hover {
+  color: #6ee787;
+}
+.alif-footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 24px;
   text-align: center;
   font-size: 13px;
-  color: var(--muted);
+  color: #9ca3af;
+}
+@media (max-width: 760px) {
+  .alif-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
 }
