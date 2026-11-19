@@ -95,8 +95,8 @@
 
     const words = src.trim() ? src.trim().split(/\s+/).length : 0;
     const changes = countChangedChars(src, out);
-    elInputStats.textContent = `${src.length} belgi • ${words} so‘z`;
-    elOutputStats.textContent = `${out.length} belgi • ${changes} o‘zgarish`;
+    elInputStats.textContent = `${src.length} belgi • ${words} söz`;
+    elOutputStats.textContent = `${out.length} belgi • ${changes} özgariş`;
   }
 
   function escapeHtml(str) {
