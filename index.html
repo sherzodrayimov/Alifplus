@@ -1058,6 +1058,44 @@
   })();
   </script>
   <style id="alifDarkGreenBtns">
+  /* Qora fonda tanlangan (bosilgan) tugmalar ham oq fondagi kabi doim rangli turishi uchun */
+  :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(
+    button.is-active,
+    button.active,
+    button[aria-pressed="true"],
+    button[aria-selected="true"],
+    .alif-doc-tab.is-active,
+    .alif-doc-scbtn.is-active,
+    .alif-mt-opt.is-active,
+    .alif-alpha-fbtn.is-active,
+    .alif-btn.is-active,
+    [role="tab"][aria-selected="true"],
+    [role="button"][aria-pressed="true"]
+  ) {
+    background: #10b981 !important;
+    background-color: #10b981 !important;
+    background-image: none !important;
+    border-color: #10b981 !important;
+    color: #022c22 !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
+  }
+
+  :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(
+    button.is-active,
+    button.active,
+    button[aria-pressed="true"],
+    button[aria-selected="true"],
+    .alif-doc-tab.is-active,
+    .alif-doc-scbtn.is-active,
+    .alif-mt-opt.is-active,
+    .alif-alpha-fbtn.is-active,
+    .alif-btn.is-active
+  ) * {
+    color: #022c22 !important;
+  }
+
+  /* Kursor ustidan o‘tganda va bosib turganda */
   :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(
     button,
     [role="button"],
@@ -1076,26 +1114,7 @@
     .alif-doc-print-btn,
     section a[href*=".dmg"],
     section a[href*=".exe"]
-  ):hover,
-  :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(
-    button,
-    [role="button"],
-    .alif-btn,
-    .alif-nav-link,
-    .alif-hero-btn-primary,
-    .alif-hero-btn-secondary,
-    .alif-trainer-btn,
-    .alif-bm-copy,
-    .alif-bm-drag,
-    .alif-alpha-fbtn,
-    .alif-mt-opt,
-    .alif-doc-tab,
-    .alif-doc-sbtn,
-    .alif-doc-scbtn,
-    .alif-doc-print-btn,
-    section a[href*=".dmg"],
-    section a[href*=".exe"]
-  ):active {
+  ):hover {
     background: #10b981 !important;
     background-color: #10b981 !important;
     background-image: none !important;
