@@ -4,6 +4,17 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>macOS uchun Alif+ (Universal M1–M4 va Intel) — Örnatiş qöllanmasi</title>
+  <script>
+    (function () {
+      var q = new URLSearchParams(window.location.search).get("theme");
+      var saved = localStorage.getItem("alif_theme") || localStorage.getItem("theme") || localStorage.getItem("alifplus_theme");
+      var sys = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      var mode = (q === "dark" || q === "light") ? q : ((saved === "dark" || saved === "light") ? saved : sys);
+      document.documentElement.setAttribute("data-theme", mode);
+      localStorage.setItem("alif_theme", mode);
+      localStorage.setItem("theme", mode);
+    })();
+  </script>
   <style>
     :root {
       --bg: #f6f8fb;
@@ -14,7 +25,31 @@
       --border: #dce3ec;
       --code-bg: #0f172a;
       --code-fg: #f8fafc;
+      --note-bg: #eef4ff;
+      --note-border: #c7d9ff;
+      --note-text: #1e3a8a;
+      --btn-bg: #ffffff;
+      --btn-border: #cbd5e1;
+      --btn-text: #0f172a;
     }
+
+    html[data-theme="dark"] {
+      --bg: #0b1220;
+      --card: #111827;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #34d399;
+      --border: #283548;
+      --code-bg: #020617;
+      --code-fg: #e2e8f0;
+      --note-bg: #0f172a;
+      --note-border: #283548;
+      --note-text: #cbd5e1;
+      --btn-bg: #1e293b;
+      --btn-border: #334155;
+      --btn-text: #f8fafc;
+    }
+
     * { box-sizing: border-box; }
     body {
       margin: 0;
@@ -22,35 +57,98 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
     .wrap { max-width: 780px; margin: 0 auto; padding: 32px 20px 64px; }
-    .back { display: inline-block; margin-bottom: 16px; color: var(--accent); text-decoration: none; font-weight: 600; font-size: 14px; }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 26px; margin-bottom: 18px; }
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .back {
+      display: inline-flex;
+      align-items: center;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      transition: opacity 0.15s ease;
+    }
+    .back:hover { opacity: 0.8; }
+    .theme-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--btn-border);
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+    }
+    .theme-btn:hover {
+      border-color: #10b981;
+      color: #10b981;
+    }
+    .theme-btn:active { transform: scale(0.97); }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 26px;
+      margin-bottom: 18px;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
     h1 { margin: 0 0 8px; font-size: 26px; }
     h2 { margin: 0 0 12px; font-size: 18px; }
     .sub { margin: 0 0 18px; color: var(--muted); }
     .step { display: flex; gap: 12px; margin-bottom: 14px; }
     .num {
-      width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff;
+      width: 28px; height: 28px; border-radius: 50%; background: var(--accent);
+      color: #ffffff;
       font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
+    html[data-theme="dark"] .num { color: #022c22; }
     .code-row {
       display: flex; align-items: center; justify-content: space-between; gap: 10px;
       background: var(--code-bg); color: var(--code-fg); padding: 11px 14px; border-radius: 10px;
+      border: 1px solid var(--border);
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; margin-top: 8px;
       overflow-x: auto;
     }
     .copy-btn {
       background: #1e293b; color: #fff; border: 1px solid #334155; border-radius: 7px;
       padding: 6px 11px; font-size: 12px; font-weight: 600; cursor: pointer; flex-shrink: 0;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
     }
-    .copy-btn:hover { background: #334155; }
-    .note { background: #eef4ff; border: 1px solid #c7d9ff; color: #1e3a8a; padding: 14px 16px; border-radius: 10px; font-size: 14px; }
+    .copy-btn:hover { background: #10b981; border-color: #10b981; color: #022c22; }
+    .copy-btn:active { transform: scale(0.96); }
+    .note {
+      background: var(--note-bg);
+      border: 1px solid var(--note-border);
+      color: var(--note-text);
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.92em;
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <a href="../index.html" class="back">← Alif+ Konverterga qaytiş</a>
+    <div class="top-bar">
+      <a href="../index.html" id="alifBackLink" class="back">← Alif+ Konverterga qaytiş</a>
+      <button type="button" id="alifGuideThemeToggle" class="theme-btn">🌙 Tungi rejim</button>
+    </div>
 
     <div class="card">
       <h1>macOS uchun Alif+ (v2.0 Universal)</h1>
@@ -97,17 +195,51 @@
   </div>
 
   <script>
+    (function () {
+      var toggleBtn = document.getElementById("alifGuideThemeToggle");
+      var backLink = document.getElementById("alifBackLink");
+
+      function applyTheme(mode) {
+        document.documentElement.setAttribute("data-theme", mode);
+        localStorage.setItem("alif_theme", mode);
+        localStorage.setItem("theme", mode);
+        localStorage.setItem("alifplus_theme", mode);
+        if (toggleBtn) {
+          toggleBtn.textContent = mode === "dark" ? "☀️ Kunduzgi rejim" : "🌙 Tungi rejim";
+        }
+        if (backLink) {
+          backLink.setAttribute("href", "../index.html?theme=" + mode);
+        }
+      }
+
+      var current = document.documentElement.getAttribute("data-theme") || "light";
+      applyTheme(current);
+
+      if (toggleBtn) {
+        toggleBtn.addEventListener("click", function () {
+          var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+          applyTheme(next);
+        });
+      }
+
+      window.addEventListener("storage", function (e) {
+        if ((e.key === "alif_theme" || e.key === "theme" || e.key === "alifplus_theme") && (e.newValue === "dark" || e.newValue === "light")) {
+          applyTheme(e.newValue);
+        }
+      });
+    })();
+
     document.querySelectorAll('[data-copy]').forEach(function (btn) {
-      let timer = null;
-      const defaultLabel = btn.textContent;
+      var timer = null;
+      var defaultLabel = btn.textContent;
       btn.addEventListener('click', function () {
-        const target = document.getElementById(btn.getAttribute('data-copy'));
+        var target = document.getElementById(btn.getAttribute('data-copy'));
         if (!target) return;
-        const text = target.textContent.trim();
+        var text = target.textContent.trim();
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(text).catch(function () {});
         } else {
-          const ta = document.createElement('textarea');
+          var ta = document.createElement('textarea');
           ta.value = text;
           document.body.appendChild(ta);
           ta.select();
