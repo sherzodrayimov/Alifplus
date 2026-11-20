@@ -224,8 +224,8 @@ final class KeyboardEngine {
     private var monitorTimer: Timer?
     private var prevChar: Character? = nil
     private var prevCharTime: Date? = nil
-    private var lastReplacement: (inserted: String, original: String)?
-    private var rawWord = "", screenWord = "", userUndid = false = nil
+    private var lastReplacement: (inserted: String, original: String)? = nil
+    private var rawWord = "", screenWord = "", userUndid = false
     private var ctrlShiftChordActive = false
     private var otherKeyPressedDuringChord = false
     private let syntheticTag: Int64 = 0x414C4946
