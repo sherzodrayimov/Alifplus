@@ -88,7 +88,124 @@
   window.fillAlifDocSample = function () { state[docType] = Object.assign({}, SAMPLES[docType]); renderForm(); renderPaper(); };
   window.clearAlifDocForm = function () { state[docType] = {}; renderForm(); renderPaper(); };
   window.copyAlifDocText = function (btn) { var p = document.getElementById("alifDocPaper"); if (p) navigator.clipboard.writeText(p.innerText).then(function () { var o = btn.textContent; btn.textContent = "✓ Nusxalandi"; setTimeout(function () { btn.textContent = o; }, 1800); }); };
-  window.downloadAlifDocWord = function () { var p = document.getElementById("alifDocPaper"); if (!p) return; var h = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><style>body{font-family:"Times New Roman",serif;font-size:14pt;line-height:1.6;}p{text-indent:1.25cm;text-align:justify;}.no-indent{text-indent:0;}.alif-doc-paper-title{text-align:center;font-weight:bold;letter-spacing:3pt;margin:16pt 0;}.alif-doc-paper-addr{margin-left:50%;margin-bottom:16pt;}</style></head><body>'+p.innerHTML+'</body></html>'; var u = URL.createObjectURL(new Blob(["\ufeff", h], { type: "application/msword;charset=utf-8" })); var a = document.createElement("a"); a.href = u; a.download = docType + "-alifplus.doc"; a.click(); URL.revokeObjectURL(u); };
+  function crc32(bytes) {
+    var c, table = crc32.t;
+    if (!table) {
+      table = crc32.t = new Uint32Array(256);
+      for (var n = 0; n < 256; n++) {
+        c = n;
+        for (var k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+        table[n] = c;
+      }
+    }
+    c = 0xFFFFFFFF;
+    for (var i = 0; i < bytes.length; i++) c = table[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+    return (c ^ 0xFFFFFFFF) >>> 0;
+  }
+
+  function makeDocxBlob(paperEl) {
+    var enc = new TextEncoder();
+    function xmlEsc(s) {
+      return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+    var bodyXml = [];
+    var children = paperEl.children;
+    for (var i = 0; i < children.length; i++) {
+      var el = children[i];
+      var cls = el.className || "";
+      var style = el.getAttribute("style") || "";
+      if (cls.indexOf("alif-doc-paper-addr") !== -1) {
+        var lines = el.innerText.split(/\n+/);
+        for (var l = 0; l < lines.length; l++) {
+          if (!lines[l].trim()) continue;
+          bodyXml.push('<w:p><w:pPr><w:ind w:left="4200"/><w:spacing w:after="60"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="28"/></w:rPr><w:t xml:space="preserve">' + xmlEsc(lines[l].trim()) + '</w:t></w:r></w:p>');
+        }
+        continue;
+      }
+      if (cls.indexOf("alif-doc-sign-row") !== -1) {
+        var spans = el.querySelectorAll("span");
+        var leftTxt = spans[0] ? (spans[0].innerText.trim() || "________________") : "________________";
+        var rightTxt = spans[1] ? (spans[1].innerText.trim() || "________________") : "________________";
+        bodyXml.push('<w:p><w:pPr><w:spacing w:before="240" w:after="120"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="28"/></w:rPr><w:t xml:space="preserve">' + xmlEsc(leftTxt + "                    " + rightTxt) + '</w:t></w:r></w:p>');
+        continue;
+      }
+      var clone = el.cloneNode(true);
+      clone.querySelectorAll(".alif-doc-blank").forEach(function (b) { b.textContent = "____________________"; });
+      var txt = clone.innerText.replace(/\s+/g, " ").trim();
+      if (!txt) continue;
+      var isTitle = cls.indexOf("alif-doc-paper-title") !== -1;
+      var isCenter = isTitle || style.indexOf("text-align:center") !== -1;
+      var isBold = isTitle || style.indexOf("font-weight:700") !== -1;
+      var noIndent = isCenter || cls.indexOf("no-indent") !== -1;
+      var pPr = '<w:pPr><w:spacing w:after="140" w:line="340" w:lineRule="auto"/>' +
+        (isCenter ? '<w:jc w:val="center"/>' : '<w:jc w:val="both"/>') +
+        (!noIndent ? '<w:ind w:firstLine="720"/>' : '') + '</w:pPr>';
+      var rPr = '<w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="' + (isTitle ? '30' : '28') + '"/>' + (isBold ? '<w:b/>' : '') + '</w:rPr>';
+      bodyXml.push('<w:p>' + pPr + '<w:r>' + rPr + '<w:t xml:space="preserve">' + xmlEsc(txt) + '</w:t></w:r></w:p>');
+    }
+
+    var files = [
+      { name: "[Content_Types].xml", data: enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>') },
+      { name: "_rels/.rels", data: enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>') },
+      { name: "word/document.xml", data: enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>' + bodyXml.join("") + '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="850" w:bottom="1134" w:left="1701"/></w:sectPr></w:body></w:document>') }
+    ];
+
+    var localChunks = [], centralChunks = [], offset = 0;
+    for (var f = 0; f < files.length; f++) {
+      var nameBytes = enc.encode(files[f].name);
+      var content = files[f].data;
+      var crc = crc32(content);
+      var lh = new Uint8Array(30 + nameBytes.length);
+      var lv = new DataView(lh.buffer);
+      lv.setUint32(0, 0x04034b50, true);
+      lv.setUint16(4, 20, true);
+      lv.setUint32(14, crc, true);
+      lv.setUint32(18, content.length, true);
+      lv.setUint32(22, content.length, true);
+      lv.setUint16(26, nameBytes.length, true);
+      lh.set(nameBytes, 30);
+      localChunks.push(lh, content);
+
+      var ch = new Uint8Array(46 + nameBytes.length);
+      var cv = new DataView(ch.buffer);
+      cv.setUint32(0, 0x02014b50, true);
+      cv.setUint16(4, 20, true);
+      cv.setUint16(6, 20, true);
+      cv.setUint32(16, crc, true);
+      cv.setUint32(20, content.length, true);
+      cv.setUint32(24, content.length, true);
+      cv.setUint16(28, nameBytes.length, true);
+      cv.setUint32(42, offset, true);
+      ch.set(nameBytes, 46);
+      centralChunks.push(ch);
+      offset += lh.length + content.length;
+    }
+    var cdSize = centralChunks.reduce(function (s, a) { return s + a.length; }, 0);
+    var eocd = new Uint8Array(22);
+    var ev = new DataView(eocd.buffer);
+    ev.setUint32(0, 0x06054b50, true);
+    ev.setUint16(8, files.length, true);
+    ev.setUint16(10, files.length, true);
+    ev.setUint32(12, cdSize, true);
+    ev.setUint32(16, offset, true);
+    return new Blob(localChunks.concat(centralChunks, [eocd]), {
+      type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    });
+  }
+
+  window.downloadAlifDocWord = function () {
+    var p = document.getElementById("alifDocPaper");
+    if (!p) return;
+    var blob = makeDocxBlob(p);
+    var u = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = u;
+    a.download = docType + "-alifplus.docx";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(u);
+  };
   window.printAlifDoc = function () { var p = document.getElementById("alifDocPaper"); if (!p) return; var w = window.open("", "_blank", "width=800,height=900"); if (!w) { window.print(); return; } w.document.write('<html><head><title>Alif+ Hujjat</title><style>body{font-family:"Times New Roman",serif;font-size:14pt;line-height:1.7;padding:20mm 22mm;color:#000;}p{text-indent:1.25cm;text-align:justify;}.no-indent{text-indent:0;}.alif-doc-paper-title{text-align:center;font-weight:bold;letter-spacing:3pt;margin:16pt 0;}.alif-doc-paper-addr{margin-left:50%;margin-bottom:16pt;}.alif-doc-sign-row{display:flex;justify-content:space-between;margin-top:24pt;}.alif-doc-blank{display:inline-block;border-bottom:1px solid #000;min-width:100px;height:1em;}</style></head><body>'+p.innerHTML+'</body></html>'); w.document.close(); w.focus(); setTimeout(function () { w.print(); w.close(); }, 250); };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { if (document.getElementById("alifDocsSection")) window.selectAlifDoc("tilxat"); });
   else if (document.getElementById("alifDocsSection")) window.selectAlifDoc("tilxat");
