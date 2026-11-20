@@ -14,6 +14,65 @@
 #include <string>
 #include <vector>
 #include <cstdint>
+#include <unordered_set>
+#include <thread>
+#include <mutex>
+#include "AlifDictData.h"
+
+class SmartDict {
+    std::unordered_set<std::string> uz_, rej_;
+    std::vector<std::string> sufs_;
+    std::mutex m_;
+    bool ready_ = false;
+public:
+    void Init() {
+        std::thread([this]() {
+            std::unordered_set<std::string> r, u; std::vector<std::string> sf;
+            auto parseLines = [](const char* p, auto fn) {
+                std::string l;
+                for (; *p; ++p) { if (*p == '\n') { if (!l.empty()) { fn(l); l.clear(); } } else if (*p != '\r') l.push_back(*p); }
+            };
+            parseLines(ALIF_EN_REJECT, [&](const std::string& l) { r.insert(l); });
+            parseLines(ALIF_SUFFIXES, [&](const std::string& l) { sf.push_back(l); });
+            u.reserve(300000); std::string prev;
+            parseLines(ALIF_UZ_PACKED, [&](const std::string& l) {
+                if (l.size() >= 2 && l[0] >= 48) {
+                    size_t pf = std::min<size_t>(l[0] - 48, prev.size());
+                    std::string w = prev.substr(0, pf) + l.substr(1);
+                    u.insert(w); prev.swap(w);
+                }
+            });
+            std::lock_guard<std::mutex> lk(m_); rej_.swap(r); sufs_.swap(sf); uz_.swap(u); ready_ = true;
+        }).detach();
+    }
+    bool ShouldConvert(const std::wstring& raw) {
+        std::string w;
+        for (wchar_t c : raw) {
+            if (c == L'\u02BB' || c == L'\u2019' || c == L'\u2018' || c == L'\u02BC' || c == L'`') w.push_back('\'');
+            else if (c >= L'A' && c <= L'Z') w.push_back(char(c + 32));
+            else if (c < 128) w.push_back(char(c));
+        }
+        while (!w.empty() && w.front() == '\'') w.erase(w.begin());
+        while (w.size() >= 2 && w.back() == '\'' && w[w.size()-2] != 'o' && w[w.size()-2] != 'g') w.pop_back();
+        if (w.size() < 2) return false;
+        std::lock_guard<std::mutex> lk(m_);
+        if (rej_.count(w)) return false;
+        if (w.find("o'") != std::string::npos || w.find("g'") != std::string::npos) return true;
+        if (!ready_) return w.find('w') == std::string::npos && w.find("th") == std::string::npos;
+        auto inU = [&](const std::string& s) {
+            return uz_.count(s) || (s.size() > 1 && s.back() == 'g' && uz_.count(s.substr(0, s.size()-1) + "k")) || (s.size() > 2 && s.substr(s.size()-2) == "g'" && uz_.count(s.substr(0, s.size()-2) + "q"));
+        };
+        if (inU(w)) return true;
+        for (const auto& s1 : sufs_) if (w.size() > s1.size() + 1 && w.compare(w.size() - s1.size(), s1.size(), s1) == 0) {
+            std::string st1 = w.substr(0, w.size() - s1.size());
+            if (inU(st1)) return true;
+            if (st1.size() >= 4) for (const auto& s2 : sufs_) if (st1.size() > s2.size() + 1 && st1.compare(st1.size() - s2.size(), s2.size(), s2) == 0 && inU(st1.substr(0, st1.size() - s2.size()))) return true;
+        }
+        return false;
+    }
+};
+static SmartDict g_dict;
+
 
 #define WM_TRAYICON (WM_USER + 1)
 #define ID_TRAY_ICON 1001
@@ -39,7 +98,8 @@ struct AppState {
     wchar_t prevChar = 0;
     bool hasUndo = false;
     std::wstring undoOriginal;
-    std::wstring undoInserted;
+    std::wstring undoInserted, rawWord, screenWord;
+    bool userUndid = false;
 
     bool ctrlShiftChord = false;
     bool otherKeyDuringChord = false;
@@ -93,7 +153,7 @@ void ResetBuffer() {
     g_state.prevChar = 0;
     g_state.hasUndo = false;
     g_state.undoOriginal.clear();
-    g_state.undoInserted.clear();
+    g_state.undoInserted.clear(); g_state.rawWord.clear(); g_state.screenWord.clear(); g_state.userUndid = false;
 }
 
 void UpdateTrayIcon() {
@@ -244,13 +304,27 @@ LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
             g_state.hasUndo = true;
             g_state.undoInserted = replacement;
             g_state.undoOriginal = std::wstring(1, g_state.prevChar) + std::wstring(1, currChar);
+            g_state.rawWord.push_back(currChar); if (!g_state.screenWord.empty()) g_state.screenWord.pop_back(); g_state.screenWord += replacement;
             g_state.prevChar = replacement.back();
             SendBackspaceAndUnicode(replacement);
             return 1;
         }
 
-        g_state.hasUndo = false;
-        g_state.prevChar = iswalpha(currChar) ? currChar : 0;
+        bool isWord = iswalnum(currChar) || ((IsApostrophe(currChar) || currChar == L'-') && !g_state.rawWord.empty());
+        if (!isWord) {
+            if (!g_state.userUndid && !g_state.rawWord.empty() && g_state.rawWord != g_state.screenWord && !g_dict.ShouldConvert(g_state.rawWord)) {
+                size_t del = g_state.screenWord.size(); std::wstring txt = g_state.rawWord + std::wstring(1, currChar); ResetBuffer();
+                for (size_t i = 0; i < del; ++i) SendBackspaceAndUnicode(L"");
+                for (wchar_t ch : txt) {
+                    INPUT u[2] = {}; u[0].type = u[1].type = INPUT_KEYBOARD; u[0].ki.wScan = u[1].ki.wScan = ch;
+                    u[0].ki.dwFlags = KEYEVENTF_UNICODE; u[1].ki.dwFlags = KEYEVENTF_UNICODE | KEYEVENTF_KEYUP;
+                    u[0].ki.dwExtraInfo = u[1].ki.dwExtraInfo = SYNTHETIC_TAG; SendInput(2, u, sizeof(INPUT));
+                }
+                return 1;
+            }
+            ResetBuffer(); return CallNextHookEx(g_hook, nCode, wParam, lParam);
+        }
+        g_state.hasUndo = false; g_state.rawWord.push_back(currChar); g_state.screenWord.push_back(currChar); g_state.prevChar = currChar;
     }
     return CallNextHookEx(g_hook, nCode, wParam, lParam);
 }
@@ -338,6 +412,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int) {
     lstrcpynW(g_nid.szTip, L"Alif+ YOQILGAN (Ctrl+Shift)", 128);
     Shell_NotifyIconW(NIM_ADD, &g_nid);
 
+    g_dict.Init();
     g_hook = SetWindowsHookExW(WH_KEYBOARD_LL, LowLevelKeyboardProc, hInstance, 0);
 
     MSG msg;

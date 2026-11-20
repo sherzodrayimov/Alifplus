@@ -175,6 +175,48 @@ final class HudNotificationController {
     }
 }
 
+
+final class AlifSmartDict {
+    static let shared = AlifSmartDict()
+    private var uz = Set<String>(), rej = Set<String>(), sufs: [String] = [], ready = false
+    private let lock = NSLock()
+    private init() { DispatchQueue.global(qos: .userInitiated).async { self.load() } }
+    private func norm(_ s: String) -> String { s.lowercased().replacingOccurrences(of: "ʻ", with: "'").replacingOccurrences(of: "’", with: "'").replacingOccurrences(of: "‘", with: "'").replacingOccurrences(of: "ʼ", with: "'").replacingOccurrences(of: "`", with: "'") }
+    private func load() {
+        var r = Set<String>(), sf: [String] = [], u = Set<String>(); u.reserveCapacity(300000)
+        if let p = Bundle.main.url(forResource: "english_reject", withExtension: "txt"), let t = try? String(contentsOf: p, encoding: .utf8) { t.split(separator: "\n").forEach { let w = norm(String($0)); if !w.isEmpty { r.insert(w) } } }
+        if let p = Bundle.main.url(forResource: "suffixes", withExtension: "txt"), let t = try? String(contentsOf: p, encoding: .utf8) { t.split(separator: "\n").forEach { let w = norm(String($0)); if !w.isEmpty { sf.append(w) } } }
+        if let p = Bundle.main.url(forResource: "uzbek_dict", withExtension: "dat"), let t = try? String(contentsOf: p, encoding: .utf8) {
+            var prev = ""
+            for l in t.split(separator: "\n") {
+                guard let a = l.first?.asciiValue, a >= 48 else { continue }
+                let w = String(prev.prefix(Int(a - 48))) + l.dropFirst(); u.insert(w); prev = w
+            }
+        }
+        lock.lock(); rej = r; sufs = sf; uz = u; ready = !u.isEmpty; lock.unlock()
+    }
+    private func inUz(_ w: String, _ u: Set<String>) -> Bool {
+        u.contains(w) || (w.hasSuffix("g") && u.contains(String(w.dropLast()) + "k")) || (w.hasSuffix("g'") && u.contains(String(w.dropLast(2)) + "q"))
+    }
+    func shouldConvert(_ raw: String) -> Bool {
+        var w = norm(raw)
+        while w.hasPrefix("'") { w.removeFirst() }
+        while w.hasSuffix("'") && !(w.dropLast().last == "o" || w.dropLast().last == "g") { w.removeLast() }
+        if w.count < 2 { return false }
+        lock.lock(); let (ok, r, u, sf) = (ready, rej, uz, sufs); lock.unlock()
+        if r.contains(w) || w.split(separator: "-").contains(where: { $0.count > 1 && $0 != "chi" && r.contains(String($0)) }) { return false }
+        if w.contains("o'") || w.contains("g'") { return true }
+        if !ok { return !(w.contains("w") || w.contains("th") || w.contains("wh") || w.contains("ck") || w.contains("qu")) }
+        if inUz(w, u) { return true }
+        for s1 in sf where w.count > s1.count + 1 && w.hasSuffix(s1) {
+            let st1 = String(w.dropLast(s1.count))
+            if inUz(st1, u) { return true }
+            if st1.count >= 4 { for s2 in sf where st1.count > s2.count + 1 && st1.hasSuffix(s2) { if inUz(String(st1.dropLast(s2.count)), u) { return true } } }
+        }
+        return false
+    }
+}
+
 final class KeyboardEngine {
     static let shared = KeyboardEngine()
     private var eventTap: CFMachPort?
@@ -182,7 +224,8 @@ final class KeyboardEngine {
     private var monitorTimer: Timer?
     private var prevChar: Character? = nil
     private var prevCharTime: Date? = nil
-    private var lastReplacement: (inserted: String, original: String)? = nil
+    private var lastReplacement: (inserted: String, original: String)?
+    private var rawWord = "", screenWord = "", userUndid = false = nil
     private var ctrlShiftChordActive = false
     private var otherKeyPressedDuringChord = false
     private let syntheticTag: Int64 = 0x414C4946
@@ -235,11 +278,7 @@ final class KeyboardEngine {
         CGEvent.tapEnable(tap: tap, enable: true)
     }
 
-    private func resetBuffer() {
-        prevChar = nil
-        prevCharTime = nil
-        lastReplacement = nil
-    }
+    private func resetBuffer() { prevChar = nil; prevCharTime = nil; lastReplacement = nil; rawWord = ""; screenWord = ""; userUndid = false }
 
     private func handleEvent(proxy: CGEventTapProxy, type: CGEventType, event: CGEvent) -> Unmanaged<CGEvent>? {
         if type == .tapDisabledByTimeout || type == .tapDisabledByUserInput {
@@ -290,7 +329,7 @@ final class KeyboardEngine {
         let keyCode = CGKeyCode(event.getIntegerValueField(.keyboardEventKeycode))
         if keyCode == CGKeyCode(kVK_Delete) {
             if settings.instantUndo, let undo = lastReplacement {
-                lastReplacement = nil
+                lastReplacement = nil; userUndid = true; if !screenWord.isEmpty { screenWord.removeLast() }; screenWord += undo.original
                 prevChar = undo.original.last
                 prevCharTime = Date()
                 replacePreviousCharacter(with: undo.original)
@@ -324,7 +363,7 @@ final class KeyboardEngine {
             let timeout = settings.letterTimeout
             let withinWindow = (timeout <= 0) || (now.timeIntervalSince(prevTime) <= timeout)
             if withinWindow, let replacement = matchPair(prev: prev, curr: currentChar, settings: settings) {
-                lastReplacement = (inserted: replacement, original: String(prev) + String(currentChar))
+                lastReplacement = (inserted: replacement, original: String(prev) + String(currentChar)); rawWord.append(currentChar); if !screenWord.isEmpty { screenWord.removeLast() }; screenWord += replacement
                 prevChar = replacement.last
                 prevCharTime = now
                 replacePreviousCharacter(with: replacement)
@@ -332,14 +371,27 @@ final class KeyboardEngine {
             }
         }
 
-        lastReplacement = nil
-        if currentChar.isLetter {
-            prevChar = currentChar
-            prevCharTime = now
-        } else {
-            prevChar = nil
-            prevCharTime = nil
+        let isApos = ["'", "ʻ", "’", "‘", "ʼ", "`"].contains(currentChar)
+        let isWord = currentChar.isLetter || currentChar.isNumber || ((isApos || currentChar == "-") && !rawWord.isEmpty)
+        if !isWord {
+            if !userUndid && !rawWord.isEmpty && rawWord != screenWord && !AlifSmartDict.shared.shouldConvert(rawWord) {
+                let del = screenWord.count, txt = rawWord + String(currentChar); resetBuffer()
+                let src = CGEventSource(stateID: .hidSystemState)
+                for _ in 0..<del {
+                    CGEvent(keyboardEventSource: src, virtualKey: CGKeyCode(kVK_Delete), keyDown: true)?.post(tap: .cghidEventTap)
+                    CGEvent(keyboardEventSource: src, virtualKey: CGKeyCode(kVK_Delete), keyDown: false)?.post(tap: .cghidEventTap)
+                }
+                let u16 = Array(txt.utf16)
+                if let d = CGEvent(keyboardEventSource: src, virtualKey: 0, keyDown: true), let u = CGEvent(keyboardEventSource: src, virtualKey: 0, keyDown: false) {
+                    d.setIntegerValueField(.eventSourceUserData, value: syntheticTag); u.setIntegerValueField(.eventSourceUserData, value: syntheticTag)
+                    d.keyboardSetUnicodeString(stringLength: u16.count, unicodeString: u16); u.keyboardSetUnicodeString(stringLength: u16.count, unicodeString: u16)
+                    d.post(tap: .cghidEventTap); u.post(tap: .cghidEventTap)
+                }
+                return nil
+            }
+            resetBuffer(); return Unmanaged.passUnretained(event)
         }
+        lastReplacement = nil; rawWord.append(currentChar); screenWord.append(currentChar); prevChar = currentChar; prevCharTime = now
         return Unmanaged.passUnretained(event)
     }
 
