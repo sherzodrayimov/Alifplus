@@ -1425,3 +1425,36 @@ html[data-theme="dark"] .alif-mt-toolbar { background: #0f172a !important; borde
 html[data-theme="dark"] .alif-mt-opt { background: transparent !important; border: none !important; }
 html[data-theme="dark"] .alif-mt-opt.is-active { color: #fbbf24 !important; background: rgba(251, 191, 36, 0.14) !important; }
 html[data-theme="dark"] .alif-mt-stage { background: #181a1d !important; border-color: #2c3038 !important; }
+
+/* ALIF-ALPHABET-TABLE-START */
+.alif-alpha-sec { padding: 18px 0 42px; }
+.alif-alpha-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 24px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05); }
+.alif-alpha-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+.alif-alpha-title { margin: 6px 0 6px; font-size: 22px; font-weight: 800; color: var(--text); }
+.alif-alpha-sub { margin: 0; font-size: 14px; color: var(--muted); max-width: 560px; line-height: 1.55; }
+.alif-law-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.alif-law-item { padding: 14px 16px; border-radius: 14px; background: var(--surface-2); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; }
+.alif-law-item small { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+.alif-law-item strong { font-size: 15px; font-weight: 800; color: var(--text); line-height: 1.35; }
+.alif-law-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 2px; font-size: 13.5px; font-weight: 700; color: #059669; text-decoration: none; }
+.alif-law-link:hover { text-decoration: underline; }
+.alif-alpha-filters { display: inline-flex; gap: 6px; padding: 4px; border-radius: 11px; background: var(--surface-2); border: 1px solid var(--border); }
+.alif-alpha-fbtn { padding: 6px 12px; border-radius: 8px; border: none; background: transparent; color: var(--muted); font-size: 13px; font-weight: 700; cursor: pointer; }
+.alif-alpha-fbtn.is-active { background: var(--surface); color: #059669; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08); }
+.alif-alpha-table-wrap { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.alif-alpha-row { display: grid; grid-template-columns: 44px 1.2fr 1fr; align-items: center; padding: 11px 16px; border-bottom: 1px solid var(--border); background: var(--surface); transition: background 0.12s ease; }
+.alif-alpha-row:last-child { border-bottom: none; }
+.alif-alpha-row.is-head { background: var(--surface-2); font-size: 11.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); padding: 10px 16px; }
+.alif-alpha-row.is-changed { background: rgba(16, 185, 129, 0.07); border-left: 4px solid #059669; padding-left: 12px; }
+.alif-alpha-row[hidden] { display: none !important; }
+.alif-alpha-num { font-size: 12.5px; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
+.alif-alpha-new { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 800; color: var(--text); }
+.alif-alpha-tag { font-size: 10.5px; font-weight: 800; letter-spacing: 0.04em; padding: 2px 8px; border-radius: 999px; background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+.alif-alpha-old { font-size: 16.5px; font-weight: 500; color: var(--muted); }
+html[data-theme="dark"] .alif-alpha-card, html[data-theme="dark"] .alif-alpha-row { background: #111827 !important; border-color: #283548 !important; }
+html[data-theme="dark"] .alif-law-item, html[data-theme="dark"] .alif-alpha-filters, html[data-theme="dark"] .alif-alpha-row.is-head { background: #0f172a !important; border-color: #283548 !important; }
+html[data-theme="dark"] .alif-alpha-row.is-changed { background: rgba(16, 185, 129, 0.12) !important; border-left-color: #34d399 !important; }
+html[data-theme="dark"] .alif-alpha-tag { background: rgba(16, 185, 129, 0.2) !important; color: #6ee787 !important; border-color: rgba(52, 211, 153, 0.35) !important; }
+html[data-theme="dark"] .alif-alpha-fbtn { background: transparent !important; border: none !important; }
+html[data-theme="dark"] .alif-alpha-fbtn.is-active { background: #1e293b !important; color: #34d399 !important; }
+html[data-theme="dark"] .alif-law-link { color: #34d399 !important; }
