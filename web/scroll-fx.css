@@ -1,0 +1,99 @@
+
+.alif-scroll-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, #10b981, #34d399, #1a56db);
+  z-index: 9999;
+  pointer-events: none;
+  transition: width 0.08s linear;
+}
+.alif-nav-link.is-scroll-active {
+  color: #10b981 !important;
+  position: relative;
+}
+.alif-nav-link.is-scroll-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  border-radius: 2px;
+  background: #10b981;
+}
+.alif-story-showcase {
+  margin: 28px auto 0;
+  padding: 26px 28px;
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  background: rgba(15, 23, 42, 0.03);
+}
+html[data-theme="dark"] .alif-story-showcase {
+  background: rgba(15, 23, 42, 0.55);
+  border-color: rgba(148, 163, 184, 0.18);
+}
+.alif-story-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #10b981;
+  margin-bottom: 10px;
+}
+.alif-story-line {
+  font-size: clamp(20px, 2.7vw, 30px);
+  font-weight: 700;
+  line-height: 1.55;
+  margin: 0 0 16px;
+}
+.alif-story-word {
+  display: inline-block;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+.alif-story-word.is-converted {
+  color: #10b981;
+}
+.alif-story-word.is-kept {
+  text-decoration: underline wavy rgba(16, 185, 129, 0.7);
+  text-underline-offset: 5px;
+}
+.alif-story-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  background: #10b981;
+  vertical-align: text-bottom;
+  margin: 0 1px;
+  opacity: 0;
+}
+.alif-story-caret.is-on {
+  opacity: 1;
+}
+.alif-story-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.alif-story-steps li {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  font-size: 13px;
+  opacity: 0.55;
+  transition: opacity 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+.alif-story-steps li.is-active {
+  opacity: 1;
+  border-color: #10b981;
+  transform: translateY(-2px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .alif-story-caret { display: none !important; }
+  .alif-story-steps li { opacity: 1 !important; }
+}
