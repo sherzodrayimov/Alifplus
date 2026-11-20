@@ -1058,20 +1058,61 @@
   })();
   </script>
   <style id="alifDarkGreenBtns">
-  /* Qora fonda tanlangan (bosilgan) tugmalar ham oq fondagi kabi doim rangli turishi uchun */
-  :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(
-    button.is-active,
-    button.active,
-    button[aria-pressed="true"],
-    button[aria-selected="true"],
-    .alif-doc-tab.is-active,
-    .alif-doc-scbtn.is-active,
-    .alif-mt-opt.is-active,
-    .alif-alpha-fbtn.is-active,
-    .alif-btn.is-active,
-    [role="tab"][aria-selected="true"],
-    [role="button"][aria-pressed="true"]
-  ) {
+  /* Qora fonda BARCHA tugmalar: kursor ustiga borganda (:hover) yashil */
+  html.alif-dark-active body button:hover,
+  html.alif-dark-active body [id] button:hover,
+  html.alif-dark-active body [role="button"]:hover,
+  html.alif-dark-active body [id] [role="button"]:hover,
+  html.alif-dark-active body a[class*="btn"]:hover,
+  html.alif-dark-active body [id] a[class*="btn"]:hover,
+  html.alif-dark-active body section a[href*=".dmg"]:hover,
+  html.alif-dark-active body section a[href*=".exe"]:hover {
+    background: #10b981 !important;
+    background-color: #10b981 !important;
+    background-image: none !important;
+    border-color: #10b981 !important;
+    color: #022c22 !important;
+    box-shadow: none !important;
+  }
+
+  html.alif-dark-active body button:hover *,
+  html.alif-dark-active body [id] button:hover *,
+  html.alif-dark-active body [role="button"]:hover *,
+  html.alif-dark-active body [id] [role="button"]:hover *,
+  html.alif-dark-active body a[class*="btn"]:hover *,
+  html.alif-dark-active body section a[href*=".dmg"]:hover *,
+  html.alif-dark-active body section a[href*=".exe"]:hover * {
+    color: #022c22 !important;
+  }
+
+  /* Bosilganda (:active) to‘q yashil */
+  html.alif-dark-active body button:active,
+  html.alif-dark-active body [id] button:active,
+  html.alif-dark-active body [role="button"]:active,
+  html.alif-dark-active body [id] [role="button"]:active,
+  html.alif-dark-active body a[class*="btn"]:active,
+  html.alif-dark-active body section a[href*=".dmg"]:active,
+  html.alif-dark-active body section a[href*=".exe"]:active {
+    background: #059669 !important;
+    background-color: #059669 !important;
+    background-image: none !important;
+    border-color: #059669 !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+    transform: scale(0.97) !important;
+  }
+
+  html.alif-dark-active body button:active *,
+  html.alif-dark-active body [id] button:active *,
+  html.alif-dark-active body [role="button"]:active *,
+  html.alif-dark-active body a[class*="btn"]:active * {
+    color: #ffffff !important;
+  }
+
+  /* Tanlangan / bosib qo‘yilgan tugmalar (Tilxat, Buyruq, Yangi, Eski, Vaqt, Sözlar, 30, 50, 100 va b.) */
+  html.alif-dark-active body button:is(.is-active, .active, .selected, [aria-pressed="true"], [aria-selected="true"], [data-active="true"]),
+  html.alif-dark-active body [id] button:is(.is-active, .active, .selected, [aria-pressed="true"], [aria-selected="true"], [data-active="true"]),
+  html.alif-dark-active body [role="button"]:is(.is-active, .active, .selected, [aria-pressed="true"], [aria-selected="true"]) {
     background: #10b981 !important;
     background-color: #10b981 !important;
     background-image: none !important;
@@ -1081,117 +1122,30 @@
     box-shadow: none !important;
   }
 
-  :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(
-    button.is-active,
-    button.active,
-    button[aria-pressed="true"],
-    button[aria-selected="true"],
-    .alif-doc-tab.is-active,
-    .alif-doc-scbtn.is-active,
-    .alif-mt-opt.is-active,
-    .alif-alpha-fbtn.is-active,
-    .alif-btn.is-active
-  ) * {
+  html.alif-dark-active body button:is(.is-active, .active, .selected, [aria-pressed="true"], [aria-selected="true"], [data-active="true"]) *,
+  html.alif-dark-active body [id] button:is(.is-active, .active, .selected, [aria-pressed="true"], [aria-selected="true"], [data-active="true"]) * {
     color: #022c22 !important;
-  }
-
-  /* Kursor ustidan o‘tganda va bosib turganda */
-  :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(
-    button,
-    [role="button"],
-    .alif-btn,
-    .alif-nav-link,
-    .alif-hero-btn-primary,
-    .alif-hero-btn-secondary,
-    .alif-trainer-btn,
-    .alif-bm-copy,
-    .alif-bm-drag,
-    .alif-alpha-fbtn,
-    .alif-mt-opt,
-    .alif-doc-tab,
-    .alif-doc-sbtn,
-    .alif-doc-scbtn,
-    .alif-doc-print-btn,
-    section a[href*=".dmg"],
-    section a[href*=".exe"]
-  ):hover {
-    background: #10b981 !important;
-    background-color: #10b981 !important;
-    background-image: none !important;
-    border-color: #10b981 !important;
-    color: #022c22 !important;
-    box-shadow: none !important;
-  }
-
-  :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(
-    button,
-    [role="button"],
-    .alif-btn,
-    .alif-nav-link,
-    .alif-hero-btn-primary,
-    .alif-hero-btn-secondary,
-    .alif-trainer-btn,
-    .alif-bm-copy,
-    .alif-bm-drag,
-    .alif-alpha-fbtn,
-    .alif-mt-opt,
-    .alif-doc-tab,
-    .alif-doc-sbtn,
-    .alif-doc-scbtn,
-    .alif-doc-print-btn,
-    section a[href*=".dmg"],
-    section a[href*=".exe"]
-  ):active {
-    background: #059669 !important;
-    background-color: #059669 !important;
-    border-color: #059669 !important;
-    color: #ffffff !important;
-    transform: scale(0.98) !important;
-  }
-
-  :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(
-    button,
-    [role="button"],
-    .alif-btn,
-    .alif-nav-link,
-    .alif-hero-btn-primary,
-    .alif-hero-btn-secondary,
-    .alif-trainer-btn,
-    .alif-bm-copy,
-    .alif-bm-drag,
-    .alif-alpha-fbtn,
-    .alif-mt-opt,
-    .alif-doc-tab,
-    .alif-doc-sbtn,
-    .alif-doc-scbtn,
-    .alif-doc-print-btn,
-    section a[href*=".dmg"],
-    section a[href*=".exe"]
-  ):hover * {
-    color: #022c22 !important;
-  }
-
-  :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(
-    button,
-    [role="button"],
-    .alif-btn,
-    .alif-nav-link,
-    .alif-hero-btn-primary,
-    .alif-hero-btn-secondary,
-    .alif-trainer-btn,
-    .alif-bm-copy,
-    .alif-bm-drag,
-    .alif-alpha-fbtn,
-    .alif-mt-opt,
-    .alif-doc-tab,
-    .alif-doc-sbtn,
-    .alif-doc-scbtn,
-    .alif-doc-print-btn,
-    section a[href*=".dmg"],
-    section a[href*=".exe"]
-  ):active * {
-    color: #ffffff !important;
   }
   </style>
+  <script id="alifDarkGreenSync">
+  (function(){
+    function checkDark(){
+      var bg = getComputedStyle(document.body).backgroundColor || "";
+      var m = bg.match(/\d+/g);
+      var dark = false;
+      if(m && m.length >= 3){
+        dark = (0.299 * +m[0] + 0.587 * +m[1] + 0.114 * +m[2]) < 128;
+      } else {
+        dark = document.documentElement.getAttribute("data-theme") === "dark" || document.body.classList.contains("dark");
+      }
+      document.documentElement.classList.toggle("alif-dark-active", dark);
+    }
+    checkDark();
+    document.addEventListener("DOMContentLoaded", checkDark);
+    document.addEventListener("click", function(){ setTimeout(checkDark, 15); setTimeout(checkDark, 120); }, true);
+    new MutationObserver(checkDark).observe(document.documentElement, { attributes: true, subtree: false });
+    if(document.body) new MutationObserver(checkDark).observe(document.body, { attributes: true });
+  })();
+  </script>
 </body>
 </html>
