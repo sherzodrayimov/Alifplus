@@ -33,13 +33,13 @@
         <span class="alif-brand-text">Alif+</span>
       </a>
       <nav class="alif-nav">
-        <a href="#alifConverter" class="alif-nav-link">Konverter</a>
-        <a href="#alifDesktopApp" class="alif-nav-link">macOS va Windows dasturi</a>
-        <a href="#alifMacGuide" class="alif-nav-link">macOS qöllanma</a>
         <a href="#alifAlphabet" class="alif-nav-link">Alifbo tartibi</a>
+        <a href="#alifConverter" class="alif-nav-link">Konverter</a>
         <a href="#alifTrainer" class="alif-nav-link">Tez yoziş</a>
         <a href="#alifDocsSection" class="alif-nav-link">Hujjatlar</a>
         <a href="#alifBookmarklet" class="alif-nav-link">Xatçöp</a>
+        <a href="#alifDesktopApp" class="alif-nav-link">macOS va Windows dasturi</a>
+        <a href="#alifMacGuide" class="alif-nav-link">macOS qöllanma</a>
         <button type="button" id="alifThemeToggle" class="alif-theme-btn" onclick="toggleAlifTheme()" aria-label="Kundalik yoki tungi rejim" title="Kundalik / Tungi rejim">
           <svg class="alif-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
           <svg class="alif-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
@@ -49,6 +49,82 @@
   </header>
 
   <main class="alif-main">
+
+  <section id="alifHero" class="alif-hero">
+      <div class="alif-container">
+        <div class="alif-badge">Yangi özbek alifbosi • Ö ö, Ğ ğ, Ş ş, Ç ç</div>
+        <h1 class="alif-hero-title">Matn va hujjatni yangi alifboga ögiriş</h1>
+        <p class="alif-hero-subtitle">
+          Kirill yoki lotin yozuvidagi Word, PDF va oddiy matn — brauzerning özida, bepul va çeklovsiz.
+        </p>
+      </div>
+    </section>
+
+  <section id="alifAlphabet" class="alif-alpha-sec">
+    <div class="alif-container">
+      <div class="alif-alpha-card">
+        <div class="alif-alpha-head">
+          <div>
+            <span class="alif-trainer-badge">28 harfli yangi tartib · 2026</span>
+            <h2 class="alif-alpha-title">Yangi özbek lotin alifbosi tartibi va huquqiy asosi</h2>
+            <p class="alif-alpha-sub">1995-yilgi lotin yozuviga asoslangan özbek alifbosidagi 4 ta murakkab belgi (<strong>O‘, G‘, Sh, Ch</strong>) örniga yagona harflar (<strong>Ö, Ğ, Ş, Ç</strong>) joriy etildi.</p>
+          </div>
+          <div class="alif-alpha-filters">
+            <button type="button" class="alif-alpha-fbtn is-active" onclick="filterAlifAlpha('all', this)">Barçasi (28)</button>
+            <button type="button" class="alif-alpha-fbtn" onclick="filterAlifAlpha('changed', this)">Özgarganlar (4)</button>
+          </div>
+        </div>
+
+        <div class="alif-law-grid">
+          <div class="alif-law-item"><small>Qabul qilingan vaqti</small><strong>2026-yil (Yangi tahrir)</strong></div>
+          <div class="alif-law-item"><small>Kuçga kiriş muddati</small><strong>Bosqiçma-bosqiç joriy etiladi</strong></div>
+          <div class="alif-law-item"><small>Huquqiy asos</small><strong>Özbekiston Respublikasi Qonuni / Qarori</strong></div>
+          <div class="alif-law-item"><small>Rasmiy hujjat matni</small><a class="alif-law-link" href="https://lex.uz" target="_blank" rel="noopener noreferrer">Lex.uz saytida köriş ↗</a></div>
+        </div>
+
+        <div class="alif-alpha-table-wrap">
+          <div class="alif-alpha-row is-head"><span>#</span><span>YANGI (2026)</span><span>ESKI LOTIN (1995)</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">1</span><span class="alif-alpha-new">A a </span><span class="alif-alpha-old">A a</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">2</span><span class="alif-alpha-new">B b </span><span class="alif-alpha-old">B b</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">3</span><span class="alif-alpha-new">D d </span><span class="alif-alpha-old">D d</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">4</span><span class="alif-alpha-new">E e </span><span class="alif-alpha-old">E e</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">5</span><span class="alif-alpha-new">F f </span><span class="alif-alpha-old">F f</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">6</span><span class="alif-alpha-new">G g </span><span class="alif-alpha-old">G g</span></div>
+          <div class="alif-alpha-row is-changed" data-changed="1"><span class="alif-alpha-num">7</span><span class="alif-alpha-new">Ğ ğ <span class="alif-alpha-tag">O‘ZGARGAN</span></span><span class="alif-alpha-old">G‘ g‘</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">8</span><span class="alif-alpha-new">H h </span><span class="alif-alpha-old">H h</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">9</span><span class="alif-alpha-new">I i </span><span class="alif-alpha-old">I i</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">10</span><span class="alif-alpha-new">J j </span><span class="alif-alpha-old">J j</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">11</span><span class="alif-alpha-new">K k </span><span class="alif-alpha-old">K k</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">12</span><span class="alif-alpha-new">L l </span><span class="alif-alpha-old">L l</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">13</span><span class="alif-alpha-new">M m </span><span class="alif-alpha-old">M m</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">14</span><span class="alif-alpha-new">N n </span><span class="alif-alpha-old">N n</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">15</span><span class="alif-alpha-new">O o </span><span class="alif-alpha-old">O o</span></div>
+          <div class="alif-alpha-row is-changed" data-changed="1"><span class="alif-alpha-num">16</span><span class="alif-alpha-new">Ö ö <span class="alif-alpha-tag">O‘ZGARGAN</span></span><span class="alif-alpha-old">O‘ o‘</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">17</span><span class="alif-alpha-new">P p </span><span class="alif-alpha-old">P p</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">18</span><span class="alif-alpha-new">Q q </span><span class="alif-alpha-old">Q q</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">19</span><span class="alif-alpha-new">R r </span><span class="alif-alpha-old">R r</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">20</span><span class="alif-alpha-new">S s </span><span class="alif-alpha-old">S s</span></div>
+          <div class="alif-alpha-row is-changed" data-changed="1"><span class="alif-alpha-num">21</span><span class="alif-alpha-new">Ş ş <span class="alif-alpha-tag">O‘ZGARGAN</span></span><span class="alif-alpha-old">Sh sh</span></div>
+          <div class="alif-alpha-row is-changed" data-changed="1"><span class="alif-alpha-num">22</span><span class="alif-alpha-new">Ç ç <span class="alif-alpha-tag">O‘ZGARGAN</span></span><span class="alif-alpha-old">Ch ch</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">23</span><span class="alif-alpha-new">T t </span><span class="alif-alpha-old">T t</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">24</span><span class="alif-alpha-new">U u </span><span class="alif-alpha-old">U u</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">25</span><span class="alif-alpha-new">V v </span><span class="alif-alpha-old">V v</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">26</span><span class="alif-alpha-new">X x </span><span class="alif-alpha-old">X x</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">27</span><span class="alif-alpha-new">Y y </span><span class="alif-alpha-old">Y y</span></div>
+          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">28</span><span class="alif-alpha-new">Z z </span><span class="alif-alpha-old">Z z</span></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function filterAlifAlpha(mode, btn) {
+        document.querySelectorAll('.alif-alpha-fbtn').forEach(function(b) { b.classList.remove('is-active'); });
+        if (btn) btn.classList.add('is-active');
+        document.querySelectorAll('#alifAlphabet .alif-alpha-row[data-changed]').forEach(function(r) {
+          r.hidden = (mode === 'changed' && r.getAttribute('data-changed') !== '1');
+        });
+      }
+    </script>
+  </section>
 
   <section id="alifConverter" class="alif-hero">
     <div class="alif-container">
@@ -175,81 +251,97 @@
     </div>
   </section>
 
-  <section class="alif-hero">
-      <div class="alif-container">
-        <div class="alif-badge">Yangi özbek alifbosi • Ö ö, Ğ ğ, Ş ş, Ç ç</div>
-        <h1 class="alif-hero-title">Matn va hujjatni yangi alifboga ögiriş</h1>
-        <p class="alif-hero-subtitle">
-          Kirill yoki lotin yozuvidagi Word, PDF va oddiy matn — brauzerning özida, bepul va çeklovsiz.
-        </p>
+  <section id="converter" class="alif-container">
+      <div class="alif-card">
+        <div class="alif-toolbar">
+          <div class="alif-dir-group">
+            <label for="alifDirection" class="alif-label-inline">Yönaliş:</label>
+            <select id="alifDirection" class="alif-select" aria-label="O'girish yo'nalishi">
+              <option value="auto2new" selected>Avtomatik (Kirill / Eski lotin → Yangi alifbo)</option>
+              <option value="oldlat2new">Eski lotin (o' g' sh ch) → Yangi alifbo (ö ğ ş ç)</option>
+              <option value="cyr2new">Kirill (ў ғ ш ч) → Yangi alifbo (ö ğ ş ç)</option>
+              <option value="new2oldlat">Yangi alifbo (ö ğ ş ç) → Eski lotin (o' g' sh ch)</option>
+              <option value="new2cyr">Yangi alifbo (ö ğ ş ç) → Kirill (ў ғ ш ч)</option>
+              <option value="cyr2oldlat">Kirill → Eski lotin</option>
+              <option value="oldlat2cyr">Eski lotin → Kirill</option>
+            </select>
+          </div>
+
+          <div class="alif-toolbar-actions">
+            <button type="button" id="alifBtnExceptions" class="alif-btn alif-btn-ghost" title="özgarmaydigan sözlar röyxati">
+              ⚙ Istisnolar (<span id="alifExcCount">0</span>)
+            </button>
+          </div>
+        </div>
+
+        <div id="alifDropzone" class="alif-dropzone" tabindex="0" role="button" aria-label="Word, PDF yoki TXT fayl yuklaş">
+          <input type="file" id="alifFileInput" accept=".txt,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden />
+          <div class="alif-dropzone-content">
+            <span class="alif-drop-icon">📄</span>
+            <div>
+              <strong>Hujjat yuklang (.docx, .pdf, .txt)</strong> yoki faylni şu yerga taşlang
+              <div class="alif-drop-hint">Barça fayllar faqat sizning brauzeringizda qayta işlanadi — serverga yuborilmaydi</div>
+            </div>
+            <button type="button" id="alifBtnUpload" class="alif-btn alif-btn-secondary">Fayl tanlaş</button>
+          </div>
+        </div>
+
+        <div id="alifStatusBanner" class="alif-status" hidden></div>
+
+        <div class="alif-panes">
+          <div class="alif-pane">
+            <div class="alif-pane-head">
+              <span class="alif-pane-title">Asl matn (Kirill yoki Eski lotin)</span>
+              <div class="alif-pane-tools">
+                <button type="button" id="alifBtnSample" class="alif-mini-btn">Namuna</button>
+                <button type="button" id="alifBtnPaste" class="alif-mini-btn">Qöyiş</button>
+                <button type="button" id="alifBtnClear" class="alif-mini-btn alif-mini-danger">Tozalaş</button>
+              </div>
+            </div>
+            <textarea
+              id="alifInput"
+              class="alif-textarea"
+              placeholder="Matnni şu yerga yozing yoki nusxalab qöying...&#10;Masalan: O'zbekiston Respublikasi — shahar va qishloqlar chiroyli."
+              spellcheck="false"
+            ></textarea>
+            <div class="alif-pane-foot">
+              <span id="alifInputStats">0 belgi • 0 söz</span>
+            </div>
+          </div>
+
+          <div class="alif-pane">
+            <div class="alif-pane-head">
+              <span class="alif-pane-title">Natija (Yangi alifbo: Ö, Ğ, Ş, Ç)</span>
+              <div class="alif-pane-tools">
+                <button type="button" id="alifBtnSwap" class="alif-mini-btn" title="Natijani çap oynaga ötkaziş">⇄ Almaştiriş</button>
+                <button type="button" id="alifBtnCopy" class="alif-mini-btn alif-mini-primary">Nusxa oliş</button>
+              </div>
+            </div>
+            <textarea
+              id="alifOutput"
+              class="alif-textarea alif-textarea-out"
+              placeholder="Ögirilgan matn şu yerda avtomatik paydo böladi..."
+              readonly
+            ></textarea>
+            <div class="alif-pane-foot alif-export-bar">
+              <span id="alifOutputStats">0 belgi • 0 özgariş</span>
+              <div class="alif-export-btns">
+                <button type="button" id="alifExportTxt" class="alif-mini-btn">.TXT</button>
+                <button type="button" id="alifExportDocx" class="alif-mini-btn">.DOCX (Word)</button>
+                <button type="button" id="alifExportPdf" class="alif-mini-btn">.PDF</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="alif-alphabet-strip">
+          <div class="alif-char-chip"><span>O‘ / o‘</span> → <strong>Ö / ö</strong></div>
+          <div class="alif-char-chip"><span>G‘ / g‘</span> → <strong>Ğ / ğ</strong></div>
+          <div class="alif-char-chip"><span>Sh / sh</span> → <strong>Ş / ş</strong></div>
+          <div class="alif-char-chip"><span>Ch / ch</span> → <strong>Ç / ç</strong></div>
+        </div>
       </div>
     </section>
-
-  <section id="alifAlphabet" class="alif-alpha-sec">
-    <div class="alif-container">
-      <div class="alif-alpha-card">
-        <div class="alif-alpha-head">
-          <div>
-            <span class="alif-trainer-badge">28 harfli yangi tartib · 2026</span>
-            <h2 class="alif-alpha-title">Yangi özbek lotin alifbosi tartibi va huquqiy asosi</h2>
-            <p class="alif-alpha-sub">1995-yilgi lotin yozuviga asoslangan özbek alifbosidagi 4 ta murakkab belgi (<strong>O‘, G‘, Sh, Ch</strong>) örniga yagona harflar (<strong>Ö, Ğ, Ş, Ç</strong>) joriy etildi.</p>
-          </div>
-          <div class="alif-alpha-filters">
-            <button type="button" class="alif-alpha-fbtn is-active" onclick="filterAlifAlpha('all', this)">Barçasi (28)</button>
-            <button type="button" class="alif-alpha-fbtn" onclick="filterAlifAlpha('changed', this)">Özgarganlar (4)</button>
-          </div>
-        </div>
-
-        <div class="alif-law-grid">
-          <div class="alif-law-item"><small>Qabul qilingan vaqti</small><strong>2026-yil (Yangi tahrir)</strong></div>
-          <div class="alif-law-item"><small>Kuçga kiriş muddati</small><strong>Bosqiçma-bosqiç joriy etiladi</strong></div>
-          <div class="alif-law-item"><small>Huquqiy asos</small><strong>Özbekiston Respublikasi Qonuni / Qarori</strong></div>
-          <div class="alif-law-item"><small>Rasmiy hujjat matni</small><a class="alif-law-link" href="https://lex.uz" target="_blank" rel="noopener noreferrer">Lex.uz saytida köriş ↗</a></div>
-        </div>
-
-        <div class="alif-alpha-table-wrap">
-          <div class="alif-alpha-row is-head"><span>#</span><span>YANGI (2026)</span><span>ESKI LOTIN (1995)</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">1</span><span class="alif-alpha-new">A a </span><span class="alif-alpha-old">A a</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">2</span><span class="alif-alpha-new">B b </span><span class="alif-alpha-old">B b</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">3</span><span class="alif-alpha-new">D d </span><span class="alif-alpha-old">D d</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">4</span><span class="alif-alpha-new">E e </span><span class="alif-alpha-old">E e</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">5</span><span class="alif-alpha-new">F f </span><span class="alif-alpha-old">F f</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">6</span><span class="alif-alpha-new">G g </span><span class="alif-alpha-old">G g</span></div>
-          <div class="alif-alpha-row is-changed" data-changed="1"><span class="alif-alpha-num">7</span><span class="alif-alpha-new">Ğ ğ <span class="alif-alpha-tag">O‘ZGARGAN</span></span><span class="alif-alpha-old">G‘ g‘</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">8</span><span class="alif-alpha-new">H h </span><span class="alif-alpha-old">H h</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">9</span><span class="alif-alpha-new">I i </span><span class="alif-alpha-old">I i</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">10</span><span class="alif-alpha-new">J j </span><span class="alif-alpha-old">J j</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">11</span><span class="alif-alpha-new">K k </span><span class="alif-alpha-old">K k</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">12</span><span class="alif-alpha-new">L l </span><span class="alif-alpha-old">L l</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">13</span><span class="alif-alpha-new">M m </span><span class="alif-alpha-old">M m</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">14</span><span class="alif-alpha-new">N n </span><span class="alif-alpha-old">N n</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">15</span><span class="alif-alpha-new">O o </span><span class="alif-alpha-old">O o</span></div>
-          <div class="alif-alpha-row is-changed" data-changed="1"><span class="alif-alpha-num">16</span><span class="alif-alpha-new">Ö ö <span class="alif-alpha-tag">O‘ZGARGAN</span></span><span class="alif-alpha-old">O‘ o‘</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">17</span><span class="alif-alpha-new">P p </span><span class="alif-alpha-old">P p</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">18</span><span class="alif-alpha-new">Q q </span><span class="alif-alpha-old">Q q</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">19</span><span class="alif-alpha-new">R r </span><span class="alif-alpha-old">R r</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">20</span><span class="alif-alpha-new">S s </span><span class="alif-alpha-old">S s</span></div>
-          <div class="alif-alpha-row is-changed" data-changed="1"><span class="alif-alpha-num">21</span><span class="alif-alpha-new">Ş ş <span class="alif-alpha-tag">O‘ZGARGAN</span></span><span class="alif-alpha-old">Sh sh</span></div>
-          <div class="alif-alpha-row is-changed" data-changed="1"><span class="alif-alpha-num">22</span><span class="alif-alpha-new">Ç ç <span class="alif-alpha-tag">O‘ZGARGAN</span></span><span class="alif-alpha-old">Ch ch</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">23</span><span class="alif-alpha-new">T t </span><span class="alif-alpha-old">T t</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">24</span><span class="alif-alpha-new">U u </span><span class="alif-alpha-old">U u</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">25</span><span class="alif-alpha-new">V v </span><span class="alif-alpha-old">V v</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">26</span><span class="alif-alpha-new">X x </span><span class="alif-alpha-old">X x</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">27</span><span class="alif-alpha-new">Y y </span><span class="alif-alpha-old">Y y</span></div>
-          <div class="alif-alpha-row" data-changed="0"><span class="alif-alpha-num">28</span><span class="alif-alpha-new">Z z </span><span class="alif-alpha-old">Z z</span></div>
-        </div>
-      </div>
-    </div>
-    <script>
-      function filterAlifAlpha(mode, btn) {
-        document.querySelectorAll('.alif-alpha-fbtn').forEach(function(b) { b.classList.remove('is-active'); });
-        if (btn) btn.classList.add('is-active');
-        document.querySelectorAll('#alifAlphabet .alif-alpha-row[data-changed]').forEach(function(r) {
-          r.hidden = (mode === 'changed' && r.getAttribute('data-changed') !== '1');
-        });
-      }
-    </script>
-  </section>
 
   <section id="alifTrainer" class="alif-trainer-sec">
     <div class="alif-container">
@@ -383,98 +475,6 @@
             <span>Windows 7 / 8 / 10 (32-bit x86)</span>
           </a>
           <a href="web/macos-install.html" class="alif-guide-link">macOS o'rnatiş qöllanmasini köriş →</a>
-        </div>
-      </div>
-    </section>
-
-  <section id="converter" class="alif-container">
-      <div class="alif-card">
-        <div class="alif-toolbar">
-          <div class="alif-dir-group">
-            <label for="alifDirection" class="alif-label-inline">Yönaliş:</label>
-            <select id="alifDirection" class="alif-select" aria-label="O'girish yo'nalishi">
-              <option value="auto2new" selected>Avtomatik (Kirill / Eski lotin → Yangi alifbo)</option>
-              <option value="oldlat2new">Eski lotin (o' g' sh ch) → Yangi alifbo (ö ğ ş ç)</option>
-              <option value="cyr2new">Kirill (ў ғ ш ч) → Yangi alifbo (ö ğ ş ç)</option>
-              <option value="new2oldlat">Yangi alifbo (ö ğ ş ç) → Eski lotin (o' g' sh ch)</option>
-              <option value="new2cyr">Yangi alifbo (ö ğ ş ç) → Kirill (ў ғ ш ч)</option>
-              <option value="cyr2oldlat">Kirill → Eski lotin</option>
-              <option value="oldlat2cyr">Eski lotin → Kirill</option>
-            </select>
-          </div>
-
-          <div class="alif-toolbar-actions">
-            <button type="button" id="alifBtnExceptions" class="alif-btn alif-btn-ghost" title="özgarmaydigan sözlar röyxati">
-              ⚙ Istisnolar (<span id="alifExcCount">0</span>)
-            </button>
-          </div>
-        </div>
-
-        <div id="alifDropzone" class="alif-dropzone" tabindex="0" role="button" aria-label="Word, PDF yoki TXT fayl yuklaş">
-          <input type="file" id="alifFileInput" accept=".txt,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden />
-          <div class="alif-dropzone-content">
-            <span class="alif-drop-icon">📄</span>
-            <div>
-              <strong>Hujjat yuklang (.docx, .pdf, .txt)</strong> yoki faylni şu yerga taşlang
-              <div class="alif-drop-hint">Barça fayllar faqat sizning brauzeringizda qayta işlanadi — serverga yuborilmaydi</div>
-            </div>
-            <button type="button" id="alifBtnUpload" class="alif-btn alif-btn-secondary">Fayl tanlaş</button>
-          </div>
-        </div>
-
-        <div id="alifStatusBanner" class="alif-status" hidden></div>
-
-        <div class="alif-panes">
-          <div class="alif-pane">
-            <div class="alif-pane-head">
-              <span class="alif-pane-title">Asl matn (Kirill yoki Eski lotin)</span>
-              <div class="alif-pane-tools">
-                <button type="button" id="alifBtnSample" class="alif-mini-btn">Namuna</button>
-                <button type="button" id="alifBtnPaste" class="alif-mini-btn">Qöyiş</button>
-                <button type="button" id="alifBtnClear" class="alif-mini-btn alif-mini-danger">Tozalaş</button>
-              </div>
-            </div>
-            <textarea
-              id="alifInput"
-              class="alif-textarea"
-              placeholder="Matnni şu yerga yozing yoki nusxalab qöying...&#10;Masalan: O'zbekiston Respublikasi — shahar va qishloqlar chiroyli."
-              spellcheck="false"
-            ></textarea>
-            <div class="alif-pane-foot">
-              <span id="alifInputStats">0 belgi • 0 söz</span>
-            </div>
-          </div>
-
-          <div class="alif-pane">
-            <div class="alif-pane-head">
-              <span class="alif-pane-title">Natija (Yangi alifbo: Ö, Ğ, Ş, Ç)</span>
-              <div class="alif-pane-tools">
-                <button type="button" id="alifBtnSwap" class="alif-mini-btn" title="Natijani çap oynaga ötkaziş">⇄ Almaştiriş</button>
-                <button type="button" id="alifBtnCopy" class="alif-mini-btn alif-mini-primary">Nusxa oliş</button>
-              </div>
-            </div>
-            <textarea
-              id="alifOutput"
-              class="alif-textarea alif-textarea-out"
-              placeholder="Ögirilgan matn şu yerda avtomatik paydo böladi..."
-              readonly
-            ></textarea>
-            <div class="alif-pane-foot alif-export-bar">
-              <span id="alifOutputStats">0 belgi • 0 özgariş</span>
-              <div class="alif-export-btns">
-                <button type="button" id="alifExportTxt" class="alif-mini-btn">.TXT</button>
-                <button type="button" id="alifExportDocx" class="alif-mini-btn">.DOCX (Word)</button>
-                <button type="button" id="alifExportPdf" class="alif-mini-btn">.PDF</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="alif-alphabet-strip">
-          <div class="alif-char-chip"><span>O‘ / o‘</span> → <strong>Ö / ö</strong></div>
-          <div class="alif-char-chip"><span>G‘ / g‘</span> → <strong>Ğ / ğ</strong></div>
-          <div class="alif-char-chip"><span>Sh / sh</span> → <strong>Ş / ş</strong></div>
-          <div class="alif-char-chip"><span>Ch / ch</span> → <strong>Ç / ç</strong></div>
         </div>
       </div>
     </section>
