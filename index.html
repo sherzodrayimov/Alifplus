@@ -24,27 +24,6 @@
       };
     })();
   </script>
-  <style id="alifDarkGreenBtns">
-  :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(button, .alif-btn, .alif-hero-btn-primary, .alif-hero-btn-secondary, .alif-trainer-btn, .alif-bm-copy, .alif-bm-drag, .alif-alpha-fbtn, .alif-mt-opt, .alif-doc-tab, .alif-doc-sbtn, .alif-doc-scbtn, .alif-nav-link) {
-    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease !important;
-  }
-  :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(button, .alif-btn, .alif-hero-btn-secondary, .alif-bm-copy, .alif-alpha-fbtn, .alif-mt-opt, .alif-doc-tab, .alif-doc-sbtn, .alif-doc-scbtn, .alif-nav-link):hover {
-    background-color: rgba(16, 185, 129, 0.22) !important;
-    border-color: #10b981 !important;
-    color: #34d399 !important;
-  }
-  :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(.alif-hero-btn-primary, .alif-trainer-btn, .alif-bm-drag, .alif-doc-tab.is-active, .alif-doc-scbtn.is-active, .alif-doc-print-btn):hover {
-    background-color: #10b981 !important;
-    border-color: #34d399 !important;
-    color: #022c22 !important;
-  }
-  :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(button, .alif-btn, .alif-hero-btn-primary, .alif-hero-btn-secondary, .alif-trainer-btn, .alif-bm-copy, .alif-bm-drag, .alif-alpha-fbtn, .alif-mt-opt, .alif-doc-tab, .alif-doc-sbtn, .alif-doc-scbtn):active {
-    background-color: #059669 !important;
-    border-color: #10b981 !important;
-    color: #ffffff !important;
-    transform: scale(0.97) !important;
-  }
-  </style>
 </head>
 <body>
   <header class="alif-topbar">
@@ -1078,5 +1057,126 @@
     sync();
   })();
   </script>
+  <style id="alifDarkGreenBtns">
+  html[data-theme="dark"] :is(
+    button,
+    [role="button"],
+    .alif-btn,
+    .alif-nav-link,
+    .alif-hero-btn-primary,
+    .alif-hero-btn-secondary,
+    .alif-trainer-btn,
+    .alif-bm-copy,
+    .alif-bm-drag,
+    .alif-alpha-fbtn,
+    .alif-mt-opt,
+    .alif-doc-tab,
+    .alif-doc-sbtn,
+    .alif-doc-scbtn,
+    .alif-doc-print-btn,
+    section a[href*=".dmg"],
+    section a[href*=".exe"]
+  ) {
+    transition: background-color 0.14s ease, border-color 0.14s ease, color 0.14s ease, box-shadow 0.14s ease, transform 0.08s ease !important;
+  }
+
+  /* Qora fonda kursor tugma ustidan yurganda (:hover) — yashil */
+  html[data-theme="dark"] :is(
+    button,
+    [role="button"],
+    .alif-btn,
+    .alif-nav-link,
+    .alif-hero-btn-primary,
+    .alif-hero-btn-secondary,
+    .alif-trainer-btn,
+    .alif-bm-copy,
+    .alif-bm-drag,
+    .alif-alpha-fbtn,
+    .alif-mt-opt,
+    .alif-doc-tab,
+    .alif-doc-sbtn,
+    .alif-doc-scbtn,
+    .alif-doc-print-btn,
+    section a[href*=".dmg"],
+    section a[href*=".exe"]
+  ):hover {
+    background: #10b981 !important;
+    background-color: #10b981 !important;
+    border-color: #34d399 !important;
+    color: #022c22 !important;
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.32) !important;
+  }
+
+  html[data-theme="dark"] :is(
+    button,
+    [role="button"],
+    .alif-btn,
+    .alif-nav-link,
+    .alif-hero-btn-primary,
+    .alif-hero-btn-secondary,
+    .alif-trainer-btn,
+    .alif-bm-copy,
+    .alif-bm-drag,
+    .alif-alpha-fbtn,
+    .alif-mt-opt,
+    .alif-doc-tab,
+    .alif-doc-sbtn,
+    .alif-doc-scbtn,
+    .alif-doc-print-btn,
+    section a[href*=".dmg"],
+    section a[href*=".exe"]
+  ):hover * {
+    color: #022c22 !important;
+  }
+
+  /* Qora fonda sichqoncha bilan bosganda (:active) — to‘qroq yashil */
+  html[data-theme="dark"] :is(
+    button,
+    [role="button"],
+    .alif-btn,
+    .alif-nav-link,
+    .alif-hero-btn-primary,
+    .alif-hero-btn-secondary,
+    .alif-trainer-btn,
+    .alif-bm-copy,
+    .alif-bm-drag,
+    .alif-alpha-fbtn,
+    .alif-mt-opt,
+    .alif-doc-tab,
+    .alif-doc-sbtn,
+    .alif-doc-scbtn,
+    .alif-doc-print-btn,
+    section a[href*=".dmg"],
+    section a[href*=".exe"]
+  ):active {
+    background: #059669 !important;
+    background-color: #059669 !important;
+    border-color: #10b981 !important;
+    color: #ffffff !important;
+    transform: scale(0.97) !important;
+  }
+
+  html[data-theme="dark"] :is(
+    button,
+    [role="button"],
+    .alif-btn,
+    .alif-nav-link,
+    .alif-hero-btn-primary,
+    .alif-hero-btn-secondary,
+    .alif-trainer-btn,
+    .alif-bm-copy,
+    .alif-bm-drag,
+    .alif-alpha-fbtn,
+    .alif-mt-opt,
+    .alif-doc-tab,
+    .alif-doc-sbtn,
+    .alif-doc-scbtn,
+    .alif-doc-print-btn,
+    section a[href*=".dmg"],
+    section a[href*=".exe"]
+  ):active * {
+    color: #ffffff !important;
+  }
+  </style>
 </body>
 </html>
