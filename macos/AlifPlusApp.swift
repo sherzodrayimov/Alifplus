@@ -213,7 +213,8 @@ final class AlifSmartDict {
             if inUz(st1, u) { return true }
             if st1.count >= 4 { for s2 in sf where st1.count > s2.count + 1 && st1.hasSuffix(s2) { if inUz(String(st1.dropLast(s2.count)), u) { return true } } }
         }
-        return false
+        let eng = w.contains("w") || w.contains("th") || w.contains("wh") || w.contains("ck") || w.contains("qu") || w.contains("tch") || w.contains("dge")
+        return !eng
     }
 }
 

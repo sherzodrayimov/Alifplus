@@ -68,7 +68,8 @@ public:
             if (inU(st1)) return true;
             if (st1.size() >= 4) for (const auto& s2 : sufs_) if (st1.size() > s2.size() + 1 && st1.compare(st1.size() - s2.size(), s2.size(), s2) == 0 && inU(st1.substr(0, st1.size() - s2.size()))) return true;
         }
-        return false;
+        bool eng = w.find('w') != std::string::npos || w.find("th") != std::string::npos || w.find("wh") != std::string::npos || w.find("ck") != std::string::npos || w.find("qu") != std::string::npos;
+        return !eng;
     }
 };
 static SmartDict g_dict;
