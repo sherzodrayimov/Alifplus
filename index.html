@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Alif+ — Matn va hujjatni yangi alifboga ögiriş</title>
   <meta name="description" content="Kirill yoki lotin yozuvidagi Word, PDF va oddiy matn — brauzerning özida, bepul va çeklovsiz." />
-  <link rel="stylesheet" href="web/converter.css?v=16" />
+  <link rel="stylesheet" href="web/converter.css?v=17" />
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
@@ -38,6 +38,7 @@
         <a href="web/macos-install.html" class="alif-nav-link">macOS qöllanma</a>
               <a href="#alifTrainer" class="alif-nav-link">Tez yoziş</a>
         <a href="#alifAlphabet" class="alif-nav-link">Alifbo tartibi</a>
+        <a href="#alifBookmarklet" class="alif-nav-link">Xatcho‘p</a>
         <button type="button" id="alifThemeToggle" class="alif-theme-btn" onclick="toggleAlifTheme()" aria-label="Kundalik yoki tungi rejim" title="Kundalik / Tungi rejim">
           <svg class="alif-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
           <svg class="alif-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
@@ -386,6 +387,39 @@
         if (btn) btn.classList.add('is-active');
         document.querySelectorAll('#alifAlphabet .alif-alpha-row[data-changed]').forEach(function(r) {
           r.hidden = (mode === 'changed' && r.getAttribute('data-changed') !== '1');
+        });
+      }
+    </script>
+  </section>
+    <section id="alifBookmarklet" class="alif-bm-sec">
+    <div class="alif-container">
+      <div class="alif-bm-card">
+        <div class="alif-bm-grid">
+          <div>
+            <span class="alif-trainer-badge">Brauzer xatcho‘pi · 1 klikda o‘girish</span>
+            <h2 class="alif-bm-title">Istalgan saytni o‘sha sahifaning o‘zida yangi alifboga o‘giring</h2>
+            <p class="alif-bm-sub">Kun.uz, Daryo, Wikipedia yoki istalgan veb-sahifadagi maqolalarni nusxalab o‘tirmasdan bir bosishda <strong>ö, ğ, ş, ç</strong> harflarida o‘qing.</p>
+            <div class="alif-bm-steps">
+              <div class="alif-bm-step"><b>1</b><span>Brauzerning xatcho‘plar panelini oching (<kbd>Cmd + Shift + B</kbd> yoki <kbd>Ctrl + Shift + B</kbd>).</span></div>
+              <div class="alif-bm-step"><b>2</b><span>O‘ng tarafdagi <strong>«⚡ Alif+ ga ögiriş»</strong> tugmasini sichqoncha bilan panelga sudrab qo‘ying.</span></div>
+              <div class="alif-bm-step"><b>3</b><span>Istalgan saytda xatcho‘pni bosing — sahifa o‘giriladi (yana bossangiz asl holatiga qaytadi).</span></div>
+            </div>
+          </div>
+          <div class="alif-bm-box">
+            <a id="alifBmLink" class="alif-bm-drag" href="javascript:(function(){var w=window,d=document,st=w.__alifBm;function toast(m){var e=d.getElementById('__alifToast');if(!e){e=d.createElement('div');e.id='__alifToast';e.style.cssText='position:fixed;bottom:22px;right:22px;z-index:2147483647;background:#0f172a;color:#34d399;border:1px solid #34d399;padding:11px 16px;border-radius:12px;font:600 14px/1.4 system-ui,-apple-system,sans-serif;box-shadow:0 12px 30px rgba(0,0,0,.35);transition:opacity .25s';d.body.appendChild(e);}e.textContent=m;e.style.opacity='1';clearTimeout(e._t);e._t=setTimeout(function(){e.style.opacity='0';},2600);}if(st&&st.active){st.map.forEach(function(v,n){if(n.parentNode)n.nodeValue=v;});st.active=false;toast('↺ Asl holatiga qaytarildi');return;}var cyr={'Ё':'Yo','ё':'yo','Ю':'Yu','ю':'yu','Я':'Ya','я':'ya','Ц':'Ts','ц':'ts','Щ':'Ş','щ':'ş','Ш':'Ş','ш':'ş','Ч':'Ç','ч':'ç','Ў':'Ö','ў':'ö','Қ':'Q','қ':'q','Ғ':'Ğ','ғ':'ğ','Ҳ':'H','ҳ':'h','А':'A','а':'a','Б':'B','б':'b','В':'V','в':'v','Г':'G','г':'g','Д':'D','д':'d','Е':'E','е':'e','Ж':'J','ж':'j','З':'Z','з':'z','И':'I','и':'i','Й':'Y','й':'y','К':'K','к':'k','Л':'L','л':'l','М':'M','м':'m','Н':'N','н':'n','О':'O','о':'o','П':'P','п':'p','Р':'R','р':'r','С':'S','с':'s','Т':'T','т':'t','У':'U','у':'u','Ф':'F','ф':'f','Х':'X','х':'x','Ъ':'’','ъ':'’','Ь':'','ь':'','Э':'E','э':'e'};function conv(s){s=s.replace(/([Oo])['ʻ’‘ʼ`]/g,function(_,c){return c==='O'?'Ö':'ö';}).replace(/([Gg])['ʻ’‘ʼ`]/g,function(_,c){return c==='G'?'Ğ':'ğ';}).replace(/S[Hh]/g,'Ş').replace(/sh/g,'ş').replace(/C[Hh]/g,'Ç').replace(/ch/g,'ç');if(/[А-Яа-яЎўҚқҒғҲҳЁё]/.test(s)){s=s.replace(/(^|[\s(\x22'«])([Ее])/g,function(_,p,e){return p+(e==='Е'?'Ye':'ye');}).replace(/[А-Яа-яЎўҚқҒғҲҳЁёЪъЬь]/g,function(ch){return cyr[ch]!==undefined?cyr[ch]:ch;});}return s;}var map=new Map(),wk=d.createTreeWalker(d.body,NodeFilter.SHOW_TEXT,null,false),n;while((n=wk.nextNode())){var p=n.parentElement;if(!p||/^(SCRIPT|STYLE|NOSCRIPT|TEXTAREA|INPUT|CODE|PRE)$/.test(p.tagName)||p.isContentEditable)continue;var o=n.nodeValue;if(!o||!o.trim())continue;var c=conv(o);if(c!==o){map.set(n,o);n.nodeValue=c;}}w.__alifBm={active:true,map:map};toast('✓ Alif+ yangi alifbosiga ögirildi ('+map.size+' ta matn)');})();" onclick="event.preventDefault();alert('Bu tugmani bosmang — sichqoncha bilan yuqoridagi xatcho‘plar (Bookmarks) paneliga sudrab qo‘ying!');">⚡ Alif+ ga ögiriş</a>
+            <span class="alif-bm-hint">↑ Tugmani ushlab yuqori panelga sudrang</span>
+            <button type="button" class="alif-bm-copy" onclick="copyAlifBm(this)">📋 Kodni nusxalash</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function copyAlifBm(btn) {
+        var code = document.getElementById('alifBmLink').getAttribute('href');
+        navigator.clipboard.writeText(code).then(function() {
+          var old = btn.textContent;
+          btn.textContent = '✓ Nusxalandi!';
+          setTimeout(function() { btn.textContent = old; }, 2000);
         });
       }
     </script>

@@ -1458,3 +1458,23 @@ html[data-theme="dark"] .alif-alpha-tag { background: rgba(16, 185, 129, 0.2) !i
 html[data-theme="dark"] .alif-alpha-fbtn { background: transparent !important; border: none !important; }
 html[data-theme="dark"] .alif-alpha-fbtn.is-active { background: #1e293b !important; color: #34d399 !important; }
 html[data-theme="dark"] .alif-law-link { color: #34d399 !important; }
+
+/* ALIF-BOOKMARKLET-START */
+.alif-bm-sec { padding: 18px 0 42px; }
+.alif-bm-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 24px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05); }
+.alif-bm-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 22px; align-items: center; }
+@media (max-width: 780px) { .alif-bm-grid { grid-template-columns: 1fr; } }
+.alif-bm-title { margin: 6px 0 8px; font-size: 22px; font-weight: 800; color: var(--text); }
+.alif-bm-sub { margin: 0 0 16px; font-size: 14px; color: var(--muted); line-height: 1.55; }
+.alif-bm-steps { display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; color: var(--text); }
+.alif-bm-step { display: flex; align-items: center; gap: 10px; }
+.alif-bm-step b { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #ecfdf5; color: #059669; font-size: 12px; flex-shrink: 0; }
+.alif-bm-box { padding: 20px; border-radius: 16px; background: var(--surface-2); border: 1.5px dashed #10b981; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.alif-bm-drag { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 12px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff !important; font-size: 15px; font-weight: 800; text-decoration: none; cursor: grab; box-shadow: 0 10px 24px rgba(16, 185, 129, 0.3); transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.alif-bm-drag:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(16, 185, 129, 0.4); }
+.alif-bm-drag:active { cursor: grabbing; }
+.alif-bm-hint { font-size: 12px; color: var(--muted); }
+.alif-bm-copy { padding: 7px 14px; border-radius: 9px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 12.5px; font-weight: 700; cursor: pointer; }
+html[data-theme="dark"] .alif-bm-card { background: #111827 !important; border-color: #283548 !important; }
+html[data-theme="dark"] .alif-bm-box { background: #0f172a !important; border-color: rgba(52, 211, 153, 0.45) !important; }
+html[data-theme="dark"] .alif-bm-step b { background: rgba(16, 185, 129, 0.18) !important; color: #34d399 !important; }
