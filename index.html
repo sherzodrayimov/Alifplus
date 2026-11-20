@@ -988,5 +988,46 @@
     return true;
   };
   </script>
+  <script id="alifSmartScroll">
+  (function(){
+    function findBlock(keywords){
+      var nodes = document.querySelectorAll('section, div[id], main > div');
+      for(var i = 0; i < nodes.length; i++){
+        var el = nodes[i];
+        if(el.closest('footer') || el.closest('nav')) continue;
+        var txt = (el.textContent || '').toLowerCase();
+        for(var k = 0; k < keywords.length; k++){
+          if(txt.indexOf(keywords[k]) !== -1 && el.offsetHeight > 120) return el;
+        }
+      }
+      return null;
+    }
+    function scrollTarget(el){
+      if(!el) return false;
+      var y = el.getBoundingClientRect().top + window.pageYOffset - 84;
+      window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+      return true;
+    }
+    document.addEventListener('click', function(e){
+      var a = e.target.closest('a');
+      if(!a) return;
+      var label = (a.textContent || '').trim().toLowerCase();
+      var target = null;
+      if(label === 'hujjat ögiriş' || label === 'hujjat o‘girish' || label === 'konverter'){
+        target = findBlock(['hujjat yuklang', 'asl matn (kirill']);
+      } else if(label === 'yuklab oliş' || label === 'yuklab olish' || label === 'macos va windows dasturi'){
+        target = findBlock(['istalgan dasturda real vaqtda yozing', 'windows 64-bit uchun']);
+      } else if(label === 'yangi alifbo haqida' || label === 'alifbo tartibi'){
+        target = document.getElementById('alifAlphabet');
+      } else if(label === 'harflarni yoziş usullari' || label === 'harflarni yozish usullari'){
+        target = document.getElementById('alifHero') || document.querySelector('section');
+      }
+      if(target){
+        e.preventDefault();
+        scrollTarget(target);
+      }
+    });
+  })();
+  </script>
 </body>
 </html>
