@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Alif+ — Matn va hujjatni yangi alifboga ögiriş</title>
   <meta name="description" content="Kirill yoki lotin yozuvidagi Word, PDF va oddiy matn — brauzerning özida, bepul va çeklovsiz." />
-  <link rel="stylesheet" href="web/converter.css?v=13" />
+  <link rel="stylesheet" href="web/converter.css?v=15" />
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
@@ -305,59 +305,22 @@
         </div>
       </div>
     </section>
-  
   <section id="alifTrainer" class="alif-trainer-sec">
     <div class="alif-container">
       <div class="alif-trainer-card">
-        <div class="alif-trainer-head">
-          <div>
-            <span class="alif-trainer-badge">Tez yoziş trenajyori · WPM</span>
-            <h2 class="alif-trainer-title">Yangi alifboda yoziş tezligingizni sinang</h2>
-            <p class="alif-trainer-sub">
-              Oddiy klaviaturada <code>o'</code>, <code>g'</code>, <code>sh</code>, <code>ch</code> deb yozavering — trenajyor ularni özi <strong>ö, ğ, ş, ç</strong> ga ögirib, tezligingizni hisoblaydi.
-            </p>
-          </div>
-          <div class="alif-trainer-stats">
-            <div class="alif-stat-pill">
-              <small>Tezlik</small>
-              <strong id="trWpm">0 WPM</strong>
-            </div>
-            <div class="alif-stat-pill">
-              <small>Aniqlik</small>
-              <strong id="trAcc">100%</strong>
-            </div>
-            <div class="alif-stat-pill">
-              <small>Vaqt</small>
-              <strong id="trTime">0s</strong>
-            </div>
-            <div class="alif-stat-pill alif-stat-best">
-              <small>Rekord</small>
-              <strong id="trBest">—</strong>
-            </div>
+        <div class="alif-trainer-top">
+          <div><span class="alif-trainer-badge">Tez yoziş trenajyori · WPM</span><h2 class="alif-trainer-title">Yangi alifboda yoziş tezligingizni sinang</h2></div>
+          <div class="alif-mt-toolbar">
+            <div class="alif-mt-group"><button type="button" class="alif-mt-opt is-active" data-mode="time" onclick="setAlifTrMode('time')">⏱ Vaqt</button><button type="button" class="alif-mt-opt" data-mode="words" onclick="setAlifTrMode('words')">📝 Sözlar</button></div>
+            <span class="alif-mt-sep"></span>
+            <div class="alif-mt-group" id="alifTrTimeOpts"><button type="button" class="alif-mt-opt is-active" data-val="30" onclick="setAlifTrVal(30)">30s</button><button type="button" class="alif-mt-opt" data-val="60" onclick="setAlifTrVal(60)">1 min</button></div>
+            <div class="alif-mt-group" id="alifTrWordOpts" hidden><button type="button" class="alif-mt-opt is-active" data-val="30" onclick="setAlifTrVal(30)">30</button><button type="button" class="alif-mt-opt" data-val="50" onclick="setAlifTrVal(50)">50</button><button type="button" class="alif-mt-opt" data-val="100" onclick="setAlifTrVal(100)">100</button></div>
           </div>
         </div>
-
-        <div id="trPromptBox" class="alif-trainer-prompt" onclick="document.getElementById('trInput').focus()" aria-label="Namuna matn"></div>
-
-        <div class="alif-trainer-input-row">
-          <input
-            type="text"
-            id="trInput"
-            class="alif-trainer-input"
-            placeholder="Yozişni boşlaş uçun şu yerga yozing..."
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="off"
-            spellcheck="false"
-          />
-          <button type="button" class="alif-trainer-btn" onclick="resetAlifTrainer(false)" title="Qaytadan boşlaş">↻ Qayta</button>
-          <button type="button" class="alif-trainer-btn alif-trainer-btn-next" onclick="resetAlifTrainer(true)">Keyingi matn →</button>
-        </div>
-
-        <div id="trResultBanner" class="alif-trainer-result" hidden>
-          <div id="trResultText"></div>
-          <button type="button" class="alif-hero-btn-primary" onclick="resetAlifTrainer(true)">Yana bir matn sinab köriş →</button>
-        </div>
+        <div class="alif-mt-status-bar"><div class="alif-mt-counter" id="trCounter">30s</div><div class="alif-mt-live-stats"><span>Tezlik: <strong id="trWpm">0 WPM</strong></span><span>Aniqlik: <strong id="trAcc">100%</strong></span><span>Rekord: <strong id="trBest" class="is-best">—</strong></span></div></div>
+        <div class="alif-mt-stage" id="trStage" onclick="focusAlifTrainer()"><input type="text" id="trHiddenInput" class="alif-mt-hidden-input" autocomplete="off" spellcheck="false" /><div class="alif-mt-viewport"><div class="alif-mt-words" id="trWords"></div></div><div class="alif-mt-focus-hint">Yozişni boşlaş uçun bosing (o', g', sh, ch → ö, ğ, ş, ç)</div></div>
+        <div class="alif-mt-actions"><button type="button" class="alif-trainer-btn" onclick="resetAlifTrainer()">↻ Yangilash (Tab)</button></div>
+        <div id="trResultBanner" class="alif-trainer-result" hidden><div id="trResultText"></div><button type="button" class="alif-hero-btn-primary" onclick="resetAlifTrainer()">Yana bir sinov →</button></div>
       </div>
     </div>
   </section>
@@ -821,165 +784,23 @@
       }
     })();
   </script>
-    <script id="alifTrainerScript">
-    (function() {
-      var passages = [
-        "Özbekiston — gözal şaharlar va çiroyli toğlar yurti.",
-        "Yangi alifboda öqiş hamda töğri yoziş ança qulay va oson.",
-        "Şahrisabz va Farğona vodiysining tabiati har doim maftunkor.",
-        "Çiroyli xat va savodli yoziş har bir öquvçi uçun muhim fazilatdir.",
-        "Ötmiş tariximizni çuqur örganiş kelajakka işonç bilan qadam qöyişga yordam beradi."
-      ];
-
-      var idx = 0;
-      var startedAt = null;
-      var timerId = null;
-      var finished = false;
-      var bestWpm = parseInt(localStorage.getItem("alif_best_wpm") || "0", 10) || 0;
-
-      function updateBestUi() {
-        var el = document.getElementById("trBest");
-        if (el) el.textContent = bestWpm > 0 ? bestWpm + " WPM" : "—";
-      }
-
-      function autoConvertTyping(val) {
-        return val
-          .replace(/([Oo])['ʻ’‘ʼ`]/g, function(_, c) { return c === "O" ? "Ö" : "ö"; })
-          .replace(/([Gg])['ʻ’‘ʼ`]/g, function(_, c) { return c === "G" ? "Ğ" : "ğ"; })
-          .replace(/([Ss])[Hh]/g, function(_, c) { return c === "S" ? "Ş" : "ş"; })
-          .replace(/([Cc])[Hh]/g, function(_, c) { return c === "C" ? "Ç" : "ç"; });
-      }
-
-      function escapeHtml(ch) {
-        if (ch === "&") return "&amp;";
-        if (ch === "<") return "&lt;";
-        if (ch === ">") return "&gt;";
-        return ch;
-      }
-
-      function renderPrompt(target, typed) {
-        var box = document.getElementById("trPromptBox");
-        if (!box) return;
-        var out = [];
-        for (var i = 0; i < target.length; i++) {
-          var ch = target[i];
-          var cls = "tr-ch";
-          if (i < typed.length) {
-            cls += (typed[i] === ch) ? " is-ok" : " is-err";
-          } else if (i === typed.length && !finished) {
-            cls += " is-cur";
-          }
-          if ("ÖöĞğŞşÇç".indexOf(ch) !== -1) {
-            cls += " is-special";
-          }
-          out.push('<span class="' + cls + '">' + escapeHtml(ch) + '</span>');
-        }
-        box.innerHTML = out.join("");
-      }
-
-      function computeMetrics(target, typed) {
-        var elapsedSec = startedAt ? Math.max((Date.now() - startedAt) / 1000, 0.5) : 0;
-        var correct = 0;
-        var len = Math.min(target.length, typed.length);
-        for (var i = 0; i < len; i++) {
-          if (typed[i] === target[i]) correct++;
-        }
-        var acc = typed.length > 0 ? Math.round((correct / typed.length) * 100) : 100;
-        var wpm = elapsedSec > 0 ? Math.round((correct / 5) / (elapsedSec / 60)) : 0;
-
-        var elWpm = document.getElementById("trWpm");
-        var elAcc = document.getElementById("trAcc");
-        var elTime = document.getElementById("trTime");
-        if (elWpm) elWpm.textContent = wpm + " WPM";
-        if (elAcc) elAcc.textContent = acc + "%";
-        if (elTime) elTime.textContent = Math.floor(elapsedSec) + "s";
-        return { wpm: wpm, acc: acc, elapsedSec: elapsedSec };
-      }
-
-      window.resetAlifTrainer = function(advance) {
-        if (advance) idx = (idx + 1) % passages.length;
-        startedAt = null;
-        finished = false;
-        clearInterval(timerId);
-        timerId = null;
-
-        var inp = document.getElementById("trInput");
-        var banner = document.getElementById("trResultBanner");
-        if (inp) {
-          inp.value = "";
-          inp.disabled = false;
-          inp.focus();
-        }
-        if (banner) banner.hidden = true;
-
-        var elWpm = document.getElementById("trWpm");
-        var elAcc = document.getElementById("trAcc");
-        var elTime = document.getElementById("trTime");
-        if (elWpm) elWpm.textContent = "0 WPM";
-        if (elAcc) elAcc.textContent = "100%";
-        if (elTime) elTime.textContent = "0s";
-
-        renderPrompt(passages[idx], "");
-      };
-
-      function initTrainer() {
-        updateBestUi();
-        renderPrompt(passages[idx], "");
-        var inp = document.getElementById("trInput");
-        if (!inp) return;
-
-        inp.addEventListener("input", function() {
-          if (finished) return;
-          var pos = inp.selectionStart;
-          var raw = inp.value;
-          var converted = autoConvertTyping(raw);
-          if (converted !== raw) {
-            var diff = raw.length - converted.length;
-            inp.value = converted;
-            inp.setSelectionRange(Math.max(0, pos - diff), Math.max(0, pos - diff));
-          }
-
-          var typed = inp.value;
-          var target = passages[idx];
-
-          if (!startedAt && typed.length > 0) {
-            startedAt = Date.now();
-            timerId = setInterval(function() {
-              if (!finished) computeMetrics(passages[idx], inp.value);
-            }, 300);
-          }
-
-          renderPrompt(target, typed);
-          var stats = computeMetrics(target, typed);
-
-          if (typed.length >= target.length) {
-            finished = true;
-            clearInterval(timerId);
-            inp.disabled = true;
-
-            if (stats.acc >= 80 && stats.wpm > bestWpm) {
-              bestWpm = stats.wpm;
-              localStorage.setItem("alif_best_wpm", String(bestWpm));
-              updateBestUi();
-            }
-
-            var banner = document.getElementById("trResultBanner");
-            var resTxt = document.getElementById("trResultText");
-            if (banner && resTxt) {
-              resTxt.innerHTML =
-                "<strong>Ajoyib!</strong> Natijangiz: <b>" + stats.wpm + " WPM</b> · Aniqlik: <b>" + stats.acc + "%</b> (" + stats.elapsedSec.toFixed(1) + " soniya)";
-              banner.hidden = false;
-            }
-          }
-        });
-      }
-
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initTrainer);
-      } else {
-        initTrainer();
-      }
-    })();
+  <script id="alifTrainerScript">
+  (function(){
+    var WB=["özbekiston","şahar","toğ","çiroyli","örganuv","birikkanlik","romantik","gulduros","samar","şumoyoq","aytgançalik","töğri","yoziş","öqiş","ğalaba","şirin","çoğ","vaqt","kitob","maktab","talaba","bilim","ilhom","kelajak","işonç","mehnat","tabiat","bahor","yomğir","quyosh","şabada","daryo","vodiysi","farğona","şahrisabz","samarqand","buxoro","navoiy","xorazm","qarşi","termiz","namangan","andijon","jizzax","guliston","nukus","köprik","yöl","manzil","safar","döstlik","hurmat","fazilat","muhim","qulay","oson","tezlik","aniqlik","natija","harakat","maqsad","orzu","umid","quvonç","baxt","tinçlik","obod","yurt","xalq","tarix","madaniyat","sanat","musiqa","asar","hikoya","maqola","gazeta","jurnal","sahifa","matn","hujjat","alifbo","harf","tovuş","söz","gap","fikr","savol","javob","yeçim","usul","tajriba","amaliyot","dastur","kompyuter","klaviatura","ekran","tugma","oyna","tizim","tarmoq","xavfsiz","çorçila","mahjublik","hurkit","vaysiramoq","elektrpayvandlaş"];
+    var mode="time",targetVal=30,words=[],typedWords=[],curIdx=0,startedAt=null,timerId=null,finished=false,bestWpm=parseInt(localStorage.getItem("alif_best_wpm")||"0",10)||0;
+    function conv(v){return v.replace(/([Oo])['ʻ’‘ʼ`]/g,function(_,c){return c==="O"?"Ö":"ö"}).replace(/([Gg])['ʻ’‘ʼ`]/g,function(_,c){return c==="G"?"Ğ":"ğ"}).replace(/([Ss])[Hh]/g,function(_,c){return c==="S"?"Ş":"ş"}).replace(/([Cc])[Hh]/g,function(_,c){return c==="C"?"Ç":"ç"})}
+    function pick(n){var o=[];for(var i=0;i<n;i++)o.push(WB[Math.floor(Math.random()*WB.length)]);return o}
+    function updBest(){var e=document.getElementById("trBest");if(e)e.textContent=bestWpm>0?bestWpm+" WPM":"—"}
+    function updCnt(){var e=document.getElementById("trCounter");if(!e)return;if(mode==="time"){var el=startedAt?(Date.now()-startedAt)/1000:0;e.textContent=Math.max(0,Math.ceil(targetVal-el))+"s"}else{e.textContent=Math.min(curIdx,targetVal)+" / "+targetVal}}
+    function stats(){var sec=startedAt?Math.max((Date.now()-startedAt)/1000,0.4):0,ok=0,tot=0;for(var i=0;i<=curIdx&&i<words.length;i++){var t=words[i],y=typedWords[i]||"";tot+=y.length+(i<curIdx?1:0);for(var c=0;c<Math.min(t.length,y.length);c++)if(y[c]===t[c])ok++;if(i<curIdx&&y===t)ok++}var acc=tot>0?Math.round(ok/tot*100):100,wpm=sec>0?Math.round((ok/5)/(sec/60)):0;document.getElementById("trWpm").textContent=wpm+" WPM";document.getElementById("trAcc").textContent=acc+"%";return{wpm:wpm,acc:acc,sec:sec}}
+    function render(){var b=document.getElementById("trWords");if(!b)return;var h=[];for(var i=0;i<words.length;i++){var t=words[i],y=typedWords[i]||"",cur=i===curIdx&&!finished,err=i<curIdx&&y!==t,ls=[];for(var j=0;j<Math.max(t.length,y.length);j++){if(cur&&j===y.length)ls.push("<span class="mt-caret"></span>");if(j<t.length)ls.push("<span class="mt-ch"+(j<y.length?(y[j]===t[j]?" is-ok":" is-err"):"")+"">"+t[j]+"</span>");else ls.push("<span class="mt-ch is-extra">"+y[j]+"</span>")}if(cur&&y.length>=t.length)ls.push("<span class="mt-caret"></span>");h.push("<span class="mt-word"+(cur?" is-active":"")+(err?" is-word-err":"")+"">"+ls.join("")+"</span>")}b.innerHTML=h.join(" ");var a=b.querySelector(".mt-word.is-active");if(a)b.style.transform="translateY(-"+Math.max(0,a.offsetTop-(a.offsetHeight||38))+"px)"}
+    function finish(){if(finished)return;finished=true;clearInterval(timerId);var inp=document.getElementById("trHiddenInput");if(inp)inp.disabled=true;updCnt();render();var s=stats();if(s.acc>=75&&s.wpm>bestWpm){bestWpm=s.wpm;localStorage.setItem("alif_best_wpm",String(bestWpm));updBest()}document.getElementById("trResultText").innerHTML="<strong>Natija:</strong> <b>"+s.wpm+" WPM</b> · Aniqlik: <b>"+s.acc+"%</b> ("+s.sec.toFixed(1)+"s)";document.getElementById("trResultBanner").hidden=false}
+    window.focusAlifTrainer=function(){var i=document.getElementById("trHiddenInput");if(i&&!i.disabled)i.focus()};
+    window.setAlifTrMode=function(m){mode=m;document.querySelectorAll(".alif-mt-opt[data-mode]").forEach(function(b){b.classList.toggle("is-active",b.dataset.mode===m)});document.getElementById("alifTrTimeOpts").hidden=m!=="time";document.getElementById("alifTrWordOpts").hidden=m!=="words";targetVal=30;document.querySelectorAll(".alif-mt-opt[data-val]").forEach(function(b){b.classList.toggle("is-active",b.dataset.val==="30")});resetAlifTrainer()};
+    window.setAlifTrVal=function(v){targetVal=v;document.getElementById(mode==="time"?"alifTrTimeOpts":"alifTrWordOpts").querySelectorAll(".alif-mt-opt").forEach(function(b){b.classList.toggle("is-active",parseInt(b.dataset.val,10)===v)});resetAlifTrainer()};
+    window.resetAlifTrainer=function(){clearInterval(timerId);startedAt=null;finished=false;curIdx=0;words=pick(mode==="words"?targetVal:65);typedWords=[""];var b=document.getElementById("trWords"),inp=document.getElementById("trHiddenInput");if(b)b.style.transform="translateY(0)";document.getElementById("trResultBanner").hidden=true;if(inp){inp.disabled=false;inp.value=""}document.getElementById("trWpm").textContent="0 WPM";document.getElementById("trAcc").textContent="100%";updBest();updCnt();render();if(inp)inp.focus()};
+    document.addEventListener("DOMContentLoaded",function(){var inp=document.getElementById("trHiddenInput"),st=document.getElementById("trStage");if(!inp)return;inp.addEventListener("focus",function(){st.classList.add("is-focused")});inp.addEventListener("blur",function(){st.classList.remove("is-focused")});inp.addEventListener("keydown",function(e){if(e.key==="Tab"){e.preventDefault();resetAlifTrainer()}if(!finished&&e.key==="Backspace"&&inp.value===""&&curIdx>0&&typedWords[curIdx-1]!==words[curIdx-1]){e.preventDefault();curIdx--;inp.value=typedWords[curIdx];render()}});inp.addEventListener("input",function(){if(finished)return;if(!startedAt){startedAt=Date.now();timerId=setInterval(function(){updCnt();stats();if(mode==="time"&&(Date.now()-startedAt)/1000>=targetVal)finish()},200)}var r=inp.value;if(r.endsWith(" ")){var w=conv(r.trim());if(!w){inp.value="";return}typedWords[curIdx]=w;curIdx++;inp.value="";if(mode==="words"&&curIdx>=targetVal){finish();return}if(mode==="time"&&words.length-curIdx<35)words=words.concat(pick(40));typedWords[curIdx]="";updCnt();stats();render();return}inp.value=conv(r);typedWords[curIdx]=inp.value;if(mode==="words"&&curIdx===targetVal-1&&typedWords[curIdx]===words[curIdx]){curIdx++;finish();return}stats();render()});resetAlifTrainer()});
+  })();
   </script>
   <script src="web/converter.js"></script>
     <script src="web/vendor/jszip.min.js"></script>
