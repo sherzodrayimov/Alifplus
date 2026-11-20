@@ -1703,3 +1703,111 @@ html[data-theme="dark"] section a[href*=".dmg"]:hover {
   background: #ffffff !important;
   transform: translateY(-2px);
 }
+
+/* ALIF-BTN-INTERACTIVE-STATES */
+button,
+.alif-btn,
+.alif-hero-btn-primary,
+.alif-hero-btn-secondary,
+.alif-trainer-btn,
+.alif-bm-drag,
+.alif-bm-copy,
+.alif-alpha-fbtn,
+.alif-mt-opt,
+.alif-doc-tab,
+.alif-doc-sbtn,
+.alif-doc-scbtn,
+.alif-nav-link {
+  transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease, transform 0.1s ease !important;
+}
+
+/* Yashil asosiy tugmalar (Konverter, Nusxa olish, Boshlash, Bookmarklet) */
+.alif-hero-btn-primary:hover,
+.alif-trainer-btn:hover,
+.alif-bm-drag:hover,
+.alif-btn-primary:hover,
+button[class*="primary"]:hover {
+  background: #059669 !important;
+  border-color: #059669 !important;
+  color: #ffffff !important;
+}
+.alif-hero-btn-primary:active,
+.alif-trainer-btn:active,
+.alif-bm-drag:active,
+.alif-btn-primary:active,
+button[class*="primary"]:active {
+  background: #047857 !important;
+  border-color: #047857 !important;
+  color: #ffffff !important;
+  transform: scale(0.97) !important;
+}
+
+/* Kunduzgi rejim: oddiy va ikkinchi darajali tugmalar */
+html:not([data-theme="dark"]) button:not([class*="primary"]):not(.is-active):hover,
+html:not([data-theme="dark"]) .alif-hero-btn-secondary:hover,
+html:not([data-theme="dark"]) .alif-bm-copy:hover,
+html:not([data-theme="dark"]) .alif-doc-sbtn:hover,
+html:not([data-theme="dark"]) .alif-doc-tab:not(.is-active):hover {
+  background-color: #e2e8f0 !important;
+  border-color: #94a3b8 !important;
+  color: #0f172a !important;
+}
+html:not([data-theme="dark"]) button:not([class*="primary"]):not(.is-active):active,
+html:not([data-theme="dark"]) .alif-hero-btn-secondary:active,
+html:not([data-theme="dark"]) .alif-bm-copy:active,
+html:not([data-theme="dark"]) .alif-doc-sbtn:active,
+html:not([data-theme="dark"]) .alif-doc-tab:not(.is-active):active {
+  background-color: #cbd5e1 !important;
+  border-color: #64748b !important;
+  color: #020617 !important;
+  transform: scale(0.97) !important;
+}
+
+/* Tungi rejim (Dark mode): oddiy va ikkinchi darajali tugmalar */
+html[data-theme="dark"] button:not([class*="primary"]):not(.is-active):not(.alif-doc-print-btn):hover,
+html[data-theme="dark"] .alif-hero-btn-secondary:hover,
+html[data-theme="dark"] .alif-bm-copy:hover,
+html[data-theme="dark"] .alif-doc-sbtn:hover,
+html[data-theme="dark"] .alif-doc-tab:not(.is-active):hover {
+  background-color: #334155 !important;
+  border-color: #38bdf8 !important;
+  color: #ffffff !important;
+}
+html[data-theme="dark"] button:not([class*="primary"]):not(.is-active):not(.alif-doc-print-btn):active,
+html[data-theme="dark"] .alif-hero-btn-secondary:active,
+html[data-theme="dark"] .alif-bm-copy:active,
+html[data-theme="dark"] .alif-doc-sbtn:active,
+html[data-theme="dark"] .alif-doc-tab:not(.is-active):active {
+  background-color: #0284c7 !important;
+  border-color: #38bdf8 !important;
+  color: #ffffff !important;
+  transform: scale(0.97) !important;
+}
+
+/* Tanlangan (active) tab va Chop etish tugmalari bosilganda */
+.alif-doc-tab.is-active:hover,
+.alif-doc-scbtn.is-active:hover,
+.alif-doc-print-btn:hover {
+  background-color: #0369a1 !important;
+  border-color: #0369a1 !important;
+  color: #ffffff !important;
+}
+.alif-doc-tab.is-active:active,
+.alif-doc-scbtn.is-active:active,
+.alif-doc-print-btn:active {
+  background-color: #075985 !important;
+  color: #ffffff !important;
+  transform: scale(0.97) !important;
+}
+
+/* Yuklab olish kartochka tugmalari (.dmg va .exe) */
+section a[href*=".dmg"]:hover,
+section a[href*=".exe"]:hover {
+  background-color: #e0f2fe !important;
+  border-color: #0284c7 !important;
+}
+section a[href*=".dmg"]:active,
+section a[href*=".exe"]:active {
+  background-color: #bae6fd !important;
+  transform: scale(0.98) !important;
+}
