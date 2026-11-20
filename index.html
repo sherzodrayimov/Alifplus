@@ -950,5 +950,28 @@
   <script src="web/documents.js"></script>
   <script src="web/trainer.js?v=1"></script>
   <script src="web/docs-generator.js?v=3"></script>
+  <div id="alifGuideModal" class="alif-guide-backdrop" hidden onclick="if(event.target===this)closeAlifMacGuide()">
+    <div class="alif-guide-dialog">
+      <div class="alif-guide-head">
+        <div><span class="alif-trainer-badge">macOS · O‘rnatish qo‘llanmasi</span><h3 id="alifGuideModalTitle">Alif+ klaviaturasini macOS’ga o‘rnatish</h3></div>
+        <div style="display:flex;gap:8px;"><button type="button" id="alifGuideThemeBtn" class="alif-doc-sbtn" onclick="toggleAlifGuideTheme()">🌓</button><button type="button" class="alif-doc-sbtn" onclick="closeAlifMacGuide()">✕ Yopish</button></div>
+      </div>
+      <div class="alif-guide-body">
+        <div class="alif-guide-step"><div class="alif-guide-num">1</div><div><strong>Dasturni yuklab oling</strong><p><b>«Kompyuter uçun yuklab oliş»</b> bo‘limidan macOS uchun faylni yuklab oling.</p></div></div>
+        <div class="alif-guide-step"><div class="alif-guide-num">2</div><div><strong>Applications papkasiga ko‘chiring</strong><p>Faylni ochib, <b>Alif+</b> ilovasini <b>Applications</b> papkasiga tashlang.</p></div></div>
+        <div class="alif-guide-step"><div class="alif-guide-num">3</div><div><strong>Gatekeeper ruxsati</strong><p><b>System Settings → Privacy &amp; Security</b> bo‘limidan <b>«Open Anyway»</b> tugmasini bosing.</p></div></div>
+        <div class="alif-guide-step"><div class="alif-guide-num">4</div><div><strong>Accessibility (Klaviatura) ruxsati</strong><p><b>Privacy &amp; Security → Accessibility</b> ro‘yxatida <b>Alif+</b> ni yoqing — shundan so‘ng <code>o'</code>, <code>g'</code>, <code>sh</code>, <code>ch</code> avtomatik <b>ö, ğ, ş, ç</b> ga aylanadi.</p></div></div>
+      </div>
+    </div>
+  </div>
+  <script id="alifGuideScript">
+  (function(){
+    function sync(){var d=document.documentElement.getAttribute('data-theme')==='dark'||document.body.classList.contains('dark');var m=document.getElementById('alifGuideModal');if(m)m.setAttribute('data-theme',d?'dark':'light');var b=document.getElementById('alifGuideThemeBtn');if(b)b.textContent=d?'☀️ Kunduzgi':'🌙 Tungi';}
+    window.toggleAlifGuideTheme=function(){var t=document.getElementById('alifThemeToggle');if(t)t.click();else{var c=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',c);localStorage.setItem('alif_theme',c);}sync();};
+    window.openAlifMacGuide=function(e){if(e)e.preventDefault();var m=document.getElementById('alifGuideModal');if(m){sync();m.hidden=false;document.body.style.overflow='hidden';return false;}return true;};
+    window.closeAlifMacGuide=function(){var m=document.getElementById('alifGuideModal');if(m)m.hidden=true;document.body.style.overflow='';};
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')window.closeAlifMacGuide();});
+  })();
+  </script>
 </body>
 </html>

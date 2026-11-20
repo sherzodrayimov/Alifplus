@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alif+ — Matn va hujjatni yangi alifboga ögiriş</title>
+  <meta name="description" content="Kirill yoki lotin yozuvidagi Word, PDF va oddiy matn — brauzerning özida, bepul va çeklovsiz." />
+  <link rel="stylesheet" href="web/converter.css?v=15" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+  <script id="alifThemeScript">
+    (function() {
+      var saved = localStorage.getItem("alif_theme");
+      var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (saved === "dark" || (!saved && prefersDark)) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+      window.toggleAlifTheme = function() {
+        var isDark = document.documentElement.getAttribute("data-theme") === "dark";
+        var next = isDark ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("alif_theme", next);
+      };
+    })();
+  </script>
+</head>
+<body>
+  <header class="alif-topbar">
+    <div class="alif-container alif-topbar-inner">
+      <a href="index.html" class="alif-brand">
+        <img src="icon.png" alt="Alif+" style="width:34px; height:34px; border-radius:10px;">
+        <span class="alif-brand-text">Alif+</span>
+      </a>
+      <nav class="alif-nav">
+        <a href="#converter" class="alif-nav-link active">Konverter</a>
+        <a href="#desktop" class="alif-nav-link">macOS va Windows dasturi</a>
+        <a href="web/macos-install.html" class="alif-nav-link">macOS qöllanma</a>
+              <a href="#alifTrainer" class="alif-nav-link">Tez yoziş</a>
+        <button type="button" id="alifThemeToggle" class="alif-theme-btn" onclick="toggleAlifTheme()" aria-label="Kundalik yoki tungi rejim" title="Kundalik / Tungi rejim">
+          <svg class="alif-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="alif-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="alif-main">
+
+  <section id="alifHeroShowcase" class="alif-hero">
+    <div class="alif-container">
+      <div class="alif-hero-intro">
+        <div class="alif-hero-pill">
+          <span class="alif-hero-pill-dot"></span>
+          <span>Yangi özbek lotin alifbosi · Ö, Ğ, Ş, Ç</span>
+        </div>
+        <h1 class="alif-hero-title">Yozayotganingizda harflar <span class="alif-hero-accent">özi töğrilanadi.</span></h1>
+        <p class="alif-hero-sub">
+          Oddiy klaviaturada eski lotin (<code>o‘</code>, <code>g‘</code>, <code>sh</code>, <code>ch</code>) yoki kirillda yozavering — <strong>Alif+</strong> matningizni real vaqtda yangi alifboga ögiradi.
+        </p>
+
+        <div class="alif-hero-rules">
+          <span class="alif-rule-chip"><code>o'</code> → <b>ö</b></span>
+          <span class="alif-rule-chip"><code>g'</code> → <b>ğ</b></span>
+          <span class="alif-rule-chip"><code>sh</code> → <b>ş</b></span>
+          <span class="alif-rule-chip"><code>ch</code> → <b>ç</b></span>
+        </div>
+
+        <div class="alif-hero-actions">
+          <a href="#converter" class="alif-hero-btn-primary">Matn ögirişni sinab köriş ↓</a>
+          <a href="#desktop" class="alif-hero-btn-secondary">Kompyuter uçun yuklab oliş</a>
+        </div>
+      </div>
+
+      <div class="alif-hero-stage" aria-label="Alif+ jonli yozuv va onlayn klaviatura namoyişi">
+        <div class="alif-stage-bar">
+          <div class="alif-stage-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="alif-stage-title">Alif+ Jonli Yozuv · Real vaqt konvertatsiya</div>
+          <button type="button" id="alifHeroToggleBtn" class="alif-stage-status" onclick="toggleAlifHeroDemo()" title="Pauza / Davom ettiriş">
+            <span class="alif-stage-live-dot"></span>
+            <span id="alifHeroToggleText">Jonli</span>
+          </button>
+        </div>
+
+        <div class="alif-stage-screen">
+          <div class="alif-stage-badge-row">
+            <span id="alifHeroTransformBadge" class="alif-stage-badge">Oddiy klaviaturada yozilmoqda...</span>
+          </div>
+          <div class="alif-stage-output">
+            <span id="alifHeroTyped"></span><span class="alif-stage-caret">|</span>
+          </div>
+        </div>
+        <div class="alif-kbd alif-mac-kbd" id="alifHeroKbd" aria-hidden="true">
+          <div class="alif-kbd-row">
+            <div class="alif-key alif-key-dual" data-key="`"><span>~</span><span>`</span></div>
+            <div class="alif-key alif-key-dual" data-key="1"><span>!</span><span>1</span></div>
+            <div class="alif-key alif-key-dual" data-key="2"><span>@</span><span>2</span></div>
+            <div class="alif-key alif-key-dual" data-key="3"><span>#</span><span>3</span></div>
+            <div class="alif-key alif-key-dual" data-key="4"><span>$</span><span>4</span></div>
+            <div class="alif-key alif-key-dual" data-key="5"><span>%</span><span>5</span></div>
+            <div class="alif-key alif-key-dual" data-key="6"><span>^</span><span>6</span></div>
+            <div class="alif-key alif-key-dual" data-key="7"><span>&amp;</span><span>7</span></div>
+            <div class="alif-key alif-key-dual" data-key="8"><span>*</span><span>8</span></div>
+            <div class="alif-key alif-key-dual" data-key="9"><span>(</span><span>9</span></div>
+            <div class="alif-key alif-key-dual" data-key="0"><span>)</span><span>0</span></div>
+            <div class="alif-key alif-key-dual" data-key="-"><span>_</span><span>-</span></div>
+            <div class="alif-key alif-key-dual" data-key="="><span>+</span><span>=</span></div>
+            <div class="alif-key alif-key-fn alif-key-right" style="flex:1.55" data-key="⌫">delete</div>
+          </div>
+
+          <div class="alif-kbd-row">
+            <div class="alif-key alif-key-fn alif-key-left" style="flex:1.55" data-key="Tab">tab</div>
+            <div class="alif-key" data-key="Q">Q</div>
+            <div class="alif-key" data-key="W">W</div>
+            <div class="alif-key" data-key="E">E</div>
+            <div class="alif-key" data-key="R">R</div>
+            <div class="alif-key" data-key="T">T</div>
+            <div class="alif-key" data-key="Y">Y</div>
+            <div class="alif-key" data-key="U">U</div>
+            <div class="alif-key" data-key="I">I</div>
+            <div class="alif-key" data-key="O">O</div>
+            <div class="alif-key" data-key="P">P</div>
+            <div class="alif-key alif-key-dual" data-key="["><span>{</span><span>[</span></div>
+            <div class="alif-key alif-key-dual" data-key="]"><span>}</span><span>]</span></div>
+            <div class="alif-key alif-key-dual" data-key="\"><span>|</span><span>\</span></div>
+          </div>
+
+          <div class="alif-kbd-row">
+            <div class="alif-key alif-key-fn alif-key-left alif-key-caps" style="flex:1.8" data-key="Caps"><i class="alif-caps-dot"></i>caps lock</div>
+            <div class="alif-key" data-key="A">A</div>
+            <div class="alif-key" data-key="S">S</div>
+            <div class="alif-key" data-key="D">D</div>
+            <div class="alif-key alif-key-home" data-key="F">F</div>
+            <div class="alif-key" data-key="G">G</div>
+            <div class="alif-key" data-key="H">H</div>
+            <div class="alif-key alif-key-home" data-key="J">J</div>
+            <div class="alif-key" data-key="K">K</div>
+            <div class="alif-key" data-key="L">L</div>
+            <div class="alif-key alif-key-dual" data-key=";"><span>:</span><span>;</span></div>
+            <div class="alif-key alif-key-dual alif-key-accent" data-key="'"><span>"</span><span>'</span></div>
+            <div class="alif-key alif-key-fn alif-key-right" style="flex:1.8" data-key="Enter">return</div>
+          </div>
+
+          <div class="alif-kbd-row">
+            <div class="alif-key alif-key-fn alif-key-left" style="flex:2.35" data-key="Shift">shift</div>
+            <div class="alif-key" data-key="Z">Z</div>
+            <div class="alif-key" data-key="X">X</div>
+            <div class="alif-key" data-key="C">C</div>
+            <div class="alif-key" data-key="V">V</div>
+            <div class="alif-key" data-key="B">B</div>
+            <div class="alif-key" data-key="N">N</div>
+            <div class="alif-key" data-key="M">M</div>
+            <div class="alif-key alif-key-dual" data-key=","><span>&lt;</span><span>,</span></div>
+            <div class="alif-key alif-key-dual" data-key="."><span>&gt;</span><span>.</span></div>
+            <div class="alif-key alif-key-dual" data-key="/"><span>?</span><span>/</span></div>
+            <div class="alif-key alif-key-fn alif-key-right" style="flex:2.35" data-key="ShiftR">shift</div>
+          </div>
+
+          <div class="alif-kbd-row">
+            <div class="alif-key alif-key-mod" style="flex:1.25" data-key="Ctrl"><span class="alif-mod-sym alif-sym-l">^</span><span class="alif-mod-lbl">control</span></div>
+            <div class="alif-key alif-key-mod" style="flex:1.25" data-key="Opt"><span class="alif-mod-sym alif-sym-l">⌥</span><span class="alif-mod-lbl">option</span></div>
+            <div class="alif-key alif-key-mod" style="flex:1.5" data-key="Cmd"><span class="alif-mod-sym alif-sym-r">⌘</span><span class="alif-mod-lbl">command</span></div>
+            <div class="alif-key alif-key-space" style="flex:5.4" data-key="SPACE"></div>
+            <div class="alif-key alif-key-mod" style="flex:1.5" data-key="CmdR"><span class="alif-mod-sym alif-sym-l">⌘</span><span class="alif-mod-lbl">command</span></div>
+            <div class="alif-key alif-key-mod" style="flex:1.25" data-key="OptR"><span class="alif-mod-sym alif-sym-r">⌥</span><span class="alif-mod-lbl">option</span></div>
+            <div class="alif-key alif-key-mod" style="flex:1.25" data-key="CtrlR"><span class="alif-mod-sym alif-sym-r">^</span><span class="alif-mod-lbl">control</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+    <section class="alif-hero">
+      <div class="alif-container">
+        <div class="alif-badge">Yangi özbek alifbosi • Ö ö, Ğ ğ, Ş ş, Ç ç</div>
+        <h1 class="alif-hero-title">Matn va hujjatni yangi alifboga ögiriş</h1>
+        <p class="alif-hero-subtitle">
+          Kirill yoki lotin yozuvidagi Word, PDF va oddiy matn — brauzerning özida, bepul va çeklovsiz.
+        </p>
+      </div>
+    </section>
+
+    <section id="converter" class="alif-container">
+      <div class="alif-card">
+        <div class="alif-toolbar">
+          <div class="alif-dir-group">
+            <label for="alifDirection" class="alif-label-inline">Yönaliş:</label>
+            <select id="alifDirection" class="alif-select" aria-label="O'girish yo'nalishi">
+              <option value="auto2new" selected>Avtomatik (Kirill / Eski lotin → Yangi alifbo)</option>
+              <option value="oldlat2new">Eski lotin (o' g' sh ch) → Yangi alifbo (ö ğ ş ç)</option>
+              <option value="cyr2new">Kirill (ў ғ ш ч) → Yangi alifbo (ö ğ ş ç)</option>
+              <option value="new2oldlat">Yangi alifbo (ö ğ ş ç) → Eski lotin (o' g' sh ch)</option>
+              <option value="new2cyr">Yangi alifbo (ö ğ ş ç) → Kirill (ў ғ ш ч)</option>
+              <option value="cyr2oldlat">Kirill → Eski lotin</option>
+              <option value="oldlat2cyr">Eski lotin → Kirill</option>
+            </select>
+          </div>
+
+          <div class="alif-toolbar-actions">
+            <button type="button" id="alifBtnExceptions" class="alif-btn alif-btn-ghost" title="özgarmaydigan sözlar röyxati">
+              ⚙ Istisnolar (<span id="alifExcCount">0</span>)
+            </button>
+          </div>
+        </div>
+
+        <div id="alifDropzone" class="alif-dropzone" tabindex="0" role="button" aria-label="Word, PDF yoki TXT fayl yuklaş">
+          <input type="file" id="alifFileInput" accept=".txt,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden />
+          <div class="alif-dropzone-content">
+            <span class="alif-drop-icon">📄</span>
+            <div>
+              <strong>Hujjat yuklang (.docx, .pdf, .txt)</strong> yoki faylni şu yerga taşlang
+              <div class="alif-drop-hint">Barça fayllar faqat sizning brauzeringizda qayta işlanadi — serverga yuborilmaydi</div>
+            </div>
+            <button type="button" id="alifBtnUpload" class="alif-btn alif-btn-secondary">Fayl tanlaş</button>
+          </div>
+        </div>
+
+        <div id="alifStatusBanner" class="alif-status" hidden></div>
+
+        <div class="alif-panes">
+          <div class="alif-pane">
+            <div class="alif-pane-head">
+              <span class="alif-pane-title">Asl matn (Kirill yoki Eski lotin)</span>
+              <div class="alif-pane-tools">
+                <button type="button" id="alifBtnSample" class="alif-mini-btn">Namuna</button>
+                <button type="button" id="alifBtnPaste" class="alif-mini-btn">Qöyish</button>
+                <button type="button" id="alifBtnClear" class="alif-mini-btn alif-mini-danger">Tozalaş</button>
+              </div>
+            </div>
+            <textarea
+              id="alifInput"
+              class="alif-textarea"
+              placeholder="Matnni şu yerga yozing yoki nusxalab qöying...&#10;Masalan: O'zbekiston Respublikasi — shahar va qishloqlar chiroyli."
+              spellcheck="false"
+            ></textarea>
+            <div class="alif-pane-foot">
+              <span id="alifInputStats">0 belgi • 0 söz</span>
+            </div>
+          </div>
+
+          <div class="alif-pane">
+            <div class="alif-pane-head">
+              <span class="alif-pane-title">Natija (Yangi alifbo: Ö, Ğ, Ş, Ç)</span>
+              <div class="alif-pane-tools">
+                <button type="button" id="alifBtnSwap" class="alif-mini-btn" title="Natijani çap oynaga ötkaziş">⇄ Almaştiriş</button>
+                <button type="button" id="alifBtnCopy" class="alif-mini-btn alif-mini-primary">Nusxa oliş</button>
+              </div>
+            </div>
+            <textarea
+              id="alifOutput"
+              class="alif-textarea alif-textarea-out"
+              placeholder="Ögirilgan matn şu yerda avtomatik paydo böladi..."
+              readonly
+            ></textarea>
+            <div class="alif-pane-foot alif-export-bar">
+              <span id="alifOutputStats">0 belgi • 0 özgariş</span>
+              <div class="alif-export-btns">
+                <button type="button" id="alifExportTxt" class="alif-mini-btn">.TXT</button>
+                <button type="button" id="alifExportDocx" class="alif-mini-btn">.DOCX (Word)</button>
+                <button type="button" id="alifExportPdf" class="alif-mini-btn">.PDF</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="alif-alphabet-strip">
+          <div class="alif-char-chip"><span>O‘ / o‘</span> → <strong>Ö / ö</strong></div>
+          <div class="alif-char-chip"><span>G‘ / g‘</span> → <strong>Ğ / ğ</strong></div>
+          <div class="alif-char-chip"><span>Sh / sh</span> → <strong>Ş / ş</strong></div>
+          <div class="alif-char-chip"><span>Ch / ch</span> → <strong>Ç / ç</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="desktop" class="alif-container alif-desktop-section">
+      <div class="alif-card alif-desktop-card">
+        <div class="alif-desktop-info">
+          <h2>Istalgan dasturda real vaqtda yozing (macOS va Windows)</h2>
+          <p>
+            Word, Telegram, brauzer yoki istalgan oynada yozayotganingizda boş va kiçik harflar avtomatik özgaradi:
+            <strong>O' → Ö</strong>, <strong>G' → Ğ</strong>, <strong>Sh → Ş</strong>, <strong>Ch → Ç</strong>.
+          </p>
+          <ol class="alif-feature-list">
+            <li>Yozişdan oldin <strong>Ctrl + Shift</strong> ni bosing — dastur <strong>YOQILADI</strong>.</li>
+            <li>Yozing: <code>shahar → şahar</code>, <code>o'zbek → özbek</code>.</li>
+            <li>Kerak bölsa <strong>DARHOL Delete (⌫)</strong> bosing — asl holi qaytadi (<code>ş → sh</code>).</li>
+            <li><strong>Sozlamalar</strong> — menyu satridagi <strong>A+</strong> belgisini bosing.</li>
+          </ol>
+        </div>
+        <div class="alif-desktop-downloads">
+          <a href="https://github.com/sherzodrayimov/Alifplus/releases/latest/download/AlifPlus-2.0-macOS.dmg" class="alif-dl-btn alif-dl-mac">
+            <strong>macOS uchun yuklab oliş (.dmg)</strong>
+            <span>Apple Silicon (M1–M4) va Intel • Universal</span>
+          </a>
+          <a href="https://github.com/sherzodrayimov/Alifplus/releases/latest/download/AlifPlus-x64.exe" class="alif-dl-btn alif-dl-win">
+            <strong>Windows 64-bit uchun yuklab oliş (x64 .exe)</strong>
+            <span>Windows 7 / 8 / 10 / 11 (64-bit)</span>
+          </a>
+          <a href="https://github.com/sherzodrayimov/Alifplus/releases/latest/download/AlifPlus-x32.exe" class="alif-dl-btn alif-dl-win">
+            <strong>Windows 32-bit uchun yuklab oliş (x32 .exe)</strong>
+            <span>Windows 7 / 8 / 10 (32-bit x86)</span>
+          </a>
+          <a href="web/macos-install.html" class="alif-guide-link">macOS o'rnatiş qöllanmasini köriş →</a>
+        </div>
+      </div>
+    </section>
+  <section id="alifTrainer" class="alif-trainer-sec">
+    <div class="alif-container">
+      <div class="alif-trainer-card">
+        <div class="alif-trainer-top">
+          <div><span class="alif-trainer-badge">Tez yoziş trenajyori · WPM</span><h2 class="alif-trainer-title">Yangi alifboda yoziş tezligingizni sinang</h2></div>
+          <div class="alif-mt-toolbar">
+            <div class="alif-mt-group"><button type="button" class="alif-mt-opt is-active" data-mode="time" onclick="setAlifTrMode('time')">⏱ Vaqt</button><button type="button" class="alif-mt-opt" data-mode="words" onclick="setAlifTrMode('words')">📝 Sözlar</button></div>
+            <span class="alif-mt-sep"></span>
+            <div class="alif-mt-group" id="alifTrTimeOpts"><button type="button" class="alif-mt-opt is-active" data-val="30" onclick="setAlifTrVal(30)">30s</button><button type="button" class="alif-mt-opt" data-val="60" onclick="setAlifTrVal(60)">1 min</button></div>
+            <div class="alif-mt-group" id="alifTrWordOpts" hidden><button type="button" class="alif-mt-opt is-active" data-val="30" onclick="setAlifTrVal(30)">30</button><button type="button" class="alif-mt-opt" data-val="50" onclick="setAlifTrVal(50)">50</button><button type="button" class="alif-mt-opt" data-val="100" onclick="setAlifTrVal(100)">100</button></div>
+          </div>
+        </div>
+        <div class="alif-mt-status-bar"><div class="alif-mt-counter" id="trCounter">30s</div><div class="alif-mt-live-stats"><span>Tezlik: <strong id="trWpm">0 WPM</strong></span><span>Aniqlik: <strong id="trAcc">100%</strong></span><span>Rekord: <strong id="trBest" class="is-best">—</strong></span></div></div>
+        <div class="alif-mt-stage" id="trStage" onclick="focusAlifTrainer()"><input type="text" id="trHiddenInput" class="alif-mt-hidden-input" autocomplete="off" spellcheck="false" /><div class="alif-mt-viewport"><div class="alif-mt-words" id="trWords"></div></div><div class="alif-mt-focus-hint">Yozişni boşlaş uçun bosing (o', g', sh, ch → ö, ğ, ş, ç)</div></div>
+        <div class="alif-mt-actions"><button type="button" class="alif-trainer-btn" onclick="resetAlifTrainer()">↻ Yangilash (Tab)</button></div>
+        <div id="trResultBanner" class="alif-trainer-result" hidden><div id="trResultText"></div><button type="button" class="alif-hero-btn-primary" onclick="resetAlifTrainer()">Yana bir sinov →</button></div>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <div id="alifExcModal" class="alif-modal" hidden>
+    <div class="alif-modal-backdrop" id="alifExcCloseBg"></div>
+    <div class="alif-modal-box" role="dialog" aria-modal="true" aria-labelledby="alifExcTitle">
+      <div class="alif-modal-head">
+        <h3 id="alifExcTitle">Istisno sözlar röyxati</h3>
+        <button type="button" id="alifExcClose" class="alif-mini-btn">✕</button>
+      </div>
+      <p class="alif-modal-desc">
+        Ögirilmasligi yoki maxsus körinişda qolişi kerak bölgan sözlarni kiriting (masalan: <code>Windows → Windows</code>).
+      </p>
+      <form id="alifExcForm" class="alif-exc-form">
+        <input type="text" id="alifExcSrc" class="alif-input" placeholder="Asl söz (masalan: YouTube)" required />
+        <input type="text" id="alifExcDst" class="alif-input" placeholder="Natija (böş qolsa özgarmaydi)" />
+        <button type="submit" class="alif-btn alif-btn-primary">Qöşiş</button>
+      </form>
+      <div id="alifExcList" class="alif-exc-list"></div>
+    </div>
+  </div>
+
+  <footer class="alif-footer">
+    <div class="alif-container">
+      <div class="alif-footer-grid">
+        <div class="alif-footer-col-brand">
+          <a href="index.html" class="alif-footer-brand">
+            <img src="icon.png" sizes="32x32" alt="Alif+" class="alif-footer-logo" />
+            <span class="alif-footer-brand-name">Alif+</span>
+          </a>
+          <p class="alif-footer-tagline">Yozayotganda harflaringiz özi töğrilansin.</p>
+        </div>
+
+        <div class="alif-footer-col">
+          <h4 class="alif-footer-heading">SAHIFA</h4>
+          <ul class="alif-footer-links">
+            <li><a href="#about-alphabet" onclick="openAlifAbout(); return false;">Yangi alifbo haqida</a></li>
+            <li><a href="#typing-methods" onclick="openAlifTyping(); return false;">Harflarni yoziş usullari</a></li>
+            <li><a href="#converter">Hujjat ögiriş</a></li>
+            <li><a href="#desktop">Yuklab oliş</a></li>
+            <li><a href="#privacy" onclick="document.getElementById('alifPrivacyModal').hidden=false; return false;">Maxfiylik siyosati</a></li>
+          </ul>
+        </div>
+
+        <div class="alif-footer-col">
+          <h4 class="alif-footer-heading">IJTIMOIY TARMOQLAR</h4>
+          <ul class="alif-footer-links alif-footer-social">
+            <li>
+              <a href="mailto:sherzodrayimov400@gmail.com">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6ee787" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                <span>Email</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://t.me/sherzodrayimov" target="_blank" rel="noopener">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#38bdf8"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+                <span>Telegram</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://instagram.com/rayimovwv" target="_blank" rel="noopener">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#f43f5e" stroke="none"/></svg>
+                <span>Instagram</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="alif-footer-bottom">
+        © 2026 Sherzod Rayimov · Bepul dastur · «Alif+» nomi va logotipi muallifga tegişli
+      </div>
+    </div>
+  </footer>
+
+  <div id="alifPrivacyModal" class="alif-modal" hidden>
+    <div class="alif-modal-backdrop" onclick="document.getElementById('alifPrivacyModal').hidden=true"></div>
+    <div class="alif-modal-box" role="dialog" aria-modal="true" aria-labelledby="alifPrivTitle">
+      <div class="alif-modal-head">
+        <h3 id="alifPrivTitle">Maxfiylik siyosati</h3>
+        <button type="button" class="alif-mini-btn" onclick="document.getElementById('alifPrivacyModal').hidden=true">✕</button>
+      </div>
+      <p class="alif-modal-desc" style="line-height:1.6; color:var(--text);">
+        <strong>Alif+</strong> sizning maxfiyligingizni töliq himoya qiladi. Barcha matn va hujjatlar (.docx, .pdf, .txt) faqat öz brauzeringiz ichida qayta işlanadi — heç qanday ma’lumot taşqi serverlarga yuborilmaydi va saqlanmaydi.
+      </p>
+    </div>
+  </div>
+
+    <div id="alifAboutModal" class="alif-modal" hidden>
+    <div class="alif-modal-backdrop" onclick="closeAlifAbout()"></div>
+    <div class="alif-modal-box alif-about-box" role="dialog" aria-modal="true" aria-labelledby="alifAboutTitle">
+      <div class="alif-modal-head">
+        <h3 id="alifAboutTitle">Yangi alifboda nimalar özgardi?</h3>
+        <button type="button" class="alif-mini-btn" onclick="closeAlifAbout()">✕</button>
+      </div>
+
+      <p class="alif-modal-desc" style="color:var(--text); line-height:1.55;">
+        Yangi özbek lotin alifbosida faqat <strong>4 ta harf</strong> yangi körinişga ötdi (<code>ng</code> birikmasi özgarmağan). <strong>Alif+</strong> esa eski usulda yozganingizda ularni avtomatik yangisiga ögiradi:
+      </p>
+
+      <div class="alif-demo-player">
+        <div class="alif-demo-topbar">
+          <div class="alif-demo-dots"><span></span><span></span><span></span></div>
+          <span class="alif-demo-badge">● Alif+ jonli namoyiş</span>
+        </div>
+        <div class="alif-demo-screen">
+          <div class="alif-demo-text-row">
+            <span id="alifDemoTyped"></span><span class="alif-demo-cursor">|</span>
+          </div>
+          <div class="alif-demo-hint" id="alifDemoHint">Eski alifboda yozilmoqda...</div>
+        </div>
+        <div class="alif-demo-keys">
+          <kbd id="alifKey1">O</kbd>
+          <span class="alif-demo-plus">+</span>
+          <kbd id="alifKey2">'</kbd>
+          <span class="alif-demo-arrow">→</span>
+          <kbd class="alif-demo-result" id="alifKeyRes">Ö</kbd>
+        </div>
+      </div>
+
+      <div class="alif-about-subhead" style="margin-top:16px;">
+        <span>Özgargan 4 ta harf (nusxalaş uçun bosing)</span>
+        <span id="alifCopyToast" class="alif-copy-toast" hidden>Nusxa olindi!</span>
+      </div>
+
+      <div class="alif-diff-grid">
+        <button type="button" class="alif-diff-card" onclick="copyAlifLetter('Ö ö')">
+          <div class="alif-diff-pair"><span>O‘ / o‘</span> → <strong>Ö / ö</strong></div>
+          <small>Özbekiston, qöşiq, töğri</small>
+        </button>
+        <button type="button" class="alif-diff-card" onclick="copyAlifLetter('Ğ ğ')">
+          <div class="alif-diff-pair"><span>G‘ / g‘</span> → <strong>Ğ / ğ</strong></div>
+          <small>ğalaba, toğ, ğamxör</small>
+        </button>
+        <button type="button" class="alif-diff-card" onclick="copyAlifLetter('Ş ş')">
+          <div class="alif-diff-pair"><span>Sh / sh</span> → <strong>Ş / ş</strong></div>
+          <small>şahar, qişloq, işonç</small>
+        </button>
+        <button type="button" class="alif-diff-card" onclick="copyAlifLetter('Ç ç')">
+          <div class="alif-diff-pair"><span>Ch / ch</span> → <strong>Ç / ç</strong></div>
+          <small>çiroyli, oçuq, keça</small>
+        </button>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function() {
+      var samples = [
+        { k1: "O", k2: "'", res: "Ö", steps: ["O", "O'", "Ö", "Öz", "Özb", "Özbe", "Özbek", "Özbeki", "Özbekis", "Özbekist", "Özbekisto", "Özbekiston"], note: "O + '  →  Ö avtomatik ögirdi" },
+        { k1: "g", k2: "'", res: "ğ", steps: ["t", "to", "tog", "tog'", "toğ"], note: "g + '  →  ğ avtomatik ögirdi" },
+        { k1: "s", k2: "h", res: "ş", steps: ["s", "sh", "ş", "şa", "şah", "şaha", "şahar"], note: "s + h  →  ş avtomatik ögirdi" },
+        { k1: "c", k2: "h", res: "ç", steps: ["c", "ch", "ç", "çi", "çir", "çiro", "çiroy", "çiroyl", "çiroyli"], note: "c + h  →  ç avtomatik ögirdi" }
+      ];
+      var timer = null, sIdx = 0, step = 0;
+
+      function tick() {
+        var modal = document.getElementById('alifAboutModal');
+        if (!modal || modal.hidden) return;
+        var s = samples[sIdx];
+        var elText = document.getElementById('alifDemoTyped');
+        var elHint = document.getElementById('alifDemoHint');
+        var elK1 = document.getElementById('alifKey1');
+        var elK2 = document.getElementById('alifKey2');
+        var elRes = document.getElementById('alifKeyRes');
+
+        if (step === 0) {
+          elK1.textContent = s.k1;
+          elK2.textContent = s.k2;
+          elRes.textContent = s.res;
+          elHint.textContent = "Eski alifboda yozilmoqda...";
+          elHint.classList.remove("is-converted");
+        }
+
+        var word = s.steps[step];
+        elText.textContent = word;
+
+        if (word.indexOf(s.res) !== -1) {
+          elHint.textContent = "✓ " + s.note;
+          elHint.classList.add("is-converted");
+          elRes.classList.add("is-active");
+        } else {
+          elRes.classList.remove("is-active");
+        }
+
+        step++;
+        if (step < s.steps.length) {
+          var nextHas = s.steps[step].indexOf(s.res) !== -1 && word.indexOf(s.res) === -1;
+          timer = setTimeout(tick, nextHas ? 420 : 170);
+        } else {
+          step = 0;
+          sIdx = (sIdx + 1) % samples.length;
+          timer = setTimeout(tick, 1350);
+        }
+      }
+
+      window.openAlifAbout = function() {
+        var modal = document.getElementById('alifAboutModal');
+        if (!modal) return;
+        modal.hidden = false;
+        clearTimeout(timer);
+        sIdx = 0; step = 0;
+        tick();
+      };
+
+      window.closeAlifAbout = function() {
+        var modal = document.getElementById('alifAboutModal');
+        if (modal) modal.hidden = true;
+        clearTimeout(timer);
+      };
+
+      window.copyAlifLetter = function(ch) {
+        if (navigator.clipboard) navigator.clipboard.writeText(ch);
+        var t = document.getElementById('alifCopyToast');
+        if (t) {
+          t.textContent = 'Nusxa olindi: ' + ch;
+          t.hidden = false;
+          clearTimeout(window._alifToastTimer);
+          window._alifToastTimer = setTimeout(function() { t.hidden = true; }, 1400);
+        }
+      };
+    })();
+  </script>
+    <div id="alifTypingModal" class="alif-modal" hidden>
+    <div class="alif-modal-backdrop" onclick="closeAlifTyping()"></div>
+    <div class="alif-modal-box alif-typing-box" role="dialog" aria-modal="true" aria-labelledby="alifTypingTitle">
+      <div class="alif-modal-head">
+        <h3 id="alifTypingTitle">Harflarni yoziş usullari</h3>
+        <button type="button" class="alif-mini-btn" onclick="closeAlifTyping()">✕</button>
+      </div>
+
+      <p class="alif-modal-desc" style="color:var(--text); line-height:1.55;">
+        Yangi alifbodagi <strong>Ö, Ğ, Ş, Ç</strong> harflarini kompyuter va telefonda eng oson yozişning 3 ta usuli:
+      </p>
+
+      <div class="alif-method-list">
+        <div class="alif-method-card alif-method-primary">
+          <div class="alif-method-top">
+            <span class="alif-method-badge">1-usul · Tavsiya etiladi</span>
+            <strong>Kompyuterda avtomatik (Alif+ dasturi)</strong>
+          </div>
+          <p class="alif-method-text">
+            macOS yoki Windows ilovasini örnatsangiz, istalgan dasturda (Telegram, Word, brauzer) oddiy klaviaturada yozaverasiz:
+          </p>
+          <div class="alif-shortcut-pills">
+            <span><code>o'</code> → <b>ö</b></span>
+            <span><code>g'</code> → <b>ğ</b></span>
+            <span><code>sh</code> → <b>ş</b></span>
+            <span><code>ch</code> → <b>ç</b></span>
+          </div>
+          <div class="alif-method-foot">
+            <small>Yoqiş/öçiriş: <kbd>Ctrl</kbd> + <kbd>Shift</kbd> · Bekor qiliş: <kbd>⌫</kbd></small>
+            <a href="#desktop" class="alif-inline-cta" onclick="closeAlifTyping()">Yuklab oliş →</a>
+          </div>
+        </div>
+
+        <div class="alif-method-card">
+          <div class="alif-method-top">
+            <span class="alif-method-badge">2-usul · Telefon</span>
+            <strong>iPhone va Android klaviaturasida</strong>
+          </div>
+          <p class="alif-method-text">
+            Harf tugmasini <strong>bosib turing</strong> — qöşimça harflar menyusidan keraklisini tanlang:
+          </p>
+          <div class="alif-shortcut-pills">
+            <span><b>O</b> bosib turing → <b>Ö</b></span>
+            <span><b>S</b> bosib turing → <b>Ş</b></span>
+            <span><b>C</b> bosib turing → <b>Ç</b></span>
+            <span><b>G</b> (Turkça klaviatura) → <b>Ğ</b></span>
+          </div>
+        </div>
+
+        <div class="alif-method-card">
+          <div class="alif-method-top">
+            <span class="alif-method-badge">3-usul · Sinab köriş</span>
+            <strong>Şu yerning özida yozib köring yoki nusxa oling</strong>
+          </div>
+          <input type="text" id="alifTypingSandbox" class="alif-input alif-sandbox-input" placeholder="Masalan: O'zbekiston, shahar, tog', chiroyli deb yozing..." autocomplete="off" />
+          <div class="alif-quick-copy-row">
+            <button type="button" class="alif-key-btn" onclick="copyTypingChar('Ö')">Ö</button>
+            <button type="button" class="alif-key-btn" onclick="copyTypingChar('ö')">ö</button>
+            <button type="button" class="alif-key-btn" onclick="copyTypingChar('Ğ')">Ğ</button>
+            <button type="button" class="alif-key-btn" onclick="copyTypingChar('ğ')">ğ</button>
+            <button type="button" class="alif-key-btn" onclick="copyTypingChar('Ş')">Ş</button>
+            <button type="button" class="alif-key-btn" onclick="copyTypingChar('ş')">ş</button>
+            <button type="button" class="alif-key-btn" onclick="copyTypingChar('Ç')">Ç</button>
+            <button type="button" class="alif-key-btn" onclick="copyTypingChar('ç')">ç</button>
+            <span id="alifTypingToast" class="alif-copy-toast" hidden>Nusxa olindi!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function() {
+      window.openAlifTyping = function() {
+        var modal = document.getElementById('alifTypingModal');
+        if (!modal) return;
+        modal.hidden = false;
+        var sb = document.getElementById('alifTypingSandbox');
+        if (sb) setTimeout(function() { sb.focus(); }, 60);
+      };
+
+      window.closeAlifTyping = function() {
+        var modal = document.getElementById('alifTypingModal');
+        if (modal) modal.hidden = true;
+      };
+
+      window.copyTypingChar = function(ch) {
+        if (navigator.clipboard) navigator.clipboard.writeText(ch);
+        var t = document.getElementById('alifTypingToast');
+        if (t) {
+          t.textContent = 'Nusxa olindi: ' + ch;
+          t.hidden = false;
+          clearTimeout(window._alifTypingToastTimer);
+          window._alifTypingToastTimer = setTimeout(function() { t.hidden = true; }, 1400);
+        }
+      };
+
+      var sb = document.getElementById('alifTypingSandbox');
+      if (sb) {
+        sb.addEventListener('input', function() {
+          var pos = sb.selectionStart;
+          var val = sb.value;
+          var converted = val
+            .replace(/([Oo])['ʻ’‘ʼ`]/g, function(_, c) { return c === 'O' ? 'Ö' : 'ö'; })
+            .replace(/([Gg])['ʻ’‘ʼ`]/g, function(_, c) { return c === 'G' ? 'Ğ' : 'ğ'; })
+            .replace(/([Ss])[Hh]/g, function(_, c) { return c === 'S' ? 'Ş' : 'ş'; })
+            .replace(/([Cc])[Hh]/g, function(_, c) { return c === 'C' ? 'Ç' : 'ç'; });
+          if (converted !== val) {
+            var diff = val.length - converted.length;
+            sb.value = converted;
+            sb.setSelectionRange(Math.max(0, pos - diff), Math.max(0, pos - diff));
+          }
+        });
+      }
+    })();
+  </script>
+    <script id="alifHeroScript">
+    (function() {
+      var sentences = [
+        "O'zbekiston — go'zal shahar va chiroyli tog'lar yurti.",
+        "Yangi alifboda o'qish va to'g'ri yozish yanada oson.",
+        "Barcha matn va hujjatlar bir zumda yangi shaklda."
+      ];
+
+      var digraphs = {
+        "O'": { res: "Ö", badge: "O + '  →  Ö avtomatik ögirdi" },
+        "o'": { res: "ö", badge: "o + '  →  ö avtomatik ögirdi" },
+        "G'": { res: "Ğ", badge: "G + '  →  Ğ avtomatik ögirdi" },
+        "g'": { res: "ğ", badge: "g + '  →  ğ avtomatik ögirdi" },
+        "Sh": { res: "Ş", badge: "S + h  →  Ş avtomatik ögirdi" },
+        "sh": { res: "ş", badge: "s + h  →  ş avtomatik ögirdi" },
+        "Ch": { res: "Ç", badge: "C + h  →  Ç avtomatik ögirdi" },
+        "ch": { res: "ç", badge: "c + h  →  ç avtomatik ögirdi" }
+      };
+
+      function buildFrames(sentence) {
+        var frames = [];
+        var display = "";
+        var i = 0;
+        while (i < sentence.length) {
+          var ch = sentence[i];
+          var nxt = i + 1 < sentence.length ? sentence[i + 1] : "";
+          var pair = ch + nxt;
+          if (digraphs[pair]) {
+            var info = digraphs[pair];
+            var firstKeys = (ch >= "A" && ch <= "Z") ? ["Shift", ch] : [ch.toUpperCase()];
+            frames.push({ text: display + ch, keys: firstKeys, badge: null, delay: 115 });
+            display += info.res;
+            frames.push({ text: display, keys: [nxt.toUpperCase()], badge: info.badge, delay: 360 });
+            i += 2;
+          } else {
+            display += ch;
+            var k = [];
+            if (ch === " ") k = ["SPACE"];
+            else if (ch === "," || ch === ".") k = [ch];
+            else if (ch === "—") k = ["-"];
+            else if (ch >= "A" && ch <= "Z") k = ["Shift", ch];
+            else k = [ch.toUpperCase()];
+            frames.push({ text: display, keys: k, badge: null, delay: ch === " " ? 70 : 92 });
+            i += 1;
+          }
+        }
+        return frames;
+      }
+
+      var allFrames = sentences.map(buildFrames);
+      var sIdx = 0, fIdx = 0, timer = null, paused = false;
+
+      function formatTypedHtml(txt) {
+        return txt
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/([ÖöĞğŞşÇç])/g, '<span class="alif-hero-newchar">$1</span>');
+      }
+
+      function highlightKeys(keys, isTransform) {
+        var kbd = document.getElementById("alifHeroKbd");
+        if (!kbd) return;
+        var all = kbd.querySelectorAll(".alif-key");
+        for (var i = 0; i < all.length; i++) {
+          all[i].classList.remove("is-pressed", "is-transform-key");
+        }
+        for (var j = 0; j < keys.length; j++) {
+          var el = kbd.querySelector('.alif-key[data-key="' + keys[j] + '"]');
+          if (el) {
+            el.classList.add("is-pressed");
+            if (isTransform) el.classList.add("is-transform-key");
+          }
+        }
+      }
+
+      function stepDemo() {
+        if (paused) return;
+        var elTyped = document.getElementById("alifHeroTyped");
+        var elBadge = document.getElementById("alifHeroTransformBadge");
+        if (!elTyped || !elBadge) return;
+
+        var frames = allFrames[sIdx];
+        var fr = frames[fIdx];
+
+        elTyped.innerHTML = formatTypedHtml(fr.text);
+        highlightKeys(fr.keys, Boolean(fr.badge));
+
+        if (fr.badge) {
+          elBadge.textContent = "✓ " + fr.badge;
+          elBadge.classList.add("is-active");
+        } else if (fIdx === 0) {
+          elBadge.textContent = "Oddiy klaviaturada yozilmoqda...";
+          elBadge.classList.remove("is-active");
+        }
+
+        fIdx++;
+        if (fIdx < frames.length) {
+          timer = setTimeout(stepDemo, fr.delay);
+        } else {
+          setTimeout(function() { highlightKeys([], false); }, 350);
+          fIdx = 0;
+          sIdx = (sIdx + 1) % allFrames.length;
+          timer = setTimeout(stepDemo, 1900);
+        }
+      }
+
+      window.toggleAlifHeroDemo = function() {
+        paused = !paused;
+        var btn = document.getElementById("alifHeroToggleBtn");
+        var txt = document.getElementById("alifHeroToggleText");
+        if (btn) btn.classList.toggle("is-paused", paused);
+        if (txt) txt.textContent = paused ? "Pauza" : "Jonli";
+        if (!paused) stepDemo();
+        else clearTimeout(timer);
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", stepDemo);
+      } else {
+        stepDemo();
+      }
+    })();
+  </script>
+<script src="web/converter.js"></script>
+    <script src="web/vendor/jszip.min.js"></script>
+  <script type="module">
+    import * as pdfjsLib from './web/vendor/pdf.min.mjs';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('web/vendor/pdf.worker.min.mjs', window.location.href).href;
+    window.pdfjsLib = pdfjsLib;
+  </script>
+  <script src="web/documents.js"></script>
+  <script id="alifTrainerScript">
+  (function(){
+    var WB=["özbekiston","şahar","toğ","çiroyli","örganuv","birikkanlik","romantik","gulduros","samar","şumoyoq","aytgançalik","töğri","yoziş","öqiş","ğalaba","şirin","çoğ","vaqt","kitob","maktab","talaba","bilim","ilhom","kelajak","işonç","mehnat","tabiat","bahor","yomğir","quyosh","şabada","daryo","vodiysi","farğona","şahrisabz","samarqand","buxoro","navoiy","xorazm","qarşi","termiz","namangan","andijon","jizzax","guliston","nukus","köprik","yöl","manzil","safar","döstlik","hurmat","fazilat","muhim","qulay","oson","tezlik","aniqlik","natija","harakat","maqsad","orzu","umid","quvonç","baxt","tinçlik","obod","yurt","xalq","tarix","madaniyat","sanat","musiqa","asar","hikoya","maqola","gazeta","jurnal","sahifa","matn","hujjat","alifbo","harf","tovuş","söz","gap","fikr","savol","javob","yeçim","usul","tajriba","amaliyot","dastur","kompyuter","klaviatura","ekran","tugma","oyna","tizim","tarmoq","xavfsiz","çorçila","mahjublik","hurkit","vaysiramoq","elektrpayvandlaş"];
+    var mode="time",targetVal=30,words=[],typedWords=[],curIdx=0,startedAt=null,timerId=null,finished=false,bestWpm=parseInt(localStorage.getItem("alif_best_wpm")||"0",10)||0;
+    function conv(v){return v.replace(/([Oo])['ʻ’‘ʼ`]/g,function(_,c){return c==="O"?"Ö":"ö"}).replace(/([Gg])['ʻ’‘ʼ`]/g,function(_,c){return c==="G"?"Ğ":"ğ"}).replace(/([Ss])[Hh]/g,function(_,c){return c==="S"?"Ş":"ş"}).replace(/([Cc])[Hh]/g,function(_,c){return c==="C"?"Ç":"ç"})}
+    function pick(n){var o=[];for(var i=0;i<n;i++)o.push(WB[Math.floor(Math.random()*WB.length)]);return o}
+    function updBest(){var e=document.getElementById("trBest");if(e)e.textContent=bestWpm>0?bestWpm+" WPM":"—"}
+    function updCnt(){var e=document.getElementById("trCounter");if(!e)return;if(mode==="time"){var el=startedAt?(Date.now()-startedAt)/1000:0;e.textContent=Math.max(0,Math.ceil(targetVal-el))+"s"}else{e.textContent=Math.min(curIdx,targetVal)+" / "+targetVal}}
+    function stats(){var sec=startedAt?Math.max((Date.now()-startedAt)/1000,0.4):0,ok=0,tot=0;for(var i=0;i<=curIdx&&i<words.length;i++){var t=words[i],y=typedWords[i]||"";tot+=y.length+(i<curIdx?1:0);for(var c=0;c<Math.min(t.length,y.length);c++)if(y[c]===t[c])ok++;if(i<curIdx&&y===t)ok++}var acc=tot>0?Math.round(ok/tot*100):100,wpm=sec>0?Math.round((ok/5)/(sec/60)):0;var wEl=document.getElementById("trWpm"),aEl=document.getElementById("trAcc");if(wEl)wEl.textContent=wpm+" WPM";if(aEl)aEl.textContent=acc+"%";return{wpm:wpm,acc:acc,sec:sec}}
+    function render(){var b=document.getElementById("trWords");if(!b)return;var h=[];for(var i=0;i<words.length;i++){var t=words[i],y=typedWords[i]||"",cur=i===curIdx&&!finished,err=i<curIdx&&y!==t,ls=[];for(var j=0;j<Math.max(t.length,y.length);j++){if(cur&&j===y.length)ls.push("<span class="mt-caret"></span>");if(j<t.length)ls.push("<span class="mt-ch"+(j<y.length?(y[j]===t[j]?" is-ok":" is-err"):"")+"">"+t[j]+"</span>");else ls.push("<span class="mt-ch is-extra">"+y[j]+"</span>")}if(cur&&y.length>=t.length)ls.push("<span class="mt-caret"></span>");h.push("<span class="mt-word"+(cur?" is-active":"")+(err?" is-word-err":"")+"">"+ls.join("")+"</span>")}b.innerHTML=h.join(" ");var a=b.querySelector(".mt-word.is-active");if(a)b.style.transform="translateY(-"+Math.max(0,a.offsetTop-(a.offsetHeight||38))+"px)"}
+    function finish(){if(finished)return;finished=true;clearInterval(timerId);var inp=document.getElementById("trHiddenInput");if(inp)inp.disabled=true;updCnt();render();var s=stats();if(s.acc>=75&&s.wpm>bestWpm){bestWpm=s.wpm;localStorage.setItem("alif_best_wpm",String(bestWpm));updBest()}var rt=document.getElementById("trResultText"),rb=document.getElementById("trResultBanner");if(rt)rt.innerHTML="<strong>Natija:</strong> <b>"+s.wpm+" WPM</b> · Aniqlik: <b>"+s.acc+"%</b> ("+s.sec.toFixed(1)+"s)";if(rb)rb.hidden=false}
+    window.focusAlifTrainer=function(){var i=document.getElementById("trHiddenInput");if(i&&!i.disabled)i.focus()};
+    window.setAlifTrMode=function(m){mode=m;document.querySelectorAll(".alif-mt-opt[data-mode]").forEach(function(b){b.classList.toggle("is-active",b.dataset.mode===m)});document.getElementById("alifTrTimeOpts").hidden=m!=="time";document.getElementById("alifTrWordOpts").hidden=m!=="words";targetVal=30;document.querySelectorAll(".alif-mt-opt[data-val]").forEach(function(b){b.classList.toggle("is-active",b.dataset.val==="30")});resetAlifTrainer()};
+    window.setAlifTrVal=function(v){targetVal=v;document.getElementById(mode==="time"?"alifTrTimeOpts":"alifTrWordOpts").querySelectorAll(".alif-mt-opt").forEach(function(b){b.classList.toggle("is-active",parseInt(b.dataset.val,10)===v)});resetAlifTrainer()};
+    window.resetAlifTrainer=function(){clearInterval(timerId);startedAt=null;finished=false;curIdx=0;words=pick(mode==="words"?targetVal:65);typedWords=[""];var b=document.getElementById("trWords"),inp=document.getElementById("trHiddenInput"),rb=document.getElementById("trResultBanner");if(b)b.style.transform="translateY(0)";if(rb)rb.hidden=true;if(inp){inp.disabled=false;inp.value=""}var wEl=document.getElementById("trWpm"),aEl=document.getElementById("trAcc");if(wEl)wEl.textContent="0 WPM";if(aEl)aEl.textContent="100%";updBest();updCnt();render();if(inp)inp.focus()};
+    function boot(){var inp=document.getElementById("trHiddenInput"),st=document.getElementById("trStage");if(!inp)return;inp.addEventListener("focus",function(){st.classList.add("is-focused")});inp.addEventListener("blur",function(){st.classList.remove("is-focused")});inp.addEventListener("keydown",function(e){if(e.key==="Tab"){e.preventDefault();resetAlifTrainer()}if(!finished&&e.key==="Backspace"&&inp.value===""&&curIdx>0&&typedWords[curIdx-1]!==words[curIdx-1]){e.preventDefault();curIdx--;inp.value=typedWords[curIdx];render()}});inp.addEventListener("input",function(){if(finished)return;if(!startedAt){startedAt=Date.now();timerId=setInterval(function(){updCnt();stats();if(mode==="time"&&(Date.now()-startedAt)/1000>=targetVal)finish()},200)}var r=inp.value;if(r.endsWith(" ")){var w=conv(r.trim());if(!w){inp.value="";return}typedWords[curIdx]=w;curIdx++;inp.value="";if(mode==="words"&&curIdx>=targetVal){finish();return}if(mode==="time"&&words.length-curIdx<35)words=words.concat(pick(40));typedWords[curIdx]="";updCnt();stats();render();return}inp.value=conv(r);typedWords[curIdx]=inp.value;if(mode==="words"&&curIdx===targetVal-1&&typedWords[curIdx]===words[curIdx]){curIdx++;finish();return}stats();render()});resetAlifTrainer()}
+    if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",boot)}else{boot()}
+  })();
+  </script>
+</body>
+</html>
