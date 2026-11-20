@@ -5035,6 +5035,7 @@ chaseing
 chasely
 chaser
 chases
+chashka
 chasidim
 chasing
 chasm
@@ -5526,6 +5527,7 @@ chemistrys
 chemitype
 chemitypy
 chemoceptor
+chemodan
 chemokinesis
 chemokinetic
 chemolysis
@@ -5992,7 +5994,6 @@ chimonanthus
 chimopeelagic
 chimpanzee
 chimu
-chin
 china
 chinaberry
 chinalike
@@ -6759,7 +6760,6 @@ chooses
 choosing
 choosingly
 choosy
-chop
 chopa
 chopboat
 chopfallen
@@ -7404,6 +7404,7 @@ chthonian
 chthonic
 chthonophagia
 chthonophagy
+chto
 chub
 chubbed
 chubbedness
@@ -9339,6 +9340,7 @@ devilship
 devon
 devonshire
 devoted
+devushka
 dewanship
 deyship
 df
@@ -13325,6 +13327,7 @@ hormone
 horn
 hornfish
 hornish
+horosho
 horrible
 horror
 horrorish
@@ -14791,6 +14794,7 @@ khakanship
 kharoshthi
 khattish
 khepesh
+khorosho
 kibosh
 kick
 kickish
@@ -14912,6 +14916,7 @@ koechlinite
 kolach
 koluschan
 kolush
+konechno
 kong
 kootcha
 korea
@@ -14929,6 +14934,7 @@ koreshan
 koreshanity
 koschei
 kosher
+koshka
 kotschubeite
 kreplech
 krishna
@@ -16106,6 +16112,7 @@ mashallah
 mashelton
 masher
 mashie
+mashina
 mashing
 mashman
 mashona
@@ -17824,6 +17831,7 @@ occurs
 ocean
 ochava
 ochavo
+ochen
 ocher
 ocherish
 ocherous
@@ -18256,6 +18264,7 @@ otherwise
 otiorhynchid
 otiorhynchidae
 otiorhynchinae
+otlichno
 ottawa
 ou
 ouachitite
@@ -19771,6 +19780,7 @@ pochard
 pochay
 poche
 pochette
+pochti
 pocket
 pockets
 pococurantish
@@ -20309,6 +20319,7 @@ pritchardia
 pritchel
 privacy
 private
+privet
 privilege
 privileges
 prix
@@ -23687,6 +23698,7 @@ shampooes
 shampooing
 shampooly
 shampoos
+shampun
 shamrock
 shamroot
 shamsheer
@@ -24506,6 +24518,7 @@ shivey
 shivoo
 shivy
 shivzoku
+shkola
 shkupetar
 shlu
 shluh
@@ -24595,6 +24608,7 @@ shogunate
 shohet
 shoji
 shojo
+shokolad
 shola
 shole
 shone
@@ -25689,6 +25703,7 @@ sparkishly
 sparkishness
 sparrowish
 spas
+spasibo
 spatchcock
 spatial
 spatterdashed
@@ -27650,6 +27665,7 @@ tocharic
 tocharish
 tocher
 tocherless
+tochno
 today
 todayish
 todd

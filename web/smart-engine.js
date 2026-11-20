@@ -5,6 +5,12 @@
   var lexSet = null;
   var suffixes = ["larning","larimiz","laringiz","larni","larga","larda","lardan","lari","lar","ning","miz","ingiz","dagi","gacha","lik","chi","dan","ga","da","ni","im","ing","si","di","gan","yapti","ish","uv"];
 
+  function deconvert(s) {
+    return s.replace(/Ş/g, 'Sh').replace(/ş/g, 'sh')
+            .replace(/Ç/g, 'Ch').replace(/ç/g, 'ch')
+            .replace(/Ö/g, "O'").replace(/ö/g, "o'")
+            .replace(/Ğ/g, "G'").replace(/ğ/g, "g'");
+  }
   function norm(s) { return (s || '').replace(APOSTROPHES, "'"); }
   function isUpper(c) { return c !== c.toLowerCase() && c === c.toUpperCase(); }
 
@@ -67,9 +73,10 @@
   }
 
   function analyzeWord(rawWord) {
-    var m = rawWord.match(/^([^A-Za-z'ʻ’‘ʼ`´]*)(.*?)([^A-Za-z'ʻ’‘ʼ`´]*)$/);
+    var m = rawWord.match(/^([^A-Za-zÖöĞğŞşÇç'ʻ’‘ʼ`´]*)(.*?)([^A-Za-zÖöĞğŞşÇç'ʻ’‘ʼ`´]*)$/);
     var pre = m ? m[1] : '', core = m ? m[2] : rawWord, post = m ? m[3] : '';
-    var low = norm(core).toLowerCase();
+    var restoredCore = deconvert(core);
+    var low = norm(restoredCore).toLowerCase();
     if (low.length < 2 || !hasPattern(low)) {
       return { input: rawWord, output: rawWord, convert: false, stage: 'naqsh', reason: "O'zgartiriladigan naqsh (sh, ch, o', g') yo'q." };
     }
@@ -77,7 +84,7 @@
       return { input: rawWord, output: rawWord, convert: false, stage: 'filtr', reason: "Xorijiy / o'zgarmas so'zlar kutubxonasida topildi — tegilmadi." };
     }
     var morph = findMorphStem(low);
-    var converted = pre + convertWordRaw(core) + post;
+    var converted = pre + convertWordRaw(restoredCore) + post;
     if (morph) {
       return {
         input: rawWord,
@@ -96,7 +103,7 @@
 
   function smartConvertText(text) {
     if (!text) return text;
-    return text.replace(/[A-Za-z'ʻ’‘ʼ`´-]+/g, function (tok) {
+    return text.replace(/[A-Za-zÖöĞğŞşÇç'ʻ’‘ʼ`´-]+/g, function (tok) {
       return analyzeWord(tok).output;
     });
   }
