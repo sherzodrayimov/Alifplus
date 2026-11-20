@@ -28,9 +28,6 @@
       --note-bg: #eef4ff;
       --note-border: #c7d9ff;
       --note-text: #1e3a8a;
-      --btn-bg: #ffffff;
-      --btn-border: #cbd5e1;
-      --btn-text: #0f172a;
     }
 
     html[data-theme="dark"] {
@@ -45,9 +42,6 @@
       --note-bg: #0f172a;
       --note-border: #283548;
       --note-text: #cbd5e1;
-      --btn-bg: #1e293b;
-      --btn-border: #334155;
-      --btn-text: #f8fafc;
     }
 
     * { box-sizing: border-box; }
@@ -60,16 +54,10 @@
       transition: background-color 0.2s ease, color 0.2s ease;
     }
     .wrap { max-width: 780px; margin: 0 auto; padding: 32px 20px 64px; }
-    .top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
     .back {
       display: inline-flex;
       align-items: center;
+      margin-bottom: 18px;
       color: var(--accent);
       text-decoration: none;
       font-weight: 700;
@@ -77,25 +65,6 @@
       transition: opacity 0.15s ease;
     }
     .back:hover { opacity: 0.8; }
-    .theme-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 14px;
-      border-radius: 10px;
-      border: 1px solid var(--btn-border);
-      background: var(--btn-bg);
-      color: var(--btn-text);
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
-    }
-    .theme-btn:hover {
-      border-color: #10b981;
-      color: #10b981;
-    }
-    .theme-btn:active { transform: scale(0.97); }
     .card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -145,10 +114,7 @@
 </head>
 <body>
   <div class="wrap">
-    <div class="top-bar">
-      <a href="../index.html" id="alifBackLink" class="back">← Alif+ Konverterga qaytiş</a>
-      <button type="button" id="alifGuideThemeToggle" class="theme-btn">🌙 Tungi rejim</button>
-    </div>
+    <a href="../index.html" id="alifBackLink" class="back">← Alif+ Konverterga qaytiş</a>
 
     <div class="card">
       <h1>macOS uchun Alif+ (v2.0 Universal)</h1>
@@ -196,7 +162,6 @@
 
   <script>
     (function () {
-      var toggleBtn = document.getElementById("alifGuideThemeToggle");
       var backLink = document.getElementById("alifBackLink");
 
       function applyTheme(mode) {
@@ -204,9 +169,6 @@
         localStorage.setItem("alif_theme", mode);
         localStorage.setItem("theme", mode);
         localStorage.setItem("alifplus_theme", mode);
-        if (toggleBtn) {
-          toggleBtn.textContent = mode === "dark" ? "☀️ Kunduzgi rejim" : "🌙 Tungi rejim";
-        }
         if (backLink) {
           backLink.setAttribute("href", "../index.html?theme=" + mode);
         }
@@ -214,13 +176,6 @@
 
       var current = document.documentElement.getAttribute("data-theme") || "light";
       applyTheme(current);
-
-      if (toggleBtn) {
-        toggleBtn.addEventListener("click", function () {
-          var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
-          applyTheme(next);
-        });
-      }
 
       window.addEventListener("storage", function (e) {
         if ((e.key === "alif_theme" || e.key === "theme" || e.key === "alifplus_theme") && (e.newValue === "dark" || e.newValue === "light")) {
