@@ -205,6 +205,11 @@ final class AlifSmartDict {
         if w.count < 2 { return false }
         lock.lock(); let (ok, r, u, sf) = (ready, rej, uz, sufs); lock.unlock()
         if r.contains(w) || w.split(separator: "-").contains(where: { $0.count > 1 && $0 != "chi" && r.contains(String($0)) }) { return false }
+        let engSufs = ["ers","ing","tion","sion","ment","ness","able","ible","ship","hood","ware","ed","er","es","ly","s"]
+        for es in engSufs where w.count > es.count + 2 && w.hasSuffix(es) {
+            let rt = String(w.dropLast(es.count))
+            if r.contains(rt) || r.contains(rt + "e") { return false }
+        }
         if w.contains("o'") || w.contains("g'") { return true }
         if !ok { return !(w.contains("w") || w.contains("th") || w.contains("wh") || w.contains("ck") || w.contains("qu")) }
         if inUz(w, u) { return true }
@@ -346,6 +351,28 @@ final class KeyboardEngine {
             kVK_Home, kVK_End, kVK_PageUp, kVK_PageDown
         ]
         if resetKeys.contains(Int(keyCode)) {
+            if (keyCode == CGKeyCode(kVK_Return) || keyCode == CGKeyCode(kVK_Tab)),
+               !userUndid, !rawWord.isEmpty, rawWord != screenWord, !AlifSmartDict.shared.shouldConvert(rawWord) {
+                let del = screenWord.count, txt = rawWord; resetBuffer()
+                let src = CGEventSource(stateID: .hidSystemState)
+                for _ in 0..<del {
+                    if let d1 = CGEvent(keyboardEventSource: src, virtualKey: CGKeyCode(kVK_Delete), keyDown: true),
+                       let u1 = CGEvent(keyboardEventSource: src, virtualKey: CGKeyCode(kVK_Delete), keyDown: false) {
+                        d1.setIntegerValueField(.eventSourceUserData, value: syntheticTag)
+                        u1.setIntegerValueField(.eventSourceUserData, value: syntheticTag)
+                        d1.post(tap: .cghidEventTap); u1.post(tap: .cghidEventTap)
+                    }
+                }
+                let u16 = Array(txt.utf16)
+                if let d = CGEvent(keyboardEventSource: src, virtualKey: 0, keyDown: true),
+                   let u = CGEvent(keyboardEventSource: src, virtualKey: 0, keyDown: false) {
+                    d.setIntegerValueField(.eventSourceUserData, value: syntheticTag)
+                    u.setIntegerValueField(.eventSourceUserData, value: syntheticTag)
+                    d.keyboardSetUnicodeString(stringLength: u16.count, unicodeString: u16)
+                    u.keyboardSetUnicodeString(stringLength: u16.count, unicodeString: u16)
+                    d.post(tap: .cghidEventTap); u.post(tap: .cghidEventTap)
+                }
+            }
             resetBuffer()
             return Unmanaged.passUnretained(event)
         }

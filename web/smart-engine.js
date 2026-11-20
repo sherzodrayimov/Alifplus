@@ -48,6 +48,24 @@
     return null;
   }
 
+  var ENG_SUFS = ["ers","ing","tion","sion","ment","ness","able","ible","ship","hood","ware","ed","er","es","ly","s"];
+  function isForeignWord(low) {
+    if (rejectSet && rejectSet.has(low)) return true;
+    var parts = low.split('-');
+    if (parts.some(function (p) { return p.length > 1 && p !== 'chi' && rejectSet && rejectSet.has(p); })) return true;
+    if (/(w|th|wh|ck|qu|tch|dge|ght|sch|chr)/.test(low) && low.indexOf("o'") === -1 && low.indexOf("g'") === -1) return true;
+    if (rejectSet) {
+      for (var i = 0; i < ENG_SUFS.length; i++) {
+        var sf = ENG_SUFS[i];
+        if (low.length > sf.length + 2 && low.endsWith(sf)) {
+          var root = low.slice(0, -sf.length);
+          if (rejectSet.has(root) || rejectSet.has(root + 'e')) return true;
+        }
+      }
+    }
+    return false;
+  }
+
   function analyzeWord(rawWord) {
     var m = rawWord.match(/^([^A-Za-z'ʻ’‘ʼ`´]*)(.*?)([^A-Za-z'ʻ’‘ʼ`´]*)$/);
     var pre = m ? m[1] : '', core = m ? m[2] : rawWord, post = m ? m[3] : '';
@@ -55,12 +73,8 @@
     if (low.length < 2 || !hasPattern(low)) {
       return { input: rawWord, output: rawWord, convert: false, stage: 'naqsh', reason: "O'zgartiriladigan naqsh (sh, ch, o', g') yo'q." };
     }
-    var parts = low.split('-');
-    var rejected = (rejectSet && rejectSet.has(low)) || parts.some(function (p) {
-      return p.length > 1 && p !== 'chi' && rejectSet && rejectSet.has(p);
-    });
-    if (rejected) {
-      return { input: rawWord, output: rawWord, convert: false, stage: 'filtr', reason: "Xorijiy / IT istisno filtrida topildi — tegilmadi." };
+    if (isForeignWord(low)) {
+      return { input: rawWord, output: rawWord, convert: false, stage: 'filtr', reason: "Xorijiy / o'zgarmas so'zlar kutubxonasida topildi — tegilmadi." };
     }
     var morph = findMorphStem(low);
     var converted = pre + convertWordRaw(core) + post;

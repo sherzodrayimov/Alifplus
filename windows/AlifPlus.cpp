@@ -57,6 +57,14 @@ public:
         if (w.size() < 2) return false;
         std::lock_guard<std::mutex> lk(m_);
         if (rej_.count(w)) return false;
+        static const char* engSufs[] = {"ers","ing","tion","sion","ment","ness","able","ible","ship","hood","ware","ed","er","es","ly","s"};
+        for (const char* es : engSufs) {
+            std::string s(es);
+            if (w.size() > s.size() + 2 && w.compare(w.size() - s.size(), s.size(), s) == 0) {
+                std::string rt = w.substr(0, w.size() - s.size());
+                if (rej_.count(rt) || rej_.count(rt + "e")) return false;
+            }
+        }
         if (w.find("o'") != std::string::npos || w.find("g'") != std::string::npos) return true;
         if (!ready_) return w.find('w') == std::string::npos && w.find("th") == std::string::npos;
         auto inU = [&](const std::string& s) {
