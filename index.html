@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Alif+ — Matn va hujjatni yangi alifboga ögiriş</title>
   <meta name="description" content="Kirill yoki lotin yozuvidagi Word, PDF va oddiy matn — brauzerning özida, bepul va çeklovsiz." />
-  <link rel="stylesheet" href="web/converter.css?v=12" />
+  <link rel="stylesheet" href="web/converter.css?v=13" />
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
@@ -36,7 +36,8 @@
         <a href="#converter" class="alif-nav-link active">Konverter</a>
         <a href="#desktop" class="alif-nav-link">macOS va Windows dasturi</a>
         <a href="web/macos-install.html" class="alif-nav-link">macOS qöllanma</a>
-              <button type="button" id="alifThemeToggle" class="alif-theme-btn" onclick="toggleAlifTheme()" aria-label="Kundalik yoki tungi rejim" title="Kundalik / Tungi rejim">
+              <a href="#alifTrainer" class="alif-nav-link">Tez yoziş</a>
+        <button type="button" id="alifThemeToggle" class="alif-theme-btn" onclick="toggleAlifTheme()" aria-label="Kundalik yoki tungi rejim" title="Kundalik / Tungi rejim">
           <svg class="alif-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
           <svg class="alif-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
         </button>
@@ -304,6 +305,62 @@
         </div>
       </div>
     </section>
+  
+  <section id="alifTrainer" class="alif-trainer-sec">
+    <div class="alif-container">
+      <div class="alif-trainer-card">
+        <div class="alif-trainer-head">
+          <div>
+            <span class="alif-trainer-badge">Tez yoziş trenajyori · WPM</span>
+            <h2 class="alif-trainer-title">Yangi alifboda yoziş tezligingizni sinang</h2>
+            <p class="alif-trainer-sub">
+              Oddiy klaviaturada <code>o'</code>, <code>g'</code>, <code>sh</code>, <code>ch</code> deb yozavering — trenajyor ularni özi <strong>ö, ğ, ş, ç</strong> ga ögirib, tezligingizni hisoblaydi.
+            </p>
+          </div>
+          <div class="alif-trainer-stats">
+            <div class="alif-stat-pill">
+              <small>Tezlik</small>
+              <strong id="trWpm">0 WPM</strong>
+            </div>
+            <div class="alif-stat-pill">
+              <small>Aniqlik</small>
+              <strong id="trAcc">100%</strong>
+            </div>
+            <div class="alif-stat-pill">
+              <small>Vaqt</small>
+              <strong id="trTime">0s</strong>
+            </div>
+            <div class="alif-stat-pill alif-stat-best">
+              <small>Rekord</small>
+              <strong id="trBest">—</strong>
+            </div>
+          </div>
+        </div>
+
+        <div id="trPromptBox" class="alif-trainer-prompt" onclick="document.getElementById('trInput').focus()" aria-label="Namuna matn"></div>
+
+        <div class="alif-trainer-input-row">
+          <input
+            type="text"
+            id="trInput"
+            class="alif-trainer-input"
+            placeholder="Yozişni boşlaş uçun şu yerga yozing..."
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+          />
+          <button type="button" class="alif-trainer-btn" onclick="resetAlifTrainer(false)" title="Qaytadan boşlaş">↻ Qayta</button>
+          <button type="button" class="alif-trainer-btn alif-trainer-btn-next" onclick="resetAlifTrainer(true)">Keyingi matn →</button>
+        </div>
+
+        <div id="trResultBanner" class="alif-trainer-result" hidden>
+          <div id="trResultText"></div>
+          <button type="button" class="alif-hero-btn-primary" onclick="resetAlifTrainer(true)">Yana bir matn sinab köriş →</button>
+        </div>
+      </div>
+    </div>
+  </section>
   </main>
 
   <div id="alifExcModal" class="alif-modal" hidden>
@@ -761,6 +818,166 @@
         document.addEventListener("DOMContentLoaded", stepDemo);
       } else {
         stepDemo();
+      }
+    })();
+  </script>
+    <script id="alifTrainerScript">
+    (function() {
+      var passages = [
+        "Özbekiston — gözal şaharlar va çiroyli toğlar yurti.",
+        "Yangi alifboda öqiş hamda töğri yoziş ança qulay va oson.",
+        "Şahrisabz va Farğona vodiysining tabiati har doim maftunkor.",
+        "Çiroyli xat va savodli yoziş har bir öquvçi uçun muhim fazilatdir.",
+        "Ötmiş tariximizni çuqur örganiş kelajakka işonç bilan qadam qöyişga yordam beradi."
+      ];
+
+      var idx = 0;
+      var startedAt = null;
+      var timerId = null;
+      var finished = false;
+      var bestWpm = parseInt(localStorage.getItem("alif_best_wpm") || "0", 10) || 0;
+
+      function updateBestUi() {
+        var el = document.getElementById("trBest");
+        if (el) el.textContent = bestWpm > 0 ? bestWpm + " WPM" : "—";
+      }
+
+      function autoConvertTyping(val) {
+        return val
+          .replace(/([Oo])['ʻ’‘ʼ`]/g, function(_, c) { return c === "O" ? "Ö" : "ö"; })
+          .replace(/([Gg])['ʻ’‘ʼ`]/g, function(_, c) { return c === "G" ? "Ğ" : "ğ"; })
+          .replace(/([Ss])[Hh]/g, function(_, c) { return c === "S" ? "Ş" : "ş"; })
+          .replace(/([Cc])[Hh]/g, function(_, c) { return c === "C" ? "Ç" : "ç"; });
+      }
+
+      function escapeHtml(ch) {
+        if (ch === "&") return "&amp;";
+        if (ch === "<") return "&lt;";
+        if (ch === ">") return "&gt;";
+        return ch;
+      }
+
+      function renderPrompt(target, typed) {
+        var box = document.getElementById("trPromptBox");
+        if (!box) return;
+        var out = [];
+        for (var i = 0; i < target.length; i++) {
+          var ch = target[i];
+          var cls = "tr-ch";
+          if (i < typed.length) {
+            cls += (typed[i] === ch) ? " is-ok" : " is-err";
+          } else if (i === typed.length && !finished) {
+            cls += " is-cur";
+          }
+          if ("ÖöĞğŞşÇç".indexOf(ch) !== -1) {
+            cls += " is-special";
+          }
+          out.push('<span class="' + cls + '">' + escapeHtml(ch) + '</span>');
+        }
+        box.innerHTML = out.join("");
+      }
+
+      function computeMetrics(target, typed) {
+        var elapsedSec = startedAt ? Math.max((Date.now() - startedAt) / 1000, 0.5) : 0;
+        var correct = 0;
+        var len = Math.min(target.length, typed.length);
+        for (var i = 0; i < len; i++) {
+          if (typed[i] === target[i]) correct++;
+        }
+        var acc = typed.length > 0 ? Math.round((correct / typed.length) * 100) : 100;
+        var wpm = elapsedSec > 0 ? Math.round((correct / 5) / (elapsedSec / 60)) : 0;
+
+        var elWpm = document.getElementById("trWpm");
+        var elAcc = document.getElementById("trAcc");
+        var elTime = document.getElementById("trTime");
+        if (elWpm) elWpm.textContent = wpm + " WPM";
+        if (elAcc) elAcc.textContent = acc + "%";
+        if (elTime) elTime.textContent = Math.floor(elapsedSec) + "s";
+        return { wpm: wpm, acc: acc, elapsedSec: elapsedSec };
+      }
+
+      window.resetAlifTrainer = function(advance) {
+        if (advance) idx = (idx + 1) % passages.length;
+        startedAt = null;
+        finished = false;
+        clearInterval(timerId);
+        timerId = null;
+
+        var inp = document.getElementById("trInput");
+        var banner = document.getElementById("trResultBanner");
+        if (inp) {
+          inp.value = "";
+          inp.disabled = false;
+          inp.focus();
+        }
+        if (banner) banner.hidden = true;
+
+        var elWpm = document.getElementById("trWpm");
+        var elAcc = document.getElementById("trAcc");
+        var elTime = document.getElementById("trTime");
+        if (elWpm) elWpm.textContent = "0 WPM";
+        if (elAcc) elAcc.textContent = "100%";
+        if (elTime) elTime.textContent = "0s";
+
+        renderPrompt(passages[idx], "");
+      };
+
+      function initTrainer() {
+        updateBestUi();
+        renderPrompt(passages[idx], "");
+        var inp = document.getElementById("trInput");
+        if (!inp) return;
+
+        inp.addEventListener("input", function() {
+          if (finished) return;
+          var pos = inp.selectionStart;
+          var raw = inp.value;
+          var converted = autoConvertTyping(raw);
+          if (converted !== raw) {
+            var diff = raw.length - converted.length;
+            inp.value = converted;
+            inp.setSelectionRange(Math.max(0, pos - diff), Math.max(0, pos - diff));
+          }
+
+          var typed = inp.value;
+          var target = passages[idx];
+
+          if (!startedAt && typed.length > 0) {
+            startedAt = Date.now();
+            timerId = setInterval(function() {
+              if (!finished) computeMetrics(passages[idx], inp.value);
+            }, 300);
+          }
+
+          renderPrompt(target, typed);
+          var stats = computeMetrics(target, typed);
+
+          if (typed.length >= target.length) {
+            finished = true;
+            clearInterval(timerId);
+            inp.disabled = true;
+
+            if (stats.acc >= 80 && stats.wpm > bestWpm) {
+              bestWpm = stats.wpm;
+              localStorage.setItem("alif_best_wpm", String(bestWpm));
+              updateBestUi();
+            }
+
+            var banner = document.getElementById("trResultBanner");
+            var resTxt = document.getElementById("trResultText");
+            if (banner && resTxt) {
+              resTxt.innerHTML =
+                "<strong>Ajoyib!</strong> Natijangiz: <b>" + stats.wpm + " WPM</b> · Aniqlik: <b>" + stats.acc + "%</b> (" + stats.elapsedSec.toFixed(1) + " soniya)";
+              banner.hidden = false;
+            }
+          }
+        });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initTrainer);
+      } else {
+        initTrainer();
       }
     })();
   </script>

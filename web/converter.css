@@ -1384,3 +1384,181 @@ html[data-theme="dark"] .alif-footer {
   background: #070b14 !important;
   border-top: 1px solid #1e293b;
 }
+
+/* ALIF-TRAINER-START */
+.alif-trainer-sec {
+  padding: 18px 0 36px;
+}
+.alif-trainer-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+.alif-trainer-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.alif-trainer-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+  margin-bottom: 8px;
+}
+.alif-trainer-title {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+}
+.alif-trainer-sub {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+  max-width: 540px;
+  line-height: 1.5;
+}
+.alif-trainer-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.alif-stat-pill {
+  min-width: 82px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+.alif-stat-pill small {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.alif-stat-pill strong {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+}
+.alif-stat-best strong {
+  color: #059669;
+}
+.alif-trainer-prompt {
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: clamp(18px, 2.4vw, 23px);
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+  margin-bottom: 14px;
+  cursor: text;
+  user-select: none;
+}
+.tr-ch.is-special {
+  font-weight: 800;
+}
+.tr-ch.is-ok {
+  color: #059669;
+}
+.tr-ch.is-err {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.14);
+  border-radius: 4px;
+  text-decoration: underline;
+}
+.tr-ch.is-cur {
+  color: var(--text);
+  border-bottom: 2.5px solid #10b981;
+}
+.alif-trainer-input-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.alif-trainer-input {
+  flex: 1 1 280px;
+  padding: 12px 15px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 600;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.alif-trainer-input:focus {
+  border-color: #10b981;
+}
+.alif-trainer-btn {
+  padding: 11px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.alif-trainer-btn-next {
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #059669;
+}
+.alif-trainer-result {
+  margin-top: 14px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: #ecfdf5;
+  border: 1px solid #86efac;
+  color: #065f46;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14.5px;
+}
+.alif-trainer-result[hidden] {
+  display: none !important;
+}
+
+/* Dark mode moslashuvi */
+html[data-theme="dark"] .alif-trainer-card {
+  background: #111827 !important;
+  border-color: #283548 !important;
+}
+html[data-theme="dark"] .alif-trainer-badge {
+  background: rgba(16, 185, 129, 0.14) !important;
+  border-color: rgba(52, 211, 153, 0.3) !important;
+  color: #6ee787 !important;
+}
+html[data-theme="dark"] .alif-stat-pill,
+html[data-theme="dark"] .alif-trainer-prompt {
+  background: #0f172a !important;
+  border-color: #283548 !important;
+}
+html[data-theme="dark"] .alif-stat-best strong,
+html[data-theme="dark"] .tr-ch.is-ok,
+html[data-theme="dark"] .alif-trainer-btn-next {
+  color: #34d399 !important;
+}
+html[data-theme="dark"] .alif-trainer-result {
+  background: rgba(16, 185, 129, 0.14) !important;
+  border-color: rgba(52, 211, 153, 0.35) !important;
+  color: #6ee787 !important;
+}
