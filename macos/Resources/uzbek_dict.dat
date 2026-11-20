@@ -237,7 +237,6 @@ Aiz
 5iv
 2r
 3amov
-4sh
 4ziv
 3band
 7chi
@@ -628,8 +627,7 @@ Biz
 6ng
 8iz
 4gach
-6n
-7cha
+6ncha
 7day
 8ek
 8ik
@@ -3769,8 +3767,7 @@ Aiz
 5ium
 3eduk
 1laba
-3cha
-6bof
+3chabof
 3dag'lar
 3f
 3g'da
@@ -4117,8 +4114,7 @@ Aiz
 4um
 3mxo'jayev
 3og'a
-3sh
-5adi
+3shadi
 8lar
 6man
 7iz
@@ -4155,8 +4151,7 @@ Aiz
 7m
 7ng
 9iz
-5er
-7aka
+5eraka
 5gach
 7n
 8cha
@@ -4211,8 +4206,7 @@ Aiz
 9m
 9ng
 ;iz
-7g
-8ach
+7gach
 9n
 :cha
 :day
@@ -5327,8 +5321,7 @@ Aiz
 3iyo
 3uh
 2ca
-3ha
-5dan
+3hadan
 5gina
 5ki
 5r
@@ -7010,8 +7003,7 @@ Aiz
 ;iz
 :san
 ;iz
-5ng
-7iz
+5ngiz
 7lar
 5oladi
 :lar
@@ -7141,8 +7133,7 @@ Aiz
 6ng
 8iz
 6ylik
-5in
-7lar
+5inlar
 4ver
 7adi
 :lar
@@ -7533,7 +7524,6 @@ Aiz
 4akiylar
 6lar
 5q
-4in
 3lanko'y
 4on
 6shohni
@@ -8110,13 +8100,11 @@ Aiz
 4ko'l
 4ni
 6ng
-4r
 3k
 4enazilar
 9ylar
 4oniylar
-3raf
-6iyaning
+3rafiyaning
 8ning
 3sha
 3tak
@@ -13496,8 +13484,7 @@ Aiz
 5a
 5g
 6iz
-4sh
-6da
+4shda
 8n
 6ga
 6lik
@@ -15399,8 +15386,7 @@ Aiz
 6k
 6m
 6ng
-5h
-6adi
+5hadi
 9lar
 7man
 8iz
@@ -15453,8 +15439,7 @@ Aiz
 7il
 8n
 7uncha
-6ing
-9iz
+6ingiz
 9lar
 7sh
 9da
@@ -16700,7 +16685,6 @@ Ani
 5o'tarar
 6kil
 5urash
-4lik
 4mat
 4nayman
 4og'och
@@ -29144,8 +29128,7 @@ Ang
 5k
 5m
 5yam
-4hevik
-8zm
+4hevizm
 4in
 4n
 3ta
@@ -29549,8 +29532,7 @@ Ang
 6ki
 5i
 4p
-4sh
-6adi
+4shadi
 7rdi
 6da
 8n
@@ -35737,8 +35719,7 @@ Blar
 2da
 2ga
 0cetga
-1ha
-3chvon
+1hachvon
 3da
 3g'alay
 6ndar
@@ -36386,7 +36367,6 @@ Biz
 5rak
 6ibek
 7xon
-4a
 3k
 4adi
 7lar
@@ -36400,8 +36380,7 @@ Biz
 7chi
 7lab
 6da
-5s
-6an
+5san
 6iz
 5ver
 8adi
@@ -36856,8 +36835,7 @@ Aiz
 6iz
 5san
 6iz
-3l
-4a
+3la
 5biyga
 8lar
 8ni
@@ -37434,8 +37412,7 @@ Aiz
 8m
 8ng
 :iz
-6g
-7ach
+6gach
 8n
 9cha
 9day
@@ -38910,8 +38887,7 @@ Biz
 6iz
 5san
 6iz
-3ma
-5don
+3madon
 5la
 7adi
 :lar
@@ -39220,8 +39196,7 @@ Aiz
 4pasak
 4sangar
 3na
-4di
-6adi
+4diadi
 9lar
 7man
 8iz
@@ -39274,8 +39249,7 @@ Aiz
 7il
 8n
 7uncha
-6ing
-9iz
+6ingiz
 9lar
 7sh
 9da
@@ -40481,8 +40455,7 @@ Bng
 7bosar
 :di
 7uz
-3p
-4ak
+3pak
 6bozlik
 5n
 6cha
@@ -44428,8 +44401,7 @@ Aiz
 8iz
 7san
 8iz
-5ng
-7iz
+5ngiz
 7lar
 5q
 5r
@@ -45117,8 +45089,7 @@ Aiz
 6ylik
 5in
 7lar
-4ta
-6nogadagi
+4tanogadagi
 4ver
 7adi
 :lar
@@ -45309,8 +45280,7 @@ Aiz
 4qi
 4usho'g'li
 3xmoq
-3y
-4adi
+3yadi
 7lar
 5man
 6iz
@@ -45365,8 +45335,7 @@ Aiz
 6n
 5uncha
 4indi
-6g
-7iz
+6giz
 7lar
 5r
 6lik
@@ -46738,8 +46707,7 @@ Biz
 7m
 7ng
 9iz
-5en
-7istondagi
+5enistondagi
 <lik
 7lar
 5gach
@@ -47184,8 +47152,7 @@ Ani
 8iz
 3hra
 3k
-4a
-5di
+4adi
 7lar
 5man
 6iz
@@ -47564,7 +47531,6 @@ Ani
 7ga
 7lik
 7ni
-6t
 4ka
 6ga
 6lik
@@ -48005,8 +47971,7 @@ Ani
 <ni
 >ng
 <siz
-3na
-4naydagi
+3nnaydagi
 9n
 3p
 3r
@@ -48028,8 +47993,7 @@ Ani
 ?lar
 Bning
 ;lik
-4t
-5adi
+4tadi
 8lar
 6man
 7iz
@@ -48082,8 +48046,7 @@ Bning
 6il
 7n
 6uncha
-5ing
-8iz
+5ingiz
 8lar
 6sh
 8da
@@ -48193,8 +48156,7 @@ Bning
 8xa
 3shirdagi
 4niy
-3t
-4an
+3tan
 4da
 6n
 4el
@@ -49820,8 +49782,7 @@ Aiz
 4magalur
 4ora
 4uvchi
-3l
-4a
+3la
 5ngar
 9lik
 5r
@@ -49996,8 +49957,7 @@ Aiz
 6kash
 6qovoq
 5suv
-4la
-6gurazon
+4lagurazon
 8zaron
 6k
 7day
@@ -51543,8 +51503,7 @@ Aiz
 4dagi
 6n
 5ovul
-4g
-5'il
+4g'il
 8la
 :adi
 =lar
@@ -52182,7 +52141,6 @@ Aiz
 7san
 8iz
 5y
-4k
 4ligini
 4ni
 6chi
@@ -54026,8 +53984,7 @@ Ang
 7iz
 6san
 7iz
-4k
-5in
+4kin
 7lash
 ;adi
 >lar
@@ -54238,8 +54195,7 @@ Biz
 7il
 8n
 7uncha
-6l
-7adi
+6ladi
 :lar
 8man
 9iz
@@ -55271,12 +55227,10 @@ Aiz
 4tiklar
 5on
 7chi
-3t
-4adagi
+3tadagi
 7n
 6i
 7lar
-5k
 5man
 6iz
 5san
@@ -55332,8 +55286,7 @@ Aiz
 5il
 6n
 5uncha
-4ing
-7iz
+4ingiz
 7lar
 5r
 6la
@@ -61610,8 +61563,7 @@ Biz
 8iz
 7san
 8iz
-3l
-4g'u
+3lg'u
 7chi
 7larich
 9shtirish
@@ -64865,8 +64817,7 @@ Biz
 ;ning
 5qcha
 4qor
-3n
-4arli
+3narli
 4ki
 4madim
 4on
@@ -64875,8 +64826,7 @@ Biz
 3qurko'l
 9prik
 3rq
-4r
-5a
+4ra
 6k
 4uk
 5lla
@@ -65763,8 +65713,7 @@ Aiz
 7ng
 9iz
 7ylik
-6h
-7istonda
+6histonda
 8ya
 :da
 <gi
@@ -75738,8 +75687,7 @@ Aiz
 6iz
 4q
 4ylik
-3h
-4anba
+3hanba
 4man
 7chilik
 7lash
@@ -81718,8 +81666,7 @@ Aiz
 4ona
 2s
 3ad
-3h
-4ist
+3hist
 5zm
 3ih
 3l
@@ -81784,7 +81731,6 @@ Aiz
 4viy
 1ederallashtirish
 2ldmarshal
-4sher
 3eton
 7chi
 2n
@@ -82196,7 +82142,6 @@ Aiz
 6lash
 7i
 3gen
-3h
 3id
 4q
 2tih
@@ -98531,8 +98476,7 @@ Aiz
 3i
 2n
 3ak
-3ch
-5kor
+3chkor
 8lik
 5la
 7adi
@@ -105055,8 +104999,7 @@ Aiz
 6ishoh
 1ch
 1ec
-3h
-4am
+3ham
 4hh
 4kim
 7ga
@@ -107439,8 +107382,7 @@ An
 2san
 5xo'jayev
 4yni
-3h
-4bo'y
+3hbo'y
 4li
 4siz
 7lan
@@ -120223,8 +120165,7 @@ Aiz
 6n
 5uncha
 4ing
-5sh
-7da
+5shda
 9n
 7ga
 7lik
@@ -125525,8 +125466,7 @@ Aiz
 5natlanish
 6sizlantirish
 5s
-3ch
-5la
+3chla
 7adi
 :lar
 8man
@@ -125956,8 +125896,7 @@ Alar
 4la
 4mardagi
 5ir
-7i
-8ydan
+7iydan
 9lar
 9ni
 ;ng
@@ -127297,7 +127236,6 @@ Aiz
 2ingi
 2jim
 2k
-3chi
 3ir
 5adi
 6verish
@@ -130287,8 +130225,7 @@ Biz
 2s
 3ako'rak
 3el
-3h
-4an
+3han
 6band
 6la
 8adi
@@ -137751,8 +137688,7 @@ Aiz
 2balt
 3ili
 3ra
-2ch
-4a
+2cha
 5da
 6i
 7lar
@@ -137811,8 +137747,7 @@ Aiz
 6n
 6ri
 5uncha
-4ing
-7iz
+4ingiz
 7lar
 5sh
 7da
@@ -141799,8 +141734,7 @@ Aiz
 2sa
 4k
 4n
-3h
-4ga
+3hga
 4im
 4kar
 7ak
@@ -141819,8 +141753,7 @@ Aiz
 6go'y
 :lik
 5boz
-4sh
-6cha
+4shcha
 6lar
 3ofat
 4v
@@ -141957,8 +141890,7 @@ Cdan
 8chi
 2c
 3ga
-3h
-4ga
+3hga
 4inka
 8xordalilar
 5zga
@@ -142085,8 +142017,7 @@ Cdan
 2ra
 3ik
 4zm
-2sh
-4adi
+2shadi
 5rdi
 5ynik
 4dan
@@ -142096,8 +142027,7 @@ Cdan
 7n
 5ga
 5miz
-5ng
-7iz
+5ngiz
 6i
 4lari
 8da
@@ -142592,8 +142522,7 @@ Cdan
 :ncha
 9uncha
 8verish
-2sh
-3on
+2son
 4s
 2tereya
 3in
@@ -144537,8 +144466,7 @@ Cga
 3sala
 4dan
 4ga
-4hal
-5rut
+4hrut
 8li
 5yangdi
 4iya
@@ -144995,7 +144923,6 @@ Biz
 7iyalar
 9ya
 5iq
-5u
 4shoq
 7ta
 4uq
@@ -146309,8 +146236,7 @@ Air
 4yam
 3man
 4cha
-3shevik
-8zm
+3shevizm
 4i
 5adi
 6verish
@@ -148294,8 +148220,7 @@ Aga
 Ai
 Ani
 4ngiz
-4sh
-6da
+4shda
 8n
 6ga
 6lik
@@ -150228,8 +150153,7 @@ Aiz
 4tan
 2bil
 3odo
-2cha
-5g'ar
+2chag'ar
 5lka
 5xar
 2da
@@ -151575,7 +151499,6 @@ Adan
 4shir
 3talo
 2cha
-5l
 4chi
 2darris
 3dao
@@ -152986,7 +152909,6 @@ Alar
 9lik
 3ruk
 3sak
-4hid
 3t
 4ad
 5k
@@ -153162,8 +153084,7 @@ Biz
 4xxar
 4yev
 3bat
-3h
-4afni
+3hafni
 5k
 6boz
 9lik
@@ -176421,8 +176342,7 @@ Alar
 5m
 5ng
 7iz
-3ered
-5k
+3erk
 6chi
 6ist
 3gach
@@ -180461,11 +180381,9 @@ Bda
 6iz
 3zarak
 2b
-2cha
-5rang
+2charang
 5zor
-4i
-5n
+4in
 4oq
 6lik
 2dda
@@ -191177,8 +191095,7 @@ Aiz
 6k
 7ni
 9ng
-1ech
-4ak
+1echak
 6gul
 5n
 6lik
@@ -191378,7 +191295,6 @@ Aiz
 4gir
 4in
 6lik
-4kash
 4la
 6adi
 9lar
@@ -192631,8 +192547,7 @@ Aiz
 4il
 5n
 4uncha
-3h
-4adi
+3hadi
 7lar
 5k
 5man
@@ -193081,8 +192996,7 @@ Aiz
 ;iz
 :san
 ;iz
-5ng
-7iz
+5ngiz
 7lar
 5oladi
 :lar
@@ -194812,8 +194726,7 @@ Biz
 4taj
 4yor
 3r
-3sh
-5ch
+3shch
 5i
 4tik
 7a
@@ -195944,8 +195857,7 @@ Ddan
 4lar
 4ni
 3yolka
-2tash
-3iha
+2tiha
 4njon
 4rla
 7averish
@@ -225520,8 +225432,7 @@ Aiz
 6at
 6lashtirish
 4li
-2ncho
-3da
+2nda
 5la
 7averish
 7gach
@@ -226151,8 +226062,7 @@ Aiz
 6niy
 2v
 3g'angaron
-3ish
-6da
+3ishda
 7osh
 6ta
 3naq
@@ -227475,7 +227385,6 @@ Averish
 2g
 2hlat
 2jo
-2ksha
 2landi
 3ikka
 2mi
@@ -227517,8 +227426,7 @@ Averish
 4ga
 6n
 5uncha
-4i
-5b
+4ib
 5m
 5ngiz
 5sh
@@ -228897,8 +228805,7 @@ Alar
 5boyvachcha
 4ng
 6iz
-4sh
-6da
+4shda
 8n
 6ga
 6lik
@@ -233176,8 +233083,7 @@ Aiz
 4ik
 2inks
 1haa
-3b
-4ada
+3bada
 7la
 9adi
 <lar
@@ -234158,8 +234064,7 @@ Aiz
 6ov
 4ida
 4ren
-3h
-4anshoh
+3hanshoh
 5r
 6cha
 8i
@@ -234423,7 +234328,6 @@ Aiz
 7xon
 4d
 5am
-4id
 4kotdan
 4lo
 4noz
@@ -234968,8 +234872,7 @@ Aiz
 4shubhasiz
 5iz
 4tizm
-3l
-4abbo
+3labbo
 6iy
 5ndin
 5rga
@@ -235886,13 +235789,11 @@ Aiz
 9san
 :iz
 3m
-4a
-5lg'an
+4alg'an
 6oq
 8day
 9ek
-5n
-6izm
+5nizm
 9ga
 9ining
 9ni
@@ -236561,8 +236462,7 @@ Aiz
 4taj
 7chi
 3oqi
-3p
-4aloq
+3paloq
 8gul
 8la
 :adi
@@ -239017,8 +238917,7 @@ Aiz
 5t
 5var
 4si
-3t
-4adi
+3tadi
 7lar
 5k
 6chi
@@ -239512,8 +239411,7 @@ Aiz
 :iz
 9san
 :iz
-5ng
-7iz
+5ngiz
 7lar
 5r
 6la
@@ -240394,8 +240292,7 @@ Aga
 4zod
 7aga
 8si
-3y
-4ba
+3yba
 5oniy
 9ga
 9lar
@@ -240736,8 +240633,7 @@ Aiz
 5t
 2ef
 4lik
-3kel
-4idagi
+3kidagi
 5l
 6i
 6li
@@ -240745,8 +240641,7 @@ Aiz
 3luxa
 3maxadagi
 7lik
-3r
-4ali
+3rali
 5ndom
 4bachcha
 5o'tayev
@@ -240914,7 +240809,6 @@ Aiz
 ;san
 <iz
 7ik
-5yat
 4lan
 7adi
 :lar
@@ -241090,15 +240984,13 @@ Aiz
 4zod
 3sternya
 3tirgiz
-3va
-5shunoslik
+3vashunoslik
 4iot
 4ro
 3yping
 3zlong
 2gan
-2i
-3a
+2ia
 4lik
 4shunoslikka
 3b
@@ -242365,7 +242257,6 @@ Aiz
 7siz
 3kaslangan
 6t
-7a
 7la
 9adi
 <lar
@@ -243211,8 +243102,7 @@ Biz
 7ga
 7lik
 7ni
-4ling
-6q
+4liq
 4madi
 8k
 8lar
@@ -243909,8 +243799,7 @@ Aiz
 6iz
 5san
 6iz
-3m
-4adi
+3madi
 7lar
 5man
 6iz
@@ -244217,8 +244106,7 @@ Aiz
 ;iz
 :san
 ;iz
-5ng
-7iz
+5ngiz
 7lar
 5oladi
 :lar
@@ -244548,8 +244436,7 @@ Aiz
 6iz
 5san
 6iz
-3na
-5k
+3nak
 5lash
 5m
 5vanda
@@ -246384,8 +246271,7 @@ Aiz
 :iz
 9san
 :iz
-4k
-5at
+4kat
 4ma
 5ol
 6n
@@ -246720,8 +246606,7 @@ Aiz
 8da
 6n
 4zada
-3sh
-5a
+3sha
 6dam
 7i
 8lar
@@ -246819,8 +246704,7 @@ Aiz
 9m
 9ng
 ;iz
-7g
-8ach
+7gach
 9n
 :cha
 :day
@@ -249443,8 +249327,7 @@ Aiz
 6t
 5sarov
 3n
-4a
-5barg
+4abarg
 5la
 7adi
 :lar
@@ -251233,7 +251116,6 @@ Aiz
 3rits
 2rabot
 4yver
-3ift
 2sa
 3ulolasi
 2t
@@ -251422,12 +251304,10 @@ Aiz
 ;gi
 9ga
 9ning
-2u
-3aro
+2uaro
 4yga
 5ni
-3ba
-5raygir
+3baraygir
 4ha
 6chi
 6lan
@@ -251750,8 +251630,7 @@ Aiz
 5ing
 4siz
 3futinskiy
-3g
-4'illanadi
+3g'illanadi
 =gan
 :gan
 :ib
@@ -252098,8 +251977,7 @@ Aiz
 6ov
 8ga
 6ullo
-3l
-4a
+3la
 5r
 6dan
 6ga
@@ -252314,8 +252192,7 @@ Aiz
 6mi
 4i
 5chun
-5ng
-7dek
+5ngdek
 5si
 7ga
 5yam
@@ -252326,7 +252203,6 @@ Aiz
 3qirko'l
 3rak
 5yq
-4f
 4langan
 4taning
 4u
@@ -256737,7 +256613,6 @@ Aiz
 4ng
 6iz
 4ylik
-3h
 3in
 5lar
 3tema
@@ -271656,8 +271531,7 @@ Aiz
 5cha
 5day
 6ek
-4sh
-6da
+4shda
 8n
 6ga
 6lik
@@ -272110,8 +271984,7 @@ An
 8sh
 8verish
 7ovchi
-3h
-4a
+3ha
 5b
 6bus
 9chi
@@ -273142,8 +273015,7 @@ Ani
 8ga
 5i
 6lot
-4rif
-7dan
+4rifdan
 7i
 8ngiz
 6h
@@ -292440,8 +292312,7 @@ Alar
 5chalar
 ;i
 <da
-4sh
-6da
+4shda
 8n
 6ga
 6lik
@@ -292563,8 +292434,7 @@ Alar
 4uncha
 3ing
 6iz
-4sh
-6da
+4shda
 8n
 6ga
 6lik
@@ -292686,8 +292556,7 @@ Alar
 7z
 6uncha
 5ing
-6sh
-8da
+6shda
 :n
 8ga
 8lik
@@ -294382,8 +294251,7 @@ Aiz
 4uncha
 3ing
 6iz
-4sh
-6da
+4shda
 8n
 6ga
 6lik
@@ -295918,8 +295786,7 @@ An
 3ab
 4mashzavod
 4shdan
-3chin
-7skiy
+3chinskiy
 3dirishda
 3im
 4q
@@ -297652,8 +297519,7 @@ Aiz
 6iz
 5san
 6iz
-3h
-4a
+3ha
 5adi
 8lar
 6man
@@ -297844,8 +297710,7 @@ Aiz
 5m
 6ning
 5narli
-6g
-7iz
+6giz
 7lar
 6ib
 6mayabman
@@ -304598,12 +304463,10 @@ Eiz
 3san
 4iz
 1sanov
-2h
-3a
+2ha
 4da
 4kovning
-4l
-5adi
+4ladi
 8lar
 6man
 7iz
@@ -339117,8 +338980,7 @@ Ani
 5li
 5r
 4usht
-8i
-9ylar
+8iylar
 =ga
 =i
 >ning

@@ -98,6 +98,9 @@
           : "O'zbekcha lug'at bazasida tasdiqlandi."
       };
     }
+    if (/(sh|ch).*(e|y|c|v|x|z)$/.test(low) || /^(un|re|in|im|dis|mis|pre|pro|sub|over|under|out|up|co|de|ex|non|anti|auto|micro|macro|multi|super|trans|inter)/.test(low)) {
+      return { input: rawWord, output: pre + restoredCore + post, convert: false, stage: 'filtr', reason: "Xorijiy morfologik tuzilish aniqlandi — o'z holida qoldirildi." };
+    }
     return { input: rawWord, output: converted, convert: true, stage: 'qoida', reason: "Fonetik imlo qoidasi bo'yicha o'girildi." };
   }
 
