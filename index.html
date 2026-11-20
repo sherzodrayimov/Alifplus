@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Alif+ — Matn va hujjatni yangi alifboga ögiriş</title>
   <meta name="description" content="Kirill yoki lotin yozuvidagi Word, PDF va oddiy matn — brauzerning özida, bepul va çeklovsiz." />
-  <link rel="stylesheet" href="web/converter.css?v=20" />
+  <link rel="stylesheet" href="web/converter.css?v=21" />
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
@@ -34,8 +34,8 @@
       </a>
       <nav class="alif-nav">
         <a href="#alifConverter" class="alif-nav-link">Konverter</a>
-        <a href="#desktop" class="alif-nav-link">macOS va Windows dasturi</a>
-        <a href="#alifGuide" class="alif-nav-link">macOS qöllanma</a>
+        <a href="#alifDesktopApp" class="alif-nav-link">macOS va Windows dasturi</a>
+        <a href="#alifMacGuide" class="alif-nav-link">macOS qöllanma</a>
         <a href="#alifAlphabet" class="alif-nav-link">Alifbo tartibi</a>
         <a href="#alifTrainer" class="alif-nav-link">Tez yoziş</a>
         <a href="#alifDocsSection" class="alif-nav-link">Hujjatlar</a>
@@ -50,7 +50,7 @@
 
   <main class="alif-main">
 
-  <section id="alifHeroShowcase" class="alif-hero">
+  <section id="alifConverter" class="alif-hero">
     <div class="alif-container">
       <div class="alif-hero-intro">
         <div class="alif-hero-pill">
@@ -185,88 +185,6 @@
       </div>
     </section>
 
-  <section id="alifDocsSection" class="alif-docs-sec">
-    <div class="alif-container">
-      <div class="alif-docs-wrap">
-        <div class="alif-docs-hero">
-          <span class="alif-trainer-badge">Namunaviy hujjatlar konstruktori</span>
-          <h2 id="alifDocTitle">Tilxat Yoziş</h2>
-          <p id="alifDocSub">Qarz tilxatini töldiring — summa avtomatik söz bilan yoziladi, hujjat yangi, eski lotin va kirill yozuvida, çop etişga tayyor.</p>
-          <div class="alif-docs-tabs">
-            <button type="button" class="alif-doc-tab is-active" data-doc="tilxat" onclick="selectAlifDoc('tilxat')">Tilxat</button>
-            <button type="button" class="alif-doc-tab" data-doc="ishdan" onclick="selectAlifDoc('ishdan')">İşdan böşaş arizasi</button>
-            <button type="button" class="alif-doc-tab" data-doc="tatil" onclick="selectAlifDoc('tatil')">Ta’til arizasi</button>
-            <button type="button" class="alif-doc-tab" data-doc="tushuntirish" onclick="selectAlifDoc('tushuntirish')">Tuşuntiriş xati</button>
-            <button type="button" class="alif-doc-tab" data-doc="tavsifnoma" onclick="selectAlifDoc('tavsifnoma')">Tavsifnoma</button>
-            <button type="button" class="alif-doc-tab" data-doc="buyruq" onclick="selectAlifDoc('buyruq')">Buyruq</button>
-          </div>
-        </div>
-        <div class="alif-docs-grid">
-          <div class="alif-doc-form-card">
-            <div class="alif-doc-card-head">
-              <div class="alif-doc-card-title">Ma’lumotlar</div>
-              <div class="alif-doc-mini-actions">
-                <button type="button" class="alif-doc-sbtn" onclick="fillAlifDocSample()">📄 Namuna</button>
-                <button type="button" class="alif-doc-sbtn" onclick="clearAlifDocForm()" title="Tozalaş">↻</button>
-              </div>
-            </div>
-            <div id="alifDocFormBody"></div>
-          </div>
-          <div class="alif-doc-preview-card">
-            <div class="alif-doc-card-head">
-              <div class="alif-doc-card-title">Hujjat</div>
-              <div class="alif-doc-mini-actions">
-                <div class="alif-doc-script-sw">
-                  <button type="button" class="alif-doc-scbtn is-active" data-sc="yangi" onclick="setAlifDocScript('yangi')">Yangi</button>
-                  <button type="button" class="alif-doc-scbtn" data-sc="eski" onclick="setAlifDocScript('eski')">Eski</button>
-                  <button type="button" class="alif-doc-scbtn" data-sc="kirill" onclick="setAlifDocScript('kirill')">Кирилл</button>
-                </div>
-                <button type="button" class="alif-doc-sbtn" onclick="copyAlifDocText(this)">📋 Nusxalaş</button>
-                <button type="button" class="alif-doc-sbtn" onclick="downloadAlifDocWord()">⬇ Word (.docx)</button>
-                <button type="button" class="alif-doc-sbtn alif-doc-print-btn" onclick="printAlifDoc()">🖨 Çop etiş</button>
-              </div>
-            </div>
-            <div class="alif-doc-paper-stage"><div id="alifDocPaper" class="alif-doc-paper"></div></div>
-            <div id="alifDocNote" class="alif-doc-note"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="desktop" class="alif-container alif-desktop-section">
-      <div class="alif-card alif-desktop-card">
-        <div class="alif-desktop-info">
-          <h2>Istalgan dasturda real vaqtda yozing (macOS va Windows)</h2>
-          <p>
-            Word, Telegram, brauzer yoki istalgan oynada yozayotganingizda boş va kiçik harflar avtomatik özgaradi:
-            <strong>O' → Ö</strong>, <strong>G' → Ğ</strong>, <strong>Sh → Ş</strong>, <strong>Ch → Ç</strong>.
-          </p>
-          <ol class="alif-feature-list">
-            <li>Yozişdan oldin <strong>Ctrl + Shift</strong> ni bosing — dastur <strong>YOQILADI</strong>.</li>
-            <li>Yozing: <code>shahar → şahar</code>, <code>o'zbek → özbek</code>.</li>
-            <li>Kerak bölsa <strong>DARHOL Delete (⌫)</strong> bosing — asl holi qaytadi (<code>ş → sh</code>).</li>
-            <li><strong>Sozlamalar</strong> — menyu satridagi <strong>A+</strong> belgisini bosing.</li>
-          </ol>
-        </div>
-        <div class="alif-desktop-downloads">
-          <a href="https://github.com/sherzodrayimov/Alifplus/releases/latest/download/AlifPlus-2.0-macOS.dmg" class="alif-dl-btn alif-dl-mac">
-            <strong>macOS uchun yuklab oliş (.dmg)</strong>
-            <span>Apple Silicon (M1–M4) va Intel • Universal</span>
-          </a>
-          <a href="https://github.com/sherzodrayimov/Alifplus/releases/latest/download/AlifPlus-x64.exe" class="alif-dl-btn alif-dl-win">
-            <strong>Windows 64-bit uchun yuklab oliş (x64 .exe)</strong>
-            <span>Windows 7 / 8 / 10 / 11 (64-bit)</span>
-          </a>
-          <a href="https://github.com/sherzodrayimov/Alifplus/releases/latest/download/AlifPlus-x32.exe" class="alif-dl-btn alif-dl-win">
-            <strong>Windows 32-bit uchun yuklab oliş (x32 .exe)</strong>
-            <span>Windows 7 / 8 / 10 (32-bit x86)</span>
-          </a>
-          <a href="web/macos-install.html" class="alif-guide-link">macOS o'rnatiş qöllanmasini köriş →</a>
-        </div>
-      </div>
-    </section>
-
   <section id="alifAlphabet" class="alif-alpha-sec">
     <div class="alif-container">
       <div class="alif-alpha-card">
@@ -353,6 +271,55 @@
     </div>
   </section>
 
+  <section id="alifDocsSection" class="alif-docs-sec">
+    <div class="alif-container">
+      <div class="alif-docs-wrap">
+        <div class="alif-docs-hero">
+          <span class="alif-trainer-badge">Namunaviy hujjatlar konstruktori</span>
+          <h2 id="alifDocTitle">Tilxat Yoziş</h2>
+          <p id="alifDocSub">Qarz tilxatini töldiring — summa avtomatik söz bilan yoziladi, hujjat yangi, eski lotin va kirill yozuvida, çop etişga tayyor.</p>
+          <div class="alif-docs-tabs">
+            <button type="button" class="alif-doc-tab is-active" data-doc="tilxat" onclick="selectAlifDoc('tilxat')">Tilxat</button>
+            <button type="button" class="alif-doc-tab" data-doc="ishdan" onclick="selectAlifDoc('ishdan')">İşdan böşaş arizasi</button>
+            <button type="button" class="alif-doc-tab" data-doc="tatil" onclick="selectAlifDoc('tatil')">Ta’til arizasi</button>
+            <button type="button" class="alif-doc-tab" data-doc="tushuntirish" onclick="selectAlifDoc('tushuntirish')">Tuşuntiriş xati</button>
+            <button type="button" class="alif-doc-tab" data-doc="tavsifnoma" onclick="selectAlifDoc('tavsifnoma')">Tavsifnoma</button>
+            <button type="button" class="alif-doc-tab" data-doc="buyruq" onclick="selectAlifDoc('buyruq')">Buyruq</button>
+          </div>
+        </div>
+        <div class="alif-docs-grid">
+          <div class="alif-doc-form-card">
+            <div class="alif-doc-card-head">
+              <div class="alif-doc-card-title">Ma’lumotlar</div>
+              <div class="alif-doc-mini-actions">
+                <button type="button" class="alif-doc-sbtn" onclick="fillAlifDocSample()">📄 Namuna</button>
+                <button type="button" class="alif-doc-sbtn" onclick="clearAlifDocForm()" title="Tozalaş">↻</button>
+              </div>
+            </div>
+            <div id="alifDocFormBody"></div>
+          </div>
+          <div class="alif-doc-preview-card">
+            <div class="alif-doc-card-head">
+              <div class="alif-doc-card-title">Hujjat</div>
+              <div class="alif-doc-mini-actions">
+                <div class="alif-doc-script-sw">
+                  <button type="button" class="alif-doc-scbtn is-active" data-sc="yangi" onclick="setAlifDocScript('yangi')">Yangi</button>
+                  <button type="button" class="alif-doc-scbtn" data-sc="eski" onclick="setAlifDocScript('eski')">Eski</button>
+                  <button type="button" class="alif-doc-scbtn" data-sc="kirill" onclick="setAlifDocScript('kirill')">Кирилл</button>
+                </div>
+                <button type="button" class="alif-doc-sbtn" onclick="copyAlifDocText(this)">📋 Nusxalaş</button>
+                <button type="button" class="alif-doc-sbtn" onclick="downloadAlifDocWord()">⬇ Word (.docx)</button>
+                <button type="button" class="alif-doc-sbtn alif-doc-print-btn" onclick="printAlifDoc()">🖨 Çop etiş</button>
+              </div>
+            </div>
+            <div class="alif-doc-paper-stage"><div id="alifDocPaper" class="alif-doc-paper"></div></div>
+            <div id="alifDocNote" class="alif-doc-note"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="alifBookmarklet" class="alif-bm-sec">
     <div class="alif-container">
       <div class="alif-bm-card">
@@ -386,6 +353,39 @@
       }
     </script>
   </section>
+
+  <section id="alifDesktopApp" class="alif-container alif-desktop-section">
+      <div class="alif-card alif-desktop-card">
+        <div class="alif-desktop-info">
+          <h2>Istalgan dasturda real vaqtda yozing (macOS va Windows)</h2>
+          <p>
+            Word, Telegram, brauzer yoki istalgan oynada yozayotganingizda boş va kiçik harflar avtomatik özgaradi:
+            <strong>O' → Ö</strong>, <strong>G' → Ğ</strong>, <strong>Sh → Ş</strong>, <strong>Ch → Ç</strong>.
+          </p>
+          <ol class="alif-feature-list">
+            <li>Yozişdan oldin <strong>Ctrl + Shift</strong> ni bosing — dastur <strong>YOQILADI</strong>.</li>
+            <li>Yozing: <code>shahar → şahar</code>, <code>o'zbek → özbek</code>.</li>
+            <li>Kerak bölsa <strong>DARHOL Delete (⌫)</strong> bosing — asl holi qaytadi (<code>ş → sh</code>).</li>
+            <li><strong>Sozlamalar</strong> — menyu satridagi <strong>A+</strong> belgisini bosing.</li>
+          </ol>
+        </div>
+        <div class="alif-desktop-downloads">
+          <a href="https://github.com/sherzodrayimov/Alifplus/releases/latest/download/AlifPlus-2.0-macOS.dmg" class="alif-dl-btn alif-dl-mac">
+            <strong>macOS uchun yuklab oliş (.dmg)</strong>
+            <span>Apple Silicon (M1–M4) va Intel • Universal</span>
+          </a>
+          <a href="https://github.com/sherzodrayimov/Alifplus/releases/latest/download/AlifPlus-x64.exe" class="alif-dl-btn alif-dl-win">
+            <strong>Windows 64-bit uchun yuklab oliş (x64 .exe)</strong>
+            <span>Windows 7 / 8 / 10 / 11 (64-bit)</span>
+          </a>
+          <a href="https://github.com/sherzodrayimov/Alifplus/releases/latest/download/AlifPlus-x32.exe" class="alif-dl-btn alif-dl-win">
+            <strong>Windows 32-bit uchun yuklab oliş (x32 .exe)</strong>
+            <span>Windows 7 / 8 / 10 (32-bit x86)</span>
+          </a>
+          <a href="web/macos-install.html" class="alif-guide-link">macOS o'rnatiş qöllanmasini köriş →</a>
+        </div>
+      </div>
+    </section>
 
   <section id="converter" class="alif-container">
       <div class="alif-card">

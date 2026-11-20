@@ -1631,3 +1631,49 @@ html[data-theme="dark"] .alif-doc-field textarea:focus {
 @media (max-width: 900px) {
   .alif-nav-link { font-size: 12.5px; padding: 6px 8px; }
 }
+
+/* ALIF-LAYOUT-POLISH-START */
+html {
+  scroll-behavior: smooth;
+}
+section[id] {
+  scroll-margin-top: 84px;
+}
+.alif-nav-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 12px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.12s ease;
+}
+.alif-nav-link:hover {
+  background: rgba(16, 185, 129, 0.12);
+}
+.alif-nav-link:active {
+  transform: scale(0.96);
+}
+button, .alif-btn, .alif-hero-btn-primary, .alif-hero-btn-secondary, .alif-trainer-btn, .alif-bm-copy, .alif-alpha-fbtn, .alif-mt-opt, .alif-doc-tab, .alif-doc-sbtn {
+  border-radius: 11px;
+  font-weight: 700;
+  transition: transform 0.12s ease, box-shadow 0.16s ease, background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+}
+button:active, .alif-btn:active, .alif-hero-btn-primary:active, .alif-hero-btn-secondary:active, .alif-trainer-btn:active, .alif-bm-copy:active {
+  transform: scale(0.96);
+}
+.alif-hero-btn-primary:hover, .alif-hero-btn-secondary:hover, .alif-trainer-btn:hover, .alif-bm-copy:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.1);
+}
+html[data-theme="dark"] .alif-hero-btn-primary:hover,
+html[data-theme="dark"] .alif-hero-btn-secondary:hover,
+html[data-theme="dark"] .alif-trainer-btn:hover,
+html[data-theme="dark"] .alif-bm-copy:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+@media (max-width: 960px) {
+  .alif-nav-link { font-size: 12.5px; padding: 6px 9px; }
+}
