@@ -24,6 +24,21 @@
       };
     })();
   </script>
+<style id="alifSubDarkStyle">
+html[data-theme="dark"], html[data-theme="dark"] body { background: #0b1220 !important; color: #f1f5f9 !important; }
+html[data-theme="dark"] .card, html[data-theme="dark"] .box, html[data-theme="dark"] .container > div, html[data-theme="dark"] section, html[data-theme="dark"] article, html[data-theme="dark"] main > div { background: #111827 !important; color: #f1f5f9 !important; border-color: #283548 !important; }
+html[data-theme="dark"] h1, html[data-theme="dark"] h2, html[data-theme="dark"] h3, html[data-theme="dark"] strong, html[data-theme="dark"] b { color: #f8fafc !important; }
+html[data-theme="dark"] p, html[data-theme="dark"] li, html[data-theme="dark"] span { color: #cbd5e1 !important; }
+html[data-theme="dark"] code:not(pre code) { background: #1e293b !important; color: #34d399 !important; }
+html[data-theme="dark"] .tip, html[data-theme="dark"] .note, html[data-theme="dark"] .info, html[data-theme="dark"] [style*="background:#f"], html[data-theme="dark"] [style*="background: #f"] { background: #0f172a !important; border-color: #283548 !important; color: #cbd5e1 !important; }
+</style>
+<script id="alifSubDarkScript">
+(function(){
+  var q = new URLSearchParams(window.location.search).get("theme");
+  var t = q || localStorage.getItem("alif_theme") || localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  if(t === "dark"){ document.documentElement.setAttribute("data-theme", "dark"); }
+})();
+</script>
 </head>
 <body>
   <header class="alif-topbar">
