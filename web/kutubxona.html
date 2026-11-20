@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alif+ — Yangi Alifbo Kutubxonasi</title>
+  <script>
+    (function () {
+      var q = new URLSearchParams(location.search).get("theme");
+      var s = localStorage.getItem("alif_theme") || localStorage.getItem("theme");
+      var m = (q === "dark" || q === "light") ? q : ((s === "dark" || s === "light") ? s : "light");
+      document.documentElement.setAttribute("data-theme", m);
+    })();
+  </script>
+  <style>
+    :root { --bg:#f6f8fb; --card:#ffffff; --text:#0f172a; --muted:#475569; --accent:#1a56db; --green:#10b981; --border:#dce3ec; }
+    html[data-theme="dark"] { --bg:#0b1220; --card:#111827; --text:#f1f5f9; --muted:#94a3b8; --accent:#34d399; --green:#10b981; --border:#283548; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Georgia,"Times New Roman",serif; background:var(--bg); color:var(--text); line-height:1.85; }
+    .wrap { max-width:860px; margin:0 auto; padding:28px 20px 72px; }
+    .topbar { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:20px; }
+    .topbar a { color:var(--accent); text-decoration:none; font-weight:700; font-size:14px; }
+    .controls { display:flex; gap:8px; flex-wrap:wrap; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    .btn { padding:7px 13px; border-radius:9px; border:1px solid var(--border); background:var(--card); color:var(--text); font-weight:600; font-size:13px; cursor:pointer; }
+    .btn:hover, .btn.active { background:var(--green); border-color:var(--green); color:#022c22; }
+    .reader { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:32px; font-size:19px; }
+    .reader h1 { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; margin:0 0 6px; font-size:26px; }
+    .author { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color:var(--muted); font-size:14px; margin-bottom:22px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div style="display:flex;gap:16px;">
+        <a href="../index.html" id="backHome">← Alif+ Bosh sahifa</a>
+        <a href="lugat.html" id="toDict">Imlo Luğati →</a>
+      </div>
+      <div class="controls">
+        <button type="button" class="btn active" data-book="0">Abdulla Qodiriy</button>
+        <button type="button" class="btn" data-book="1">Alisher Navoiy</button>
+        <button type="button" class="btn" data-book="2">Yangi Alifbo Qoidalari</button>
+        <button type="button" class="btn" id="fontMinus">A−</button>
+        <button type="button" class="btn" id="fontPlus">A+</button>
+      </div>
+    </div>
+
+    <article class="reader" id="readerBox">
+      <h1 id="bookTitle"></h1>
+      <div class="author" id="bookAuthor"></div>
+      <div id="bookBody"></div>
+    </article>
+  </div>
+
+  <script>
+    (function () {
+      var mode = document.documentElement.getAttribute("data-theme") || "light";
+      document.getElementById("backHome").href = "../index.html?theme=" + mode;
+      document.getElementById("toDict").href = "lugat.html?theme=" + mode;
+
+      var books = [
+        {
+          title: "Ötkan kunlar (parça)",
+          author: "Abdulla Qodiriy — 28 harfli yangi özbek alifbosida",
+          paragraphs: [
+            "1264-nçi hijriy, dalv oyining ön yettinçisi, qişki kunlarning biri, quyosh botqan, tevarakdan şom azoni eşitiladir...",
+            "Darbozasi şarqi-janubiyga qaratib qurilğan bu dongdor saroyni Toşkent, Samarqand va Buxoro savdogarlari egallaganlar, saroydagi bir-ikki hujrani istisno qiliş bilan boşqalari musofirlar bilan töla edi.",
+            "Hujralardan birida ötirğuçi yigit — Otabek özining bosiqligi, teran fikri va odobi bilan barçaning hurmatini qozonğan edi."
+          ]
+        },
+        {
+          title: "Mahbub ul-qulubdan hikmatlar",
+          author: "Alisher Navoiy — Yangi imlo talqinida",
+          paragraphs: [
+            "Tilga ixtiyorsiz — elga e'tiborsiz. Har kimki sözini öylab gapirsa, uning qadri baland bölar.",
+            "Olim bölsang, olam seniki. Ilm va hunar örganiş har bir yigit-qizning eng şarafli burçidir.",
+            "Yaxşilik qilmoq — insoniylikning eng oliy nişonasidir; elga foydasi tegmagan kişi tiriklar qatorida sanalmas."
+          ]
+        },
+        {
+          title: "28 harfli yangi özbek alifbosining afzalliklari",
+          author: "Alif+ Ilmiy-amaliy qöllanma",
+          paragraphs: [
+            "Yangi alifboda har bir tovuşga bitta aniq harf mos keladi: O‘ → Ö, G‘ → Ğ, Sh → Ş, Ch → Ç. Bu esa öqiş tezligini oşiradi va imlo xatolarini keskin kamaytiradi.",
+            "Tutuq belgisi (') faqat unlini undoshdan ajratiş uchun saqlanadi (masalan: ta'lim, e'lon, san'at, Is'hoq). Endi o' va g' harflari tutuq belgisi bilan adashtirilmaydi.",
+            "Alif+ platformasi orqali siz istalgan hujjatni (.docx, .pdf, .txt) bir soniyada yangi imloga ögirişingiz va klaviaturada töğridan-töğri yozişingiz mumkin."
+          ]
+        }
+      ];
+
+      var size = 19;
+      var reader = document.getElementById("readerBox");
+      function loadBook(idx) {
+        var b = books[idx];
+        document.getElementById("bookTitle").textContent = b.title;
+        document.getElementById("bookAuthor").textContent = b.author;
+        document.getElementById("bookBody").innerHTML = b.paragraphs.map(function (p) { return "<p>" + p + "</p>"; }).join("");
+      }
+      document.querySelectorAll("[data-book]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          document.querySelectorAll("[data-book]").forEach(function (b) { b.classList.remove("active"); });
+          btn.classList.add("active");
+          loadBook(+btn.getAttribute("data-book"));
+        });
+      });
+      document.getElementById("fontMinus").addEventListener("click", function () { size = Math.max(15, size - 2); reader.style.fontSize = size + "px"; });
+      document.getElementById("fontPlus").addEventListener("click", function () { size = Math.min(28, size + 2); reader.style.fontSize = size + "px"; });
+      loadBook(0);
+    })();
+  </script>
+</body>
+</html>

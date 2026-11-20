@@ -31,6 +31,9 @@
   }
 
   function oldLatToNewLat(text, opts) {
+    if (window.AlifSmartEngine && (!opts || opts.smart !== false)) {
+      return window.AlifSmartEngine.smartConvertText(text);
+    }
     let s = normalizeApostrophes(text);
 
     s = s.replace(/O'/g, 'Ö').replace(/o'/g, 'ö');

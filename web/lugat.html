@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alif+ — Aqlli Imlo Lug‘ati va Morfologiya Tahlilchisi</title>
+  <script>
+    (function () {
+      var q = new URLSearchParams(location.search).get("theme");
+      var s = localStorage.getItem("alif_theme") || localStorage.getItem("theme");
+      var m = (q === "dark" || q === "light") ? q : ((s === "dark" || s === "light") ? s : "light");
+      document.documentElement.setAttribute("data-theme", m);
+    })();
+  </script>
+  <style>
+    :root { --bg:#f6f8fb; --card:#ffffff; --text:#0f172a; --muted:#475569; --accent:#1a56db; --green:#10b981; --border:#dce3ec; --pill:#eef2f7; }
+    html[data-theme="dark"] { --bg:#0b1220; --card:#111827; --text:#f1f5f9; --muted:#94a3b8; --accent:#34d399; --green:#10b981; --border:#283548; --pill:#1e293b; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+    .wrap { max-width:920px; margin:0 auto; padding:28px 20px 64px; }
+    .nav { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:20px; }
+    .nav a { color:var(--accent); text-decoration:none; font-weight:700; font-size:14px; }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:20px; }
+    h1 { margin:0 0 6px; font-size:26px; }
+    .sub { margin:0 0 18px; color:var(--muted); font-size:15px; }
+    .chips { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+    .chip { background:var(--pill); color:var(--text); border:1px solid var(--border); border-radius:999px; padding:6px 14px; font-size:13px; font-weight:600; cursor:pointer; }
+    .chip:hover, .chip.active { background:var(--green); border-color:var(--green); color:#022c22; }
+    .input-box { width:100%; padding:13px 16px; border-radius:12px; border:1px solid var(--border); background:var(--bg); color:var(--text); font-size:16px; outline:none; }
+    .input-box:focus { border-color:var(--green); }
+    .stages { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; margin:18px 0; }
+    .stage { border:1px solid var(--border); border-radius:12px; padding:12px; background:var(--bg); opacity:0.55; }
+    .stage.hit { opacity:1; border-color:var(--green); box-shadow:0 0 0 2px rgba(16,185,129,0.2); }
+    .stage b { display:block; font-size:14px; margin-bottom:4px; }
+    .stage span { font-size:12px; color:var(--muted); }
+    .res-banner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding:16px; border-radius:12px; background:var(--bg); border:1px solid var(--border); }
+    .res-word { font-size:24px; font-weight:800; }
+    .res-arrow { color:var(--green); margin:0 10px; }
+    .dict-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:10px; margin-top:14px; }
+    .dict-item { padding:10px 14px; border-radius:10px; border:1px solid var(--border); background:var(--bg); display:flex; justify-content:space-between; font-size:14px; }
+    .dict-item b { color:var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="nav">
+      <a href="../index.html" id="backHome">← Alif+ Bosh sahifa</a>
+      <a href="kutubxona.html" id="toLib">Kutubxona →</a>
+    </div>
+
+    <div class="card">
+      <h1>Qaysi söz özbekça ekanini biladi</h1>
+      <p class="sub">Har bir söz 4 bosqichdan ötadi: Naqş → Xorijiy filtr (10 055) → Özbekça luğat → Morfologiya (400+ qöşimça).</p>
+      <div class="chips" id="sampleChips">
+        <button type="button" class="chip active" data-w="shahar">shahar</button>
+        <button type="button" class="chip" data-w="show">show</button>
+        <button type="button" class="chip" data-w="gaplashishdi">gaplashishdi</button>
+        <button type="button" class="chip" data-w="Is'hoq">Is'hoq</button>
+        <button type="button" class="chip" data-w="o'zbekistonliklar">o'zbekistonliklar</button>
+        <button type="button" class="chip" data-w="switch">switch</button>
+      </div>
+      <input id="wordInput" class="input-box" value="shahar" placeholder="Istalgan sözni kiriting (masalan: o'quvchilarimiz, chat, g'alaba)..." />
+      <div class="stages">
+        <div class="stage" id="st-naqsh"><b>1. Naqş</b><span>sh, ch, o', g' bormi?</span></div>
+        <div class="stage" id="st-filtr"><b>2. Filtr (10 055)</b><span>Inglizça va IT istisnolar</span></div>
+        <div class="stage" id="st-lugat"><b>3. Luğat bazasi</b><span>Özbekça söz va özaklar</span></div>
+        <div class="stage" id="st-morfologiya"><b>4. Morfologiya</b><span>400+ qöşimcha tahlili</span></div>
+      </div>
+      <div class="res-banner">
+        <div>
+          <span class="res-word" id="outFrom">shahar</span>
+          <span class="res-arrow">→</span>
+          <span class="res-word" id="outTo">şahar</span>
+        </div>
+        <div id="outReason" style="color:var(--muted);font-size:14px;">Tekşirilmoqda...</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin:0 0 6px;font-size:20px;">Yangi Alifbo Imlo Luğati</h2>
+      <p class="sub" id="lexStats">Baza yuklanmoqda...</p>
+      <input id="dictSearch" class="input-box" placeholder="Luğatdan söz qidiring (eski yoki yangi imloda)..." />
+      <div class="dict-grid" id="dictGrid"></div>
+    </div>
+  </div>
+
+  <script src="smart-engine.js"></script>
+  <script>
+    (function () {
+      var mode = document.documentElement.getAttribute("data-theme") || "light";
+      document.getElementById("backHome").href = "../index.html?theme=" + mode;
+      document.getElementById("toLib").href = "kutubxona.html?theme=" + mode;
+
+      var inp = document.getElementById("wordInput");
+      var dictInp = document.getElementById("dictSearch");
+      var grid = document.getElementById("dictGrid");
+      var lex = [];
+
+      function inspect(w) {
+        if (!window.AlifSmartEngine) return;
+        var r = window.AlifSmartEngine.analyzeWord(w.trim() || "shahar");
+        document.getElementById("outFrom").textContent = r.input;
+        document.getElementById("outTo").textContent = r.output;
+        document.getElementById("outReason").textContent = r.reason;
+        ["naqsh","filtr","lugat","morfologiya"].forEach(function (id) {
+          var el = document.getElementById("st-" + id);
+          el.classList.toggle("hit", r.stage === id || (r.stage === "qoida" && id === "naqsh"));
+        });
+      }
+
+      function renderDict(q) {
+        var term = (q || "").trim().toLowerCase().replace(/[ö]/g,"o'").replace(/[ğ]/g,"g'").replace(/[ş]/g,"sh").replace(/[ç]/g,"ch");
+        var list = [];
+        for (var i = 0; i < lex.length && list.length < 48; i++) {
+          if (!term || lex[i].indexOf(term) !== -1) list.push(lex[i]);
+        }
+        grid.innerHTML = list.map(function (w) {
+          return '<div class="dict-item"><span>' + w + '</span><b>' + window.AlifSmartEngine.convertWordRaw(w) + '</b></div>';
+        }).join("");
+      }
+
+      document.querySelectorAll("#sampleChips .chip").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          document.querySelectorAll("#sampleChips .chip").forEach(function (c) { c.classList.remove("active"); });
+          btn.classList.add("active");
+          inp.value = btn.getAttribute("data-w");
+          inspect(inp.value);
+        });
+      });
+
+      inp.addEventListener("input", function () { inspect(inp.value); });
+      dictInp.addEventListener("input", function () { renderDict(dictInp.value); });
+
+      window.AlifSmartEngine.ready().then(function (info) {
+        lex = window.AlifSmartEngine.getLexicon();
+        document.getElementById("lexStats").textContent = info.lexCount.toLocaleString() + " ta saralangan özbekça söz, " + info.rejectCount.toLocaleString() + " ta istisno filtr va " + info.suffixCount + " ta morfologik qöşimça faol.";
+        inspect(inp.value);
+        renderDict("o'");
+      });
+    })();
+  </script>
+</body>
+</html>
