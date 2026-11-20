@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Alif+ — Matn va hujjatni yangi alifboga ögiriş</title>
   <meta name="description" content="Kirill yoki lotin yozuvidagi Word, PDF va oddiy matn — brauzerning özida, bepul va çeklovsiz." />
-  <link rel="stylesheet" href="web/converter.css?v=17" />
+  <link rel="stylesheet" href="web/converter.css?v=18" />
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
@@ -39,6 +39,7 @@
               <a href="#alifTrainer" class="alif-nav-link">Tez yoziş</a>
         <a href="#alifAlphabet" class="alif-nav-link">Alifbo tartibi</a>
         <a href="#alifBookmarklet" class="alif-nav-link">Xatçöp</a>
+        <a href="#alifDocsSection" class="alif-nav-link">Hujjatlar</a>
         <button type="button" id="alifThemeToggle" class="alif-theme-btn" onclick="toggleAlifTheme()" aria-label="Kundalik yoki tungi rejim" title="Kundalik / Tungi rejim">
           <svg class="alif-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
           <svg class="alif-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
@@ -423,6 +424,52 @@
         });
       }
     </script>
+  </section>
+    <section id="alifDocsSection" class="alif-docs-sec">
+    <div class="alif-container">
+      <div class="alif-docs-wrap">
+        <div class="alif-docs-hero">
+          <span class="alif-trainer-badge">Namunaviy hujjatlar konstruktori</span>
+          <h2 id="alifDocTitle">Tilxat Yoziş</h2>
+          <p id="alifDocSub">Qarz tilxatini töldiring — summa avtomatik söz bilan yoziladi, hujjat yangi, eski lotin va kirill yozuvida, çop etişga tayyor.</p>
+          <div class="alif-docs-tabs">
+            <button type="button" class="alif-doc-tab is-active" data-doc="tilxat" onclick="selectAlifDoc('tilxat')">Tilxat</button>
+            <button type="button" class="alif-doc-tab" data-doc="ishdan" onclick="selectAlifDoc('ishdan')">İşdan böşaş arizasi</button>
+            <button type="button" class="alif-doc-tab" data-doc="tatil" onclick="selectAlifDoc('tatil')">Ta’til arizasi</button>
+            <button type="button" class="alif-doc-tab" data-doc="tushuntirish" onclick="selectAlifDoc('tushuntirish')">Tuşuntiriş xati</button>
+          </div>
+        </div>
+        <div class="alif-docs-grid">
+          <div class="alif-doc-form-card">
+            <div class="alif-doc-card-head">
+              <div class="alif-doc-card-title">Ma’lumotlar</div>
+              <div class="alif-doc-mini-actions">
+                <button type="button" class="alif-doc-sbtn" onclick="fillAlifDocSample()">📄 Namuna</button>
+                <button type="button" class="alif-doc-sbtn" onclick="clearAlifDocForm()" title="Tozalaş">↻</button>
+              </div>
+            </div>
+            <div id="alifDocFormBody"></div>
+          </div>
+          <div class="alif-doc-preview-card">
+            <div class="alif-doc-card-head">
+              <div class="alif-doc-card-title">Hujjat</div>
+              <div class="alif-doc-mini-actions">
+                <div class="alif-doc-script-sw">
+                  <button type="button" class="alif-doc-scbtn is-active" data-sc="yangi" onclick="setAlifDocScript('yangi')">Yangi</button>
+                  <button type="button" class="alif-doc-scbtn" data-sc="eski" onclick="setAlifDocScript('eski')">Eski</button>
+                  <button type="button" class="alif-doc-scbtn" data-sc="kirill" onclick="setAlifDocScript('kirill')">Кирилл</button>
+                </div>
+                <button type="button" class="alif-doc-sbtn" onclick="copyAlifDocText(this)">📋 Nusxalaş</button>
+                <button type="button" class="alif-doc-sbtn" onclick="downloadAlifDocWord()">⬇ Word (.doc)</button>
+                <button type="button" class="alif-doc-sbtn alif-doc-print-btn" onclick="printAlifDoc()">🖨 Çop etiş</button>
+              </div>
+            </div>
+            <div class="alif-doc-paper-stage"><div id="alifDocPaper" class="alif-doc-paper"></div></div>
+            <div id="alifDocNote" class="alif-doc-note"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
   </main>
 
@@ -893,5 +940,6 @@
   </script>
   <script src="web/documents.js"></script>
   <script src="web/trainer.js?v=1"></script>
+  <script src="web/docs-generator.js?v=1"></script>
 </body>
 </html>
