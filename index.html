@@ -24,6 +24,27 @@
       };
     })();
   </script>
+  <style id="alifDarkGreenBtns">
+  :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(button, .alif-btn, .alif-hero-btn-primary, .alif-hero-btn-secondary, .alif-trainer-btn, .alif-bm-copy, .alif-bm-drag, .alif-alpha-fbtn, .alif-mt-opt, .alif-doc-tab, .alif-doc-sbtn, .alif-doc-scbtn, .alif-nav-link) {
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease !important;
+  }
+  :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(button, .alif-btn, .alif-hero-btn-secondary, .alif-bm-copy, .alif-alpha-fbtn, .alif-mt-opt, .alif-doc-tab, .alif-doc-sbtn, .alif-doc-scbtn, .alif-nav-link):hover {
+    background-color: rgba(16, 185, 129, 0.22) !important;
+    border-color: #10b981 !important;
+    color: #34d399 !important;
+  }
+  :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(.alif-hero-btn-primary, .alif-trainer-btn, .alif-bm-drag, .alif-doc-tab.is-active, .alif-doc-scbtn.is-active, .alif-doc-print-btn):hover {
+    background-color: #10b981 !important;
+    border-color: #34d399 !important;
+    color: #022c22 !important;
+  }
+  :is(html[data-theme="dark"], body[data-theme="dark"], html.dark, body.dark) :is(button, .alif-btn, .alif-hero-btn-primary, .alif-hero-btn-secondary, .alif-trainer-btn, .alif-bm-copy, .alif-bm-drag, .alif-alpha-fbtn, .alif-mt-opt, .alif-doc-tab, .alif-doc-sbtn, .alif-doc-scbtn):active {
+    background-color: #059669 !important;
+    border-color: #10b981 !important;
+    color: #ffffff !important;
+    transform: scale(0.97) !important;
+  }
+  </style>
 </head>
 <body>
   <header class="alif-topbar">
@@ -1031,41 +1052,30 @@
   </script>
   <script id="alifThemeBridge">
   (function(){
-    function isDarkNow(){
-      return document.documentElement.getAttribute('data-theme') === 'dark'
-        || document.body.classList.contains('dark')
-        || localStorage.getItem('alif_theme') === 'dark'
-        || localStorage.getItem('theme') === 'dark';
+    function detectDark(){
+      var bg = getComputedStyle(document.body).backgroundColor || "";
+      var m = bg.match(/\d+/g);
+      if(m && m.length >= 3){
+        var lum = (0.299*+m[0] + 0.587*+m[1] + 0.114*+m[2]);
+        return lum < 128;
+      }
+      return document.documentElement.getAttribute("data-theme") === "dark" || document.body.classList.contains("dark");
     }
-    function syncAll(dark){
-      var mode = dark ? 'dark' : 'light';
-      localStorage.setItem('alif_theme', mode);
-      localStorage.setItem('theme', mode);
-      document.querySelectorAll('a[href]').forEach(function(a){
-        var h = a.getAttribute('href') || '';
-        var t = (a.textContent || '').toLowerCase();
-        if(h && !h.startsWith('#') && !h.startsWith('http') && !h.startsWith('javascript:') && (t.indexOf('qöllanma') !== -1 || t.indexOf('qo‘llanma') !== -1 || h.indexOf('.html') !== -1)){
-          var clean = h.split('?')[0];
-          a.setAttribute('href', clean + '?theme=' + mode);
+    function sync(){
+      var d = detectDark();
+      var mode = d ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", mode);
+      localStorage.setItem("alif_theme", mode);
+      document.querySelectorAll("a[href]").forEach(function(a){
+        var h = a.getAttribute("href") || "";
+        if(h && !h.startsWith("#") && !h.startsWith("http") && !h.startsWith("mailto:") && !h.startsWith("javascript:") && !/\.(dmg|exe|zip)$/i.test(h)){
+          a.setAttribute("href", h.split("?")[0] + "?theme=" + mode);
         }
       });
     }
-    document.addEventListener('click', function(e){
-      var a = e.target.closest('a[href]');
-      if(a){
-        var h = a.getAttribute('href') || '';
-        var t = (a.textContent || '').toLowerCase();
-        if(h && !h.startsWith('#') && !h.startsWith('http') && !h.startsWith('javascript:') && (t.indexOf('qöllanma') !== -1 || t.indexOf('qo‘llanma') !== -1 || h.indexOf('.html') !== -1)){
-          var mode = isDarkNow() ? 'dark' : 'light';
-          localStorage.setItem('alif_theme', mode);
-          localStorage.setItem('theme', mode);
-          a.setAttribute('href', h.split('?')[0] + '?theme=' + mode);
-        }
-      }
-      setTimeout(function(){ syncAll(isDarkNow()); }, 30);
-    }, true);
-    new MutationObserver(function(){ syncAll(isDarkNow()); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'class'] });
-    syncAll(isDarkNow());
+    document.addEventListener("click", function(){ setTimeout(sync, 20); setTimeout(sync, 150); }, true);
+    window.addEventListener("DOMContentLoaded", sync);
+    sync();
   })();
   </script>
 </body>
