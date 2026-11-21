@@ -196,30 +196,66 @@ final class AlifSmartDict {
         lock.lock(); rej = r; sufs = sf; uz = u; ready = !u.isEmpty; lock.unlock()
     }
     private func inUz(_ w: String, _ u: Set<String>) -> Bool {
-        u.contains(w) || (w.hasSuffix("g") && u.contains(String(w.dropLast()) + "k")) || (w.hasSuffix("g'") && u.contains(String(w.dropLast(2)) + "q"))
+        if u.contains(w) { return true }
+        if w.hasSuffix("kk") || w.hasSuffix("qq") {
+            if u.contains(String(w.dropLast())) { return true }
+        }
+        if w.hasSuffix("g") && u.contains(String(w.dropLast()) + "k") { return true }
+        if w.hasSuffix("g'") && u.contains(String(w.dropLast(2)) + "q") { return true }
+        return false
     }
+
+    private func isUzbekMorph(_ low: String, _ u: Set<String>, _ sf: [String]) -> Bool {
+        if inUz(low, u) { return true }
+        var cur = low
+        for _ in 0..<4 {
+            if inUz(cur, u) { return true }
+            for dim in ["qina", "gina", "kina"] where cur.count > dim.count + 2 && cur.hasSuffix(dim) {
+                let st = String(cur.dropLast(dim.count))
+                if inUz(st, u) { return true }
+                if st.count >= 2 && st.last == st.dropLast().last && inUz(String(st.dropLast()), u) { return true }
+            }
+            var peeled = false
+            for s in sf where cur.count > s.count + 1 && cur.hasSuffix(s) {
+                let nxt = String(cur.dropLast(s.count))
+                if inUz(nxt, u) { return true }
+                if nxt.count >= 3 {
+                    cur = nxt
+                    peeled = true
+                    break
+                }
+            }
+            if !peeled { break }
+        }
+        return inUz(cur, u)
+    }
+
+    private func isEnglishPhonotactic(_ w: String) -> Bool {
+        let clusters = ["w", "th", "wh", "ck", "qu", "tch", "dge", "ght", "sch", "chr", "chl", "shr"]
+        if clusters.contains(where: { w.contains($0) }) { return true }
+        let endings = ["ll", "ss", "ff", "zz", "nge"]
+        if endings.contains(where: { w.hasSuffix($0) }) { return true }
+        let chaPrefixes = ["chart", "charg", "chanc", "chant", "chasm", "chalk", "champ", "chapt", "charl"]
+        if chaPrefixes.contains(where: { w.hasPrefix($0) }) { return true }
+        return false
+    }
+
     func shouldConvert(_ raw: String) -> Bool {
         var w = norm(raw)
         while w.hasPrefix("'") { w.removeFirst() }
         while w.hasSuffix("'") && !(w.dropLast().last == "o" || w.dropLast().last == "g") { w.removeLast() }
         if w.count < 2 { return false }
         lock.lock(); let (ok, r, u, sf) = (ready, rej, uz, sufs); lock.unlock()
+        if w.contains("o'") || w.contains("g'") { return true }
+        if ok && isUzbekMorph(w, u, sf) { return true }
         if r.contains(w) || w.split(separator: "-").contains(where: { $0.count > 1 && $0 != "chi" && r.contains(String($0)) }) { return false }
         let engSufs = ["ers","ing","tion","sion","ment","ness","able","ible","ship","hood","ware","ed","er","es","ly","s"]
         for es in engSufs where w.count > es.count + 2 && w.hasSuffix(es) {
             let rt = String(w.dropLast(es.count))
             if r.contains(rt) || r.contains(rt + "e") { return false }
         }
-        if w.contains("o'") || w.contains("g'") { return true }
-        if !ok { return !(w.contains("w") || w.contains("th") || w.contains("wh") || w.contains("ck") || w.contains("qu")) }
-        if inUz(w, u) { return true }
-        for s1 in sf where w.count > s1.count + 1 && w.hasSuffix(s1) {
-            let st1 = String(w.dropLast(s1.count))
-            if inUz(st1, u) { return true }
-            if st1.count >= 4 { for s2 in sf where st1.count > s2.count + 1 && st1.hasSuffix(s2) { if inUz(String(st1.dropLast(s2.count)), u) { return true } } }
-        }
-        let eng = w.contains("w") || w.contains("th") || w.contains("wh") || w.contains("ck") || w.contains("qu") || w.contains("tch") || w.contains("dge")
-        return !eng
+        if isEnglishPhonotactic(w) { return false }
+        return true
     }
 }
 

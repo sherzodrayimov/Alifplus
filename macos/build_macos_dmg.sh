@@ -11,6 +11,9 @@ mkdir -p "${BUNDLE_DIR}/Contents/Resources"
 
 cp Info.plist "${BUNDLE_DIR}/Contents/Info.plist"
 cp AlifPlus.icns "${BUNDLE_DIR}/Contents/Resources/AlifPlus.icns"
+if [ -d "Resources" ]; then
+  cp -R Resources/* "${BUNDLE_DIR}/Contents/Resources/"
+fi
 if [ -f "../icon.png" ]; then
   cp "../icon.png" "${BUNDLE_DIR}/Contents/Resources/icon.png"
 fi

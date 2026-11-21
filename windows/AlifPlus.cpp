@@ -55,8 +55,54 @@ public:
         while (!w.empty() && w.front() == '\'') w.erase(w.begin());
         while (w.size() >= 2 && w.back() == '\'' && w[w.size()-2] != 'o' && w[w.size()-2] != 'g') w.pop_back();
         if (w.size() < 2) return false;
+        if (w.find("o'") != std::string::npos || w.find("g'") != std::string::npos) return true;
+
         std::lock_guard<std::mutex> lk(m_);
+        auto inU = [&](const std::string& s) -> bool {
+            if (uz_.count(s)) return true;
+            if (s.size() > 2 && ((s[s.size()-1] == 'k' && s[s.size()-2] == 'k') || (s[s.size()-1] == 'q' && s[s.size()-2] == 'q'))) {
+                if (uz_.count(s.substr(0, s.size()-1))) return true;
+            }
+            if (s.size() > 1 && s.back() == 'g' && uz_.count(s.substr(0, s.size()-1) + "k")) return true;
+            if (s.size() > 2 && s.substr(s.size()-2) == "g'" && uz_.count(s.substr(0, s.size()-2) + "q")) return true;
+            return false;
+        };
+
+        auto isUzMorph = [&]() -> bool {
+            if (!ready_) return false;
+            if (inU(w)) return true;
+            std::string cur = w;
+            for (int step = 0; step < 4; ++step) {
+                if (inU(cur)) return true;
+                static const char* dims[] = {"qina", "gina", "kina"};
+                for (const char* dm : dims) {
+                    std::string d(dm);
+                    if (cur.size() > d.size() + 2 && cur.compare(cur.size() - d.size(), d.size(), d) == 0) {
+                        std::string st = cur.substr(0, cur.size() - d.size());
+                        if (inU(st)) return true;
+                        if (st.size() >= 2 && st.back() == st[st.size()-2] && inU(st.substr(0, st.size()-1))) return true;
+                    }
+                }
+                bool peeled = false;
+                for (const auto& s : sufs_) {
+                    if (cur.size() > s.size() + 1 && cur.compare(cur.size() - s.size(), s.size(), s) == 0) {
+                        std::string nxt = cur.substr(0, cur.size() - s.size());
+                        if (inU(nxt)) return true;
+                        if (nxt.size() >= 3) {
+                            cur = nxt;
+                            peeled = true;
+                            break;
+                        }
+                    }
+                }
+                if (!peeled) break;
+            }
+            return inU(cur);
+        };
+
+        if (isUzMorph()) return true;
         if (rej_.count(w)) return false;
+
         static const char* engSufs[] = {"ers","ing","tion","sion","ment","ness","able","ible","ship","hood","ware","ed","er","es","ly","s"};
         for (const char* es : engSufs) {
             std::string s(es);
@@ -65,19 +111,22 @@ public:
                 if (rej_.count(rt) || rej_.count(rt + "e")) return false;
             }
         }
-        if (w.find("o'") != std::string::npos || w.find("g'") != std::string::npos) return true;
-        if (!ready_) return w.find('w') == std::string::npos && w.find("th") == std::string::npos;
-        auto inU = [&](const std::string& s) {
-            return uz_.count(s) || (s.size() > 1 && s.back() == 'g' && uz_.count(s.substr(0, s.size()-1) + "k")) || (s.size() > 2 && s.substr(s.size()-2) == "g'" && uz_.count(s.substr(0, s.size()-2) + "q"));
-        };
-        if (inU(w)) return true;
-        for (const auto& s1 : sufs_) if (w.size() > s1.size() + 1 && w.compare(w.size() - s1.size(), s1.size(), s1) == 0) {
-            std::string st1 = w.substr(0, w.size() - s1.size());
-            if (inU(st1)) return true;
-            if (st1.size() >= 4) for (const auto& s2 : sufs_) if (st1.size() > s2.size() + 1 && st1.compare(st1.size() - s2.size(), s2.size(), s2) == 0 && inU(st1.substr(0, st1.size() - s2.size()))) return true;
+
+        static const char* clusters[] = {"w", "th", "wh", "ck", "qu", "tch", "dge", "ght", "sch", "chr", "chl", "shr"};
+        for (const char* cl : clusters) {
+            if (w.find(cl) != std::string::npos) return false;
         }
-        bool eng = w.find('w') != std::string::npos || w.find("th") != std::string::npos || w.find("wh") != std::string::npos || w.find("ck") != std::string::npos || w.find("qu") != std::string::npos;
-        return !eng;
+        static const char* endings[] = {"ll", "ss", "ff", "zz", "nge"};
+        for (const char* en : endings) {
+            std::string e(en);
+            if (w.size() >= e.size() && w.compare(w.size() - e.size(), e.size(), e) == 0) return false;
+        }
+        static const char* chaPfx[] = {"chart", "charg", "chanc", "chant", "chasm", "chalk", "champ", "chapt", "charl"};
+        for (const char* cp : chaPfx) {
+            std::string c(cp);
+            if (w.size() >= c.size() && w.compare(0, c.size(), c) == 0) return false;
+        }
+        return true;
     }
 };
 static SmartDict g_dict;
