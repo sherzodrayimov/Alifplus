@@ -56,7 +56,27 @@
   }
 
   var ENG_SUFS = ["ers","ing","tion","sion","ment","ness","able","ible","ship","hood","ware","ed","er","es","ly","s"];
+  var UZBEK_PROTECTED = new Set([
+    "shunday", "shunaqa", "shuncha", "shahar", "shahri", "shahardan", "shaharga",
+    "choy", "choyxona", "chol", "cho'l", "chiroyli", "chiroq", "chiqmoq", "chiqish",
+    "achchiq", "achchiqqina", "ochiq", "kichik", "yaxshi", "ish", "ishonch",
+    "tush", "tushunmoq", "qush", "bosh", "boshliq", "yosh", "yoshlik",
+    "go'sht", "o'zbekiston", "o'zbek", "to'g'ri", "qo'shiq", "qishloq", "bog'cha"
+  ]);
+  function isProtectedUzbek(low) {
+    if (UZBEK_PROTECTED.has(low)) return true;
+    for (var i = 0; i < suffixes.length; i++) {
+      var sf = suffixes[i];
+      if (low.length > sf.length + 1 && low.endsWith(sf)) {
+        var base = low.slice(0, -sf.length);
+        if (UZBEK_PROTECTED.has(base)) return true;
+      }
+    }
+    return false;
+  }
+
   function isForeignWord(low) {
+    if (isProtectedUzbek(low)) return false;
     if (rejectSet && rejectSet.has(low)) return true;
     var parts = low.split('-');
     if (parts.some(function (p) { return p.length > 1 && p !== 'chi' && rejectSet && rejectSet.has(p); })) return true;
@@ -120,7 +140,7 @@
   ]).then(function (res) {
     if (res[0]) {
       rejectSet = new Set();
-      res[0].split(/\r?\n/).forEach(function (w) { w = norm(w.trim()).toLowerCase(); if (w) rejectSet.add(w); });
+      res[0].split(/\r?\n/).forEach(function (w) { w = norm(w.trim()).toLowerCase(); if (w && !UZBEK_PROTECTED.has(w)) rejectSet.add(w); });
     }
     if (res[1]) {
       lexSet = new Set();
