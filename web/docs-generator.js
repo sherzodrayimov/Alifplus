@@ -2,9 +2,8 @@
   'use strict';
 
   var CATEGORIES = [
-    { id: 'all', label: 'Barchasi (15)' },
+    { id: 'all', label: 'Barchasi (13)' },
     { id: 'talim', label: "Ta'lim" },
-    { id: 'karyera', label: 'Ish va karyera' },
     { id: 'shaxsiy', label: 'Shaxsiy hujjatlar' },
     { id: 'biznes', label: 'Biznes' },
     { id: 'murojaat', label: 'Rasmiy murojaatlar' },
@@ -115,7 +114,7 @@
       situation: "Xalqaro grantlar, magistratura, stajirovka dasturlari yoki nufuzli ish o'rniga hujjat topshirishda kerak bo'ladi.",
       required: ["Nomzod F.I.Sh.", "O'qish / Ish joyi", "Yo'nalish / Lavozim", "Yutuq va fazilatlar", "Tavsiya beruvchi F.I.Sh. va unvoni", "Sana"],
       fields: [
-        { key: 'candidate', label: 'Tavsiya etiluvchi F.I.Sh.', placeholder: "Rayimov Sherzod Bahodirovich", shared: 'fullname' },
+        { key: 'candidate', label: 'Tavsiya etiluvchi F.I.Sh.', placeholder: "Abdullayev Sardor Bahodirovich", shared: 'fullname' },
         { key: 'org', label: "Ta'lim muassasasi / Tashkilot", placeholder: "Jahon iqtisodiyoti va diplomatiya universiteti", shared: 'org' },
         { key: 'faculty', label: "Fakultet / Yo'nalish", placeholder: "Xalqaro iqtisodiyot va menejment fakulteti, 2-kurs", shared: 'dept' },
         { key: 'achievements', label: 'Asosiy yutuqlar va fazilatlar', type: 'textarea', placeholder: "a'lo baholarga o'qishi, debat klubi asoschisi ekanligi, python va veb-dasturlash bo'yicha loyihalar yaratgani hamda mas'uliyatliligi" },
@@ -123,7 +122,7 @@
         { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
       ],
       build: function (d) {
-        var cand = d.candidate || "Rayimov Sherzod Bahodirovich";
+        var cand = d.candidate || "Abdullayev Sardor Bahodirovich";
         var org = d.org || "Jahon iqtisodiyoti va diplomatiya universiteti";
         var fac = d.faculty || "Xalqaro iqtisodiyot va menejment fakulteti";
         var ach = (d.achievements || "o'qishdagi yuqori natijalari, tashabbuskorligi va jamoada ishlash qobiliyati").trim().replace(/\.+$/, '');
@@ -143,82 +142,6 @@
       }
     },
 
-    // ── 2. ISH VA KARYERA ──
-    {
-      id: 'rezyume-cv',
-      cat: 'karyera',
-      catName: 'Ish va karyera',
-      title: 'Rezyume (CV)',
-      desc: "Nomzodning ma'lumoti, ish tajribasi, texnik ko'nikmalari va til bilish darajasini jamlovchi professional hujjat.",
-      situation: "Kompaniyalarga ishga kirish, stajirovka topshirish yoki HR mutaxassisiga o'z profilingizni yuborishda ishlatiladi.",
-      required: ["F.I.Sh.", "Maqsadli lavozim", "Telefon va Email", "Ma'lumoti", "Tajriba va loyihalar", "Ko'nikmalar va tillar"],
-      fields: [
-        { key: 'fullname', label: 'F.I.Sh.', placeholder: "Rayimov Sherzod", shared: 'fullname' },
-        { key: 'position', label: 'Maqsadli lavozim / Sohasi', placeholder: "Frontend & Python dasturchi / Loyiha menejeri" },
-        { key: 'contact', label: 'Telefon, Email va Shahar', placeholder: "+998 90 123-45-67 | sherzod@example.uz | Toshkent", shared: 'contact' },
-        { key: 'education', label: "Ma'lumoti", placeholder: "Jahon iqtisodiyoti va diplomatiya universiteti (2025–2029)", shared: 'org' },
-        { key: 'experience', label: 'Ish tajribasi va loyihalar', type: 'textarea', placeholder: "Alif+ platformasi asoschisi va dasturchisi; Grand Debate Club rahbari (2026)" },
-        { key: 'skills', label: "Asosiy ko'nikmalar", placeholder: "Python, JavaScript, SwiftUI, Git, Muammolarni tahlil qilish" },
-        { key: 'languages', label: 'Tillar', placeholder: "O'zbek tili (ona tili), Ingliz tili (B2), Rus tili (B2), Ispan tili (A2)" }
-      ],
-      build: function (d) {
-        var fn = d.fullname || "Rayimov Sherzod";
-        var pos = d.position || "Dasturchi va loyiha boshqaruvchisi";
-        var cnt = d.contact || "+998 90 123-45-67 | Toshkent";
-        var edu = d.education || "Jahon iqtisodiyoti va diplomatiya universiteti";
-        var exp = d.experience || "Alif+ raqamli alifbo platformasi yaratuvchisi; talabalar tashkiloti rahbari";
-        var skl = d.skills || "Python, JavaScript, HTML/CSS, Jamoa boshqaruvi";
-        var lng = d.languages || "O'zbek tili (ona tili), Ingliz tili (B2), Rus tili (B2)";
-        return {
-          rightHeader: [cnt],
-          docTitle: "REZYUME (CV) — " + fn.toUpperCase(),
-          paragraphs: [
-            "MAQSADLI LAVOZIM: " + pos,
-            "MA'LUMOTI: " + edu,
-            "ISH TAJRIBASI VA LOYIHALAR: " + exp,
-            "ASOSIY KO'NIKMALAR: " + skl,
-            "TIL BILISH DARAJASI: " + lng
-          ],
-          footerLeft: "Yangilangan sana: " + todayStr(),
-          footerRight: fn
-        };
-      }
-    },
-    {
-      id: 'motivatsion-xat',
-      cat: 'karyera',
-      catName: 'Ish va karyera',
-      title: 'Motivatsion xat',
-      desc: "Nomzodning aynan shu tashkilot, vakansiya yoki grant dasturiga bo'lgan qiziqishi va qo'shadigan hissasini ochib beruvchi xat.",
-      situation: "Rezyume bilan birga yuboriladi; xorijiy universitet, stipendiya yoki nufuzli kompaniyaga hujjat topshirishda muhim.",
-      required: ["Qabul qiluvchi tashkilot", "F.I.Sh.", "Vakansiya / Dastur nomi", "Tajriba va motivatsiya", "Sana"],
-      fields: [
-        { key: 'company', label: 'Tashkilot / Dastur nomi', placeholder: "IT Park Uzbekistan / Xalqaro stipendiya komissiyasi" },
-        { key: 'fullname', label: 'F.I.Sh.', placeholder: "Rayimov Sherzod", shared: 'fullname' },
-        { key: 'role', label: 'Vakansiya yoki dastur nomi', placeholder: "Yoshlar innovatsion loyihalar koordinatori" },
-        { key: 'motivation', label: 'Asosiy tajriba va maqsadingiz', type: 'textarea', placeholder: "raqamli ta'lim vositalarini yaratish tajribamga tayanib, jamoangizda foydali texnologik mahsulotlarni rivojlantirishni maqsad qilganman" },
-        { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
-      ],
-      build: function (d) {
-        var cmp = d.company || "Hurmatli tanlov komissiyasi";
-        var fn = d.fullname || "Rayimov Sherzod";
-        var role = d.role || "mutaxassis lavozimi";
-        var mot = (d.motivation || "o'z bilim va amaliy tajribamni tashkilotingiz rivojiga yo'naltirishni maqsad qilganman").trim().replace(/\.+$/, '');
-        var dt = d.date || todayStr();
-        return {
-          rightHeader: [cmp + "ga", fn + "dan"],
-          docTitle: "MOTIVATSION XAT",
-          paragraphs: [
-            "Hurmatli " + cmp + " vakillari!",
-            "Ushbu xat orqali «" + role + "» yo'nalishi bo'yicha o'z nomzodimni taqdim etmoqchiman. Tashkilotingizning zamonaviy tashabbuslari va amaliy natijalari meni ushbu jamoaga qo'shilishga undadi.",
-            "Men " + mot + ". Qisqa muddatda yangi ko'nikmalarni o'zlashtirish, mas'uliyatni zimmasiga olish va aniq natija ko'rsatish mening asosiy ustunligimdir.",
-            "Nomzodimni ko'rib chiqqaningiz uchun tashakkur bildiraman va suhbat jarayonida batafsil suhbatlashishdan mamnun bo'laman."
-          ],
-          footerLeft: "Sana: " + dt,
-          footerRight: "Hurmat bilan, " + fn
-        };
-      }
-    },
 
     // ── 3. SHAXSIY HUJJATLAR ──
     {
@@ -310,7 +233,7 @@
         { key: 'client_org', label: 'Mijoz / Hamkor tashkilot', placeholder: "«Kelajak Ta'lim» o'quv markazi rahbariyatiga" },
         { key: 'offer_item', label: 'Taklif etilayotgan xizmat yoki mahsulot', type: 'textarea', placeholder: "hujjat aylanishini avtomatlashtirish va yangi alifbo konverteri tizimini joriy etish" },
         { key: 'terms', label: 'Asosiy afzalliklar va narx shartlari', placeholder: "14 kunlik bepul sinov davri, texnik qo'llab-quvvatlash va moslashuvchan oylik tarif" },
-        { key: 'contact', label: "Mas'ul shaxs va telefon", placeholder: "Sh. Rayimov, +998 90 123-45-67", shared: 'contact' },
+        { key: 'contact', label: "Mas'ul shaxs va telefon", placeholder: "S. Abdullayev, +998 90 123-45-67", shared: 'contact' },
         { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
       ],
       build: function (d) {
@@ -345,7 +268,7 @@
       fields: [
         { key: 'contract_no', label: 'Shartnoma raqami', placeholder: "№ 14/2026" },
         { key: 'customer', label: 'Buyurtmachi (Tashkilot / F.I.Sh.)', placeholder: "«Global Trade» MChJ direktori A. Karimov" },
-        { key: 'executor', label: 'Ijrochi (Tashkilot / F.I.Sh.)', placeholder: "YaTT Rayimov Sherzod Bahodirovich", shared: 'fullname' },
+        { key: 'executor', label: 'Ijrochi (Tashkilot / F.I.Sh.)', placeholder: "YaTT Abdullayev Sardor Bahodirovich", shared: 'fullname' },
         { key: 'subject', label: 'Xizmat predmeti (nima bajariladi)', type: 'textarea', placeholder: "korporativ veb-sayt va hujjatlar konverteri modulini ishlab chiqish" },
         { key: 'price', label: 'Xizmat narxi va bajarish muddati', placeholder: "10 000 000 so'm, 15 ish kuni davomida" },
         { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
@@ -452,14 +375,14 @@
       required: ["Kimga (Tashkilot / Rahbar)", "Tashabbuskor F.I.Sh.", "Aloqa ma'lumoti", "Taklif mazmuni va foydasi", "Sana"],
       fields: [
         { key: 'to_whom', label: 'Kimga', placeholder: "Yoshlar ishlari agentligi direktoriga" },
-        { key: 'fullname', label: 'Tashabbuskor F.I.Sh. / Jamoa', placeholder: "Rayimov Sherzod, «Alif+» loyihasi jamoasi", shared: 'fullname' },
+        { key: 'fullname', label: 'Tashabbuskor F.I.Sh. / Jamoa', placeholder: "Abdullayev Sardor, «Alif+» loyihasi jamoasi", shared: 'fullname' },
         { key: 'contact', label: 'Aloqa ma’lumotlari', placeholder: "+998 90 123-45-67 | info@alifplus.uz", shared: 'contact' },
         { key: 'proposal', label: 'Taklif g‘oyasi va kutilayotgan natija', type: 'textarea', placeholder: "talabalar va yoshlar o'rtasida savodxonlikni oshirish uchun bepul raqamli hujjatlar va imlo platformasini keng joriy etish" },
         { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
       ],
       build: function (d) {
         var to = d.to_whom || "Tashkilot rahbariyatiga";
-        var fn = d.fullname || "Rayimov Sherzod";
+        var fn = d.fullname || "Abdullayev Sardor";
         var cnt = d.contact || "+998 90 123-45-67";
         var prp = (d.proposal || "faoliyat samaradorligini oshiruvchi yangi loyihani joriy etish").trim().replace(/\.+$/, '');
         var dt = d.date || todayStr();
@@ -489,7 +412,7 @@
       fields: [
         { key: 'org', label: 'Tashkilot / Kengash nomi', placeholder: "«Grand Debate Club» tashkiliy qo'mitasi", shared: 'org' },
         { key: 'proto_no', label: 'Bayonnoma raqami', placeholder: "№ 05" },
-        { key: 'chair', label: 'Yig‘ilish raisi F.I.Sh.', placeholder: "Sh. Rayimov", shared: 'fullname' },
+        { key: 'chair', label: 'Yig‘ilish raisi F.I.Sh.', placeholder: "S. Abdullayev", shared: 'fullname' },
         { key: 'secretary', label: 'Kotib F.I.Sh.', placeholder: "M. Karimova" },
         { key: 'attendees', label: 'Qatnashchilar', placeholder: "Qo'mita a'zolari (jami 12 nafar)" },
         { key: 'agenda', label: 'Kun tartibi', placeholder: "Respublika turniriga tayyorgarlik va hakamlar hay'atini tasdiqlash" },
@@ -499,7 +422,7 @@
       build: function (d) {
         var org = d.org || "Tashkilot yig'ilishi";
         var no = d.proto_no || "№ 01";
-        var chr = d.chair || "Sh. Rayimov";
+        var chr = d.chair || "S. Abdullayev";
         var sec = d.secretary || "M. Karimova";
         var att = d.attendees || "Barcha a'zolar";
         var agn = d.agenda || "Joriy tashkiliy masalalar";
@@ -533,7 +456,7 @@
         { key: 'topic', label: 'Buyruq sarlavhasi', placeholder: "Xodimni ishga qabul qilish to'g'risida" },
         { key: 'body', label: 'Buyruq matni (BUYURAMAN)', type: 'textarea', placeholder: "1. Karimov Jasur Rustamovich 2026-yil 25-noyabrdan loyiha menejeri lavozimiga ishga qabul qilinsin.\n2. Buxgalteriya bo'limiga shtat jadvaliga muvofiq ish haqi to'lash yuklatilsin." },
         { key: 'basis', label: 'Asos', placeholder: "J. Karimovning arizasi va mehnat shartnomasi" },
-        { key: 'director', label: 'Rahbar lavozimi va F.I.Sh.', placeholder: "Direktor Sh. Rayimov", shared: 'fullname' },
+        { key: 'director', label: 'Rahbar lavozimi va F.I.Sh.', placeholder: "Direktor S. Abdullayev", shared: 'fullname' },
         { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
       ],
       build: function (d) {
@@ -542,7 +465,7 @@
         var top = d.topic || "Tashkiliy masala to'g'risida";
         var bdy = d.body || "1. Belgilangan vazifalar o'z muddatida ijro etilsin.";
         var bas = d.basis || "Rahbariyat qarori";
-        var dir = d.director || "Direktor Sh. Rayimov";
+        var dir = d.director || "Direktor S. Abdullayev";
         var dt = d.date || todayStr();
         return {
           rightHeader: [org],
@@ -568,7 +491,7 @@
       fields: [
         { key: 'org', label: 'Tashkilot nomi', placeholder: "«AlifTech» MChJ", shared: 'org' },
         { key: 'act_no', label: 'Dalolatnoma raqami', placeholder: "№ 08" },
-        { key: 'commission', label: 'Komissiya raisi va a’zolari', placeholder: "Rais: Sh. Rayimov; A'zolar: A. Valiyev, D. Sobirova" },
+        { key: 'commission', label: 'Komissiya raisi va a’zolari', placeholder: "Rais: S. Abdullayev; A'zolar: A. Valiyev, D. Sobirova" },
         { key: 'fact', label: 'Tasdiqlanayotgan holat yoki topshirilgan mulk', type: 'textarea', placeholder: "5 dona noutbuk va 2 dona proyektor to'liq ishchi holatda o'quv xonasiga topshirilganligi" },
         { key: 'conclusion', label: 'Komissiya xulosasi', placeholder: "Jihozlar nuqsonsiz qabul qilindi va foydalanishga yaroqli deb topildi" },
         { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
@@ -576,7 +499,7 @@
       build: function (d) {
         var org = d.org || "«Tashkilot» MChJ";
         var no = d.act_no || "№ 01";
-        var com = d.commission || "Rais: Sh. Rayimov; A'zolar: A. Valiyev";
+        var com = d.commission || "Rais: S. Abdullayev; A'zolar: A. Valiyev";
         var fct = (d.fact || "belgilangan moddiy boyliklar ko'zdan kechirilganligi").trim().replace(/\.+$/, '');
         var cnc = (d.conclusion || "holat rasman tasdiqlandi").trim().replace(/\.+$/, '');
         var dt = d.date || todayStr();
