@@ -728,21 +728,126 @@
       return lines.join('\n');
     }
 
-    function renderPreview() {
-      var d = getCompiledDoc();
-      var rhHtml = d.rightHeader.length
-        ? '<div class="alif-paper-right">' + d.rightHeader.map(escapeHtml).join('<br>') + '</div>'
-        : '';
-      var titleHtml = '<div class="alif-paper-title">' + escapeHtml(d.docTitle).replace(/\n/g, '<br>') + '</div>';
-      var bodyHtml = d.paragraphs.map(function (p) {
-        return '<p class="alif-paper-p">' + escapeHtml(p).replace(/\n/g, '<br>') + '</p>';
-      }).join('');
-      var footHtml = '<div class="alif-paper-foot">' +
-        '<div>' + escapeHtml(d.footerLeft).replace(/\n/g, '<br>') + '</div>' +
-        '<div style="text-align:right;">' + escapeHtml(d.footerRight).replace(/\n/g, '<br>') + '</div>' +
-      '</div>';
+    var sheetEl = document.getElementById('alifDocSheet');
+    var headerSlotEl = document.getElementById('alifPaperHeaderSlot');
+    var footerSlotEl = document.getElementById('alifPaperFooterSlot');
+    var manualBadgeEl = document.getElementById('alifManualEditBadge');
+    var resetTplBtn = document.getElementById('alifDocResetTplBtn');
+    var addRowBtn = document.getElementById('alifDocAddTableRow');
 
-      paperEl.innerHTML = rhHtml + titleHtml + bodyHtml + footHtml;
+    var editorState = {
+      fontFamily: 'Times New Roman',
+      fontSize: '14pt',
+      lineSpacing: '1.5',
+      margins: 'standard',
+      headerText: '',
+      footerText: '',
+      pageNumbering: false,
+      isManual: false
+    };
+
+    var undoStack = [];
+    var redoStack = [];
+    var snapTimer = null;
+
+    function updateHistoryButtons() {
+      var uBtn = document.getElementById('alifDocUndoBtn');
+      var rBtn = document.getElementById('alifDocRedoBtn');
+      if (uBtn) uBtn.disabled = undoStack.length <= 1;
+      if (rBtn) rBtn.disabled = redoStack.length === 0;
+    }
+
+    function pushSnapshot() {
+      var cur = paperEl.innerHTML;
+      if (undoStack.length && undoStack[undoStack.length - 1] === cur) return;
+      undoStack.push(cur);
+      if (undoStack.length > 50) undoStack.shift();
+      redoStack = [];
+      updateHistoryButtons();
+    }
+
+    function scheduleSnapshot() {
+      clearTimeout(snapTimer);
+      snapTimer = setTimeout(pushSnapshot, 320);
+    }
+
+    function setManualMode(flag) {
+      editorState.isManual = flag;
+      if (manualBadgeEl) manualBadgeEl.hidden = !flag;
+      if (resetTplBtn) resetTplBtn.hidden = !flag;
+    }
+
+    function syncTableControls() {
+      if (addRowBtn) {
+        addRowBtn.hidden = !paperEl.querySelector('table');
+      }
+    }
+
+    function applySheetStyles() {
+      if (!sheetEl) return;
+      var fontStack = editorState.fontFamily === 'Times New Roman'
+        ? '"Times New Roman", Georgia, serif'
+        : '"' + editorState.fontFamily + '", -apple-system, BlinkMacSystemFont, sans-serif';
+      sheetEl.style.fontFamily = fontStack;
+      paperEl.style.fontSize = editorState.fontSize;
+      paperEl.style.lineHeight = editorState.lineSpacing;
+
+      var padMap = {
+        standard: '34px 36px',
+        wide: '48px 52px',
+        narrow: '20px 22px'
+      };
+      sheetEl.style.padding = padMap[editorState.margins] || padMap.standard;
+
+      var hTxt = convertScript(editorState.headerText.trim(), scriptMode);
+      if (headerSlotEl) {
+        if (hTxt) {
+          headerSlotEl.hidden = false;
+          headerSlotEl.textContent = hTxt;
+        } else {
+          headerSlotEl.hidden = true;
+          headerSlotEl.textContent = '';
+        }
+      }
+
+      var fTxt = convertScript(editorState.footerText.trim(), scriptMode);
+      var pgTxt = editorState.pageNumbering ? convertScript('1-bet', scriptMode) : '';
+      if (footerSlotEl) {
+        if (fTxt || pgTxt) {
+          footerSlotEl.hidden = false;
+          footerSlotEl.innerHTML = '<span>' + escapeHtml(fTxt) + '</span><span>' + escapeHtml(pgTxt) + '</span>';
+        } else {
+          footerSlotEl.hidden = true;
+          footerSlotEl.innerHTML = '';
+        }
+      }
+    }
+
+    function renderPreview(forceReset) {
+      if (forceReset) {
+        setManualMode(false);
+      }
+      if (!editorState.isManual) {
+        var d = getCompiledDoc();
+        var rhHtml = d.rightHeader.length
+          ? '<div class="alif-paper-right">' + d.rightHeader.map(escapeHtml).join('<br>') + '</div>'
+          : '';
+        var titleHtml = '<div class="alif-paper-title">' + escapeHtml(d.docTitle).replace(/\n/g, '<br>') + '</div>';
+        var bodyHtml = d.paragraphs.map(function (p) {
+          return '<p class="alif-paper-p">' + escapeHtml(p).replace(/\n/g, '<br>') + '</p>';
+        }).join('');
+        var footHtml = '<div class="alif-paper-foot">' +
+          '<div>' + escapeHtml(d.footerLeft).replace(/\n/g, '<br>') + '</div>' +
+          '<div style="text-align:right;">' + escapeHtml(d.footerRight).replace(/\n/g, '<br>') + '</div>' +
+        '</div>';
+
+        paperEl.innerHTML = rhHtml + titleHtml + bodyHtml + footHtml;
+        undoStack = [paperEl.innerHTML];
+        redoStack = [];
+        updateHistoryButtons();
+      }
+      applySheetStyles();
+      syncTableControls();
     }
 
     function renderForm() {
@@ -764,7 +869,7 @@
         '</div>';
       }).join('');
 
-      renderPreview();
+      renderPreview(true);
     }
 
     function selectTemplate(tplId, scrollIntoView) {
@@ -778,6 +883,159 @@
         builderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
+
+    // Jonli tahrirlash kuzatuvi
+    paperEl.addEventListener('input', function () {
+      setManualMode(true);
+      syncTableControls();
+      scheduleSnapshot();
+    });
+
+    paperEl.addEventListener('keydown', function (e) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'z') {
+        e.preventDefault();
+        if (e.shiftKey) {
+          doRedo();
+        } else {
+          doUndo();
+        }
+      }
+    });
+
+    function doUndo() {
+      if (undoStack.length <= 1) return;
+      var current = undoStack.pop();
+      redoStack.push(current);
+      paperEl.innerHTML = undoStack[undoStack.length - 1];
+      setManualMode(true);
+      syncTableControls();
+      updateHistoryButtons();
+    }
+
+    function doRedo() {
+      if (!redoStack.length) return;
+      var next = redoStack.pop();
+      undoStack.push(next);
+      paperEl.innerHTML = next;
+      setManualMode(true);
+      syncTableControls();
+      updateHistoryButtons();
+    }
+
+    var undoBtn = document.getElementById('alifDocUndoBtn');
+    var redoBtn = document.getElementById('alifDocRedoBtn');
+    if (undoBtn) undoBtn.addEventListener('click', doUndo);
+    if (redoBtn) redoBtn.addEventListener('click', doRedo);
+
+    if (resetTplBtn) {
+      resetTplBtn.addEventListener('click', function () {
+        renderPreview(true);
+      });
+    }
+
+    // Toolbar: Bold / Italic (mousedown selectionni saqlab qoladi)
+    document.querySelectorAll('[data-exec]').forEach(function (btn) {
+      btn.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        paperEl.focus();
+        document.execCommand(btn.dataset.exec, false, null);
+        setManualMode(true);
+        pushSnapshot();
+      });
+    });
+
+    // Toolbar: 4-way Text Alignment
+    document.querySelectorAll('[data-align]').forEach(function (btn) {
+      btn.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        var al = btn.dataset.align;
+        var cmdMap = { left: 'justifyLeft', center: 'justifyCenter', right: 'justifyRight', justify: 'justifyFull' };
+        paperEl.focus();
+        document.execCommand(cmdMap[al], false, null);
+        var sel = window.getSelection();
+        if (sel && sel.anchorNode) {
+          var el = sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentElement;
+          var block = el && el.closest('p, div.alif-paper-title, div.alif-paper-right, td, th');
+          if (block && paperEl.contains(block)) {
+            block.style.textAlign = al;
+          }
+        }
+        setManualMode(true);
+        pushSnapshot();
+      });
+    });
+
+    // Font family, size, line spacing, margins
+    var ffSel = document.getElementById('alifDocFontFamily');
+    var fsSel = document.getElementById('alifDocFontSize');
+    var lsSel = document.getElementById('alifDocLineSpacing');
+    var mgSel = document.getElementById('alifDocMargins');
+
+    if (ffSel) ffSel.addEventListener('change', function () { editorState.fontFamily = ffSel.value; applySheetStyles(); });
+    if (fsSel) fsSel.addEventListener('change', function () { editorState.fontSize = fsSel.value; applySheetStyles(); });
+    if (lsSel) lsSel.addEventListener('change', function () { editorState.lineSpacing = lsSel.value; applySheetStyles(); });
+    if (mgSel) mgSel.addEventListener('change', function () { editorState.margins = mgSel.value; applySheetStyles(); });
+
+    // Jadval qo'shish va qator qo'shish
+    var insTblBtn = document.getElementById('alifDocInsertTable');
+    if (insTblBtn) {
+      insTblBtn.addEventListener('click', function () {
+        var tbl = document.createElement('table');
+        tbl.className = 'alif-paper-table';
+        tbl.innerHTML =
+          '<thead><tr><th>№</th><th>Nomi / Ko‘rsatkich</th><th>Miqdori / Izoh</th></tr></thead>' +
+          '<tbody>' +
+            '<tr><td>1</td><td>...</td><td>...</td></tr>' +
+            '<tr><td>2</td><td>...</td><td>...</td></tr>' +
+          '</tbody>';
+        var foot = paperEl.querySelector('.alif-paper-foot');
+        if (foot) {
+          paperEl.insertBefore(tbl, foot);
+        } else {
+          paperEl.appendChild(tbl);
+        }
+        setManualMode(true);
+        syncTableControls();
+        pushSnapshot();
+      });
+    }
+
+    if (addRowBtn) {
+      addRowBtn.addEventListener('click', function () {
+        var tables = paperEl.querySelectorAll('table');
+        if (!tables.length) return;
+        var lastTbl = tables[tables.length - 1];
+        var tbody = lastTbl.querySelector('tbody') || lastTbl;
+        var rows = tbody.querySelectorAll('tr');
+        var colCount = rows.length ? rows[0].children.length : 3;
+        var tr = document.createElement('tr');
+        for (var c = 0; c < colCount; c++) {
+          var td = document.createElement('td');
+          td.textContent = c === 0 ? String(rows.length + 1) : '...';
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+        setManualMode(true);
+        pushSnapshot();
+      });
+    }
+
+    // Header / Footer & Page Numbering
+    var toggleHFBtn = document.getElementById('alifDocToggleHF');
+    var hfPanel = document.getElementById('alifDocHFPanel');
+    var headerInp = document.getElementById('alifDocHeaderInput');
+    var footerInp = document.getElementById('alifDocFooterInput');
+    var pageNumChk = document.getElementById('alifDocPageNumCheck');
+
+    if (toggleHFBtn && hfPanel) {
+      toggleHFBtn.addEventListener('click', function () {
+        hfPanel.hidden = !hfPanel.hidden;
+        toggleHFBtn.classList.toggle('is-active', !hfPanel.hidden);
+      });
+    }
+    if (headerInp) headerInp.addEventListener('input', function () { editorState.headerText = headerInp.value; applySheetStyles(); });
+    if (footerInp) footerInp.addEventListener('input', function () { editorState.footerText = footerInp.value; applySheetStyles(); });
+    if (pageNumChk) pageNumChk.addEventListener('change', function () { editorState.pageNumbering = pageNumChk.checked; applySheetStyles(); });
 
     catBar.addEventListener('click', function (e) {
       var btn = e.target.closest('[data-cat]');
@@ -811,7 +1069,7 @@
         profile[fDef.shared] = el.value;
         saveProfile();
       }
-      renderPreview();
+      renderPreview(true);
     });
 
     // Yozuv rejimi (Yangi lotin / Eski lotin / Kirill)
@@ -821,11 +1079,23 @@
         document.querySelectorAll('[data-doc-script]').forEach(function (b) {
           b.classList.toggle('is-active', b.dataset.docScript === scriptMode);
         });
-        renderPreview();
+        if (editorState.isManual) {
+          // Qo'lda tahrirlangan matnni ham tanlangan alifboga o'girish
+          var walker = document.createTreeWalker(paperEl, NodeFilter.SHOW_TEXT, null, false);
+          var n;
+          while ((n = walker.nextNode())) {
+            if (n.nodeValue && n.nodeValue.trim()) {
+              n.nodeValue = convertScript(n.nodeValue, scriptMode);
+            }
+          }
+          applySheetStyles();
+          pushSnapshot();
+        } else {
+          renderPreview(false);
+        }
       });
     });
 
-    // Namunani to'ldirish / Formani tozalash
     var fillDemoBtn = document.getElementById('alifDocFillDemo');
     if (fillDemoBtn) {
       fillDemoBtn.addEventListener('click', function () {
@@ -848,11 +1118,24 @@
       });
     }
 
-    // Eksport: Nusxa olish, .DOCX, .PDF, .TXT
+    function getLivePlainText() {
+      var parts = [];
+      if (headerSlotEl && !headerSlotEl.hidden && headerSlotEl.textContent.trim()) {
+        parts.push(headerSlotEl.textContent.trim());
+        parts.push('----------------------------------------');
+      }
+      parts.push(paperEl.innerText.trim());
+      if (footerSlotEl && !footerSlotEl.hidden && footerSlotEl.innerText.trim()) {
+        parts.push('----------------------------------------');
+        parts.push(footerSlotEl.innerText.trim());
+      }
+      return parts.join('\n\n');
+    }
+
     var copyBtn = document.getElementById('alifDocCopyBtn');
     if (copyBtn) {
       copyBtn.addEventListener('click', function () {
-        var txt = getPlainTextDoc();
+        var txt = getLivePlainText();
         if (navigator.clipboard) navigator.clipboard.writeText(txt);
         var old = copyBtn.textContent;
         copyBtn.textContent = '✓ Nusxa olindi';
@@ -873,61 +1156,162 @@
     var txtBtn = document.getElementById('alifDocTxtBtn');
     if (txtBtn) {
       txtBtn.addEventListener('click', function () {
-        downloadBlob(new Blob([getPlainTextDoc()], { type: 'text/plain;charset=utf-8' }), activeTpl.id + '_alifplus.txt');
+        downloadBlob(new Blob([getLivePlainText()], { type: 'text/plain;charset=utf-8' }), activeTpl.id + '_alifplus.txt');
       });
     }
 
+    // ── HIGH-FIDELITY .DOCX EXPORT (JONLI DOM + JADVAL + KOLONTITUL + SAHIFA RAQAMI) ──
     var docxBtn = document.getElementById('alifDocDocxBtn');
     if (docxBtn) {
       docxBtn.addEventListener('click', async function () {
-        var d = getCompiledDoc();
         if (!window.JSZip) {
-          downloadBlob(new Blob([getPlainTextDoc()], { type: 'text/plain;charset=utf-8' }), activeTpl.id + '_alifplus.txt');
+          downloadBlob(new Blob([getLivePlainText()], { type: 'text/plain;charset=utf-8' }), activeTpl.id + '_alifplus.txt');
           return;
         }
+
         var esc = function (s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
-        var xmlParts = [];
+        var fontName = editorState.fontFamily || 'Times New Roman';
+        var ptNum = parseInt(editorState.fontSize, 10) || 14;
+        var halfPt = ptNum * 2;
+        var lineTwips = Math.round(parseFloat(editorState.lineSpacing || '1.5') * 240);
+        var marginMap = { standard: 1134, wide: 1701, narrow: 680 };
+        var pgMar = marginMap[editorState.margins] || 1134;
 
-        // O'ng yuqori rekvizitlar (Kimga / Kimdan)
-        d.rightHeader.forEach(function (line) {
-          xmlParts.push('<w:p><w:pPr><w:jc w:val="right"/><w:spacing w:after="40"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="28"/></w:rPr><w:t xml:space="preserve">' + esc(line) + '</w:t></w:r></w:p>');
-        });
-
-        // Markaziy sarlavha
-        xmlParts.push('<w:p><w:pPr><w:jc w:val="center"/><w:spacing w:before="240" w:after="200"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:b/><w:sz w:val="30"/></w:rPr><w:t xml:space="preserve">' + esc(d.docTitle) + '</w:t></w:r></w:p>');
-
-        // Asosiy matn
-        d.paragraphs.forEach(function (p) {
-          p.split(/\n/).forEach(function (subLine) {
-            xmlParts.push('<w:p><w:pPr><w:jc w:val="both"/><w:ind w:firstLine="560"/><w:spacing w:after="140" w:line="320" w:lineRule="auto"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="28"/></w:rPr><w:t xml:space="preserve">' + esc(subLine) + '</w:t></w:r></w:p>');
+        function buildRunsFromNode(node, inheritedBold, inheritedItalic, customHalfPt) {
+          var sz = customHalfPt || halfPt;
+          if (node.nodeType === 3) {
+            var raw = node.nodeValue || '';
+            if (!raw) return '';
+            var lines = raw.split(/\n/);
+            return lines.map(function (ln, idx) {
+              var rPr = '<w:rPr><w:rFonts w:ascii="' + esc(fontName) + '" w:hAnsi="' + esc(fontName) + '"/><w:sz w:val="' + sz + '"/>' +
+                        (inheritedBold ? '<w:b/>' : '') + (inheritedItalic ? '<w:i/>' : '') + '</w:rPr>';
+              return (idx > 0 ? '<w:r><w:br/></w:r>' : '') +
+                     '<w:r>' + rPr + '<w:t xml:space="preserve">' + esc(ln) + '</w:t></w:r>';
+            }).join('');
+          }
+          if (node.nodeType !== 1) return '';
+          var tag = node.tagName.toUpperCase();
+          if (tag === 'BR') return '<w:r><w:br/></w:r>';
+          var b = inheritedBold || tag === 'B' || tag === 'STRONG' || (node.style && node.style.fontWeight === 'bold');
+          var it = inheritedItalic || tag === 'I' || tag === 'EM' || (node.style && node.style.fontStyle === 'italic');
+          var out = '';
+          node.childNodes.forEach(function (ch) {
+            out += buildRunsFromNode(ch, b, it, sz);
           });
+          return out;
+        }
+
+        function mapAlign(el, fallback) {
+          var ta = (el && el.style && el.style.textAlign) || fallback || 'left';
+          if (ta === 'justify') return 'both';
+          if (ta === 'center' || ta === 'right' || ta === 'left') return ta;
+          return 'left';
+        }
+
+        var bodyXml = [];
+        Array.from(paperEl.children).forEach(function (el) {
+          var tag = el.tagName.toUpperCase();
+          if (tag === 'TABLE') {
+            var trs = Array.from(el.querySelectorAll('tr')).map(function (tr, rIdx) {
+              var tcs = Array.from(tr.children).map(function (cell) {
+                var isHead = rIdx === 0 || cell.tagName.toUpperCase() === 'TH';
+                var runs = buildRunsFromNode(cell, isHead, false, halfPt - 2);
+                return '<w:tc><w:tcPr><w:tcBorders><w:top w:val="single" w:sz="6" w:color="333333"/><w:left w:val="single" w:sz="6" w:color="333333"/><w:bottom w:val="single" w:sz="6" w:color="333333"/><w:right w:val="single" w:sz="6" w:color="333333"/></w:tcBorders></w:tcPr>' +
+                       '<w:p><w:pPr><w:spacing w:after="40"/></w:pPr>' + runs + '</w:p></w:tc>';
+              }).join('');
+              return '<w:tr>' + tcs + '</w:tr>';
+            }).join('');
+            bodyXml.push('<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/><w:tblBorders><w:top w:val="single" w:sz="6" w:color="333333"/><w:left w:val="single" w:sz="6" w:color="333333"/><w:bottom w:val="single" w:sz="6" w:color="333333"/><w:right w:val="single" w:sz="6" w:color="333333"/><w:insideH w:val="single" w:sz="4" w:color="666666"/><w:insideV w:val="single" w:sz="4" w:color="666666"/></w:tblBorders></w:tblPr>' + trs + '</w:tbl><w:p/>');
+          } else if (el.classList.contains('alif-paper-right')) {
+            var jcR = mapAlign(el, 'right');
+            bodyXml.push('<w:p><w:pPr><w:jc w:val="' + jcR + '"/><w:spacing w:after="160" w:line="' + lineTwips + '" w:lineRule="auto"/></w:pPr>' + buildRunsFromNode(el, false, false, halfPt) + '</w:p>');
+          } else if (el.classList.contains('alif-paper-title')) {
+            var jcT = mapAlign(el, 'center');
+            bodyXml.push('<w:p><w:pPr><w:jc w:val="' + jcT + '"/><w:spacing w:before="200" w:after="200"/></w:pPr>' + buildRunsFromNode(el, true, false, halfPt + 2) + '</w:p>');
+          } else if (el.classList.contains('alif-paper-foot')) {
+            var cols = el.children;
+            var leftRuns = cols[0] ? buildRunsFromNode(cols[0], false, false, halfPt) : '';
+            var rightRuns = cols[1] ? buildRunsFromNode(cols[1], false, false, halfPt) : '';
+            bodyXml.push('<w:p><w:pPr><w:spacing w:before="260"/></w:pPr>' + leftRuns + '<w:r><w:t xml:space="preserve">          </w:t></w:r>' + rightRuns + '</w:p>');
+          } else {
+            var jcP = mapAlign(el, el.classList.contains('alif-paper-p') ? 'justify' : 'left');
+            var ind = el.classList.contains('alif-paper-p') ? '<w:ind w:firstLine="560"/>' : '';
+            bodyXml.push('<w:p><w:pPr><w:jc w:val="' + jcP + '"/>' + ind + '<w:spacing w:after="140" w:line="' + lineTwips + '" w:lineRule="auto"/></w:pPr>' + buildRunsFromNode(el, false, false, halfPt) + '</w:p>');
+          }
         });
 
-        // Sana va Imzo
-        xmlParts.push('<w:p><w:pPr><w:spacing w:before="280"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="28"/></w:rPr><w:t xml:space="preserve">' + esc(d.footerLeft + '          ' + d.footerRight) + '</w:t></w:r></w:p>');
+        var hasHeader = Boolean(editorState.headerText.trim());
+        var hasFooter = Boolean(editorState.footerText.trim() || editorState.pageNumbering);
+        var sectRefs = '';
+        if (hasHeader) sectRefs += '<w:headerReference w:type="default" r:id="rId1"/>';
+        if (hasFooter) sectRefs += '<w:footerReference w:type="default" r:id="rId2"/>';
+
+        bodyXml.push('<w:sectPr>' + sectRefs + '<w:pgMar w:top="' + pgMar + '" w:right="' + pgMar + '" w:bottom="' + pgMar + '" w:left="' + pgMar + '" w:header="567" w:footer="567"/></w:sectPr>');
 
         var zip = new window.JSZip();
-        zip.file('[Content_Types].xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>');
+        var ctOverrides = '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>';
+        var docRels = '';
+
+        if (hasHeader) {
+          ctOverrides += '<Override PartName="/word/header1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"/>';
+          docRels += '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/header" Target="header1.xml"/>';
+          var hVal = esc(convertScript(editorState.headerText.trim(), scriptMode));
+          zip.file('word/header1.xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:hdr xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:p><w:pPr><w:jc w:val="right"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="' + esc(fontName) + '" w:hAnsi="' + esc(fontName) + '"/><w:sz w:val="20"/><w:color w:val="666666"/></w:rPr><w:t xml:space="preserve">' + hVal + '</w:t></w:r></w:p></w:hdr>');
+        }
+
+        if (hasFooter) {
+          ctOverrides += '<Override PartName="/word/footer1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"/>';
+          docRels += '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer" Target="footer1.xml"/>';
+          var fVal = esc(convertScript(editorState.footerText.trim(), scriptMode));
+          var pgXml = editorState.pageNumbering
+            ? '<w:r><w:rPr><w:rFonts w:ascii="' + esc(fontName) + '" w:hAnsi="' + esc(fontName) + '"/><w:sz w:val="20"/><w:color w:val="666666"/></w:rPr><w:t xml:space="preserve">' + (fVal ? '   |   ' : '') + '</w:t></w:r><w:fldSimple w:instr="PAGE"/><w:r><w:rPr><w:rFonts w:ascii="' + esc(fontName) + '" w:hAnsi="' + esc(fontName) + '"/><w:sz w:val="20"/><w:color w:val="666666"/></w:rPr><w:t xml:space="preserve">' + esc(convertScript('-bet', scriptMode)) + '</w:t></w:r>'
+            : '';
+          zip.file('word/footer1.xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:ftr xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="' + esc(fontName) + '" w:hAnsi="' + esc(fontName) + '"/><w:sz w:val="20"/><w:color w:val="666666"/></w:rPr><w:t xml:space="preserve">' + fVal + '</w:t></w:r>' + pgXml + '</w:p></w:ftr>');
+        }
+
+        zip.file('[Content_Types].xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/>' + ctOverrides + '</Types>');
         zip.file('_rels/.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>');
-        zip.file('word/document.xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>' + xmlParts.join('') + '</w:body></w:document>');
+        if (docRels) {
+          zip.file('word/_rels/document.xml.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' + docRels + '</Relationships>');
+        }
+        zip.file('word/document.xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><w:body>' + bodyXml.join('') + '</w:body></w:document>');
+
         var blob = await zip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
         downloadBlob(blob, activeTpl.id + '_alifplus.docx');
       });
     }
 
+    // ── HIGH-FIDELITY .PDF EXPORT (JONLI HTML + MARGIN + HEADER/FOOTER + JADVAL) ──
     var pdfBtn = document.getElementById('alifDocPdfBtn');
     if (pdfBtn) {
       pdfBtn.addEventListener('click', function () {
-        var d = getCompiledDoc();
-        var w = window.open('', '_blank', 'width=840,height=720');
+        var w = window.open('', '_blank', 'width=860,height=740');
         if (!w) return;
-        var rh = d.rightHeader.length ? '<div style="margin-left:auto;width:54%;margin-bottom:24px;">' + d.rightHeader.map(escapeHtml).join('<br>') + '</div>' : '';
-        var ps = d.paragraphs.map(function (p) { return '<p style="text-indent:28px;text-align:justify;margin:0 0 12px;">' + escapeHtml(p).replace(/\n/g, '<br>') + '</p>'; }).join('');
-        w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>' + escapeHtml(d.docTitle) + '</title><style>body{font-family:"Times New Roman",serif;padding:48px 56px;font-size:14pt;line-height:1.55;color:#111;}</style></head><body>' +
-          rh +
-          '<h2 style="text-align:center;margin:18px 0 20px;font-size:15pt;">' + escapeHtml(d.docTitle).replace(/\n/g, '<br>') + '</h2>' +
-          ps +
-          '<div style="display:flex;justify-content:space-between;margin-top:34px;"><div>' + escapeHtml(d.footerLeft).replace(/\n/g, '<br>') + '</div><div style="text-align:right;">' + escapeHtml(d.footerRight).replace(/\n/g, '<br>') + '</div></div>' +
+        var marginMm = { standard: '20mm', wide: '30mm', narrow: '12mm' }[editorState.margins] || '20mm';
+        var fFam = editorState.fontFamily === 'Times New Roman'
+          ? '"Times New Roman", Georgia, serif'
+          : '"' + editorState.fontFamily + '", Arial, sans-serif';
+        var hHtml = (headerSlotEl && !headerSlotEl.hidden)
+          ? '<div style="text-align:right;font-size:10pt;color:#6b7280;border-bottom:1px solid #e5e7eb;padding-bottom:6px;margin-bottom:16px;">' + escapeHtml(headerSlotEl.textContent) + '</div>'
+          : '';
+        var fHtml = (footerSlotEl && !footerSlotEl.hidden)
+          ? '<div style="display:flex;justify-content:space-between;font-size:10pt;color:#6b7280;border-top:1px solid #e5e7eb;padding-top:6px;margin-top:26px;">' + footerSlotEl.innerHTML + '</div>'
+          : '';
+
+        w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>' + escapeHtml(activeTpl.title) + '</title>' +
+          '<style>' +
+            '@page { margin: ' + marginMm + '; }' +
+            'body { font-family: ' + fFam + '; font-size: ' + editorState.fontSize + '; line-height: ' + editorState.lineSpacing + '; color: #111827; margin: 0; padding: 12px; }' +
+            '.alif-paper-right { margin-left: auto; width: 56%; margin-bottom: 20px; }' +
+            '.alif-paper-title { text-align: center; font-weight: 700; font-size: 1.12em; margin: 14px 0 18px; }' +
+            '.alif-paper-p { margin: 0 0 12px; text-indent: 26px; text-align: justify; }' +
+            '.alif-paper-foot { display: flex; justify-content: space-between; margin-top: 30px; }' +
+            'table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.92em; }' +
+            'th, td { border: 1px solid #374151; padding: 6px 8px; text-align: left; }' +
+            'th { background: #f3f4f6; font-weight: 700; }' +
+          '</style></head><body>' +
+          hHtml + paperEl.innerHTML + fHtml +
         '</body></html>');
         w.document.close();
         w.focus();

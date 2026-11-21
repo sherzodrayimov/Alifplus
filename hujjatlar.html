@@ -30,7 +30,7 @@
     })();
   </script>
   <link rel="stylesheet" href="web/scroll-fx.css" />
-  <link rel="stylesheet" href="web/theme-variants.css?v=5" />
+  <link rel="stylesheet" href="web/theme-variants.css?v=6" />
 </head>
 <body>
   <header class="alif-topbar">
@@ -99,7 +99,11 @@
 
           <div class="alif-builder-preview-col">
             <div class="alif-builder-export-bar">
-              <span style="font-size:13px; font-weight:700; color:var(--muted);">Jonli hujjat ko‘rinishi (A4)</span>
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span style="font-size:13px; font-weight:700; color:var(--muted);">Jonli A4 muharriri</span>
+                <span id="alifManualEditBadge" class="alif-edit-badge" hidden>✎ Qo‘lda tahrirlangan</span>
+                <button type="button" id="alifDocResetTplBtn" class="alif-mini-btn" hidden title="Qo‘lda kiritilgan o‘zgarishlarni bekor qilib shablonga qaytarish">↺ Shablonga qaytarish</button>
+              </div>
               <div class="alif-export-btns">
                 <button type="button" id="alifDocCopyBtn" class="alif-mini-btn alif-mini-primary">Nusxa olish</button>
                 <button type="button" id="alifDocDocxBtn" class="alif-mini-btn">.DOCX (Word)</button>
@@ -107,7 +111,83 @@
                 <button type="button" id="alifDocTxtBtn" class="alif-mini-btn">.TXT</button>
               </div>
             </div>
-            <div id="alifDocPaper" class="alif-doc-paper"></div>
+
+            <div class="alif-editor-toolbar" role="toolbar" aria-label="Hujjatni formatlash paneli">
+              <div class="alif-tb-group">
+                <button type="button" id="alifDocUndoBtn" class="alif-tb-btn" title="Bekor qilish (Undo — Cmd+Z)">↶</button>
+                <button type="button" id="alifDocRedoBtn" class="alif-tb-btn" title="Qaytarish (Redo — Cmd+Shift+Z)">↷</button>
+              </div>
+
+              <div class="alif-tb-group">
+                <select id="alifDocFontFamily" class="alif-tb-select" title="Shrift turi" aria-label="Shrift turi">
+                  <option value="Times New Roman" selected>Times New Roman</option>
+                  <option value="Arial">Arial</option>
+                  <option value="Calibri">Calibri</option>
+                  <option value="Georgia">Georgia</option>
+                </select>
+                <select id="alifDocFontSize" class="alif-tb-select" title="Shrift o‘lchami" aria-label="Shrift o‘lchami">
+                  <option value="12pt">12 pt</option>
+                  <option value="13pt">13 pt</option>
+                  <option value="14pt" selected>14 pt</option>
+                  <option value="16pt">16 pt</option>
+                </select>
+              </div>
+
+              <div class="alif-tb-group">
+                <button type="button" class="alif-tb-btn" data-exec="bold" title="Qalin (Bold)"><b>B</b></button>
+                <button type="button" class="alif-tb-btn" data-exec="italic" title="Kursiv (Italic)"><i>I</i></button>
+              </div>
+
+              <div class="alif-tb-group">
+                <button type="button" class="alif-tb-btn" data-align="left" title="Chapga tekislash">⫷</button>
+                <button type="button" class="alif-tb-btn" data-align="center" title="Markazga tekislash">☰</button>
+                <button type="button" class="alif-tb-btn" data-align="right" title="O‘ngga tekislash">⫸</button>
+                <button type="button" class="alif-tb-btn" data-align="justify" title="Ikki chetdan tekislash">▤</button>
+              </div>
+
+              <div class="alif-tb-group">
+                <select id="alifDocLineSpacing" class="alif-tb-select" title="Qatorlar orasidagi masofa" aria-label="Qator orasi">
+                  <option value="1.15">Interval: 1.15</option>
+                  <option value="1.5" selected>Interval: 1.5</option>
+                  <option value="1.75">Interval: 1.75</option>
+                  <option value="2">Interval: 2.0</option>
+                </select>
+                <select id="alifDocMargins" class="alif-tb-select" title="Sahifa hoshiyalari (Margins)" aria-label="Sahifa chetlari">
+                  <option value="standard" selected>Hoshiya: 20mm</option>
+                  <option value="wide">Hoshiya: 30mm</option>
+                  <option value="narrow">Hoshiya: 12mm</option>
+                </select>
+              </div>
+
+              <div class="alif-tb-group">
+                <button type="button" id="alifDocInsertTable" class="alif-tb-btn alif-tb-pill" title="Hujjatga jadval qo‘shish">+ Jadval</button>
+                <button type="button" id="alifDocAddTableRow" class="alif-tb-btn alif-tb-pill" hidden title="Oxirgi jadvalga qator qo‘shish">+ Qator</button>
+                <button type="button" id="alifDocToggleHF" class="alif-tb-btn alif-tb-pill" title="Yuqori/pastki kolontitul va bet raqami">Kolontitul / Bet №</button>
+              </div>
+            </div>
+
+            <div id="alifDocHFPanel" class="alif-hf-panel" hidden>
+              <div class="alif-hf-grid">
+                <div>
+                  <label for="alifDocHeaderInput">Yuqori kolontitul (Header)</label>
+                  <input type="text" id="alifDocHeaderInput" placeholder="Masalan: Toshkent shahri · Rasmiy hujjat" />
+                </div>
+                <div>
+                  <label for="alifDocFooterInput">Pastki kolontitul (Footer)</label>
+                  <input type="text" id="alifDocFooterInput" placeholder="Masalan: Alif+ hujjatlar tizimi" />
+                </div>
+                <label class="alif-hf-check">
+                  <input type="checkbox" id="alifDocPageNumCheck" />
+                  <span>Sahifani raqamlash (1-bet)</span>
+                </label>
+              </div>
+            </div>
+
+            <div id="alifDocSheet" class="alif-doc-sheet">
+              <div id="alifPaperHeaderSlot" class="alif-paper-hf-top" hidden></div>
+              <div id="alifDocPaper" class="alif-doc-paper-body" contenteditable="true" spellcheck="false" aria-label="Tahrirlanadigan hujjat matni"></div>
+              <div id="alifPaperFooterSlot" class="alif-paper-hf-bot" hidden></div>
+            </div>
           </div>
         </div>
       </div>
@@ -563,7 +643,7 @@
   </script>
   <script src="web/documents.js"></script>
   <script src="web/trainer.js?v=1"></script>
-  <script src="web/docs-generator.js?v=5"></script>
+  <script src="web/docs-generator.js?v=6"></script>
   <div id="alifGuideModal" class="alif-guide-backdrop" hidden onclick="if(event.target===this)closeAlifMacGuide()">
     <div class="alif-guide-dialog">
       <div class="alif-guide-head">
