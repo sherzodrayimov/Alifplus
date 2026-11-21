@@ -45,7 +45,7 @@
       var raw = inputEl.value || '';
       var dir = dirEl.value || 'auto2new';
       var out = (window.Alif && typeof window.Alif.convert === 'function')
-        ? window.Alif.convert(raw, dir, { exceptions: exceptions })
+        ? window.Alif.convert(raw, dir, { exceptions: exceptions, smart: false })
         : raw;
       outputEl.value = out;
 
