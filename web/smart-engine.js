@@ -264,8 +264,16 @@
     return parts.join('');
   }
 
-  var scriptSrc = document.currentScript ? document.currentScript.src : '';
-  var basePath = scriptSrc.indexOf('/web/') !== -1 ? 'data/' : 'web/data/';
+  var scriptSrc = (document.currentScript && document.currentScript.src) || '';
+  var basePath = 'web/data/';
+  try {
+    if (scriptSrc) {
+      basePath = new URL('data/', scriptSrc).href;
+    }
+  } catch (e) {
+    basePath = scriptSrc.indexOf('/web/') !== -1 ? 'data/' : 'web/data/';
+  }
+  var engineState = { loaded: false, error: null };
   var readyPromise = Promise.all([
     fetch(basePath + 'english_reject.txt').then(function (r) { return r.ok ? r.text() : ''; }).catch(function () { return ''; }),
     fetch(basePath + 'uzbek_lexicon.txt').then(function (r) { return r.ok ? r.text() : ''; }).catch(function () { return ''; }),
@@ -296,14 +304,20 @@
     if (typeof root.dispatchEvent === 'function') {
       root.dispatchEvent(new CustomEvent('alif-smart-ready', { detail: info }));
     }
+    engineState.loaded = true;
     return info;
+  }).catch(function (err) {
+    engineState.error = err ? String(err.message || err) : 'Yuklashda xatolik';
+    return { rejectCount: 0, lexCount: 0, suffixCount: suffixes.length, error: engineState.error };
   });
 
   root.AlifSmartEngine = {
+    convert: smartConvertText,
     analyzeWord: analyzeWord,
     smartConvertText: smartConvertText,
     convertWordRaw: convertWordRaw,
     ready: function () { return readyPromise; },
+    getStatus: function () { return { loaded: engineState.loaded, error: engineState.error }; },
     getLexicon: function () { return lexSet ? Array.from(lexSet) : []; }
   };
 })(window);

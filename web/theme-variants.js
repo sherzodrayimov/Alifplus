@@ -58,7 +58,7 @@
   function initPageEnhancements() {
     function quickConvert(s) {
       if (window.AlifSmartEngine && typeof window.AlifSmartEngine.convert === 'function') {
-        return window.AlifSmartEngine.convert(s, 'to_new');
+        return (window.AlifSmartEngine.convert || window.AlifSmartEngine.smartConvertText)(s, 'to_new');
       }
       var cyr = {'Ё':'Yo','ё':'yo','Ю':'Yu','ю':'yu','Я':'Ya','я':'ya','Ц':'Ts','ц':'ts','Щ':'Ş','щ':'ş','Ш':'Ş','ш':'ş','Ч':'Ç','ч':'ç','Ў':'Ö','ў':'ö','Қ':'Q','қ':'q','Ғ':'Ğ','ғ':'ğ','Ҳ':'H','ҳ':'h','А':'A','а':'a','Б':'B','б':'b','В':'V','в':'v','Г':'G','г':'g','Д':'D','д':'d','Е':'E','е':'e','Ж':'J','ж':'j','З':'Z','з':'z','И':'I','и':'i','Й':'Y','й':'y','К':'K','к':'k','Л':'L','л':'l','М':'M','м':'m','Н':'N','н':'n','О':'O','о':'o','П':'P','п':'p','Р':'R','р':'r','С':'S','с':'s','Т':'T','т':'t','У':'U','у':'u','Ф':'F','ф':'f','Х':'X','х':'x','Ъ':'’','ъ':'’','Ь':'','ь':'','Э':'E','э':'e'};
       s = s.replace(/([Oo])['ʻ’‘ʼ`]/g, function(_, c) { return c === 'O' ? 'Ö' : 'ö'; })
@@ -214,7 +214,7 @@
         s.onload = function () {
           if (qIn.value && window.AlifSmartEngine) {
             var qOut = document.getElementById('alifQuickOutput');
-            if (qOut) qOut.value = window.AlifSmartEngine.convert(qIn.value, 'to_new');
+            if (qOut) qOut.value = (window.AlifSmartEngine.convert || window.AlifSmartEngine.smartConvertText)(qIn.value, 'to_new');
           }
         };
         document.body.appendChild(s);
@@ -239,3 +239,37 @@
   else window.addEventListener('DOMContentLoaded', initMobileAndLazy);
 
 })();
+
+  // Global xavfsiz nusxa olish (Promise + fallback + screen reader xabari)
+  window.alifCopySafe = async function (text, triggerBtn) {
+    var msg = '';
+    var ok = false;
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        ok = true;
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+    } catch (err) {
+      ok = false;
+    }
+    msg = ok ? '✓ Nusxa olindi' : '✕ Nusxalab bo‘lmadi';
+    var live = document.getElementById('alifAriaLive');
+    if (live) live.textContent = ok ? 'Matn buferga nusxalandi.' : 'Matnni nusxalashda xatolik yuz berdi.';
+    if (triggerBtn) {
+      var prev = triggerBtn.dataset.origText || triggerBtn.textContent;
+      triggerBtn.dataset.origText = prev;
+      triggerBtn.textContent = msg;
+      setTimeout(function () { triggerBtn.textContent = prev; }, 1600);
+    }
+    return ok;
+  };

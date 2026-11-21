@@ -30,7 +30,22 @@
     })();
   </script>
   <link rel="stylesheet" href="web/scroll-fx.css" />
-  <link rel="stylesheet" href="web/theme-variants.css?v=2" />
+  <link rel="stylesheet" href="web/theme-variants.css?v=20261122" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:site_name" content="Alif+" />
+  <meta property="og:locale" content="uz_UZ" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Alif+",
+    "url": "https://sherzodrayimov.github.io/Alifplus/",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Web, iOS, Android, macOS, Windows",
+    "inLanguage": "uz",
+    "description": "Yangi o'zbek alifbosi (Ö, Ğ, Ş, Ç) konverteri, aqlli hujjatlar konstruktori va imlo mashqlari platformasi."
+  }
+  </script>
 </head>
 <body>
   <header class="alif-topbar">
@@ -39,6 +54,8 @@
         <img src="icon.png" alt="Alif+" style="width:34px; height:34px; border-radius:10px;">
         <span class="alif-brand-text">Alif+</span>
       </a>
+      <input type="checkbox" id="alifNavCheckbox" class="alif-nav-checkbox" aria-hidden="true" />
+      <label for="alifNavCheckbox" class="alif-nav-burger-label" aria-label="Menyuni ochish">☰</label>
       <nav class="alif-nav" aria-label="Asosiy menyu">
         <a href="index.html" class="alif-nav-link is-page-active" aria-current="page">Bosh sahifa</a>
         <a href="alifbo.html" class="alif-nav-link">Alifbo</a>
@@ -74,7 +91,7 @@
         </div>
 
         <div class="alif-hero-actions">
-          <a href="#converter" class="alif-hero-btn-primary">Matn ögirişni sinab köriş ↓</a>
+          <a href="#alifQuickInput" class="alif-hero-btn-primary">Matn ögirişni sinab köriş ↓</a>
           <a href="ilovalar.html" class="alif-hero-btn-secondary">Kompyuter uçun yuklab oliş</a>
         </div>
       </div>
@@ -936,6 +953,41 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="web/scroll-fx.js"></script>
-  <script src="web/theme-variants.js"></script>
+  <script src="web/theme-variants.js?v=20261122"></script>
+  <div id="alifAriaLive" class="alif-sr-only" aria-live="polite" aria-atomic="true"></div>
+  <script>
+    (function () {
+      var lastFocused = null;
+      document.addEventListener('click', function (e) {
+        var opener = e.target.closest('[data-modal-open], [aria-haspopup="dialog"]');
+        if (opener) lastFocused = opener;
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          var openModals = document.querySelectorAll('.alif-modal.is-open, .alif-modal[open], dialog[open], [role="dialog"]:not([hidden])');
+          openModals.forEach(function (m) {
+            if (m.style && m.style.display === 'none') return;
+            var closeBtn = m.querySelector('[data-modal-close], .alif-modal-close, button[aria-label*="Yopish"]');
+            if (closeBtn) {
+              closeBtn.click();
+            } else {
+              m.classList.remove('is-open');
+              m.setAttribute('hidden', '');
+            }
+          });
+          if (lastFocused && typeof lastFocused.focus === 'function') {
+            lastFocused.focus();
+            lastFocused = null;
+          }
+        }
+      });
+      // Form maydonlariga avtomatik aria-label biriktirish (agar <label> bog'lanmagan bo'lsa)
+      document.querySelectorAll('input[placeholder], textarea[placeholder], select').forEach(function (el) {
+        if (!el.getAttribute('aria-label') && !el.id) {
+          el.setAttribute('aria-label', el.getAttribute('placeholder') || 'Kiritish maydoni');
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

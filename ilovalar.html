@@ -30,7 +30,7 @@
     })();
   </script>
   <link rel="stylesheet" href="web/scroll-fx.css" />
-  <link rel="stylesheet" href="web/theme-variants.css?v=2" />
+  <link rel="stylesheet" href="web/theme-variants.css?v=20261122" />
 </head>
 <body>
   <header class="alif-topbar">
@@ -39,6 +39,8 @@
         <img src="icon.png" alt="Alif+" style="width:34px; height:34px; border-radius:10px;">
         <span class="alif-brand-text">Alif+</span>
       </a>
+      <input type="checkbox" id="alifNavCheckbox" class="alif-nav-checkbox" aria-hidden="true" />
+      <label for="alifNavCheckbox" class="alif-nav-burger-label" aria-label="Menyuni ochish">☰</label>
       <nav class="alif-nav" aria-label="Asosiy menyu">
         <a href="index.html" class="alif-nav-link">Bosh sahifa</a>
         <a href="alifbo.html" class="alif-nav-link">Alifbo</a>
@@ -795,6 +797,7 @@
   
   
   
-  <script src="web/theme-variants.js"></script>
+  <script src="web/theme-variants.js?v=20261122"></script>
+  <div id="alifAriaLive" class="alif-sr-only" aria-live="polite" aria-atomic="true"></div>
 </body>
 </html>

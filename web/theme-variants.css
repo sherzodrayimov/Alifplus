@@ -561,7 +561,7 @@ input:focus, textarea:focus, select:focus {
   box-sizing: border-box;
   font-family: inherit;
 }
-.alif-quick-box textarea:focus { box-shadow: none !important; }
+.alif-quick-box textarea:focus { outline: 2px solid var(--indigo, #4f46e5) !important; outline-offset: 2px !important; }
 
 .alif-hub-sec { padding: 30px 0 54px; }
 .alif-hub-head { text-align: center; margin-bottom: 24px; }
@@ -1360,4 +1360,62 @@ button:disabled {
 .alif-paper-table th {
   background: #f3f4f6;
   font-weight: 700;
+}
+
+/* ── MOBIL MENYU JS-SIZ FALLBACK VA ACCESSIBILITY ── */
+.alif-nav-checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.alif-nav-burger-label {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 19px;
+  cursor: pointer;
+  user-select: none;
+}
+@media (max-width: 860px) {
+  .alif-nav-burger-label {
+    display: inline-flex !important;
+  }
+  .alif-nav-checkbox:checked ~ .alif-nav,
+  .alif-nav.is-open {
+    display: flex !important;
+    flex-direction: column !important;
+    position: absolute;
+    top: 100%;
+    left: 12px;
+    right: 12px;
+    padding: 12px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.16);
+    z-index: 999;
+  }
+  .alif-nav-checkbox:checked ~ .alif-nav .alif-nav-link,
+  .alif-nav.is-open .alif-nav-link {
+    display: flex !important;
+    width: 100%;
+    padding: 10px 12px;
+  }
+}
+.alif-sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
