@@ -379,7 +379,6 @@ abortiv
 abr
 abramov
 abramovni
-abrash
 abraziv
 abrband
 abrbandchi
@@ -867,7 +866,6 @@ achidim
 achiding
 achidingiz
 achigach
-achigan
 achigancha
 achiganday
 achigandek
@@ -6178,7 +6176,6 @@ akvatoriya
 akveduk
 al'amon
 alaba
-alacha
 alachabof
 alaf
 alag'
@@ -7649,7 +7646,6 @@ alijonov
 alik
 alikum
 aliment
-alish
 alishadi
 alishadilar
 alishaman
@@ -7687,7 +7683,6 @@ alishdilar
 alishdim
 alishding
 alishdingiz
-alisher
 alisheraka
 alishgach
 alishgan
@@ -7743,7 +7738,6 @@ alishindilar
 alishindim
 alishinding
 alishindingiz
-alishing
 alishingach
 alishingan
 alishingancha
@@ -9546,7 +9540,6 @@ anbarafshon
 anbiyo
 anbuh
 anca
-ancha
 anchadan
 anchagina
 anchaki
@@ -12514,7 +12507,6 @@ arazlaverdingiz
 arazlaverish
 arazlaversang
 arazlaversangiz
-arch
 archa
 archadi
 archadilar
@@ -12625,7 +12617,6 @@ archigansiz
 archigil
 archigin
 archiguncha
-archiing
 archiingiz
 archiinglar
 archiish
@@ -12661,7 +12652,6 @@ archimoqdaman
 archimoqdamiz
 archimoqdasan
 archimoqdasiz
-arching
 archingiz
 archinglar
 archioladi
@@ -12702,7 +12692,6 @@ archishlik
 archishni
 archisin
 archisinlar
-archiver
 archiveradi
 archiveradilar
 archiveramiz
@@ -12792,7 +12781,6 @@ archsam
 archsang
 archsangiz
 archsaylik
-archsin
 archsinlar
 archver
 archveradi
@@ -13194,7 +13182,6 @@ arralaverish
 arralaversang
 arralaversangiz
 arsh
-arshin
 artaverding
 artaverdingiz
 artaverish
@@ -13778,10 +13765,7 @@ ashida
 ashidan
 ashiga
 ashini
-ashining
-ashir
 ashk
-ashraf
 ashsha
 ashtak
 ashtarxoniylar
@@ -18639,7 +18623,6 @@ baribog'
 baring
 baringiz
 baringlar
-barish
 barishda
 barishdan
 barishga
@@ -20346,7 +20329,6 @@ belaolsang
 belaolsangiz
 belasang
 belasangiz
-belash
 belashadi
 belashadilar
 belashaman
@@ -20400,7 +20382,6 @@ belashgansiz
 belashgil
 belashgin
 belashguncha
-belashing
 belashingiz
 belashinglar
 belashish
@@ -21649,7 +21630,6 @@ beshkashta
 beshko'tarar
 beshkokil
 beshkurash
-beshlik
 beshmat
 beshotar
 beshov
@@ -32001,12 +31981,14 @@ bo'ylaydilar
 bog'cha
 bosh
 boshqa
+chin
 chiq
 chiqmoq
 chiroq
 chiroyli
 cho'l
 chol
+chop
 choy
 choyxona
 eshik
@@ -32031,20 +32013,37 @@ qosh
 qush
 ruchka
 shahar
+shahmat
 shahri
+shakl
+shamol
+sharq
+shart
+shashlik
+shaxs
+shayton
+sher
 shifokor
 shkaf
 shlang
 shlem
+sho'r
+shoh
 shoir
 shokolad
+shol
+shon
+shor
 shoshilinch
+shox
 shrift
 shtab
+shuba
 shuhrat
 shunaqa
 shuncha
 shunday
+shurpa
 tashqi
 to'g'ri
 tosh

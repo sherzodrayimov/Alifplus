@@ -43,7 +43,7 @@
     "bu","shu","o'sha","men","sen","u","biz","siz","ular","nima","qanday","limon","mastava"
   ]);
 
-  var EN_PHONOTACTIC_RE = /(w|th|wh|ck|qu|tch|dge|ght|sch|chr|chl|shr|(ll|ss|ff|zz)$|^(bl|br|cl|cr|dr|fl|fr|gl|gr|pl|pr|sc|scr|sk|sl|sm|sn|sp|spl|spr|sq|st|str|sw|tr|tw)|((sh|ch).*(ea|ee|oo|ou|ow|ai|ay|oa|ie|ue|ui|au|aw|ew|ey))|((ea|ee|oo|ou|ow|ai|ay|oa|ie|ue|ui|au|aw|ew|ey).*(sh|ch))|(ate|ine|ive|ous|ble|ful|less|ment|tion|sion|ture|sure|age|ize|ise)$)/;
+  var EN_PHONOTACTIC_RE = /(w|th|wh|ck|qu|tch|dge|ght|sch|chr|chl|shr|(ll|ss|ff|zz|nge)$|^cha(rt|rg|nc|nt|sm|lk|mp|pt|rl)|^(bl|br|cl|cr|dr|fl|fr|gl|gr|pl|pr|sc|scr|sk|sl|sm|sn|sp|spl|spr|sq|st|str|sw|tr|tw)|((sh|ch).*(ea|ee|oo|ou|ow|ai|ay|oa|ie|ue|ui|au|aw|ew|ey))|((ea|ee|oo|ou|ow|ai|ay|oa|ie|ue|ui|au|aw|ew|ey).*(sh|ch))|(ate|ine|ive|ous|ble|ful|less|ment|tion|sion|ture|sure|age|ize|ise)$)/;
 
   var UZ_TRIGRAMS = ["lar","nin","ing","day","chi","liq","loq","shi","cha","g'i","o'q","o'z","shl","chl","qish","osh","ish","uch","cho","sha","tog","bog"];
   var EN_TRIGRAMS = ["ill","ell","all","ull","tch","ack","eck","ick","ock","uck","ash","esh","ush","ine","ate","ake","ore","ive","ous","ble","ful","chr","shr","whi","tha","the"];
