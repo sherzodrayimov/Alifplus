@@ -10,32 +10,30 @@
   --border: #e4e2dc;
   --indigo: #4338ca;
   --indigo-hover: #3730a3;
-  --indigo-soft: rgba(67, 56, 202, 0.09);
+  --indigo-soft: rgba(67, 56, 202, 0.10);
   --coral: #e11d48;
-  --coral-soft: rgba(225, 29, 72, 0.1);
+  --coral-soft: rgba(225, 29, 72, 0.10);
   --teal: #0d9488;
 }
 
 html[data-theme="dark"],
 body[data-theme="dark"] {
-  --bg: #0e1116;
-  --surface: #151921;
-  --surface-2: #1c212b;
+  --bg: #0c0f14;
+  --surface: #141821;
+  --surface-2: #1c222e;
   --text: #f4f4f6;
   --muted: #9ca3af;
-  --border: #262c38;
+  --border: #283040;
   --indigo: #6366f1;
   --indigo-hover: #818cf8;
-  --indigo-soft: rgba(99, 102, 241, 0.16);
+  --indigo-soft: rgba(99, 102, 241, 0.18);
   --coral: #fb7185;
-  --coral-soft: rgba(251, 113, 133, 0.16);
+  --coral-soft: rgba(251, 113, 133, 0.18);
   --teal: #2dd4bf;
 }
 
-/* Silliq, naqshsiz toza qog'oz fon */
 html, body {
   background-color: var(--bg) !important;
-  background-image: none !important;
   color: var(--text) !important;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
   -webkit-font-smoothing: antialiased;
@@ -55,18 +53,93 @@ code, pre,
   font-family: 'JetBrains Mono', monospace !important;
 }
 
-/* ── TOPBAR VA MENYU ── */
+/* ── 1. JONLI SOKIN ORQA FON (Dot-Grid + Floating Aura) ── */
+.alif-ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background-image: radial-gradient(rgba(67, 56, 202, 0.13) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+html[data-theme="dark"] .alif-ambient-bg,
+body[data-theme="dark"] .alif-ambient-bg {
+  background-image: radial-gradient(rgba(129, 140, 248, 0.13) 1px, transparent 1px);
+}
+
+.alif-ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(85px);
+  opacity: 0.45;
+  will-change: transform;
+  animation: alifOrbFloat 18s ease-in-out infinite alternate;
+}
+
+.alif-ambient-orb--1 {
+  width: 480px;
+  height: 480px;
+  top: -120px;
+  left: -90px;
+  background: radial-gradient(circle, rgba(67, 56, 202, 0.16), transparent 70%);
+}
+
+.alif-ambient-orb--2 {
+  width: 420px;
+  height: 420px;
+  top: 22%;
+  right: -110px;
+  background: radial-gradient(circle, rgba(225, 29, 72, 0.11), transparent 70%);
+  animation-delay: -6s;
+}
+
+.alif-ambient-orb--3 {
+  width: 520px;
+  height: 520px;
+  bottom: -140px;
+  left: 28%;
+  background: radial-gradient(circle, rgba(13, 148, 136, 0.10), transparent 70%);
+  animation-delay: -11s;
+}
+
+html[data-theme="dark"] .alif-ambient-orb--1 {
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.22), transparent 70%);
+}
+html[data-theme="dark"] .alif-ambient-orb--2 {
+  background: radial-gradient(circle, rgba(251, 113, 133, 0.14), transparent 70%);
+}
+html[data-theme="dark"] .alif-ambient-orb--3 {
+  background: radial-gradient(circle, rgba(45, 212, 191, 0.12), transparent 70%);
+}
+
+@keyframes alifOrbFloat {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(28px, 22px, 0) scale(1.06); }
+  100% { transform: translate3d(-20px, 36px, 0) scale(0.97); }
+}
+
+header.alif-topbar,
+main.alif-main,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── 2. TOPBAR VA MENYU ── */
 .alif-topbar {
-  background: rgba(250, 249, 246, 0.88) !important;
+  background: rgba(250, 249, 246, 0.85) !important;
   border-bottom: 1px solid var(--border) !important;
   backdrop-filter: blur(14px);
 }
-html[data-theme="dark"] .alif-topbar {
-  background: rgba(14, 17, 22, 0.88) !important;
+html[data-theme="dark"] .alif-topbar,
+body[data-theme="dark"] .alif-topbar {
+  background: rgba(12, 15, 20, 0.85) !important;
 }
 .alif-nav-link {
   color: var(--muted) !important;
-  transition: color 0.16s ease, background-color 0.16s ease, transform 0.12s ease !important;
+  transition: color 0.16s ease, background-color 0.16s ease, transform 0.14s ease !important;
 }
 .alif-nav-link:hover,
 .alif-nav-link.is-scroll-active {
@@ -77,22 +150,29 @@ html[data-theme="dark"] .alif-topbar {
   background: var(--indigo) !important;
 }
 
-/* ── HERO QISMI VA QOIDA CHIPLARI (Indigo + Marjon urg'u) ── */
+/* ── 3. HERO QISMI VA QOIDA CHIPLARI ── */
 .alif-hero-pill {
   background: var(--indigo-soft) !important;
-  border: 1px solid rgba(67, 56, 202, 0.22) !important;
+  border: 1px solid rgba(67, 56, 202, 0.24) !important;
   color: var(--indigo) !important;
 }
 .alif-hero-pill-dot {
   background: var(--coral) !important;
   box-shadow: 0 0 8px var(--coral) !important;
+  animation: alifPulseDot 2.2s infinite ease-in-out;
 }
+@keyframes alifPulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.7; }
+}
+
 .alif-hero-accent {
   background: linear-gradient(125deg, #4338ca 0%, #e11d48 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-html[data-theme="dark"] .alif-hero-accent {
+html[data-theme="dark"] .alif-hero-accent,
+body[data-theme="dark"] .alif-hero-accent {
   background: linear-gradient(125deg, #818cf8 0%, #fb7185 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -103,18 +183,19 @@ html[data-theme="dark"] .alif-hero-accent {
   border: 1px solid var(--border) !important;
   color: var(--text) !important;
   box-shadow: 0 2px 6px rgba(24, 24, 27, 0.03);
-  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease !important;
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.18s ease, box-shadow 0.18s ease !important;
 }
 .alif-rule-chip:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2.5px) scale(1.02);
   border-color: var(--indigo) !important;
-  box-shadow: 0 6px 16px rgba(67, 56, 202, 0.12) !important;
+  box-shadow: 0 8px 18px rgba(67, 56, 202, 0.14) !important;
 }
 .alif-rule-chip b {
   color: var(--coral) !important;
 }
 
-/* ── BARCHA TUGMALAR (Indigo asosiy + jonli taktil bosilish) ── */
+/* ── 4. BARCHA TUGMALAR: OQ VA QORA FONDA BIRXIL ANIQ BOSILISH VA RIPPLE ── */
+button,
 .alif-hero-btn-primary,
 .alif-hero-btn-secondary,
 .alif-doc-tab,
@@ -122,7 +203,12 @@ html[data-theme="dark"] .alif-hero-accent {
 .alif-doc-scbtn,
 .alif-theme-btn,
 .alif-bm-copy,
-button[class*="alif-"] {
+#alifDesktopApp a[href*=".dmg"],
+#alifDesktopApp a[href*=".exe"] {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   transition: transform 0.14s cubic-bezier(0.22, 1, 0.36, 1),
               box-shadow 0.2s ease,
               background-color 0.18s ease,
@@ -130,6 +216,25 @@ button[class*="alif-"] {
               color 0.18s ease !important;
 }
 
+/* Ripple to'lqini */
+.alif-ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: alifRippleAnim 0.55s ease-out forwards;
+  background: rgba(255, 255, 255, 0.38);
+  pointer-events: none;
+}
+html:not([data-theme="dark"]) .alif-doc-tab:not(.is-active) .alif-ripple,
+html:not([data-theme="dark"]) .alif-doc-sbtn:not(.alif-doc-print-btn) .alif-ripple,
+html:not([data-theme="dark"]) .alif-hero-btn-secondary .alif-ripple {
+  background: rgba(67, 56, 202, 0.18);
+}
+@keyframes alifRippleAnim {
+  to { transform: scale(3.2); opacity: 0; }
+}
+
+/* Primary tugmalar (Oq va Qora fonda) */
 .alif-hero-btn-primary,
 .alif-doc-print-btn,
 #alifDesktopApp a[href*=".dmg"],
@@ -137,7 +242,7 @@ button[class*="alif-"] {
   background: var(--indigo) !important;
   color: #ffffff !important;
   border: 1.5px solid var(--indigo) !important;
-  box-shadow: 0 6px 18px rgba(67, 56, 202, 0.22) !important;
+  box-shadow: 0 6px 18px rgba(67, 56, 202, 0.24) !important;
 }
 #alifDesktopApp a[href*=".dmg"] *,
 #alifDesktopApp .alif-dl-primary * {
@@ -156,86 +261,154 @@ button[class*="alif-"] {
   border-color: var(--indigo-hover) !important;
   color: #ffffff !important;
   transform: translateY(-2px) !important;
-  box-shadow: 0 10px 24px rgba(67, 56, 202, 0.32) !important;
+  box-shadow: 0 10px 26px rgba(99, 102, 241, 0.36) !important;
 }
 
-/* Ikkilamchi tugmalar va Windows yuklab olish */
-.alif-hero-btn-secondary,
-.alif-doc-sbtn:not(.alif-doc-print-btn),
-.alif-theme-btn,
-.alif-bm-copy,
-#alifDesktopApp a[href*=".exe"],
-#alifDesktopApp .alif-dl-secondary {
-  background: var(--surface) !important;
-  color: var(--text) !important;
-  border: 1.5px solid var(--border) !important;
+/* Secondary va oddiy tugmalar — OQ FONDA */
+html:not([data-theme="dark"]) .alif-hero-btn-secondary,
+html:not([data-theme="dark"]) .alif-doc-tab:not(.is-active),
+html:not([data-theme="dark"]) .alif-doc-sbtn:not(.alif-doc-print-btn),
+html:not([data-theme="dark"]) .alif-theme-btn,
+html:not([data-theme="dark"]) .alif-bm-copy,
+html:not([data-theme="dark"]) #alifDesktopApp a[href*=".exe"] {
+  background: #ffffff !important;
+  color: #18181b !important;
+  border: 1.5px solid #dedbd2 !important;
+  box-shadow: 0 2px 6px rgba(24, 24, 27, 0.04) !important;
 }
-#alifDesktopApp a[href*=".exe"] strong,
-#alifDesktopApp a[href*=".exe"] div:first-child,
-#alifDesktopApp a[href*=".exe"] span:first-child {
-  color: var(--indigo) !important;
-}
-#alifDesktopApp a[href*=".exe"] small,
-#alifDesktopApp a[href*=".exe"] div:last-child,
-#alifDesktopApp a[href*=".exe"] span:last-child {
-  color: var(--muted) !important;
-}
-
-.alif-hero-btn-secondary:hover,
-.alif-doc-sbtn:not(.alif-doc-print-btn):hover,
-.alif-theme-btn:hover,
-.alif-bm-copy:hover,
-#alifDesktopApp a[href*=".exe"]:hover,
-#alifDesktopApp .alif-dl-secondary:hover {
-  background: var(--indigo-soft) !important;
-  border-color: var(--indigo) !important;
-  color: var(--indigo) !important;
+html:not([data-theme="dark"]) .alif-hero-btn-secondary:hover,
+html:not([data-theme="dark"]) .alif-doc-tab:not(.is-active):hover,
+html:not([data-theme="dark"]) .alif-doc-sbtn:not(.alif-doc-print-btn):hover,
+html:not([data-theme="dark"]) .alif-theme-btn:hover,
+html:not([data-theme="dark"]) .alif-bm-copy:hover,
+html:not([data-theme="dark"]) #alifDesktopApp a[href*=".exe"]:hover {
+  background: #eef2ff !important;
+  border-color: #4338ca !important;
+  color: #4338ca !important;
   transform: translateY(-1.5px) !important;
-  box-shadow: 0 6px 16px rgba(67, 56, 202, 0.12) !important;
+  box-shadow: 0 6px 16px rgba(67, 56, 202, 0.14) !important;
 }
 
-/* Hujjatlar konstruktori tablari (Oq va Qora fonda birdek aniq) */
-.alif-doc-tab {
-  background: var(--surface) !important;
-  border: 1.5px solid var(--border) !important;
-  color: var(--muted) !important;
+/* Secondary va oddiy tugmalar — QORA FONDA (oq fondagidek aniq chegara va yorqin hover) */
+html[data-theme="dark"] .alif-hero-btn-secondary,
+body[data-theme="dark"] .alif-hero-btn-secondary,
+html[data-theme="dark"] .alif-doc-tab:not(.is-active),
+body[data-theme="dark"] .alif-doc-tab:not(.is-active),
+html[data-theme="dark"] .alif-doc-sbtn:not(.alif-doc-print-btn),
+body[data-theme="dark"] .alif-doc-sbtn:not(.alif-doc-print-btn),
+html[data-theme="dark"] .alif-theme-btn,
+body[data-theme="dark"] .alif-theme-btn,
+html[data-theme="dark"] .alif-bm-copy,
+body[data-theme="dark"] .alif-bm-copy,
+html[data-theme="dark"] #alifDesktopApp a[href*=".exe"],
+body[data-theme="dark"] #alifDesktopApp a[href*=".exe"],
+html[data-theme="dark"] main button:not(.is-active):not(.alif-doc-print-btn):not(.alif-doc-scbtn),
+body[data-theme="dark"] main button:not(.is-active):not(.alif-doc-print-btn):not(.alif-doc-scbtn) {
+  background: #181d27 !important;
+  color: #f4f4f6 !important;
+  border: 1.5px solid #2e3748 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
 }
-.alif-doc-tab:hover {
-  background: var(--indigo-soft) !important;
-  border-color: var(--indigo) !important;
-  color: var(--indigo) !important;
+
+html[data-theme="dark"] .alif-hero-btn-secondary:hover,
+body[data-theme="dark"] .alif-hero-btn-secondary:hover,
+html[data-theme="dark"] .alif-doc-tab:not(.is-active):hover,
+body[data-theme="dark"] .alif-doc-tab:not(.is-active):hover,
+html[data-theme="dark"] .alif-doc-sbtn:not(.alif-doc-print-btn):hover,
+body[data-theme="dark"] .alif-doc-sbtn:not(.alif-doc-print-btn):hover,
+html[data-theme="dark"] .alif-theme-btn:hover,
+body[data-theme="dark"] .alif-theme-btn:hover,
+html[data-theme="dark"] .alif-bm-copy:hover,
+body[data-theme="dark"] .alif-bm-copy:hover,
+html[data-theme="dark"] #alifDesktopApp a[href*=".exe"]:hover,
+body[data-theme="dark"] #alifDesktopApp a[href*=".exe"]:hover,
+html[data-theme="dark"] main button:not(.is-active):not(.alif-doc-print-btn):not(.alif-doc-scbtn):hover,
+body[data-theme="dark"] main button:not(.is-active):not(.alif-doc-print-btn):not(.alif-doc-scbtn):hover {
+  background: #232a3b !important;
+  border-color: #818cf8 !important;
+  color: #ffffff !important;
+  transform: translateY(-1.5px) !important;
+  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.28) !important;
 }
+
+/* Faol (.is-active) tugmalar — OQ va QORA FONDA birdek yorqin Indigo */
+html[data-theme="dark"] .alif-doc-tab.is-active,
+body[data-theme="dark"] .alif-doc-tab.is-active,
+html[data-theme="dark"] .alif-doc-scbtn.is-active,
+body[data-theme="dark"] .alif-doc-scbtn.is-active,
+html[data-theme="dark"] main button.is-active,
+body[data-theme="dark"] main button.is-active,
 .alif-doc-tab.is-active,
 .alif-doc-scbtn.is-active {
-  background: var(--indigo) !important;
-  border-color: var(--indigo) !important;
+  background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%) !important;
+  border: 1.5px solid #a5b4fc !important;
   color: #ffffff !important;
   font-weight: 700 !important;
-  box-shadow: 0 5px 15px rgba(67, 56, 202, 0.28) !important;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25), 0 6px 18px rgba(99, 102, 241, 0.38) !important;
 }
+html[data-theme="dark"] .alif-doc-tab.is-active *,
+html[data-theme="dark"] .alif-doc-scbtn.is-active *,
+.alif-doc-tab.is-active *,
+.alif-doc-scbtn.is-active * {
+  color: #ffffff !important;
+}
+
 .alif-doc-script-sw {
   background: var(--surface-2) !important;
-  border: 1px solid var(--border) !important;
+  border: 1.5px solid var(--border) !important;
 }
 .alif-doc-scbtn:not(.is-active) {
   background: transparent !important;
   border: none !important;
   color: var(--muted) !important;
 }
+html[data-theme="dark"] .alif-doc-scbtn:not(.is-active):hover {
+  color: #ffffff !important;
+}
 
-/* Bosilgan lahza (:active) effekti */
+/* TUGMA BOSILGAN LAHZA (:active) — OQ va QORA FONDA ANIQ SEZILISHI UCHUN */
+button:active,
 .alif-hero-btn-primary:active,
 .alif-hero-btn-secondary:active,
 .alif-doc-tab:active,
 .alif-doc-sbtn:active,
 .alif-doc-scbtn:active,
 .alif-theme-btn:active,
-button[class*="alif-"]:active {
-  transform: translateY(1.5px) scale(0.97) !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14) !important;
+.alif-bm-copy:active,
+#alifDesktopApp a:active {
+  transform: translateY(2px) scale(0.962) !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.22) !important;
 }
 
-/* ── JONLI KLAVIATURA VA SKROL HIKOYASI URG'ULARI ── */
+html[data-theme="dark"] button:active,
+body[data-theme="dark"] button:active,
+html[data-theme="dark"] .alif-doc-tab:active,
+html[data-theme="dark"] .alif-doc-sbtn:active,
+html[data-theme="dark"] .alif-doc-scbtn:active {
+  background: #4f46e5 !important;
+  border-color: #c7d2fe !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 18px rgba(129, 140, 248, 0.55) !important;
+}
+
+/* ── 5. KARTOCHKALAR VA ALIFBO KATAKCHALARI UCHUN MAYIN HOVER ANIMATSIYASI ── */
+.alif-alpha-card,
+.alif-letter-card,
+[class*="alif-card"],
+.alif-doc-form-card,
+.alif-doc-preview-card {
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.22s ease,
+              box-shadow 0.22s ease !important;
+}
+.alif-alpha-card:hover,
+.alif-letter-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--indigo) !important;
+  box-shadow: 0 10px 24px rgba(67, 56, 202, 0.14) !important;
+}
+
+/* ── 6. JONLI KLAVIATURA VA SKROL HIKOYASI URG'ULARI ── */
 .alif-scroll-bar {
   background: linear-gradient(90deg, #4338ca, #e11d48) !important;
 }
@@ -274,8 +447,6 @@ button[class*="alif-"]:active {
 .alif-story-steps li.is-active {
   border-color: var(--indigo) !important;
 }
-
-/* Forma elementlari va mayda detallar */
 .alif-doc-card-title::before {
   background: var(--indigo) !important;
 }
