@@ -77,6 +77,7 @@
               <option value="cyr2oldlat">Kirill → Eski lotin</option>
               <option value="oldlat2cyr">Eski lotin → Kirill</option>
             </select>
+            <span id="alifDetectedBadge" class="alif-detect-pill" hidden></span>
           </div>
 
           <div class="alif-toolbar-actions">
@@ -87,17 +88,31 @@
         </div>
 
         <div id="alifDropzone" class="alif-dropzone" tabindex="0" role="button" aria-label="Word, PDF yoki TXT fayl yuklaş">
-          <input type="file" id="alifFileInput" accept=".txt,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden />
+          <input type="file" id="alifFileInput" multiple accept=".txt,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden />
           <div class="alif-dropzone-content">
             <span class="alif-drop-icon">📄</span>
             <div>
-              <strong>Hujjat yuklang (.docx, .pdf, .txt)</strong> yoki faylni şu yerga taşlang
+              <strong>1 yoki bir neçta hujjat yuklang (.docx, .pdf, .txt)</strong> yoki fayllarni sahifaga sudrab taşlang
               <div class="alif-drop-hint">Barça fayllar faqat sizning brauzeringizda qayta işlanadi — serverga yuborilmaydi</div>
             </div>
             <button type="button" id="alifBtnUpload" class="alif-btn alif-btn-secondary">Fayl tanlaş</button>
           </div>
         </div>
 
+                <div id="alifBatchPanel" class="alif-batch-panel" hidden>
+          <div class="alif-batch-head">
+            <div>
+              <strong id="alifBatchTitle">0 ta fayl ögirildi</strong>
+              <span id="alifBatchSub" class="alif-batch-sub">Har birini alohida yoki hammasini bitta arxivda yuklab oling</span>
+            </div>
+            <div class="alif-batch-actions">
+              <button type="button" id="alifBatchDownloadZip" class="alif-mini-btn alif-mini-primary">⬇ Barchasi (.ZIP)</button>
+              <button type="button" id="alifBatchDownloadMerged" class="alif-mini-btn">⬇ Bitta umumiy (.DOCX)</button>
+              <button type="button" id="alifBatchClear" class="alif-mini-btn alif-mini-danger">✕ Yopish</button>
+            </div>
+          </div>
+          <div id="alifBatchList" class="alif-batch-list"></div>
+        </div>
         <div id="alifStatusBanner" class="alif-status" hidden></div>
 
         <div class="alif-panes">
@@ -105,6 +120,8 @@
             <div class="alif-pane-head">
               <span class="alif-pane-title">Asl matn (Kirill yoki Eski lotin)</span>
               <div class="alif-pane-tools">
+                <button type="button" id="alifBtnUndo" class="alif-mini-btn" title="Orqaga qaytarish (Ctrl+Z)" disabled>↶ Orqaga</button>
+                <button type="button" id="alifBtnRedo" class="alif-mini-btn" title="Oldinga qaytarish (Ctrl+Shift+Z)" disabled>↷ Oldinga</button>
                 <button type="button" id="alifBtnSample" class="alif-mini-btn">Namuna</button>
                 <button type="button" id="alifBtnPaste" class="alif-mini-btn">Qöyiş</button>
                 <button type="button" id="alifBtnClear" class="alif-mini-btn alif-mini-danger">Tozalaş</button>
@@ -146,6 +163,13 @@
           </div>
         </div>
 
+                <div id="alifLetterStatsBar" class="alif-letter-stats">
+          <span class="alif-lstat-chip"><b>ö</b>: <strong id="statCntO">0</strong></span>
+          <span class="alif-lstat-chip"><b>ğ</b>: <strong id="statCntG">0</strong></span>
+          <span class="alif-lstat-chip"><b>ş</b>: <strong id="statCntS">0</strong></span>
+          <span class="alif-lstat-chip"><b>ç</b>: <strong id="statCntC">0</strong></span>
+          <span class="alif-lstat-chip alif-lstat-kept">Himoyalangan xorijiy söz: <strong id="statCntForeign">0</strong></span>
+        </div>
         <div class="alif-alphabet-strip">
           <div class="alif-char-chip"><span>O‘ / o‘</span> → <strong>Ö / ö</strong></div>
           <div class="alif-char-chip"><span>G‘ / g‘</span> → <strong>Ğ / ğ</strong></div>
@@ -630,6 +654,7 @@
     })();
   </script>
 <script src="web/smart-engine.js"></script>
+  <script src="web/vendor/jszip.min.js"></script>
   <script src="web/converter.js"></script>
     
   <script type="module">
@@ -841,6 +866,7 @@
   
   
   <script src="web/test-engine.js"></script>
+  <script src="web/konverter-pro.js"></script>
   <script src="web/theme-variants.js"></script>
 </body>
 </html>

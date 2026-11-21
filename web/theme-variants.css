@@ -745,3 +745,185 @@ html[data-theme="dark"] .alif-diff-ch {
     align-items: flex-start;
   }
 }
+
+/* ── KONVERTER PRO: DRAG-OVER, BATCH PANEL, DETECT PILL, LETTER STATS ── */
+.alif-dropzone {
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+.alif-dropzone.is-dragover {
+  border-color: var(--indigo) !important;
+  border-style: solid !important;
+  background: var(--indigo-soft) !important;
+  transform: scale(1.01);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.22), 0 12px 28px rgba(67, 56, 202, 0.16) !important;
+}
+
+.alif-detect-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--indigo-soft);
+  color: var(--indigo);
+  font-size: 12px;
+  font-weight: 700;
+  margin-left: 8px;
+}
+.alif-detect-pill.is-warn {
+  background: var(--coral-soft);
+  color: var(--coral);
+}
+.alif-inline-link-btn {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  color: inherit !important;
+  text-decoration: underline;
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.alif-batch-panel {
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--surface-2);
+  border: 1.5px solid var(--indigo);
+}
+.alif-batch-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.alif-batch-sub {
+  display: block;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.alif-batch-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.alif-batch-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.alif-batch-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.alif-batch-info strong {
+  display: block;
+  font-size: 13.5px;
+}
+.alif-batch-info span {
+  font-size: 12px;
+  color: var(--muted);
+}
+.alif-batch-item-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.alif-letter-stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.alif-lstat-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 13px;
+}
+.alif-lstat-chip b {
+  color: var(--indigo);
+  font-size: 14px;
+}
+.alif-lstat-kept strong {
+  color: var(--teal);
+}
+
+button:disabled {
+  opacity: 0.42 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
+
+/* ── TRENAJYOR XATO HARFLAR STATISTIKASI ── */
+.alif-tr-errors-wrap {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.alif-tr-errors-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 13.5px;
+}
+.alif-char-err-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+  gap: 8px;
+}
+.alif-err-pill {
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.alif-err-pill.is-special-err {
+  border-color: rgba(225, 29, 72, 0.35);
+}
+.alif-err-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+.alif-err-top strong {
+  font-size: 15px;
+  color: var(--coral);
+}
+.alif-err-top span {
+  color: var(--muted);
+}
+.alif-err-bar {
+  height: 4px;
+  border-radius: 99px;
+  background: var(--border);
+  overflow: hidden;
+}
+.alif-err-bar i {
+  display: block;
+  height: 100%;
+  background: var(--coral);
+}

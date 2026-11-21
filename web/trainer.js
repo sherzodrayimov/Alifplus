@@ -1,39 +1,43 @@
 (function () {
-  var WB = [
-    "şamol", "öqituvçilik", "ğalaba", "köça", "boğçalar", "işonçli", "töğrilik", 
-    "çiroyli", "yaşil", "qöşiqçilik", "mağrurlik", "öyinçoqlar", "taşakkurnoma", 
+  var SPECIAL_WB = [
+    "şamol", "öqituvçilik", "ğalaba", "köça", "boğçalar", "işonçli", "töğrilik",
+    "çiroyli", "yaşil", "qöşiqçilik", "mağrurlik", "öyinçoqlar", "taşakkurnoma",
     "çörakxona", "soğlomlaştiriş", "yönalişlar", "ğildiraklar", "şirinlik", "qöçqor",
     "uçqun", "maşğulotlar", "köprik", "ağdarilmoq", "beşavqatlik", "çumoli", "ösimlikşunoslik",
-    "doğ", "quş", "sözlaşuv", "ğişt", "keça", "uluğvorlik", "şifokor", "tölqinlanmoq", "baça",
-    "yağmurgir", "öçirğiç", "haşarotşunos", "çöntak", "muğombirlik", "quyöş", "taşvişlanmoq", 
-    "qisqiçbaqa", "bağir", "ötmiş", "şon-şuhrat", "çuçvara", "eğilmoq", "köriniş", "oşxona", 
-    "ğayratli", "töppa-töğri", "çegaradosh", "yaşamoq", "qöşniçilik", "buğdoyzor", "işçilar",
-    "söroq", "çaraqlamoq", "lağmon", "şovqin-suron", "öquvçilik", "boğbonçilik", "peşona", "çelak", 
-    "ğurur", "köngilçan", "aşulaçi", "tösiqlar", "çoynak", "tuğilmoq", "naqşinkor", "böri", "çuqurlaşmoq", 
-    "soğliqni", "şaharsozlik", "ölkaşunoslik", "ğazablanmoq", "keşikçi", "qölqop", "muşkullik", "çempionat", 
-    "bağri", "yöqolmoq", "taşqi", "ğizillamoq", "bölinma", "şoir", "çeçak", "oğirlik", "örmonçilik", 
-    "duşmançilik", "çin", "uğur", "şarqşunoslik", "kötarmoq", "ğamginlik", "işora", "qiliçbozlik", "böşliq",
-    "çağirmoq", "tuşunçalar", "şaxsiyat", "öçmoq", "dağallik", "eşik", "çana", "yoğdu", "köçmançi", "haşar",
-    "qiğir", "sönmoq", "çiroq", "mağlubiyat", "quyon", "şubhalanmoq", "örganmoq", "buğlama", "oşpazlik", "çöp", 
-    "ğariblik", "yölak", "işlamoq", "qalpoq", "böyinboğ", "çoğ", "şar", "öyin", "iğvogarlik", "pişirmoq", "çet", 
-    "qörqmoq", "töliq", "laşkarboşi", "çamanzor", "oğri", "özbekçilik", "nişon", "çoy", "ğoyaviy", "közgu", 
-    "baxşida", "çiqmoq", "soğ", "ösmoq", "şer", "çang-tözon", "toğ", "qişloq", "böy", "iştiyoq", "çizmoq", 
-    "ğoz", "töy", "paşşa", "çöl", "buğ", "ördak", "maşhur", "çeçak", "oğuz", "qöy", "taşqi", "çala", "ğam",
-    "kömir", "aşyo", "çoçmoq", "boğlam", "şirin", "öqimoq", "ğazalxonlik", "kuçli", "dağdaga", "söz", "naşriyot",
-    "baliğ", "öş", "hoş", "kölak", "maşq", "toş", "öy", "raşq", "boğliq", "örin", "ğalat", "köz", "iş", "çap",
-    "tuğ", "töla", "öç", "yoğ", "qöymoq", "maşinasozlik", "ölçaş", "duş", "bölak", "xursandçilik", "kömaklaşmoq",
-    "beş", "uğurli", "töğriçilik", "ğayratşijoat", "öquv-maşğulot", "şarqona", "çörakçi", "boğçabop", "soğlomlik",
-    "yönaltirmoq", "qöşiqçi", "qöçqorça", "işonçsizlik", "taşakkurli", "çiroyliroq", "yaşillik", "ösimlikşunos",
-    "öçirğiçlar", "quyöşli", "taşvişli", "qisqiç", "şonli", "körinişli", "çegaraçi", "qöşni", "buğdoy", "çaraqlab",
-    "şovqinli", "boğbon", "köngilli", "tösiq", "naqşband", "çuqur", "şaharlik", "ölka", "ğazabli", "muşkulot", 
-    "çempion", "yöqotmoq", "bölim", "oğir", "örmon", "duşman", "şarq", "ğamgin", "qiliç", "böş", "tuşunça",
-    "şaxs", "dağal", "yoğduli", "köçmoq", "mağlub", "şubha", "oşpaz", "ğarib", "böyin", "iğvo", "qörquv",
-    "töliqlik", "laşkar", "özbek", "ğoya", "baxş", "soğliq", "qişloqi", "iştiyoqli", "çizgi", "maşhurlik",
-    "oğuzlar", "aşyoviy", "boğlama", "ğazal", "naşr", "baliğlar", "kölak", "raşqçi", "boğliqlik", "ğalatlik",
-    "öçiş", "ölçov", "xursand", "kömak"
+    "doğ", "quş", "sözlaşuv", "ğişt", "keça", "uluğvorlik", "şifokor", "tölqinlanmoq",
+    "yağmurgir", "öçirğiç", "haşarotşunos", "çöntak", "muğombirlik", "quyöş", "taşvişlanmoq",
+    "qisqiçbaqa", "bağir", "ötmiş", "şon-şuhrat", "çuçvara", "eğilmoq", "köriniş", "oşxona",
+    "ğayratli", "töppa-töğri", "yaşamoq", "qöşniçilik", "buğdoyzor", "işçilar",
+    "söroq", "çaraqlamoq", "lağmon", "şovqin-suron", "öquvçilik", "boğbonçilik", "peşona",
+    "ğurur", "köngilçan", "aşulaçi", "tösiqlar", "çoynak", "tuğilmoq", "naqşinkor", "böri",
+    "soğliqni", "şaharsozlik", "ölkaşunoslik", "ğazablanmoq", "keşikçi", "qölqop", "muşkullik",
+    "bağri", "yöqolmoq", "taşqi", "ğizillamoq", "bölinma", "şoir", "çeçak", "oğirlik",
+    "örmonçilik", "duşmançilik", "çin", "uğur", "şarqşunoslik", "kötarmoq", "ğamginlik",
+    "işora", "qiliçbozlik", "böşliq", "çağirmoq", "tuşunçalar", "şaxsiyat", "öçmoq",
+    "dağallik", "eşik", "çana", "yoğdu", "köçmançi", "haşar", "sönmoq", "çiroq",
+    "mağlubiyat", "şubhalanmoq", "örganmoq", "buğlama", "oşpazlik", "çöp", "ğariblik",
+    "yölak", "işlamoq", "böyinboğ", "çoğ", "şar", "öyin", "iğvogarlik", "pişirmoq",
+    "qörqmoq", "töliq", "laşkarboşi", "çamanzor", "oğri", "özbekçilik", "nişon", "çoy",
+    "ğoyaviy", "közgu", "baxşida", "çiqmoq", "soğ", "ösmoq", "şer", "çang-tözon", "toğ",
+    "qişloq", "böy", "iştiyoq", "çizmoq", "ğoz", "töy", "paşşa", "çöl", "buğ", "ördak",
+    "maşhur", "oğuz", "qöy", "çala", "ğam", "kömir", "aşyo", "çoçmoq", "boğlam", "şirin",
+    "öqimoq", "ğazalxonlik", "kuçli", "söz", "naşriyot", "baliğ", "öş", "hoş", "kölak",
+    "maşq", "toş", "öy", "raşq", "boğliq", "örin", "ğalat", "köz", "iş", "çap", "tuğ",
+    "töla", "öç", "yoğ", "qöymoq", "maşinasozlik", "ölçaş", "duş", "bölak", "xursandçilik",
+    "kömaklaşmoq", "beş", "uğurli", "töğriçilik", "ğayratşijoat", "şarqona", "çörakçi",
+    "Özbekiston", "Ğalaba", "Şahar", "Çiroyli", "Töğri", "Qöşiq"
   ];
 
+  var GENERAL_WB = SPECIAL_WB.concat([
+    "kitob", "maktab", "talaba", "kelajak", "vatan", "bilim", "ilm", "fan", "madaniyat",
+    "tarix", "adabiyot", "matematika", "dastur", "kompyuter", "internet", "texnologiya",
+    "taraqqiyot", "hamkorlik", "dustlik", "tinchlik", "mehnat", "harakat", "natija",
+    "senga", "menga", "teng", "keng", "tong", "yangi", "rang", "dengiz", "ming",
+    "universitet", "diplomatiya", "iqtisodiyot", "xalqaro", "aloqa", "loyiha", "tizim"
+  ]);
+
   var mode = "time";
+  var focusMode = "special";
   var targetVal = 30;
   var words = [];
   var typedWords = [];
@@ -42,6 +46,38 @@
   var timerId = null;
   var finished = false;
   var bestWpm = parseInt(localStorage.getItem("alif_best_wpm") || "0", 10) || 0;
+  var charErrors = {};
+  try {
+    charErrors = JSON.parse(localStorage.getItem("alif_tr_char_errors") || "{}") || {};
+  } catch (e) { charErrors = {}; }
+
+  function saveCharErrors() {
+    try { localStorage.setItem("alif_tr_char_errors", JSON.stringify(charErrors)); } catch (e) {}
+  }
+
+  function renderCharErrors() {
+    var box = document.getElementById("alifCharErrorList");
+    if (!box) return;
+    var entries = Object.keys(charErrors)
+      .map(function (ch) { return { ch: ch, count: charErrors[ch] }; })
+      .filter(function (x) { return x.count > 0; })
+      .sort(function (a, b) { return b.count - a.count; })
+      .slice(0, 8);
+
+    if (entries.length === 0) {
+      box.innerHTML = '<span style="color:var(--muted); font-size:13px;">Hali xatolar qayd etilmagan — maşqni boşlang!</span>';
+      return;
+    }
+    var maxCnt = entries[0].count || 1;
+    box.innerHTML = entries.map(function (it) {
+      var isSpecial = /[ÖöĞğŞşÇç]/.test(it.ch);
+      var pct = Math.max(14, Math.round((it.count / maxCnt) * 100));
+      return '<div class="alif-err-pill' + (isSpecial ? ' is-special-err' : '') + '">' +
+        '<div class="alif-err-top"><strong>' + it.ch + '</strong><span>' + it.count + ' xato</span></div>' +
+        '<div class="alif-err-bar"><i style="width:' + pct + '%"></i></div>' +
+      '</div>';
+    }).join("");
+  }
 
   function conv(v) {
     return v
@@ -52,9 +88,27 @@
   }
 
   function pick(n) {
+    var pool = GENERAL_WB;
+    if (focusMode === "special") {
+      pool = SPECIAL_WB;
+    } else if (focusMode === "errors") {
+      var topChars = Object.keys(charErrors)
+        .filter(function (k) { return charErrors[k] > 0; })
+        .sort(function (a, b) { return charErrors[b] - charErrors[a]; })
+        .slice(0, 4);
+      if (topChars.length > 0) {
+        var filtered = GENERAL_WB.filter(function (w) {
+          var lw = w.toLowerCase();
+          return topChars.some(function (ch) { return lw.indexOf(ch) !== -1; });
+        });
+        if (filtered.length >= 8) pool = filtered;
+      } else {
+        pool = SPECIAL_WB;
+      }
+    }
     var out = [];
     for (var i = 0; i < n; i++) {
-      out.push(WB[Math.floor(Math.random() * WB.length)]);
+      out.push(pool[Math.floor(Math.random() * pool.length)]);
     }
     return out;
   }
@@ -62,6 +116,8 @@
   function updBest() {
     var e = document.getElementById("trBest");
     if (e) e.textContent = bestWpm > 0 ? bestWpm + " WPM" : "—";
+    var b2 = document.getElementById("alifBestWpm");
+    if (b2) b2.textContent = bestWpm + " WPM";
   }
 
   function updCnt() {
@@ -124,6 +180,18 @@
     if (a) b.style.transform = "translateY(-" + Math.max(0, a.offsetTop - (a.offsetHeight || 38)) + "px)";
   }
 
+  function recordWordErrors(expected, actual) {
+    for (var i = 0; i < expected.length; i++) {
+      var expCh = expected[i].toLowerCase();
+      var gotCh = actual[i] ? actual[i].toLowerCase() : "";
+      if (gotCh !== expCh && /[a-zöüğşç]/.test(expCh)) {
+        charErrors[expCh] = (charErrors[expCh] || 0) + 1;
+      }
+    }
+    saveCharErrors();
+    renderCharErrors();
+  }
+
   function finish() {
     if (finished) return;
     finished = true;
@@ -133,11 +201,19 @@
     updCnt();
     render();
     var s = stats();
-    if (s.acc >= 75 && s.wpm > bestWpm) {
+    if (s.acc >= 70 && s.wpm > bestWpm) {
       bestWpm = s.wpm;
       localStorage.setItem("alif_best_wpm", String(bestWpm));
-      updBest();
     }
+    var runs = (parseInt(localStorage.getItem("alif_tr_runs") || "0", 10) || 0) + 1;
+    localStorage.setItem("alif_tr_runs", String(runs));
+    localStorage.setItem("alif_tr_last", String(s.wpm));
+    updBest();
+    var lastEl = document.getElementById("alifLastWpm");
+    var runsEl = document.getElementById("alifTotalRuns");
+    if (lastEl) lastEl.textContent = s.wpm + " WPM";
+    if (runsEl) runsEl.textContent = runs;
+
     var rt = document.getElementById("trResultText");
     var rb = document.getElementById("trResultBanner");
     if (rt) rt.innerHTML = "<strong>Natija:</strong> <b>" + s.wpm + " WPM</b> · Aniqlik: <b>" + s.acc + "%</b> (" + s.sec.toFixed(1) + "s)";
@@ -147,6 +223,14 @@
   window.focusAlifTrainer = function () {
     var i = document.getElementById("trHiddenInput");
     if (i && !i.disabled) i.focus();
+  };
+
+  window.setAlifTrFocus = function (f) {
+    focusMode = f;
+    document.querySelectorAll(".alif-mt-opt[data-focus]").forEach(function (b) {
+      b.classList.toggle("is-active", b.dataset.focus === f);
+    });
+    window.resetAlifTrainer();
   };
 
   window.setAlifTrMode = function (m) {
@@ -199,6 +283,7 @@
     updBest();
     updCnt();
     render();
+    renderCharErrors();
     if (inp) inp.focus();
   };
 
@@ -206,6 +291,15 @@
     var inp = document.getElementById("trHiddenInput");
     var st = document.getElementById("trStage");
     if (!inp || !st) return;
+
+    var clearErrBtn = document.getElementById("alifResetCharErrors");
+    if (clearErrBtn) {
+      clearErrBtn.addEventListener("click", function () {
+        charErrors = {};
+        saveCharErrors();
+        renderCharErrors();
+      });
+    }
 
     inp.addEventListener("focus", function () { st.classList.add("is-focused"); });
     inp.addEventListener("blur", function () { st.classList.remove("is-focused"); });
@@ -241,6 +335,9 @@
           return;
         }
         typedWords[curIdx] = w;
+        if (w !== words[curIdx]) {
+          recordWordErrors(words[curIdx], w);
+        }
         curIdx++;
         inp.value = "";
         if (mode === "words" && curIdx >= targetVal) {

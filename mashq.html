@@ -60,6 +60,12 @@
         <div class="alif-trainer-top">
           <div><span class="alif-trainer-badge">Tez yoziş trenajyori · WPM</span><h2 class="alif-trainer-title">Yangi alifboda yoziş tezligingizni sinang</h2></div>
           <div class="alif-mt-toolbar">
+            <div class="alif-mt-group" id="alifTrFocusOpts">
+              <button type="button" class="alif-mt-opt is-active" data-focus="special" onclick="setAlifTrFocus('special')">🎯 Ö, Ğ, Ş, Ç</button>
+              <button type="button" class="alif-mt-opt" data-focus="all" onclick="setAlifTrFocus('all')">📚 Aralash</button>
+              <button type="button" class="alif-mt-opt" data-focus="errors" onclick="setAlifTrFocus('errors')">⚠ Xato harflar</button>
+            </div>
+            <span class="alif-mt-sep"></span>
             <div class="alif-mt-group"><button type="button" class="alif-mt-opt is-active" data-mode="time" onclick="setAlifTrMode('time')">⏱ Vaqt</button><button type="button" class="alif-mt-opt" data-mode="words" onclick="setAlifTrMode('words')">📝 Sözlar</button></div>
             <span class="alif-mt-sep"></span>
             <div class="alif-mt-group" id="alifTrTimeOpts"><button type="button" class="alif-mt-opt is-active" data-val="30" onclick="setAlifTrVal(30)">30s</button><button type="button" class="alif-mt-opt" data-val="60" onclick="setAlifTrVal(60)">1 min</button></div>
@@ -70,6 +76,15 @@
         <div class="alif-mt-stage" id="trStage" onclick="focusAlifTrainer()"><input type="text" id="trHiddenInput" class="alif-mt-hidden-input" autocomplete="off" spellcheck="false" /><div class="alif-mt-viewport"><div class="alif-mt-words" id="trWords"></div></div><div class="alif-mt-focus-hint">Yozişni boşlaş uçun bosing (o', g', sh, ch → ö, ğ, ş, ç)</div></div>
         <div class="alif-mt-actions"><button type="button" class="alif-trainer-btn" onclick="resetAlifTrainer()">↻ Yangilaş (Tab)</button></div>
         <div id="trResultBanner" class="alif-trainer-result" hidden><div id="trResultText"></div><button type="button" class="alif-hero-btn-primary" onclick="resetAlifTrainer()">Yana bir sinov →</button></div>
+      </div>
+      <div class="alif-tr-errors-wrap" id="alifTrErrorsWrap">
+        <div class="alif-tr-errors-head">
+          <strong>Eng köp xato qilingan harflar</strong>
+          <button type="button" id="alifResetCharErrors" class="alif-mini-btn">Statistikani tozalash</button>
+        </div>
+        <div id="alifCharErrorList" class="alif-char-err-grid">
+          <span style="color:var(--muted); font-size:13px;">Hali xatolar qayd etilmagan — maşqni boşlang!</span>
+        </div>
       </div>
     </div>
   </section>
