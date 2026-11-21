@@ -53,4 +53,131 @@
 
   if (document.body) initVisualFX();
   else window.addEventListener('DOMContentLoaded', initVisualFX);
+
+  // 4. Bosh sahifadagi tezkor mini-konverter + Konverter sahifasidagi Visual Diff + Mashq rekordlari
+  function initPageEnhancements() {
+    function quickConvert(s) {
+      if (window.AlifSmartEngine && typeof window.AlifSmartEngine.convert === 'function') {
+        return window.AlifSmartEngine.convert(s, 'to_new');
+      }
+      var cyr = {'Ё':'Yo','ё':'yo','Ю':'Yu','ю':'yu','Я':'Ya','я':'ya','Ц':'Ts','ц':'ts','Щ':'Ş','щ':'ş','Ш':'Ş','ш':'ş','Ч':'Ç','ч':'ç','Ў':'Ö','ў':'ö','Қ':'Q','қ':'q','Ғ':'Ğ','ғ':'ğ','Ҳ':'H','ҳ':'h','А':'A','а':'a','Б':'B','б':'b','В':'V','в':'v','Г':'G','г':'g','Д':'D','д':'d','Е':'E','е':'e','Ж':'J','ж':'j','З':'Z','з':'z','И':'I','и':'i','Й':'Y','й':'y','К':'K','к':'k','Л':'L','л':'l','М':'M','м':'m','Н':'N','н':'n','О':'O','о':'o','П':'P','п':'p','Р':'R','р':'r','С':'S','с':'s','Т':'T','т':'t','У':'U','у':'u','Ф':'F','ф':'f','Х':'X','х':'x','Ъ':'’','ъ':'’','Ь':'','ь':'','Э':'E','э':'e'};
+      s = s.replace(/([Oo])['ʻ’‘ʼ`]/g, function(_, c) { return c === 'O' ? 'Ö' : 'ö'; })
+           .replace(/([Gg])['ʻ’‘ʼ`]/g, function(_, c) { return c === 'G' ? 'Ğ' : 'ğ'; })
+           .replace(/S[Hh]/g, 'Ş').replace(/sh/g, 'ş')
+           .replace(/C[Hh]/g, 'Ç').replace(/ch/g, 'ç');
+      if (/[А-Яа-яЎўҚқҒғҲҳЁё]/.test(s)) {
+        s = s.replace(/(^|[\s("«])([Ее])/g, function(_, p, e) { return p + (e === 'Е' ? 'Ye' : 'ye'); })
+             .replace(/[А-Яа-яЎўҚқҒғҲҳЁёЪъЬь]/g, function(ch) { return cyr[ch] !== undefined ? cyr[ch] : ch; });
+      }
+      return s;
+    }
+
+    // Bosh sahifa tezkor konverter
+    var qIn = document.getElementById('alifQuickInput');
+    var qOut = document.getElementById('alifQuickOutput');
+    if (qIn && qOut) {
+      qIn.addEventListener('input', function () { qOut.value = quickConvert(qIn.value); });
+      var qSample = document.getElementById('alifQuickSample');
+      if (qSample) {
+        qSample.addEventListener('click', function () {
+          qIn.value = "O'zbekiston Respublikasida yangi alifbo 2027-yil 22-apreldan kuchga kiradi. Toshkent shahri va tog'li hududlar haqida YouTube orqali video tayyorlandi.";
+          qOut.value = quickConvert(qIn.value);
+        });
+      }
+      var qCopy = document.getElementById('alifQuickCopy');
+      if (qCopy) {
+        qCopy.addEventListener('click', function () {
+          if (!qOut.value) return;
+          if (navigator.clipboard) navigator.clipboard.writeText(qOut.value);
+          var prev = qCopy.textContent;
+          qCopy.textContent = '✓ Nusxalandi';
+          setTimeout(function () { qCopy.textContent = prev; }, 1400);
+        });
+      }
+    }
+
+    // Konverter sahifasi Visual Diff
+    var cIn = document.getElementById('alifInput');
+    var cOut = document.getElementById('alifOutput');
+    var diffBox = document.getElementById('alifVisualDiffBox');
+    var diffSum = document.getElementById('alifDiffSummary');
+    if (cIn && cOut && diffBox) {
+      function escHtml(t) {
+        return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+      function renderDiff() {
+        var raw = cIn.value || '';
+        var out = cOut.value || '';
+        if (!out.trim()) {
+          diffBox.textContent = 'Matn kiritilganda natija tahlili şu yerda körinadi...';
+          if (diffSum) diffSum.textContent = 'Matn kiriting — özgarğan harflar rang bilan ajratiladi';
+          return;
+        }
+        var changedCount = 0;
+        var keptCount = 0;
+        var tokens = out.split(/(\s+)/);
+        var html = tokens.map(function (tok) {
+          if (!tok || /^\s+$/.test(tok)) return tok;
+          if (/[ÖöĞğŞşÇç]/.test(tok)) {
+            changedCount++;
+            return escHtml(tok).replace(/([ÖöĞğŞşÇç])/g, '<mark class="alif-diff-ch">$1</mark>');
+          }
+          if (/[sh|ch|w|x|q]/i.test(tok) && /^[A-Za-z0-9'-]+$/.test(tok) && /(sh|ch|th|tion|oo|ee|w)/i.test(tok) && raw.indexOf(tok) !== -1) {
+            keptCount++;
+            return '<span class="alif-diff-kept" title="Xorijiy/istisno söz saqlandi">' + escHtml(tok) + '</span>';
+          }
+          return escHtml(tok);
+        }).join('');
+        diffBox.innerHTML = html;
+        if (diffSum) {
+          diffSum.textContent = changedCount + ' ta sözda yangi harf qöllandi' + (keptCount ? ' · ' + keptCount + ' ta xorijiy söz himoyalandi' : '');
+        }
+      }
+      cIn.addEventListener('input', function () { setTimeout(renderDiff, 30); });
+      var obs = new MutationObserver(renderDiff);
+      obs.observe(cOut, { attributes: true, childList: true, characterData: true });
+      setInterval(function () {
+        if (diffBox.dataset.lastVal !== cOut.value) {
+          diffBox.dataset.lastVal = cOut.value;
+          renderDiff();
+        }
+      }, 450);
+    }
+
+    // Mashq sahifasi shaxsiy rekordlar
+    var bestEl = document.getElementById('alifBestWpm');
+    if (bestEl) {
+      function loadRecs() {
+        var best = parseInt(localStorage.getItem('alif_tr_best') || '0', 10);
+        var last = parseInt(localStorage.getItem('alif_tr_last') || '0', 10);
+        var runs = parseInt(localStorage.getItem('alif_tr_runs') || '0', 10);
+        bestEl.textContent = best + ' WPM';
+        var lastEl = document.getElementById('alifLastWpm');
+        var runsEl = document.getElementById('alifTotalRuns');
+        if (lastEl) lastEl.textContent = last + ' WPM';
+        if (runsEl) runsEl.textContent = runs;
+      }
+      loadRecs();
+      setInterval(function () {
+        var wpmNode = document.querySelector('#alifTrainer [id*="Wpm"], #alifTrainer .alif-tr-wpm');
+        if (wpmNode) {
+          var val = parseInt(wpmNode.textContent, 10);
+          var resModal = document.querySelector('#alifTrainer [id*="Result"]:not([hidden])');
+          if (resModal && val > 0 && resModal.dataset.counted !== '1') {
+            resModal.dataset.counted = '1';
+            var best = Math.max(val, parseInt(localStorage.getItem('alif_tr_best') || '0', 10));
+            var runs = parseInt(localStorage.getItem('alif_tr_runs') || '0', 10) + 1;
+            localStorage.setItem('alif_tr_best', String(best));
+            localStorage.setItem('alif_tr_last', String(val));
+            localStorage.setItem('alif_tr_runs', String(runs));
+            loadRecs();
+          }
+        }
+      }, 900);
+    }
+  }
+
+  if (document.body) initPageEnhancements();
+  else window.addEventListener('DOMContentLoaded', initPageEnhancements);
+
 })();
