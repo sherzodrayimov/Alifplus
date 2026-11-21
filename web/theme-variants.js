@@ -180,4 +180,62 @@
   if (document.body) initPageEnhancements();
   else window.addEventListener('DOMContentLoaded', initPageEnhancements);
 
+
+  // 5. Mobil menyu tugmasi (Hamburger Drawer) + Bosh sahifada Lazy Load
+  function initMobileAndLazy() {
+    var topbar = document.querySelector('.alif-topbar');
+    var nav = document.querySelector('.alif-nav');
+    if (topbar && nav && !document.getElementById('alifMobileMenuBtn')) {
+      var mBtn = document.createElement('button');
+      mBtn.type = 'button';
+      mBtn.id = 'alifMobileMenuBtn';
+      mBtn.className = 'alif-mobile-menu-btn';
+      mBtn.setAttribute('aria-expanded', 'false');
+      mBtn.setAttribute('aria-label', 'Menyuni ochish');
+      mBtn.innerHTML = '<span>☰</span><span>Menyu</span>';
+      nav.parentNode.insertBefore(mBtn, nav);
+
+      mBtn.addEventListener('click', function () {
+        var open = topbar.classList.toggle('is-menu-open');
+        mBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        mBtn.innerHTML = open ? '<span>✕</span><span>Yopish</span>' : '<span>☰</span><span>Menyu</span>';
+      });
+    }
+
+    // Bosh sahifadagi tezkor konverterga foydalanuvchi kirgandagina smart-engine.js ni Lazy Load qilish
+    var qIn = document.getElementById('alifQuickInput');
+    if (qIn && !window.AlifSmartEngine) {
+      var loaded = false;
+      function loadEngineOnce() {
+        if (loaded) return;
+        loaded = true;
+        var s = document.createElement('script');
+        s.src = 'web/smart-engine.js';
+        s.onload = function () {
+          if (qIn.value && window.AlifSmartEngine) {
+            var qOut = document.getElementById('alifQuickOutput');
+            if (qOut) qOut.value = window.AlifSmartEngine.convert(qIn.value, 'to_new');
+          }
+        };
+        document.body.appendChild(s);
+      }
+      qIn.addEventListener('focus', loadEngineOnce, { once: true });
+      qIn.addEventListener('input', loadEngineOnce, { once: true });
+      var qSample = document.getElementById('alifQuickSample');
+      if (qSample) qSample.addEventListener('click', loadEngineOnce, { once: true });
+    }
+
+    // Konverter sahifasida avtomatik test natijasini ko'rsatish
+    var diffSum = document.getElementById('alifDiffSummary');
+    if (diffSum && typeof window.runAlifTests === 'function') {
+      var rep = window.runAlifTests();
+      if (rep.failedCount === 0) {
+        diffSum.textContent = '✓ ' + rep.passed + '/' + rep.total + ' ta avtomatik imlo va istisno testidan ötdi';
+      }
+    }
+  }
+
+  if (document.body) initMobileAndLazy();
+  else window.addEventListener('DOMContentLoaded', initMobileAndLazy);
+
 })();

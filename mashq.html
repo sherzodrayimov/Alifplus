@@ -548,15 +548,15 @@
       }
     })();
   </script>
-<script src="web/smart-engine.js"></script>
-  <script src="web/converter.js"></script>
-    <script src="web/vendor/jszip.min.js"></script>
+
+  
+    
   <script type="module">
     import * as pdfjsLib from './web/vendor/pdf.min.mjs';
     pdfjsLib.GlobalWorkerOptions.workerSrc = new URL('web/vendor/pdf.worker.min.mjs', window.location.href).href;
     window.pdfjsLib = pdfjsLib;
   </script>
-  <script src="web/documents.js"></script>
+  
   <script src="web/trainer.js?v=1"></script>
   <script src="web/docs-generator.js?v=3"></script>
   <div id="alifGuideModal" class="alif-guide-backdrop" hidden onclick="if(event.target===this)closeAlifMacGuide()">
@@ -680,7 +680,7 @@
     background-color: #4338ca !important;
     background-image: none !important;
     border-color: #4338ca !important;
-    color: #022c22 !important;
+    color: #ffffff !important;
     box-shadow: none !important;
   }
 
@@ -691,7 +691,7 @@
   html.alif-dark-active body a[class*="btn"]:hover *,
   html.alif-dark-active body section a[href*=".dmg"]:hover *,
   html.alif-dark-active body section a[href*=".exe"]:hover * {
-    color: #022c22 !important;
+    color: #ffffff !important;
   }
 
   /* Bosilganda (:active) to‘q yashil */
@@ -726,14 +726,14 @@
     background-color: #4338ca !important;
     background-image: none !important;
     border-color: #4338ca !important;
-    color: #022c22 !important;
+    color: #ffffff !important;
     font-weight: 700 !important;
     box-shadow: none !important;
   }
 
   html.alif-dark-active body button:is(.is-active, .active, .selected, [aria-pressed="true"], [aria-selected="true"], [data-active="true"]) *,
   html.alif-dark-active body [id] button:is(.is-active, .active, .selected, [aria-pressed="true"], [aria-selected="true"], [data-active="true"]) * {
-    color: #022c22 !important;
+    color: #ffffff !important;
   }
   </style>
   <script id="alifDarkGreenSync">
@@ -756,9 +756,9 @@
     if(document.body) new MutationObserver(checkDark).observe(document.body, { attributes: true });
   })();
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-  <script src="web/scroll-fx.js"></script>
+  
+  
+  
   <script src="web/theme-variants.js"></script>
 </body>
 </html>
