@@ -16,6 +16,13 @@
 
   var CASES = [
     // 1. Asosiy 4 harf va turli apostrof belgilari (24 ta)
+    ["shunday", "şunday"], ["choy", "çoy"], ["chill", "chill"],
+    ["Let's chill and watch a show", "Let's chill and watch a show"],
+    ["shoir", "şoir"], ["shifokor", "şifokor"], ["achchiqqina", "aççiqqina"],
+    ["go'sht", "göşt"], ["chol", "çol"], ["cho'l", "çöl"],
+    ["chiroyliroqlardan", "çiroyliroqlardan"], ["eshikka", "eşikka"], ["qishloqqa", "qişloqqa"],
+    ["blush", "blush"], ["sketch", "sketch"], ["chrome", "chrome"], ["shrimp", "shrimp"],
+    ["shkaf", "şkaf"], ["shtab", "ştab"], ["shlang", "şlang"],
     ["O'zbekiston", "Özbekiston"], ["o'zbekiston", "özbekiston"],
     ["O‘zbekiston", "Özbekiston"], ["o‘zbekiston", "özbekiston"],
     ["O’zbekiston", "Özbekiston"], ["oʻzbekiston", "özbekiston"],
