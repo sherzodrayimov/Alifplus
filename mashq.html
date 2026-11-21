@@ -30,7 +30,7 @@
     })();
   </script>
   <link rel="stylesheet" href="web/scroll-fx.css" />
-  <link rel="stylesheet" href="web/theme-variants.css?v=20261122" />
+  <link rel="stylesheet" href="web/theme-variants.css?v=20261122c" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:site_name" content="Alif+" />
   <meta property="og:locale" content="uz_UZ" />
@@ -43,18 +43,22 @@
         <span class="alif-brand-text">Alif+</span>
       </a>
       <input type="checkbox" id="alifNavCheckbox" class="alif-nav-checkbox" aria-hidden="true" />
-      <label for="alifNavCheckbox" class="alif-nav-burger-label" aria-label="Menyuni ochish">☰</label>
+      <div class="alif-topbar-actions">
+        <button type="button" id="alifThemeToggle" class="alif-theme-btn" onclick="toggleAlifTheme()" aria-label="Kundalik yoki tungi rejim" title="Kundalik / Tungi rejim">
+          <svg class="alif-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="alif-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+        <label for="alifNavCheckbox" class="alif-nav-burger-label" aria-label="Menyuni ochish">☰</label>
+      </div>
       <nav class="alif-nav" aria-label="Asosiy menyu">
+        <div class="alif-drawer-head"><span>Bo‘limlar</span><label for="alifNavCheckbox" class="alif-drawer-close" aria-label="Menyuni yopish">✕</label></div>
         <a href="index.html" class="alif-nav-link">Bosh sahifa</a>
         <a href="alifbo.html" class="alif-nav-link">Alifbo</a>
         <a href="konverter.html" class="alif-nav-link">Konverter</a>
         <a href="hujjatlar.html" class="alif-nav-link">Hujjatlar</a>
         <a href="mashq.html" class="alif-nav-link is-page-active" aria-current="page">Mashq</a>
         <a href="ilovalar.html" class="alif-nav-link">Ilovalar</a>
-        <button type="button" id="alifThemeToggle" class="alif-theme-btn" onclick="toggleAlifTheme()" aria-label="Kundalik yoki tungi rejim" title="Kundalik / Tungi rejim">
-          <svg class="alif-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-          <svg class="alif-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-        </button>
+        
       </nav>
     </div>
   </header>
@@ -63,7 +67,7 @@
     <div class="alif-container">
       <div class="alif-trainer-card">
         <div class="alif-trainer-top">
-          <div><span class="alif-trainer-badge">Tez yoziş trenajyori · WPM</span><h2 class="alif-trainer-title">Yangi alifboda yoziş tezligingizni sinang</h2></div>
+          <div><span class="alif-trainer-badge">Tez yoziş trenajyori · WPM</span><h1 class="alif-trainer-title">Yangi alifboda yoziş tezligingizni sinang</h1></div>
           <div class="alif-mt-toolbar">
             <div class="alif-mt-group" id="alifTrFocusOpts">
               <button type="button" class="alif-mt-opt is-active" data-focus="special" onclick="setAlifTrFocus('special')">🎯 Ö, Ğ, Ş, Ç</button>

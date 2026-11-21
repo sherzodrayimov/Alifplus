@@ -281,7 +281,7 @@
         var f = list[i];
         var raw = await extractFileText(f);
         var conv = (window.Alif && typeof window.Alif.convert === 'function')
-          ? window.Alif.convert(raw, dirEl.value, { smart: false })
+          ? window.Alif.convert(raw, dirEl.value, { smart: (document.getElementById('alifSmartProtect') ? document.getElementById('alifSmartProtect').checked : true) })
           : raw;
         var changes = (conv.match(/[ÖöĞğŞşÇç]/g) || []).length;
         batchResults.push({ name: f.name, raw: raw, converted: conv, changes: changes });

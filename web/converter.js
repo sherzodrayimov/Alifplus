@@ -1,5 +1,7 @@
 (function (global) {
   'use strict';
+  var CORE_EN_FALLBACK = new Set(['chat', 'chats', 'chatted', 'chatting', 'chatbot', 'chatbots', 'channel', 'channels', 'change', 'changes', 'changed', 'changing', 'chart', 'charts', 'charter', 'check', 'checks', 'checked', 'checking', 'chill', 'chills', 'chilled', 'chilling', 'chip', 'chips', 'choice', 'choose', 'chosen', 'chrome', 'church', 'share', 'shares', 'shared', 'sharing', 'shake', 'shampoo', 'shape', 'sharp', 'she', 'sheet', 'shell', 'shift', 'shine', 'ship', 'shirt', 'shock', 'shoe', 'shoes', 'shop', 'shopping', 'short', 'shot', 'should', 'shoulder', 'show', 'shows', 'showed', 'shown', 'shower', 'shut', 'shy', 'youtube', 'google', 'apple', 'windows', 'iphone', 'ipad', 'macbook', 'whatsapp', 'telegram', 'instagram', 'facebook', 'twitter', 'tiktok', 'linkedin', 'github', 'microsoft', 'excel', 'word', 'powerpoint', 'photoshop', 'english', 'russian', 'spanish', 'cache', 'sketch', 'match', 'watch', 'switch', 'pitch', 'batch', 'patch']);
+
 
   const APOSTROPHE_RE = /[ʻ’‘ʼ`´]/g;
   const CYR_RE = /[\u0400-\u04FF]/;
