@@ -565,3 +565,53 @@ html[data-theme="dark"] .alif-doc-scbtn:active {
   border-color: #fde68a !important;
   box-shadow: 0 0 16px rgba(251, 191, 36, 0.55) !important;
 }
+
+/* ── 1-VARIANT: MILLIY GIRIH VA GEOMETRIK NAQSH ORQA FONI ── */
+.alif-girih-bg {
+  position: fixed;
+  inset: -120px 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.065;
+  background-repeat: repeat;
+  background-size: 160px 160px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160' fill='none'%3E%3Cg stroke='%23b45309' stroke-width='1'%3E%3Crect x='24' y='24' width='112' height='112'/%3E%3Crect x='24' y='24' width='112' height='112' transform='rotate(45 80 80)'/%3E%3Cpolygon points='80,14 96,46 130,30 114,64 146,80 114,96 130,130 96,114 80,146 64,114 30,130 46,96 14,80 46,64 30,30 64,46'/%3E%3Ccircle cx='80' cy='80' r='18'/%3E%3Cpath d='M0 80H14M146 80H160M80 0V14M80 146V160M0 0L24 24M160 0L136 24M0 160L24 136M160 160L136 136'/%3E%3C/g%3E%3C/svg%3E");
+  will-change: transform;
+  transition: opacity 0.3s ease;
+}
+
+html[data-theme="dark"] .alif-girih-bg,
+body[data-theme="dark"] .alif-girih-bg {
+  opacity: 0.085;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160' fill='none'%3E%3Cg stroke='%23f59e0b' stroke-width='1'%3E%3Crect x='24' y='24' width='112' height='112'/%3E%3Crect x='24' y='24' width='112' height='112' transform='rotate(45 80 80)'/%3E%3Cpolygon points='80,14 96,46 130,30 114,64 146,80 114,96 130,130 96,114 80,146 64,114 30,130 46,96 14,80 46,64 30,30 64,46'/%3E%3Ccircle cx='80' cy='80' r='18'/%3E%3Cpath d='M0 80H14M146 80H160M80 0V14M80 146V160M0 0L24 24M160 0L136 24M0 160L24 136M160 160L136 136'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.alif-girih-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 28%, rgba(247, 245, 240, 0.72) 0%, rgba(247, 245, 240, 0.15) 68%, rgba(217, 119, 6, 0.05) 100%);
+}
+
+html[data-theme="dark"] .alif-girih-vignette,
+body[data-theme="dark"] .alif-girih-vignette {
+  background: radial-gradient(circle at 50% 28%, rgba(9, 9, 11, 0.74) 0%, rgba(9, 9, 11, 0.18) 68%, rgba(245, 158, 11, 0.06) 100%);
+}
+
+header.alif-topbar,
+main.alif-main,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .alif-girih-bg {
+    background-size: 120px 120px;
+    opacity: 0.05;
+  }
+  html[data-theme="dark"] .alif-girih-bg {
+    opacity: 0.07;
+  }
+}
