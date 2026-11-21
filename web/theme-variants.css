@@ -1170,3 +1170,25 @@ button:disabled {
   margin-top: 32px;
   font-size: 14.5px;
 }
+
+/* ── HUJJATLAR FULL-WIDTH LAYOUT GUARD ── */
+#alifDocsMain {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  float: none !important;
+  clear: both !important;
+  box-sizing: border-box !important;
+}
+#alifDocsMain > .alif-container {
+  display: block !important;
+  width: 100% !important;
+  max-width: 1180px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  box-sizing: border-box !important;
+}
