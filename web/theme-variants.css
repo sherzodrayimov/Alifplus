@@ -486,3 +486,82 @@ html[data-theme="dark"] .alif-doc-sbtn:hover {
   border-color: #f59e0b !important;
   color: #fbbf24 !important;
 }
+
+/* ── QORA FONDA (DARK MODE) FAOL VA BOSILGAN TUGMALARNI YORQIN OLTIN QILISH ── */
+html[data-theme="dark"] #alifDocsSection .alif-doc-tab,
+body[data-theme="dark"] #alifDocsSection .alif-doc-tab {
+  background: #16161b !important;
+  border: 1.5px solid #2e2e38 !important;
+  color: #d4d4d8 !important;
+}
+
+html[data-theme="dark"] #alifDocsSection .alif-doc-tab:hover,
+body[data-theme="dark"] #alifDocsSection .alif-doc-tab:hover {
+  background: #241d11 !important;
+  border-color: #f59e0b !important;
+  color: #fde68a !important;
+}
+
+html[data-theme="dark"] #alifDocsSection .alif-doc-tab.is-active,
+body[data-theme="dark"] #alifDocsSection .alif-doc-tab.is-active,
+html[data-theme="dark"] #alifDocsSection .alif-doc-scbtn.is-active,
+body[data-theme="dark"] #alifDocsSection .alif-doc-scbtn.is-active,
+html[data-theme="dark"] #alifDocsSection .alif-doc-print-btn,
+body[data-theme="dark"] #alifDocsSection .alif-doc-print-btn,
+html[data-theme="dark"] .is-active,
+body[data-theme="dark"] .is-active {
+  background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%) !important;
+  border: 1.5px solid #fde68a !important;
+  color: #09090b !important;
+  font-weight: 800 !important;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.25), 0 6px 18px rgba(245, 158, 11, 0.42) !important;
+}
+
+html[data-theme="dark"] #alifDocsSection .alif-doc-tab.is-active *,
+body[data-theme="dark"] #alifDocsSection .alif-doc-tab.is-active *,
+html[data-theme="dark"] #alifDocsSection .alif-doc-scbtn.is-active *,
+body[data-theme="dark"] #alifDocsSection .alif-doc-scbtn.is-active *,
+html[data-theme="dark"] #alifDocsSection .alif-doc-print-btn *,
+body[data-theme="dark"] #alifDocsSection .alif-doc-print-btn * {
+  color: #09090b !important;
+}
+
+html[data-theme="dark"] #alifDocsSection .alif-doc-script-sw,
+body[data-theme="dark"] #alifDocsSection .alif-doc-script-sw {
+  background: #141418 !important;
+  border: 1.5px solid #2e2e38 !important;
+}
+
+html[data-theme="dark"] #alifDocsSection .alif-doc-scbtn:not(.is-active),
+body[data-theme="dark"] #alifDocsSection .alif-doc-scbtn:not(.is-active) {
+  background: transparent !important;
+  border: none !important;
+  color: #a1a1aa !important;
+}
+
+html[data-theme="dark"] #alifDocsSection .alif-doc-sbtn:not(.alif-doc-print-btn),
+body[data-theme="dark"] #alifDocsSection .alif-doc-sbtn:not(.alif-doc-print-btn) {
+  background: #18181e !important;
+  border: 1.5px solid #32323d !important;
+  color: #f4f4f5 !important;
+}
+
+html[data-theme="dark"] #alifDocsSection .alif-doc-sbtn:not(.alif-doc-print-btn):hover,
+body[data-theme="dark"] #alifDocsSection .alif-doc-sbtn:not(.alif-doc-print-btn):hover {
+  background: #261e11 !important;
+  border-color: #f59e0b !important;
+  color: #fbbf24 !important;
+}
+
+/* Har ikki rejimda tugma bosilgan lahza (:active) effekti */
+html[data-theme="dark"] button:active,
+body[data-theme="dark"] button:active,
+html[data-theme="dark"] .alif-doc-tab:active,
+html[data-theme="dark"] .alif-doc-sbtn:active,
+html[data-theme="dark"] .alif-doc-scbtn:active {
+  transform: translateY(1.5px) scale(0.965) !important;
+  background: #f59e0b !important;
+  color: #09090b !important;
+  border-color: #fde68a !important;
+  box-shadow: 0 0 16px rgba(251, 191, 36, 0.55) !important;
+}
