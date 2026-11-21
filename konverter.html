@@ -529,133 +529,11 @@
       }
     })();
   </script>
-    <script id="alifHeroScript">
-    (function() {
-      var sentences = [
-        "O'zbekiston — go'zal shahar va chiroyli tog'lar yurti.",
-        "Yangi alifboda o'qish va to'g'ri yozish yanada oson.",
-        "Barcha matn va hujjatlar bir zumda yangi shaklda."
-      ];
-
-      var digraphs = {
-        "O'": { res: "Ö", badge: "O + '  →  Ö avtomatik ögirdi" },
-        "o'": { res: "ö", badge: "o + '  →  ö avtomatik ögirdi" },
-        "G'": { res: "Ğ", badge: "G + '  →  Ğ avtomatik ögirdi" },
-        "g'": { res: "ğ", badge: "g + '  →  ğ avtomatik ögirdi" },
-        "Sh": { res: "Ş", badge: "S + h  →  Ş avtomatik ögirdi" },
-        "sh": { res: "ş", badge: "s + h  →  ş avtomatik ögirdi" },
-        "Ch": { res: "Ç", badge: "C + h  →  Ç avtomatik ögirdi" },
-        "ch": { res: "ç", badge: "c + h  →  ç avtomatik ögirdi" }
-      };
-
-      function buildFrames(sentence) {
-        var frames = [];
-        var display = "";
-        var i = 0;
-        while (i < sentence.length) {
-          var ch = sentence[i];
-          var nxt = i + 1 < sentence.length ? sentence[i + 1] : "";
-          var pair = ch + nxt;
-          if (digraphs[pair]) {
-            var info = digraphs[pair];
-            var firstKeys = (ch >= "A" && ch <= "Z") ? ["Shift", ch] : [ch.toUpperCase()];
-            frames.push({ text: display + ch, keys: firstKeys, badge: null, delay: 115 });
-            display += info.res;
-            frames.push({ text: display, keys: [nxt.toUpperCase()], badge: info.badge, delay: 360 });
-            i += 2;
-          } else {
-            display += ch;
-            var k = [];
-            if (ch === " ") k = ["SPACE"];
-            else if (ch === "," || ch === ".") k = [ch];
-            else if (ch === "—") k = ["-"];
-            else if (ch >= "A" && ch <= "Z") k = ["Shift", ch];
-            else k = [ch.toUpperCase()];
-            frames.push({ text: display, keys: k, badge: null, delay: ch === " " ? 70 : 92 });
-            i += 1;
-          }
-        }
-        return frames;
-      }
-
-      var allFrames = sentences.map(buildFrames);
-      var sIdx = 0, fIdx = 0, timer = null, paused = false;
-
-      function formatTypedHtml(txt) {
-        return txt
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/([ÖöĞğŞşÇç])/g, '<span class="alif-hero-newchar">$1</span>');
-      }
-
-      function highlightKeys(keys, isTransform) {
-        var kbd = document.getElementById("alifHeroKbd");
-        if (!kbd) return;
-        var all = kbd.querySelectorAll(".alif-key");
-        for (var i = 0; i < all.length; i++) {
-          all[i].classList.remove("is-pressed", "is-transform-key");
-        }
-        for (var j = 0; j < keys.length; j++) {
-          var el = kbd.querySelector('.alif-key[data-key="' + keys[j] + '"]');
-          if (el) {
-            el.classList.add("is-pressed");
-            if (isTransform) el.classList.add("is-transform-key");
-          }
-        }
-      }
-
-      function stepDemo() {
-        if (paused) return;
-        var elTyped = document.getElementById("alifHeroTyped");
-        var elBadge = document.getElementById("alifHeroTransformBadge");
-        if (!elTyped || !elBadge) return;
-
-        var frames = allFrames[sIdx];
-        var fr = frames[fIdx];
-
-        elTyped.innerHTML = formatTypedHtml(fr.text);
-        highlightKeys(fr.keys, Boolean(fr.badge));
-
-        if (fr.badge) {
-          elBadge.textContent = "✓ " + fr.badge;
-          elBadge.classList.add("is-active");
-        } else if (fIdx === 0) {
-          elBadge.textContent = "Oddiy klaviaturada yozilmoqda...";
-          elBadge.classList.remove("is-active");
-        }
-
-        fIdx++;
-        if (fIdx < frames.length) {
-          timer = setTimeout(stepDemo, fr.delay);
-        } else {
-          setTimeout(function() { highlightKeys([], false); }, 350);
-          fIdx = 0;
-          sIdx = (sIdx + 1) % allFrames.length;
-          timer = setTimeout(stepDemo, 1900);
-        }
-      }
-
-      window.toggleAlifHeroDemo = function() {
-        paused = !paused;
-        var btn = document.getElementById("alifHeroToggleBtn");
-        var txt = document.getElementById("alifHeroToggleText");
-        if (btn) btn.classList.toggle("is-paused", paused);
-        if (txt) txt.textContent = paused ? "Pauza" : "Jonli";
-        if (!paused) stepDemo();
-        else clearTimeout(timer);
-      };
-
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", stepDemo);
-      } else {
-        stepDemo();
-      }
-    })();
-  </script>
+    
 <script src="web/smart-engine.js"></script>
   <script src="web/vendor/jszip.min.js"></script>
   <script src="web/converter.js"></script>
+  <script src="web/converter-ui.js"></script>
     
   <script type="module">
     import * as pdfjsLib from './web/vendor/pdf.min.mjs';
@@ -663,8 +541,6 @@
     window.pdfjsLib = pdfjsLib;
   </script>
   
-  <script src="web/trainer.js?v=1"></script>
-  <script src="web/docs-generator.js?v=3"></script>
   <div id="alifGuideModal" class="alif-guide-backdrop" hidden onclick="if(event.target===this)closeAlifMacGuide()">
     <div class="alif-guide-dialog">
       <div class="alif-guide-head">
