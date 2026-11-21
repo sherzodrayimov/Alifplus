@@ -101,6 +101,9 @@
     if (low.length < 2 || !hasPattern(low)) {
       return { input: rawWord, output: rawWord, convert: false, stage: 'naqsh', reason: "O'zgartiriladigan naqsh (sh, ch, o', g') yo'q." };
     }
+    if (isProtectedUzbek(low)) {
+      return { input: rawWord, output: pre + convertWordRaw(restoredCore) + post, convert: true, stage: 'himoya', reason: "Asosiy o'zbekcha so'z qoidaga muvofiq o'girildi." };
+    }
     if (isForeignWord(low)) {
       return { input: rawWord, output: rawWord, convert: false, stage: 'filtr', reason: "Xorijiy / o'zgarmas so'zlar kutubxonasida topildi — tegilmadi." };
     }
