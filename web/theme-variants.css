@@ -927,3 +927,246 @@ button:disabled {
   height: 100%;
   background: var(--coral);
 }
+
+/* ── SMART DOCUMENT BUILDER & KATEGORIYALAR ── */
+.alif-doc-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.alif-doc-cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.alif-doc-cat-btn {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+.alif-doc-cat-btn:hover {
+  border-color: var(--indigo);
+}
+.alif-doc-cat-btn.is-active {
+  background: var(--indigo);
+  border-color: var(--indigo);
+  color: #ffffff;
+}
+.alif-doc-search {
+  max-width: 340px;
+  width: 100%;
+}
+.alif-doc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 16px;
+}
+.alif-doc-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  border-radius: 16px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.alif-doc-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--indigo);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+.alif-doc-card.is-selected {
+  border-color: var(--indigo);
+  background: var(--surface-2);
+}
+.alif-doc-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.alif-doc-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--indigo-soft);
+  color: var(--indigo);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.alif-doc-active-dot {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--teal);
+}
+.alif-doc-card-title {
+  margin: 0;
+  font-size: 18px;
+}
+.alif-doc-card-desc {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--text);
+}
+.alif-doc-card-sit {
+  font-size: 12.8px;
+  line-height: 1.48;
+  padding: 9px 11px;
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--muted);
+}
+.alif-doc-card-req {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.alif-doc-req-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 6px;
+}
+.alif-doc-req-tag {
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 11.5px;
+  color: var(--text);
+}
+.alif-doc-open-btn {
+  margin-top: auto;
+  width: 100%;
+  justify-content: center;
+}
+.alif-doc-empty {
+  grid-column: 1 / -1;
+  padding: 28px;
+  text-align: center;
+  border-radius: 14px;
+  border: 1px dashed var(--border);
+  color: var(--muted);
+}
+
+/* Builder Layout */
+.alif-builder-shell {
+  padding: 22px;
+}
+.alif-builder-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 18px;
+}
+.alif-builder-script-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.alif-builder-grid {
+  display: grid;
+  grid-template-columns: minmax(290px, 1fr) minmax(320px, 1.15fr);
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .alif-builder-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.alif-builder-form-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.alif-builder-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.alif-b-field label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+.alif-b-field input,
+.alif-b-field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13.5px;
+  box-sizing: border-box;
+}
+.alif-b-field input:focus,
+.alif-b-field textarea:focus {
+  outline: none;
+  border-color: var(--indigo);
+  background: var(--surface);
+}
+.alif-builder-export-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.alif-doc-paper {
+  padding: 34px 36px;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+  font-family: "Times New Roman", Georgia, serif;
+  font-size: 15px;
+  line-height: 1.65;
+  min-height: 440px;
+}
+.alif-paper-right {
+  margin-left: auto;
+  width: 56%;
+  margin-bottom: 22px;
+  font-size: 14.5px;
+}
+.alif-paper-title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 16.5px;
+  letter-spacing: 0.4px;
+  margin: 14px 0 18px;
+}
+.alif-paper-p {
+  margin: 0 0 12px;
+  text-indent: 26px;
+  text-align: justify;
+}
+.alif-paper-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 32px;
+  font-size: 14.5px;
+}

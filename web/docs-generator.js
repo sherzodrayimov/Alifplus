@@ -1,212 +1,949 @@
 (function () {
-  var docType = "tilxat", scriptMode = "yangi";
-  var DOCS_META = {
-    tilxat: { title: "Tilxat Yoziş", sub: "Qarz tilxatini töldiring — summa avtomatik söz bilan yoziladi, hujjat 3 xil yozuvda tayyor.", note: "Imzo har doim qölda qöyiladi. Böş maydonlar çiziq bölib çiqadi." },
-    ishdan: { title: "İşdan Böşaş Arizasi", sub: "Arizani töldiring — oxirgi iş kuni MK 160-moddasi böyiça özi hisoblanadi.", note: "Imzo har doim qölda qöyiladi. Arizani ikki nusxada tayyorlang." },
-    tatil: { title: "Ta’til Arizasi", sub: "Mehnat ta’tili arizasini töldiring — tugaş sanasi özi hisoblanadi.", note: "Imzo har doim qölda qöyiladi. Yillik ta’til kamida 21 kalendar kun." },
-    tushuntirish: { title: "Tuşuntiriş Xati", sub: "İş joyiga beriladigan tuşuntiriş xatini töldiring — yakuniy jumlani özingiz tanlaysiz.", note: "Imzo har doim qölda qöyiladi. Xatni ikki nusxada tayyorlang." },
-    tavsifnoma: { title: "Tavsifnoma Yoziş", sub: "Xodim yoki talaba/öquvçi uçun rasmiy tavsifnoma — 3 xil yozuvda tayyor.", note: "Tavsifnoma taşkilot blankasida çop etiladi, rahbar imzosi va muhr bilan tasdiqlanadi." },
-    buyruq: { title: "Buyruq Çiqariş", sub: "Taşkilot rahbarining rasmiy buyruği — bandlar, asos va tanışiş imzosi bilan.", note: "Buyruq rahbar tomonidan imzolanib muhrlanadi va xodimga imzo qöydirib tanıştıriladi." }
-  };
-  var SAMPLES = {
-    tilxat: { bName:"Aliyev Vali Salimovich",bPass:"AB 1234567",bPin:"30412900123456",bAddr:"Toshkent shahri, Chilonzor tumani, 12-mavze, 4-uy",lName:"Karimov Anvar Alisherovich",lPass:"AD 7654321",lPin:"31205880543210",lAddr:"Toshkent shahri, Yunusobod tumani, 7-mavze, 18-uy",amount:"5 000 000",method:"naqd pul ko'rinishida",givenDate:"2026-11-20",dueDate:"2027-02-20",city:"Toshkent shahri",interestFree:true,w1:"",w2:"" },
-    ishdan: { org:"«Alifplus» MChJ",bossRole:"direktori",bossName:"Aliyev Anvar Alisherovich",empName:"Salimov Olim Qobiljonovich",empRole:"dasturchi",cat:"14",appDate:"2026-11-20",reason:"o'qishga kirganim sababli" },
-    tatil: { org:"«Alifplus» MChJ",bossRole:"direktori",bossName:"Aliyev Anvar Alisherovich",empName:"Salimov Olim Qobiljonovich",empRole:"dasturchi",leaveType:"navbatdagi yillik mehnat ta'tilini",startDate:"2026-12-01",days:"21",appDate:"2026-11-20" },
-    tushuntirish: { org:"«Alifplus» MChJ",bossRole:"direktori",bossName:"Aliyev Anvar Alisherovich",empName:"Salimov Olim Qobiljonovich",empRole:"dasturchi",incidentDate:"2026-11-20",appDate:"2026-11-20",what:"ish kunining boshlanishiga 40 daqiqa kechikib kelganim",why:"O'sha kuni ertalab yo'lda tirbandlik yuz berdi va jamoat transporti to'xtab qoldi.",ending:"Holat yuz berganini tan olaman, biroq u yuqorida ko'rsatilgan uzrli sabab tufayli sodir bo'ldi. Shuni inobatga olishingizni so'rayman." },
-    tavsifnoma: { org:"Jahon iqtisodiyoti va diplomatiya universiteti",role:"2-kurs talabasi",fullName:"Salimov Olim Qobiljonovich",shortName:"O.Q.Salimov",birthDate:"2006-05-14",birthPlace:"Qashqadaryo viloyati, Shahrisabz tumani",nation:"o'zbek",isStudent:true,eduLevel:"oliy",gradYear:"",uniName:"",spec:"",since:"2025-yil sentabr oyi",traits:"mas'uliyatli, intizomli, tashabbuskor va tirishqoq",achievements:"Xalqaro munozara klubini tashkil etdi, dasturlash va tilshunoslik loyihalarida faol qatnashib kelmoqda.",family:"Oilali emas.",target:"so'ralgan joyga",bossRole:"Fakultet dekani",bossName:"Karimov B.T.",docDate:"2026-11-20" },
-    buyruq: { org:"«Alifplus» MAS'ULIYATI CHEKLANGAN JAMIYATI",docDate:"2026-11-20",num:"48-K",city:"Toshkent shahri",subject:"Ishga qabul qilish to'g'risida",basisClause:"Ishlab chiqarish zaruriyati munosabati bilan hamda O'zbekiston Respublikasi Mehnat kodeksining 104-moddasiga muvofiq",p1:"Salimov Olim Qobiljonovich 2026-yil 23-noyabrdan boshlab dasturchi lavozimiga 3 oylik sinov muddati bilan ishga qabul qilinsin.",p2:"Buxgalteriya bo'limi (M.Sobirova) shtat jadvaliga muvofiq oylik ish haqi to'lovlarini amalga oshirsin.",control:"kadrlar bo'limi boshlig'i D.Karimova zimmasiga yuklatilsin",reasonDoc:"O.Salimovning 2026-yil 20-noyabrdagi arizasi va mehnat shartnomasi",bossRole:"Direktor",bossName:"A.A. Aliyev",empName:"O.Q.Salimov" }
-  };
-  var state = { tilxat:{}, ishdan:{}, tatil:{}, tushuntirish:{}, tavsifnoma:{}, buyruq:{} };
-  function toYangi(s){return String(s||"").replace(/([Oo])['ʻ’‘ʼ`]/g,function(_,c){return c==="O"?"Ö":"ö"}).replace(/([Gg])['ʻ’‘ʼ`]/g,function(_,c){return c==="G"?"Ğ":"ğ"}).replace(/S[Hh]/g,"Ş").replace(/sh/g,"ş").replace(/C[Hh]/g,"Ç").replace(/ch/g,"ç")}
-  function toEski(s){return String(s||"").replace(/Ö/g,"O‘").replace(/ö/g,"o‘").replace(/Ğ/g,"G‘").replace(/ğ/g,"g‘").replace(/Ş/g,"Sh").replace(/ş/g,"sh").replace(/Ç/g,"Ch").replace(/ç/g,"ch")}
-  function toKirill(s){var t=toEski(s).replace(/O‘/g,"Ў").replace(/o‘/g,"ў").replace(/G‘/g,"Ғ").replace(/g‘/g,"ғ").replace(/Sh/g,"Ш").replace(/SH/g,"Ш").replace(/sh/g,"ш").replace(/Ch/g,"Ч").replace(/CH/g,"Ч").replace(/ch/g,"ч").replace(/Yo/g,"Ё").replace(/YO/g,"Ё").replace(/yo/g,"ё").replace(/Yu/g,"Ю").replace(/YU/g,"Ю").replace(/yu/g,"ю").replace(/Ya/g,"Я").replace(/YA/g,"Я").replace(/ya/g,"я").replace(/(^|[\s("«])Ye/g,"$1Е").replace(/(^|[\s("«])ye/g,"$1е").replace(/(^|[\s("«])E/g,"$1Э").replace(/(^|[\s("«])e/g,"$1э");var m={A:"А",a:"а",B:"Б",b:"б",D:"Д",d:"д",E:"Е",e:"е",F:"Ф",f:"ф",G:"Г",g:"г",H:"Ҳ",h:"ҳ",I:"И",i:"и",J:"Ж",j:"ж",K:"К",k:"к",L:"Л",l:"л",M:"М",m:"м",N:"Н",n:"н",O:"О",o:"о",P:"П",p:"п",Q:"Қ",q:"қ",R:"Р",r:"р",S:"С",s:"с",T:"Т",t:"т",U:"У",u:"у",V:"В",v:"в",X:"Х",x:"х",Y:"Й",y:"й",Z:"З",z:"з","’":"ъ","'":"ъ"};return t.replace(/[A-Za-z’']/g,function(c){return m[c]!==undefined?m[c]:c})}
-  function tr(s){return scriptMode==="kirill"?toKirill(s):(scriptMode==="eski"?toEski(s):toYangi(s))}
-  function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
-  function blank(v,w){v=(v||"").trim();return v?"<strong>"+esc(tr(v))+"</strong>":'<span class="alif-doc-blank" style="min-width:'+(w||115)+'px"></span>'}
-  function fmtDateUz(iso){if(!iso)return"";var p=iso.split("-");if(p.length!==3)return iso;var m=["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentabr","oktabr","noyabr","dekabr"];return p[0]+"-yil "+parseInt(p[2],10)+"-"+(m[parseInt(p[1],10)-1]||p[1])}
-  function addDays(iso,d){if(!iso)return"";var x=new Date(iso+"T00:00:00");if(isNaN(x.getTime()))return"";x.setDate(x.getDate()+(parseInt(d,10)||0));return x.toISOString().slice(0,10)}
-  function numToUzWords(ns){var n=parseInt(String(ns||"").replace(/\D/g,""),10);if(!n||n<=0)return"";if(n>999999999999)return String(n);var o=["","bir","ikki","uch","to'rt","besh","olti","yetti","sakkiz","to'qqiz"],t=["","o'n","yigirma","o'ttiz","qirq","ellik","oltmish","yetmish","sakson","to'qson"],sc=["","ming","million","milliard"],pt=[],ix=0;while(n>0){var r=n%1000;if(r>0){var a=[],h=Math.floor(r/100),tn=Math.floor((r%100)/10),on=r%10;if(h)a.push(o[h]+" yuz");if(tn)a.push(t[tn]);if(on)a.push(o[on]);pt.unshift(sc[ix]?(a.join(" ")+" "+sc[ix]):a.join(" "))}n=Math.floor(n/1000);ix++}return pt.join(" ")}
-  function renderForm() {
-    var box = document.getElementById("alifDocFormBody"); if (!box) return;
-    var s = state[docType];
-    if (docType === "tilxat") {
-      box.innerHTML = '<div class="alif-doc-group-title">Qarz oluvchi</div><div class="alif-doc-field"><label>F.I.Ş.</label><input data-k="bName" value="'+esc(s.bName)+'"></div><div class="alif-doc-row2"><div class="alif-doc-field"><label>Pasport</label><input data-k="bPass" value="'+esc(s.bPass)+'"></div><div class="alif-doc-field"><label>JŞŞIR</label><input data-k="bPin" value="'+esc(s.bPin)+'"></div></div><div class="alif-doc-field"><label>Manzil</label><input data-k="bAddr" value="'+esc(s.bAddr)+'"></div><div class="alif-doc-group-title">Qarz beruvçi</div><div class="alif-doc-field"><label>F.I.Ş.</label><input data-k="lName" value="'+esc(s.lName)+'"></div><div class="alif-doc-row2"><div class="alif-doc-field"><label>Pasport</label><input data-k="lPass" value="'+esc(s.lPass)+'"></div><div class="alif-doc-field"><label>JŞŞIR</label><input data-k="lPin" value="'+esc(s.lPin)+'"></div></div><div class="alif-doc-field"><label>Manzil</label><input data-k="lAddr" value="'+esc(s.lAddr)+'"></div><div class="alif-doc-group-title">Qarz şartlari</div><div class="alif-doc-field"><label>Summa (sömda)</label><input data-k="amount" value="'+esc(s.amount)+'"></div><div class="alif-doc-field"><label>Beriliş usuli</label><select data-k="method"><option value="naqd pul ko\'rinishida"'+(s.method!=="bank kartasiga o'tkazish yo'li bilan"?" selected":"")+'>Naqd pul bilan</option><option value="bank kartasiga o\'tkazish yo\'li bilan"'+(s.method==="bank kartasiga o'tkazish yo'li bilan"?" selected":"")+'>Bank kartasiga ötkaziş</option></select></div><div class="alif-doc-row2"><div class="alif-doc-field"><label>Berilgan sana</label><input type="date" data-k="givenDate" value="'+esc(s.givenDate)+'"></div><div class="alif-doc-field"><label>Qaytariş muddati</label><input type="date" data-k="dueDate" value="'+esc(s.dueDate)+'"></div></div><div class="alif-doc-field"><label>Şahar</label><input data-k="city" value="'+esc(s.city)+'"></div><label class="alif-doc-check"><input type="checkbox" data-k="interestFree"'+(s.interestFree!==false?" checked":"")+'> Qarz foizsiz berildi</label><div class="alif-doc-row2"><div class="alif-doc-field"><label>1-guvoh</label><input data-k="w1" value="'+esc(s.w1)+'"></div><div class="alif-doc-field"><label>2-guvoh</label><input data-k="w2" value="'+esc(s.w2)+'"></div></div>';
-    } else if (docType === "ishdan") {
-      var ld = s.appDate ? addDays(s.appDate, parseInt(s.cat || "14", 10)) : "";
-      box.innerHTML = '<div class="alif-doc-group-title">Kimga</div><div class="alif-doc-field"><label>Taşkilot</label><input data-k="org" value="'+esc(s.org)+'"></div><div class="alif-doc-row2"><div class="alif-doc-field"><label>Rahbar lavozimi</label><input data-k="bossRole" value="'+esc(s.bossRole)+'"></div><div class="alif-doc-field"><label>Rahbar F.I.Ş.</label><input data-k="bossName" value="'+esc(s.bossName)+'"></div></div><div class="alif-doc-group-title">Kimdan</div><div class="alif-doc-field"><label>F.I.Ş.</label><input data-k="empName" value="'+esc(s.empName)+'"></div><div class="alif-doc-field"><label>Lavozim</label><input data-k="empRole" value="'+esc(s.empRole)+'"></div><div class="alif-doc-field"><label>Toifa</label><select data-k="cat"><option value="14"'+((s.cat||"14")==="14"?" selected":"")+'>Oddiy xodim — 14 kun</option><option value="3"'+(s.cat==="3"?" selected":"")+'>Sinov muddati — 3 kun</option><option value="30"'+(s.cat==="30"?" selected":"")+'>Rahbar / buxgalter — 30 kun</option></select></div><div class="alif-doc-row2"><div class="alif-doc-field"><label>Ariza sanasi</label><input type="date" data-k="appDate" value="'+esc(s.appDate)+'"></div><div class="alif-doc-field"><label>Oxirgi iş kuni</label><input type="date" value="'+esc(ld)+'" readonly></div></div><div class="alif-doc-field"><label>Sabab (ixtiyoriy)</label><input data-k="reason" value="'+esc(s.reason)+'"></div>';
-    } else if (docType === "tatil") {
-      var ed = (s.startDate && s.days) ? addDays(s.startDate, Math.max(0, (parseInt(s.days, 10) || 21) - 1)) : "";
-      box.innerHTML = '<div class="alif-doc-group-title">Kimga</div><div class="alif-doc-field"><label>Taşkilot</label><input data-k="org" value="'+esc(s.org)+'"></div><div class="alif-doc-row2"><div class="alif-doc-field"><label>Rahbar lavozimi</label><input data-k="bossRole" value="'+esc(s.bossRole)+'"></div><div class="alif-doc-field"><label>Rahbar F.I.Ş.</label><input data-k="bossName" value="'+esc(s.bossName)+'"></div></div><div class="alif-doc-group-title">Kimdan</div><div class="alif-doc-field"><label>F.I.Ş.</label><input data-k="empName" value="'+esc(s.empName)+'"></div><div class="alif-doc-field"><label>Lavozim</label><input data-k="empRole" value="'+esc(s.empRole)+'"></div><div class="alif-doc-field"><label>Ta’til turi</label><select data-k="leaveType"><option value="navbatdagi yillik mehnat ta\'tilini"'+(String(s.leaveType||"").indexOf("ish haqi")===-1?" selected":"")+'>Yillik mehnat ta’tili</option><option value="ish haqi saqlanmagan holdagi ta\'tilni"'+(String(s.leaveType||"").indexOf("ish haqi")!==-1?" selected":"")+'>Öz hisobidan ta’til</option></select></div><div class="alif-doc-row2"><div class="alif-doc-field"><label>Boşlaniş sanasi</label><input type="date" data-k="startDate" value="'+esc(s.startDate)+'"></div><div class="alif-doc-field"><label>Kun soni</label><input type="number" min="1" max="60" data-k="days" value="'+esc(s.days||"21")+'"></div></div>'+(ed?'<div class="alif-doc-field"><small>Tugaş sanasi: <strong>'+fmtDateUz(ed)+'</strong></small></div>':'')+'<div class="alif-doc-field"><label>Ariza sanasi</label><input type="date" data-k="appDate" value="'+esc(s.appDate)+'"></div>';
-    } else if (docType === "tushuntirish") {
-      box.innerHTML = '<div class="alif-doc-group-title">Kimga</div><div class="alif-doc-field"><label>Taşkilot</label><input data-k="org" value="'+esc(s.org)+'"></div><div class="alif-doc-row2"><div class="alif-doc-field"><label>Rahbar lavozimi</label><input data-k="bossRole" value="'+esc(s.bossRole)+'"></div><div class="alif-doc-field"><label>Rahbar F.I.Ş.</label><input data-k="bossName" value="'+esc(s.bossName)+'"></div></div><div class="alif-doc-group-title">Kimdan</div><div class="alif-doc-field"><label>F.I.Ş.</label><input data-k="empName" value="'+esc(s.empName)+'"></div><div class="alif-doc-field"><label>Lavozim</label><input data-k="empRole" value="'+esc(s.empRole)+'"></div><div class="alif-doc-row2"><div class="alif-doc-field"><label>Holat sanasi</label><input type="date" data-k="incidentDate" value="'+esc(s.incidentDate)+'"></div><div class="alif-doc-field"><label>Xat sanasi</label><input type="date" data-k="appDate" value="'+esc(s.appDate)+'"></div></div><div class="alif-doc-field"><label>Nima yuz berdi</label><input data-k="what" value="'+esc(s.what)+'"></div><div class="alif-doc-field"><label>Izoh</label><textarea data-k="why">'+esc(s.why)+'</textarea></div><div class="alif-doc-field"><label>Yakuniy jumla</label><select data-k="ending"><option value="Holat yuz berganini tan olaman, biroq u yuqorida ko\'rsatilgan uzrli sabab tufayli sodir bo\'ldi. Shuni inobatga olishingizni so\'rayman.">Holatni tan olaman, uzrli sabab bölgan</option><option value="Holat yuz berganini tan olaman va kelgusida bunday holatga yo\'l qo\'ymaslikka va\'da beraman.">Holatni tan olaman, takrorlamayman</option><option value="Mazkur holat mening aybim bilan sodir bo\'lmaganligini ma\'lum qilaman va buni inobatga olishingizni so\'rayman.">Mening aybim bilan sodir bölmagan</option></select></div>';
-    } else if (docType === "tavsifnoma") {
-      box.innerHTML = '<div class="alif-doc-group-title">Muassasa va Şaxs</div><div class="alif-doc-field"><label>Taşkilot / öquv muassasasi nomi</label><input data-k="org" value="'+esc(s.org)+'"></div><div class="alif-doc-row2"><div class="alif-doc-field"><label>Lavozimi / guruhi / sinfi</label><input data-k="role" value="'+esc(s.role)+'"></div><div class="alif-doc-field"><label>Qisqa ism-şarifi (A.B. Karimov)</label><input data-k="shortName" value="'+esc(s.shortName)+'"></div></div><div class="alif-doc-field"><label>F.I.Ş. (töliq)</label><input data-k="fullName" value="'+esc(s.fullName)+'"></div><div class="alif-doc-row2"><div class="alif-doc-field"><label>Tuğilgan sanasi</label><input type="date" data-k="birthDate" value="'+esc(s.birthDate)+'"></div><div class="alif-doc-field"><label>Millati</label><input data-k="nation" value="'+esc(s.nation)+'" placeholder="özbek"></div></div><div class="alif-doc-field"><label>Tuğilgan joyi</label><input data-k="birthPlace" value="'+esc(s.birthPlace)+'"></div><label class="alif-doc-check"><input type="checkbox" data-k="isStudent"'+(s.isStudent?" checked":"")+'> Talaba / öquvçi (tamomlagan OTM qatori yopiladi)</label>' +
-        (!s.isStudent ? ('<div class="alif-doc-row2"><div class="alif-doc-field"><label>Ma’lumoti</label><select data-k="eduLevel"><option value="oliy">Oliy</option><option value="o\'rta maxsus">Örta maxsus</option><option value="o\'rta">Örta</option></select></div><div class="alif-doc-field"><label>Bitirgan yili</label><input data-k="gradYear" value="'+esc(s.gradYear)+'" placeholder="2024"></div></div><div class="alif-doc-row2"><div class="alif-doc-field"><label>Öquv yurti nomi</label><input data-k="uniName" value="'+esc(s.uniName)+'"></div><div class="alif-doc-field"><label>Mutaxassisligi</label><input data-k="spec" value="'+esc(s.spec)+'"></div></div>') : '') +
-        '<div class="alif-doc-group-title">Faoliyat va Fazilatlar</div><div class="alif-doc-field"><label>Qaçondan buyon faoliyat yuritadi / öqiydi</label><input data-k="since" value="'+esc(s.since)+'" placeholder="2025-yil sentabr oyi"></div><div class="alif-doc-field"><label>Şaxsiy fazilatlari</label><input data-k="traits" value="'+esc(s.traits)+'"></div><div class="alif-doc-field"><label>Yutuqlari, loyihalari va natijalari</label><textarea data-k="achievements">'+esc(s.achievements)+'</textarea></div><div class="alif-doc-row2"><div class="alif-doc-field"><label>Oilaviy holati</label><input data-k="family" value="'+esc(s.family)+'" placeholder="Oilali emas"></div><div class="alif-doc-field"><label>Qayerga taqdim etiladi</label><input data-k="target" value="'+esc(s.target)+'" placeholder="söralgan joyga"></div></div><div class="alif-doc-row2"><div class="alif-doc-field"><label>Rahbar lavozimi</label><input data-k="bossRole" value="'+esc(s.bossRole)+'"></div><div class="alif-doc-field"><label>Rahbar F.I.Ş.</label><input data-k="bossName" value="'+esc(s.bossName)+'"></div></div><div class="alif-doc-field"><label>Sana</label><input type="date" data-k="docDate" value="'+esc(s.docDate)+'"></div>';
-    } else {
-      box.innerHTML = '<div class="alif-doc-group-title">Buyruq rekvizitlari</div><div class="alif-doc-field"><label>Taşkilot yoki muassasa nomi</label><input data-k="org" value="'+esc(s.org)+'"></div><div class="alif-doc-row2"><div class="alif-doc-field"><label>Buyruq sanasi</label><input type="date" data-k="docDate" value="'+esc(s.docDate)+'"></div><div class="alif-doc-field"><label>Buyruq raqami (№)</label><input data-k="num" value="'+esc(s.num)+'" placeholder="48-K"></div></div><div class="alif-doc-field"><label>Şahar / tuman nomi</label><input data-k="city" value="'+esc(s.city)+'"></div><div class="alif-doc-field"><label>Qisqaça mazmuni (sarlavha)</label><input data-k="subject" value="'+esc(s.subject)+'" placeholder="İşga qabul qiliş töğrisida"></div><div class="alif-doc-field"><label>Buyruq çiqarişga asos bölgan sabab / modda</label><textarea data-k="basisClause">'+esc(s.basisClause)+'</textarea></div><div class="alif-doc-group-title">BUYURAMAN bandlari</div><div class="alif-doc-field"><label>1-band (asosiy qaror)</label><textarea data-k="p1">'+esc(s.p1)+'</textarea></div><div class="alif-doc-field"><label>2-band (buxgalteriya / kadrlar)</label><textarea data-k="p2">'+esc(s.p2)+'</textarea></div><div class="alif-doc-field"><label>3-band (ijro nazorati kimning zimmasida)</label><input data-k="control" value="'+esc(s.control)+'"></div><div class="alif-doc-field"><label>Asos (hujjat nomi va sanasi)</label><input data-k="reasonDoc" value="'+esc(s.reasonDoc)+'"></div><div class="alif-doc-row2"><div class="alif-doc-field"><label>Rahbar lavozimi</label><input data-k="bossRole" value="'+esc(s.bossRole)+'"></div><div class="alif-doc-field"><label>Rahbar F.I.Ş.</label><input data-k="bossName" value="'+esc(s.bossName)+'"></div></div><div class="alif-doc-field"><label>Tanışgan xodim F.I.Ş.</label><input data-k="empName" value="'+esc(s.empName)+'"></div>';
-    }
-    box.querySelectorAll("[data-k]").forEach(function (el) {
-      var k = el.getAttribute("data-k");
-      var fn = function () { state[docType][k] = el.type === "checkbox" ? el.checked : el.value; if ((docType==="ishdan"&&(k==="appDate"||k==="cat"))||(docType==="tatil"&&(k==="startDate"||k==="days"))||(docType==="tavsifnoma"&&k==="isStudent")) renderForm(); renderPaper(); };
-      el.addEventListener("input", fn); el.addEventListener("change", fn);
-    });
-  }
-  function renderPaper() {
-    var paper = document.getElementById("alifDocPaper"); if (!paper) return;
-    var s = state[docType];
-    if (docType === "tilxat") {
-      var ca = String(s.amount || "").replace(/\D/g, ""), fa = ca ? ca.replace(/\B(?=(\d{3})+(?!\d))/g, " ") : "", wa = numToUzWords(ca);
-      var bp = (s.bPin||"").trim() ? (", "+tr("JSHSHIR")+" "+esc(s.bPin.trim())) : "";
-      var lp = (s.lPin||"").trim() ? (", "+tr("JSHSHIR")+" "+esc(s.lPin.trim())) : "";
-      var ic = (s.interestFree !== false) ? (" " + esc(tr("Qarz foizsiz berildi."))) : "";
-      var wh = ((s.w1||"").trim()||(s.w2||"").trim()) ? ('<p class="no-indent" style="margin-top:16px;">'+esc(tr("Guvohlar:"))+"<br>"+((s.w1||"").trim()?("1. "+esc(tr(s.w1))+" — ________________<br>"):"")+((s.w2||"").trim()?("2. "+esc(tr(s.w2))+" — ________________"):"")+"</p>") : "";
-      paper.innerHTML = '<div class="alif-doc-paper-title">'+esc(tr("TILXAT"))+'</div><p>'+esc(tr("Men,"))+' '+blank(s.bName,160)+', '+esc(tr("pasport"))+' '+blank(s.bPass,90)+bp+', '+blank(s.bAddr,170)+' '+esc(tr("manzilida yashovchi,"))+' '+blank(s.lName,160)+' ('+esc(tr("pasport"))+' '+blank(s.lPass,90)+lp+', '+blank(s.lAddr,170)+' '+esc(tr("manzilida yashovchi"))+')'+esc(tr("dan"))+' '+blank(fmtDateUz(s.givenDate),110)+' '+esc(tr("kuni"))+' '+esc(tr(s.method||"naqd pul ko'rinishida"))+' '+blank(fa,90)+' ('+blank(wa,140)+') '+esc(tr("so'm miqdorida pul mablag'ini qarzga oldim."))+'</p><p>'+esc(tr("Mazkur summani"))+' '+blank(fmtDateUz(s.dueDate),115)+esc(tr("gacha to'liq qaytarib berish majburiyatini o'z zimmamga olaman."))+ic+'</p><p class="no-indent" style="margin-top:20px;">'+blank(s.city,120)+', '+blank(fmtDateUz(s.givenDate),110)+'</p><p class="no-indent" style="margin-top:22px;">'+esc(tr("Qarz oluvchi:"))+' <span class="alif-doc-blank" style="min-width:120px"></span> '+blank(s.bName,140)+'</p>'+wh;
-    } else if (docType === "ishdan") {
-      var ld = s.appDate ? addDays(s.appDate, parseInt(s.cat || "14", 10)) : "";
-      var rp = (s.reason||"").trim() ? (" ("+esc(tr(s.reason.trim()))+")") : "";
-      paper.innerHTML = '<div class="alif-doc-paper-addr">'+blank(s.org,115)+' <strong>'+esc(tr(s.bossRole||"direktori"))+'</strong><br>'+blank(s.bossName,135)+esc(tr("ga"))+'<br>'+blank(s.empRole,90)+' '+blank(s.empName,115)+esc(tr("dan"))+'</div><div class="alif-doc-paper-title">'+esc(tr("ARIZA"))+'</div><p>'+esc(tr("Meni o'z xohishimga ko'ra egallab turgan"))+' '+blank(s.empRole,125)+' '+esc(tr("lavozimidan"))+' '+blank(fmtDateUz(ld),110)+' '+esc(tr("kunidan ozod qilishingizni so'rayman"))+rp+'.</p><p>'+esc(tr("Asos: O'zbekiston Respublikasi Mehnat kodeksining 160-moddasi."))+'</p><div class="alif-doc-sign-row"><span>'+blank(fmtDateUz(s.appDate),110)+'</span><span><span class="alif-doc-blank" style="min-width:95px"></span> '+blank(s.empName,135)+'</span></div>';
-    } else if (docType === "tatil") {
-      paper.innerHTML = '<div class="alif-doc-paper-addr">'+blank(s.org,115)+' <strong>'+esc(tr(s.bossRole||"direktori"))+'</strong><br>'+blank(s.bossName,135)+esc(tr("ga"))+'<br>'+blank(s.empRole,90)+' '+blank(s.empName,115)+esc(tr("dan"))+'</div><div class="alif-doc-paper-title">'+esc(tr("ARIZA"))+'</div><p>'+esc(tr("Menga"))+' '+blank(fmtDateUz(s.startDate),110)+esc(tr("dan boshlab"))+' <strong>'+esc(s.days||"21")+'</strong> '+esc(tr("kalendar kun muddatga"))+' '+esc(tr(s.leaveType||"navbatdagi yillik mehnat ta'tilini"))+' '+esc(tr("berishingizni so'rayman."))+'</p><div class="alif-doc-sign-row"><span>'+blank(fmtDateUz(s.appDate),110)+'</span><span><span class="alif-doc-blank" style="min-width:95px"></span> '+blank(s.empName,135)+'</span></div>';
-    } else if (docType === "tushuntirish") {
-      var et = s.ending || "Holat yuz berganini tan olaman, biroq u yuqorida ko'rsatilgan uzrli sabab tufayli sodir bo'ldi. Shuni inobatga olishingizni so'rayman.";
-      var wh2 = (s.why||"").trim() ? ("<p>"+esc(tr(s.why.trim())).replace(/\n/g,"</p><p>")+"</p>") : '<p class="no-indent"><span class="alif-doc-blank" style="width:100%"></span><br><span class="alif-doc-blank" style="width:100%"></span></p>';
-      paper.innerHTML = '<div class="alif-doc-paper-addr">'+blank(s.org,115)+' <strong>'+esc(tr(s.bossRole||"direktori"))+'</strong><br>'+blank(s.bossName,135)+esc(tr("ga"))+'<br>'+blank(s.empRole,90)+' '+blank(s.empName,115)+esc(tr("dan"))+'</div><div class="alif-doc-paper-title">'+esc(tr("TUSHUNTIRISH XATI"))+'</div><p>'+esc(tr("Men,"))+' '+blank(s.empName,145)+', '+blank(fmtDateUz(s.incidentDate),105)+' '+esc(tr("kuni"))+' '+blank(s.what,160)+' '+esc(tr("yuzasidan quyidagilarni ma'lum qilaman."))+'</p>'+wh2+'<p>'+esc(tr(et))+'</p><div class="alif-doc-sign-row"><span>'+blank(fmtDateUz(s.appDate),110)+'</span><span><span class="alif-doc-blank" style="min-width:95px"></span> '+blank(s.empName,135)+'</span></div>';
-    } else if (docType === "tavsifnoma") {
-      var eduPart = s.isStudent ? "" : (" "+esc(tr("Ma'lumoti —"))+" "+blank(s.eduLevel||"oliy",75)+", "+blank(s.gradYear,55)+esc(tr("-yilda"))+" "+blank(s.uniName,140)+esc(tr("ni"))+" "+blank(s.spec,115)+" "+esc(tr("yo'nalishi bo'yicha tamomlagan.")));
-      var roleWord = s.isStudent ? "talaba (o'quvchi)" : "xodim";
-      var actWord = s.isStudent ? "o'qib kelmoqda" : "faoliyat yuritib kelmoqda";
-      var peerWord = s.isStudent ? "kursdoshlar (sinfdoshlar)" : "jamoa";
-      var achHtml = (s.achievements||"").trim() ? (" "+esc(tr(s.achievements.trim()))) : (' <span class="alif-doc-blank" style="min-width:220px"></span>.');
-      paper.innerHTML = '<div class="alif-doc-paper-title" style="margin-top:4px;">'+esc(tr("TAVSIFNOMA"))+'</div><p class="no-indent" style="text-align:center;font-weight:700;margin-bottom:4px;">'+blank(s.org,220)+'</p><p class="no-indent" style="text-align:center;margin-bottom:14px;">'+blank(s.role,120)+' '+blank(s.fullName,170)+esc(tr("ga"))+'</p><p>'+blank(s.fullName,170)+' '+blank(fmtDateUz(s.birthDate),115)+esc(tr("da"))+' '+blank(s.birthPlace,170)+esc(tr("da tug'ilgan."))+' '+esc(tr("Millati —"))+' '+blank(s.nation,80)+'.'+eduPart+'</p><p>'+blank(s.shortName,115)+' '+blank(s.since,125)+esc(tr("dan buyon"))+' '+blank(s.org,165)+esc(tr("da"))+' '+blank(s.role,110)+' '+esc(tr("sifatida"))+' '+esc(tr(actWord))+'. '+esc(tr("O'tgan davr mobaynida u o'zini"))+' '+blank(s.traits,160)+' '+esc(tr(roleWord+" sifatida namoyon etdi."))+'</p><p>'+esc(tr("O'z vazifalarini o'z vaqtida va sifatli bajaradi."))+achHtml+' '+esc(tr("Sohaga oid bilimlarni va zamonaviy texnologiyalarni yaxshi o'zlashtirgan, doimiy ravishda o'z ustida ishlaydi."))+'</p><p>'+esc(tr("Jamoa"))+' ('+esc(tr(peerWord))+') '+esc(tr("orasida samimiyligi, xushmuomalaligi va odobi bilan hurmat qozongan."))+'</p><p>'+blank(s.family,140)+'</p><p>'+esc(tr("Tavsifnoma"))+' '+blank(s.target,140)+' '+esc(tr("taqdim etish uchun berildi."))+'</p><div class="alif-doc-sign-row"><span>'+blank(s.bossRole,125)+'</span><span><span class="alif-doc-blank" style="min-width:95px"></span> '+blank(s.bossName,130)+'</span></div><p class="no-indent" style="font-size:12.5px;color:#4b5563;margin-top:6px;">('+esc(tr("Muhr o'rni"))+')</p><p class="no-indent" style="margin-top:10px;">'+esc(tr("Sana:"))+' '+blank(fmtDateUz(s.docDate),125)+'</p>';
-    } else {
-      paper.innerHTML = '<p class="no-indent" style="text-align:center;font-weight:700;letter-spacing:0.04em;margin-bottom:4px;">'+blank(s.org,240)+'</p><div class="alif-doc-paper-title" style="margin:10px 0 12px;">'+esc(tr("BUYRUQ"))+'</div><div class="alif-doc-sign-row" style="margin:0 0 14px;"><span>'+blank(fmtDateUz(s.docDate),115)+'</span><span>№ '+blank(s.num,65)+'</span><span>'+blank(s.city,115)+'</span></div><p class="no-indent" style="font-weight:700;margin-bottom:10px;">'+blank(s.subject,220)+'</p><p>'+blank(s.basisClause,240)+',</p><p class="no-indent" style="font-weight:700;letter-spacing:0.12em;margin:10px 0;">'+esc(tr("BUYURAMAN:"))+'</p><p>1. '+blank(s.p1,260)+'</p><p>2. '+blank(s.p2,260)+'</p><p>3. '+esc(tr("Ushbu buyruqning ijrosini nazorat qilish"))+' '+blank(s.control,210)+'.</p><p class="no-indent" style="margin-top:12px;"><strong>'+esc(tr("Asos:"))+'</strong> '+blank(s.reasonDoc,230)+'.</p><div class="alif-doc-sign-row"><span>'+blank(s.bossRole,120)+'</span><span><span class="alif-doc-blank" style="min-width:95px"></span> '+blank(s.bossName,130)+'</span></div><p class="no-indent" style="font-size:12.5px;color:#4b5563;margin-top:4px;">('+esc(tr("Tashkilot muhri"))+')</p><p class="no-indent" style="margin-top:16px;font-weight:700;">'+esc(tr("Buyruq bilan tanishdim:"))+'</p><div class="alif-doc-sign-row" style="margin-top:8px;"><span><span class="alif-doc-blank" style="min-width:95px"></span> '+blank(s.empName,140)+'</span><span>'+blank(fmtDateUz(s.docDate),110)+'</span></div>';
-    }
-  }
-  window.selectAlifDoc = function (t) { docType = t; document.querySelectorAll(".alif-doc-tab").forEach(function (b) { b.classList.toggle("is-active", b.getAttribute("data-doc") === t); }); var m = DOCS_META[t]; document.getElementById("alifDocTitle").textContent = m.title; document.getElementById("alifDocSub").textContent = m.sub; document.getElementById("alifDocNote").textContent = m.note; renderForm(); renderPaper(); };
-  window.setAlifDocScript = function (sc) { scriptMode = sc; document.querySelectorAll(".alif-doc-scbtn").forEach(function (b) { b.classList.toggle("is-active", b.getAttribute("data-sc") === sc); }); renderPaper(); };
-  window.fillAlifDocSample = function () { state[docType] = Object.assign({}, SAMPLES[docType]); renderForm(); renderPaper(); };
-  window.clearAlifDocForm = function () { state[docType] = {}; renderForm(); renderPaper(); };
-  window.copyAlifDocText = function (btn) { var p = document.getElementById("alifDocPaper"); if (p) navigator.clipboard.writeText(p.innerText).then(function () { var o = btn.textContent; btn.textContent = "✓ Nusxalandi"; setTimeout(function () { btn.textContent = o; }, 1800); }); };
-  function crc32(bytes) {
-    var c, table = crc32.t;
-    if (!table) {
-      table = crc32.t = new Uint32Array(256);
-      for (var n = 0; n < 256; n++) {
-        c = n;
-        for (var k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
-        table[n] = c;
-      }
-    }
-    c = 0xFFFFFFFF;
-    for (var i = 0; i < bytes.length; i++) c = table[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
-    return (c ^ 0xFFFFFFFF) >>> 0;
+  'use strict';
+
+  var CATEGORIES = [
+    { id: 'all', label: 'Barchasi (15)' },
+    { id: 'talim', label: "Ta'lim" },
+    { id: 'karyera', label: 'Ish va karyera' },
+    { id: 'shaxsiy', label: 'Shaxsiy hujjatlar' },
+    { id: 'biznes', label: 'Biznes' },
+    { id: 'murojaat', label: 'Rasmiy murojaatlar' },
+    { id: 'tashkilot', label: 'Tashkilotlar' }
+  ];
+
+  function todayStr() {
+    var d = new Date();
+    var dd = String(d.getDate()).padStart(2, '0');
+    var mm = String(d.getMonth() + 1).padStart(2, '0');
+    var yyyy = d.getFullYear();
+    return dd + '.' + mm + '.' + yyyy + '-yil';
   }
 
-  function makeDocxBlob(paperEl) {
-    var enc = new TextEncoder();
-    function xmlEsc(s) {
-      return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  function cleanReason(raw, fallback) {
+    var r = (raw || '').trim().replace(/\.+$/, '');
+    if (!r) r = fallback || 'oilaviy sharoitim sababli';
+    if (/(sababli|tufayli|uchun|bo'yicha|boyicha|munosabati bilan|asosida|maqsadida)$/i.test(r)) {
+      return r;
     }
-    var bodyXml = [];
-    var children = paperEl.children;
-    for (var i = 0; i < children.length; i++) {
-      var el = children[i];
-      var cls = el.className || "";
-      var style = el.getAttribute("style") || "";
-      if (cls.indexOf("alif-doc-paper-addr") !== -1) {
-        var lines = el.innerText.split(/\n+/);
-        for (var l = 0; l < lines.length; l++) {
-          if (!lines[l].trim()) continue;
-          bodyXml.push('<w:p><w:pPr><w:ind w:left="4200"/><w:spacing w:after="60"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="28"/></w:rPr><w:t xml:space="preserve">' + xmlEsc(lines[l].trim()) + '</w:t></w:r></w:p>');
+    return r + ' sababli';
+  }
+
+  var TEMPLATES = [
+    // ── 1. TA'LIM ──
+    {
+      id: 'oquv-ariza',
+      cat: 'talim',
+      catName: "Ta'lim",
+      title: "O'quv arizasi",
+      desc: "Talaba yoki o'quvchi nomidan universitet rahbariyati yoki dekanatga yo'llanadigan rasmiy murojaat.",
+      situation: "Akademik ta'til olish, o'qishni ko'chirish, kontrakt to'lovi muddatini uzaytirish yoki ma'lumotnoma olishda ishlatiladi.",
+      required: ["Kimga (Rektor / Dekan)", "F.I.Sh.", "Universitet nomi", "Fakultet", "Yo'nalish", "Kurs", "Ariza mazmuni", "Sana"],
+      fields: [
+        { key: 'to_whom', label: 'Kimga (lavozimi va F.I.Sh.)', placeholder: "Jahon iqtisodiyoti va diplomatiya universiteti rektoriga", shared: 'org_head' },
+        { key: 'fullname', label: 'F.I.Sh. (Kimdan)', placeholder: "Aliyev Ali Valiyevich", shared: 'fullname' },
+        { key: 'org', label: "Ta'lim muassasasi", placeholder: "Jahon iqtisodiyoti va diplomatiya universiteti", shared: 'org' },
+        { key: 'faculty', label: 'Fakultet', placeholder: "Xalqaro munosabatlar", shared: 'dept' },
+        { key: 'major', label: "Ta'lim yo'nalishi", placeholder: "Xalqaro iqtisodiyot va menejment", shared: 'major' },
+        { key: 'course', label: 'Kurs va guruh', placeholder: "2-kurs, 204-guruh", shared: 'course' },
+        { key: 'reason', label: 'Ariza sababi va mazmuni', type: 'textarea', placeholder: "Oilaviy sharoitim sababli kontrakt to'lovini ikki bo'lib to'lashga ruxsat berishingizni" },
+        { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
+      ],
+      build: function (d) {
+        var to = d.to_whom || "Universitet rektori nomiga";
+        var fn = d.fullname || "Aliyev Ali Valiyevich";
+        var org = d.org || "Jahon iqtisodiyoti va diplomatiya universiteti";
+        var fac = d.faculty || "Xalqaro munosabatlar";
+        var maj = d.major || "Xalqaro munosabatlar";
+        var crs = d.course || "2-kurs";
+        var rsn = cleanReason(d.reason, "oilaviy sharoitim sababli");
+        var dt = d.date || todayStr();
+        return {
+          rightHeader: [to, org + " " + fac + " fakulteti", maj + " yo'nalishi " + crs + " talabasi", fn + " tomonidan"],
+          docTitle: "ARIZA",
+          paragraphs: [
+            "Men, " + fn + ", " + org + "ning " + fac + " fakulteti (" + maj + " yo'nalishi, " + crs + ") talabasi, " + rsn + " tegishli masalani ko'rib chiqishingizni va ijobiy hal etishingizni so'rayman.",
+            "Ilova: tasdiqlovchi hujjatlar nusxasi (mavjud bo'lsa)."
+          ],
+          footerLeft: "Sana: " + dt,
+          footerRight: "Imzo: ___________ / " + fn
+        };
+      }
+    },
+    {
+      id: 'tushuntirish-xati',
+      cat: 'talim',
+      catName: "Ta'lim",
+      title: "Tushuntirish xati",
+      desc: "Dars qoldirish, kechikish yoki belgilangan topshiriq bajarilmagani sabablarini asoslab beruvchi hujjat.",
+      situation: "Uzrli yoki uzrsiz sabab bilan mashg'ulotlarda qatnasha olmaganda dekanat yoki rahbariyat talabiga ko'ra yoziladi.",
+      required: ["Kimga (Dekan / Rahbar)", "F.I.Sh.", "Muassasa va fakultet", "Holat sanasi", "Sabab tafsiloti", "Sana"],
+      fields: [
+        { key: 'to_whom', label: 'Kimga', placeholder: "Xalqaro munosabatlar fakulteti dekaniga", shared: 'org_head' },
+        { key: 'fullname', label: 'F.I.Sh.', placeholder: "Karimova Madina Rustamovna", shared: 'fullname' },
+        { key: 'org', label: "Ta'lim muassasasi / Tashkilot", placeholder: "Jahon iqtisodiyoti va diplomatiya universiteti", shared: 'org' },
+        { key: 'faculty', label: "Fakultet / Bo'lim", placeholder: "Xalqaro huquq fakulteti, 2-kurs", shared: 'dept' },
+        { key: 'incident_date', label: 'Holat yuz bergan sana', placeholder: "2026-yil 20-noyabr kuni" },
+        { key: 'reason', label: 'Sabab tavsifi', type: 'textarea', placeholder: "Sog'lig'im keskin yomonlashib, shifokor ko'rigiga borganligim" },
+        { key: 'date', label: 'Hujjat sanasi', placeholder: todayStr(), defaultVal: todayStr() }
+      ],
+      build: function (d) {
+        var to = d.to_whom || "Fakultet dekani nomiga";
+        var fn = d.fullname || "Karimova Madina Rustamovna";
+        var org = d.org || "Jahon iqtisodiyoti va diplomatiya universiteti";
+        var fac = d.faculty || "Xalqaro huquq fakulteti, 2-kurs";
+        var idt = d.incident_date || "joriy yilning 20-noyabr kuni";
+        var rsn = cleanReason(d.reason, "sog'lig'im yomonlashganligi sababli");
+        var dt = d.date || todayStr();
+        return {
+          rightHeader: [to, org, fac + " talabasi", fn + "dan"],
+          docTitle: "TUSHUNTIRISH XATI",
+          paragraphs: [
+            "Men, " + fn + ", " + idt + " dars mashg'ulotlarida ishtirok eta olmaganligimning sababi shundaki, " + rsn + " mashg'ulotlarga kelish imkonim bo'lmadi.",
+            "Kelgusida dars intizomiga qat'iy rioya qilishga va qoldirilgan mavzularni o'z vaqtida o'zlashtirishga va'da beraman."
+          ],
+          footerLeft: "Sana: " + dt,
+          footerRight: "Imzo: ___________ / " + fn
+        };
+      }
+    },
+    {
+      id: 'tavsiyanoma',
+      cat: 'talim',
+      catName: "Ta'lim",
+      title: "Tavsiyanoma",
+      desc: "Talaba, bitiruvchi yoki xodimning bilim darajasi, shaxsiy fazilatlari va yutuqlarini tasdiqlovchi rasmiy xat.",
+      situation: "Xalqaro grantlar, magistratura, stajirovka dasturlari yoki nufuzli ish o'rniga hujjat topshirishda kerak bo'ladi.",
+      required: ["Nomzod F.I.Sh.", "O'qish / Ish joyi", "Yo'nalish / Lavozim", "Yutuq va fazilatlar", "Tavsiya beruvchi F.I.Sh. va unvoni", "Sana"],
+      fields: [
+        { key: 'candidate', label: 'Tavsiya etiluvchi F.I.Sh.', placeholder: "Rayimov Sherzod Bahodirovich", shared: 'fullname' },
+        { key: 'org', label: "Ta'lim muassasasi / Tashkilot", placeholder: "Jahon iqtisodiyoti va diplomatiya universiteti", shared: 'org' },
+        { key: 'faculty', label: "Fakultet / Yo'nalish", placeholder: "Xalqaro iqtisodiyot va menejment fakulteti, 2-kurs", shared: 'dept' },
+        { key: 'achievements', label: 'Asosiy yutuqlar va fazilatlar', type: 'textarea', placeholder: "a'lo baholarga o'qishi, debat klubi asoschisi ekanligi, python va veb-dasturlash bo'yicha loyihalar yaratgani hamda mas'uliyatliligi" },
+        { key: 'recommender', label: 'Tavsiya beruvchi F.I.Sh. va lavozimi', placeholder: "prof. A. Xolmatov, Kafedra mudiri" },
+        { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
+      ],
+      build: function (d) {
+        var cand = d.candidate || "Rayimov Sherzod Bahodirovich";
+        var org = d.org || "Jahon iqtisodiyoti va diplomatiya universiteti";
+        var fac = d.faculty || "Xalqaro iqtisodiyot va menejment fakulteti";
+        var ach = (d.achievements || "o'qishdagi yuqori natijalari, tashabbuskorligi va jamoada ishlash qobiliyati").trim().replace(/\.+$/, '');
+        var rec = d.recommender || "prof. A. Xolmatov, Kafedra mudiri";
+        var dt = d.date || todayStr();
+        return {
+          rightHeader: ["So'ralgan joyga taqdim etish uchun"],
+          docTitle: "TAVSIYANOMA",
+          paragraphs: [
+            "Ushbu tavsiyanoma " + org + "ning " + fac + " talabasi " + cand + "ga berildi.",
+            cand + " o'qish davomida o'zini bilimli, tirishqoq va intizomli talaba sifatida namoyon etdi. Xususan, " + ach + " bilan tengdoshlari orasida alohida ajralib turadi.",
+            "Yuqoridagilarni inobatga olgan holda, " + cand + "ni tanlov / grant / amaliyot dasturida ishtirok etish uchun tavsiya etamiz."
+          ],
+          footerLeft: "Sana: " + dt,
+          footerRight: rec + " ___________"
+        };
+      }
+    },
+
+    // ── 2. ISH VA KARYERA ──
+    {
+      id: 'rezyume-cv',
+      cat: 'karyera',
+      catName: 'Ish va karyera',
+      title: 'Rezyume (CV)',
+      desc: "Nomzodning ma'lumoti, ish tajribasi, texnik ko'nikmalari va til bilish darajasini jamlovchi professional hujjat.",
+      situation: "Kompaniyalarga ishga kirish, stajirovka topshirish yoki HR mutaxassisiga o'z profilingizni yuborishda ishlatiladi.",
+      required: ["F.I.Sh.", "Maqsadli lavozim", "Telefon va Email", "Ma'lumoti", "Tajriba va loyihalar", "Ko'nikmalar va tillar"],
+      fields: [
+        { key: 'fullname', label: 'F.I.Sh.', placeholder: "Rayimov Sherzod", shared: 'fullname' },
+        { key: 'position', label: 'Maqsadli lavozim / Sohasi', placeholder: "Frontend & Python dasturchi / Loyiha menejeri" },
+        { key: 'contact', label: 'Telefon, Email va Shahar', placeholder: "+998 90 123-45-67 | sherzod@example.uz | Toshkent", shared: 'contact' },
+        { key: 'education', label: "Ma'lumoti", placeholder: "Jahon iqtisodiyoti va diplomatiya universiteti (2025–2029)", shared: 'org' },
+        { key: 'experience', label: 'Ish tajribasi va loyihalar', type: 'textarea', placeholder: "Alif+ platformasi asoschisi va dasturchisi; Grand Debate Club rahbari (2026)" },
+        { key: 'skills', label: "Asosiy ko'nikmalar", placeholder: "Python, JavaScript, SwiftUI, Git, Muammolarni tahlil qilish" },
+        { key: 'languages', label: 'Tillar', placeholder: "O'zbek tili (ona tili), Ingliz tili (B2), Rus tili (B2), Ispan tili (A2)" }
+      ],
+      build: function (d) {
+        var fn = d.fullname || "Rayimov Sherzod";
+        var pos = d.position || "Dasturchi va loyiha boshqaruvchisi";
+        var cnt = d.contact || "+998 90 123-45-67 | Toshkent";
+        var edu = d.education || "Jahon iqtisodiyoti va diplomatiya universiteti";
+        var exp = d.experience || "Alif+ raqamli alifbo platformasi yaratuvchisi; talabalar tashkiloti rahbari";
+        var skl = d.skills || "Python, JavaScript, HTML/CSS, Jamoa boshqaruvi";
+        var lng = d.languages || "O'zbek tili (ona tili), Ingliz tili (B2), Rus tili (B2)";
+        return {
+          rightHeader: [cnt],
+          docTitle: "REZYUME (CV) — " + fn.toUpperCase(),
+          paragraphs: [
+            "MAQSADLI LAVOZIM: " + pos,
+            "MA'LUMOTI: " + edu,
+            "ISH TAJRIBASI VA LOYIHALAR: " + exp,
+            "ASOSIY KO'NIKMALAR: " + skl,
+            "TIL BILISH DARAJASI: " + lng
+          ],
+          footerLeft: "Yangilangan sana: " + todayStr(),
+          footerRight: fn
+        };
+      }
+    },
+    {
+      id: 'motivatsion-xat',
+      cat: 'karyera',
+      catName: 'Ish va karyera',
+      title: 'Motivatsion xat',
+      desc: "Nomzodning aynan shu tashkilot, vakansiya yoki grant dasturiga bo'lgan qiziqishi va qo'shadigan hissasini ochib beruvchi xat.",
+      situation: "Rezyume bilan birga yuboriladi; xorijiy universitet, stipendiya yoki nufuzli kompaniyaga hujjat topshirishda muhim.",
+      required: ["Qabul qiluvchi tashkilot", "F.I.Sh.", "Vakansiya / Dastur nomi", "Tajriba va motivatsiya", "Sana"],
+      fields: [
+        { key: 'company', label: 'Tashkilot / Dastur nomi', placeholder: "IT Park Uzbekistan / Xalqaro stipendiya komissiyasi" },
+        { key: 'fullname', label: 'F.I.Sh.', placeholder: "Rayimov Sherzod", shared: 'fullname' },
+        { key: 'role', label: 'Vakansiya yoki dastur nomi', placeholder: "Yoshlar innovatsion loyihalar koordinatori" },
+        { key: 'motivation', label: 'Asosiy tajriba va maqsadingiz', type: 'textarea', placeholder: "raqamli ta'lim vositalarini yaratish tajribamga tayanib, jamoangizda foydali texnologik mahsulotlarni rivojlantirishni maqsad qilganman" },
+        { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
+      ],
+      build: function (d) {
+        var cmp = d.company || "Hurmatli tanlov komissiyasi";
+        var fn = d.fullname || "Rayimov Sherzod";
+        var role = d.role || "mutaxassis lavozimi";
+        var mot = (d.motivation || "o'z bilim va amaliy tajribamni tashkilotingiz rivojiga yo'naltirishni maqsad qilganman").trim().replace(/\.+$/, '');
+        var dt = d.date || todayStr();
+        return {
+          rightHeader: [cmp + "ga", fn + "dan"],
+          docTitle: "MOTIVATSION XAT",
+          paragraphs: [
+            "Hurmatli " + cmp + " vakillari!",
+            "Ushbu xat orqali «" + role + "» yo'nalishi bo'yicha o'z nomzodimni taqdim etmoqchiman. Tashkilotingizning zamonaviy tashabbuslari va amaliy natijalari meni ushbu jamoaga qo'shilishga undadi.",
+            "Men " + mot + ". Qisqa muddatda yangi ko'nikmalarni o'zlashtirish, mas'uliyatni zimmasiga olish va aniq natija ko'rsatish mening asosiy ustunligimdir.",
+            "Nomzodimni ko'rib chiqqaningiz uchun tashakkur bildiraman va suhbat jarayonida batafsil suhbatlashishdan mamnun bo'laman."
+          ],
+          footerLeft: "Sana: " + dt,
+          footerRight: "Hurmat bilan, " + fn
+        };
+      }
+    },
+
+    // ── 3. SHAXSIY HUJJATLAR ──
+    {
+      id: 'tilxat',
+      cat: 'shaxsiy',
+      catName: 'Shaxsiy hujjatlar',
+      title: 'Tilxat',
+      desc: "Bir shaxs boshqa shaxsdan ma'lum miqdordagi pul mablag'i yoki moddiy buyumni olganligini tasdiqlovchi hujjat.",
+      situation: "Qarz berish-olishda, avans to'lovida yoki qimmatbaho buyumni vaqtincha topshirishda moliyaviy xavfsizlik uchun yoziladi.",
+      required: ["Oluvchi F.I.Sh.", "Pasport ma'lumoti va manzil", "Beruvchi F.I.Sh.", "Pul miqdori / Buyum", "Qaytarish muddati", "Sana"],
+      fields: [
+        { key: 'receiver', label: 'Pul / buyum oluvchi F.I.Sh.', placeholder: "Tursunov Jamshid Otabekovich", shared: 'fullname' },
+        { key: 'passport', label: 'Oluvchi pasporti va manzili', placeholder: "AD 1234567, Toshkent shahri, Yunusobod tumani" },
+        { key: 'giver', label: 'Pul / buyum beruvchi F.I.Sh.', placeholder: "Qodirov Sardor Akmalovich" },
+        { key: 'amount', label: 'Pul miqdori (raqam va so‘z bilan) yoki buyum', placeholder: "5 000 000 (besh million) so'm" },
+        { key: 'deadline', label: 'Qaytarish muddati', placeholder: "2026-yil 31-dekabrga qadar" },
+        { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
+      ],
+      build: function (d) {
+        var rcv = d.receiver || "Tursunov Jamshid Otabekovich";
+        var psp = d.passport || "AD 1234567, Toshkent shahri";
+        var gvr = d.giver || "Qodirov Sardor Akmalovich";
+        var amt = d.amount || "5 000 000 (besh million) so'm";
+        var ddl = d.deadline || "2026-yil 31-dekabrga qadar";
+        var dt = d.date || todayStr();
+        return {
+          rightHeader: [],
+          docTitle: "TILXAT",
+          paragraphs: [
+            "Men, " + rcv + " (pasport: " + psp + "), fuqaro " + gvr + "dan " + amt + " miqdoridagi pul mablag'ini (buyumni) to'liq sanab oldim.",
+            "Ushbu mablag'ni (buyumni) " + ddl + " hech qanday e'tirozsiz va to'liq hajmda qaytarib berish majburiyatini o'z zimmamga olaman.",
+            "Tilxat o'z qo'lim bilan yozildi va imzolandi."
+          ],
+          footerLeft: "Sana: " + dt,
+          footerRight: "Oluvchi imzosi: ___________ / " + rcv
+        };
+      }
+    },
+    {
+      id: 'ishonchnoma',
+      cat: 'shaxsiy',
+      catName: 'Shaxsiy hujjatlar',
+      title: 'Ishonchnoma loyihasi',
+      desc: "Bir shaxs boshqa shaxsga o'z nomidan hujjat topshirish, olish yoki vakillik qilish huquqini beruvchi hujjat.",
+      situation: "O'zingiz shaxsan bora olmagan holatda diplom, ma'lumotnoma, jo'natma yoki to'lovni ishonchli vakil orqali olishda qo'llaniladi.",
+      required: ["Ishonch bildiruvchi F.I.Sh.", "Pasport va manzil", "Vakil F.I.Sh.", "Vakolat mazmuni", "Amal qilish muddati", "Sana"],
+      fields: [
+        { key: 'principal', label: 'Ishonch bildiruvchi F.I.Sh.', placeholder: "Sobirov Dilshod Anvarovich", shared: 'fullname' },
+        { key: 'principal_info', label: 'Ishonch bildiruvchi pasporti va manzili', placeholder: "AC 7654321, Toshkent shahri, Mirzo Ulug'bek tumani" },
+        { key: 'agent', label: 'Vakil (ishonchli shaxs) F.I.Sh.', placeholder: "Sobirova Nilufar Anvarovna" },
+        { key: 'agent_info', label: 'Vakil pasport ma’lumotlari', placeholder: "AD 9876543" },
+        { key: 'scope', label: 'Berilayotgan vakolat mazmuni', type: 'textarea', placeholder: "Universitet arxividan diplom va ilovasining asl nusxasini olish hamda tegishli hujjatlarga imzo qo'yish" },
+        { key: 'valid_until', label: 'Amal qilish muddati', placeholder: "3 (uch) oy muddatga" },
+        { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
+      ],
+      build: function (d) {
+        var prn = d.principal || "Sobirov Dilshod Anvarovich";
+        var pInf = d.principal_info || "AC 7654321, Toshkent shahri";
+        var agn = d.agent || "Sobirova Nilufar Anvarovna";
+        var aInf = d.agent_info || "AD 9876543";
+        var scp = (d.scope || "tegishli muassasadan hujjatlarni olish va imzo qo'yish").trim().replace(/\.+$/, '');
+        var val = d.valid_until || "3 (uch) oy muddatga";
+        var dt = d.date || todayStr();
+        return {
+          rightHeader: [],
+          docTitle: "ISHONCHNOMA",
+          paragraphs: [
+            "Men, " + prn + " (pasport: " + pInf + "), ushbu ishonchnoma bilan fuqaro " + agn + "ga (pasport: " + aInf + ") mening nomimdan " + scp + " vakolatini beraman.",
+            "Mazkur vakolatni amalga oshirish doirasida " + agn + " mening nomimdan arizalar topshirish, ma'lumotnomalar olish va zarur hujjatlarga imzo qo'yish huquqiga ega.",
+            "Ishonchnoma " + val + " berildi."
+          ],
+          footerLeft: "Sana: " + dt,
+          footerRight: "Ishonch bildiruvchi: ___________ / " + prn
+        };
+      }
+    },
+
+    // ── 4. BIZNES ──
+    {
+      id: 'tijorat-taklifi',
+      cat: 'biznes',
+      catName: 'Biznes',
+      title: 'Tijorat taklifi',
+      desc: "Potensial mijoz yoki hamkor tashkilotga mahsulot, xizmat va hamkorlik shartlarini taqdim etuvchi biznes xat.",
+      situation: "Yangi mijozlarni jalb qilish, tender yoki B2B hamkorlikni yo'lga qo'yishda rasmiy elektron xat yoki PDF sifatida yuboriladi.",
+      required: ["Kompaniya nomi", "Mijoz / Hamkor nomi", "Xizmat / Mahsulot tavsifi", "Afzallik va narx shartlari", "Aloqa mas'uli", "Sana"],
+      fields: [
+        { key: 'sender_org', label: 'Taklif yuboruvchi kompaniya', placeholder: "«AlifTech Solutions» MChJ", shared: 'org' },
+        { key: 'client_org', label: 'Mijoz / Hamkor tashkilot', placeholder: "«Kelajak Ta'lim» o'quv markazi rahbariyatiga" },
+        { key: 'offer_item', label: 'Taklif etilayotgan xizmat yoki mahsulot', type: 'textarea', placeholder: "hujjat aylanishini avtomatlashtirish va yangi alifbo konverteri tizimini joriy etish" },
+        { key: 'terms', label: 'Asosiy afzalliklar va narx shartlari', placeholder: "14 kunlik bepul sinov davri, texnik qo'llab-quvvatlash va moslashuvchan oylik tarif" },
+        { key: 'contact', label: "Mas'ul shaxs va telefon", placeholder: "Sh. Rayimov, +998 90 123-45-67", shared: 'contact' },
+        { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
+      ],
+      build: function (d) {
+        var snd = d.sender_org || "«AlifTech Solutions» MChJ";
+        var cln = d.client_org || "Hamkor tashkilot rahbariyatiga";
+        var itm = (d.offer_item || "raqamli xizmatlar va dasturiy yechimlarni joriy etish").trim().replace(/\.+$/, '');
+        var trm = d.terms || "qulay narxlar, tezkor o'rnatish va doimiy texnik yordam";
+        var cnt = d.contact || "+998 90 123-45-67";
+        var dt = d.date || todayStr();
+        return {
+          rightHeader: [cln, snd + " tomonidan"],
+          docTitle: "TIJORAT TAKLIFI",
+          paragraphs: [
+            "Hurmatli hamkorlar!",
+            snd + " sizga o'z hurmatini bildirgan holda, tashkilotingiz faoliyati samaradorligini oshirish maqsadida " + itm + " bo'yicha hamkorlikni taklif etadi.",
+            "Bizning taklifimiz afzalliklari: " + trm + ".",
+            "Hamkorlik shartlarini batafsil muhokama qilish va taqdimot o'tkazish uchun quyidagi raqam orqali bog'lanishingiz mumkin: " + cnt + "."
+          ],
+          footerLeft: "Sana: " + dt,
+          footerRight: snd + " rahbariyati ___________"
+        };
+      }
+    },
+    {
+      id: 'xizmat-shartnomasi',
+      cat: 'biznes',
+      catName: 'Biznes',
+      title: 'Xizmat shartnomasi loyihasi',
+      desc: "Buyurtmachi va ijrochi o'rtasida xizmat ko'rsatish hajmi, muddati va to'lov tartibini belgilovchi shartnoma matni.",
+      situation: "Frilans loyihalar, IT xizmatlari, dizayn, tarjima yoki konsalting ishlarini rasmiylashtirishda asos sifatida ishlatiladi.",
+      required: ["Shartnoma raqami", "Buyurtmachi", "Ijrochi", "Xizmat predmeti", "Summa va muddat", "Sana"],
+      fields: [
+        { key: 'contract_no', label: 'Shartnoma raqami', placeholder: "№ 14/2026" },
+        { key: 'customer', label: 'Buyurtmachi (Tashkilot / F.I.Sh.)', placeholder: "«Global Trade» MChJ direktori A. Karimov" },
+        { key: 'executor', label: 'Ijrochi (Tashkilot / F.I.Sh.)', placeholder: "YaTT Rayimov Sherzod Bahodirovich", shared: 'fullname' },
+        { key: 'subject', label: 'Xizmat predmeti (nima bajariladi)', type: 'textarea', placeholder: "korporativ veb-sayt va hujjatlar konverteri modulini ishlab chiqish" },
+        { key: 'price', label: 'Xizmat narxi va bajarish muddati', placeholder: "10 000 000 so'm, 15 ish kuni davomida" },
+        { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
+      ],
+      build: function (d) {
+        var no = d.contract_no || "№ 01/2026";
+        var cst = d.customer || "«Buyurtmachi» MChJ";
+        var exc = d.executor || "«Ijrochi»";
+        var sbj = (d.subject || "kelishilgan texnik topshiriq asosida xizmat ko'rsatish").trim().replace(/\.+$/, '');
+        var prc = d.price || "kelishilgan summa, 15 ish kuni ichida";
+        var dt = d.date || todayStr();
+        return {
+          rightHeader: ["Toshkent shahri"],
+          docTitle: "XIZMAT KO'RSATISH SHARTNOMASI " + no,
+          paragraphs: [
+            "Bir tomondan «Buyurtmachi» deb ataluvchi " + cst + " va ikkinchi tomondan «Ijrochi» deb ataluvchi " + exc + " ushbu shartnomani quyidagilar haqida tuzdilar:",
+            "1. SHARTNOMA PREDMETI: Ijrochi Buyurtmachining topshirig'iga binoan " + sbj + " majburiyatini oladi, Buyurtmachi esa xizmatlarni qabul qilish va haqini to'lash majburiyatini oladi.",
+            "2. NARX VA MUDDAT: Xizmatlar qiymati va bajarish muddati — " + prc + ". To'lovlar tomonlar kelishuviga muvofiq naqd pulsiz yoki naqd shaklda amalga oshiriladi.",
+            "3. YAKUNIY QOIDALAR: Shartnoma ikki nusxada tuzildi va imzolangan kundan kuchga kiradi."
+          ],
+          footerLeft: "Buyurtmachi: ___________\nSana: " + dt,
+          footerRight: "Ijrochi: ___________"
+        };
+      }
+    },
+
+    // ── 5. RASMIY MUROJAATLAR ──
+    {
+      id: 'rasmiy-ariza',
+      cat: 'murojaat',
+      catName: 'Rasmiy murojaatlar',
+      title: 'Rasmiy ariza',
+      desc: "Davlat idorasi, hokimiyat, mahalla yoki tashkilot rahbariga qonuniy huquq va manfaatlarni amalga oshirish uchun yoziladigan murojaat.",
+      situation: "Ruxsatnoma olish, ishga kirish, ijtimoiy yordam yoki tashkilot rahbariyatidan rasmiy qaror so'rashda qo'llaniladi.",
+      required: ["Idora / Rahbar (Kimga)", "F.I.Sh.", "Manzil va telefon", "Murojaat mazmuni", "Sana"],
+      fields: [
+        { key: 'to_whom', label: 'Kimga (Idora va rahbar)', placeholder: "Toshkent shahar Mirzo Ulug'bek tumani hokimiga" },
+        { key: 'fullname', label: 'Ariza beruvchi F.I.Sh.', placeholder: "Xolmatov Bobur Erkinovich", shared: 'fullname' },
+        { key: 'address', label: 'Yashash manzili va telefon', placeholder: "Mirzo Ulug'bek tumani, Buyuk Ipak Yo'li 12-uy, +998 90 123-45-67", shared: 'contact' },
+        { key: 'content', label: 'Murojaat mazmuni va iltimos', type: 'textarea', placeholder: "mahallamiz hududida yoshlar uchun bepul kutubxona va o'quv markazi tashkil etishga bino ajratish masalasini ko'rib chiqishingizni" },
+        { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
+      ],
+      build: function (d) {
+        var to = d.to_whom || "Tashkilot rahbari nomiga";
+        var fn = d.fullname || "Xolmatov Bobur Erkinovich";
+        var adr = d.address || "Toshkent shahri";
+        var cnt = (d.content || "tegishli masalani qonunchilik doirasida ko'rib chiqishingizni").trim().replace(/\.+$/, '');
+        var dt = d.date || todayStr();
+        return {
+          rightHeader: [to, "Manzil: " + adr, fn + "dan"],
+          docTitle: "ARIZA",
+          paragraphs: [
+            "Men, " + fn + ", ushbu ariza orqali Sizdan " + cnt + " so'rayman.",
+            "Murojaatim natijasi haqida belgilangan tartibda yozma yoki elektron javob berishingizni iltimos qilaman."
+          ],
+          footerLeft: "Sana: " + dt,
+          footerRight: "Imzo: ___________ / " + fn
+        };
+      }
+    },
+    {
+      id: 'shikoyat-xati',
+      cat: 'murojaat',
+      catName: 'Rasmiy murojaatlar',
+      title: 'Shikoyat xati',
+      desc: "Buzilgan huquqlar, sifatsiz xizmat yoki mas'ul shaxslarning harakatsizligi yuzasidan yuqori turuvchi organga yoziladigan rasmiy e'tiroz.",
+      situation: "Iste'molchi huquqlari buzilganda, shartnoma shartlari bajarilmaganda yoki rasmiy idoradan asosli chora talab qilinganda yoziladi.",
+      required: ["Ko'rib chiquvchi idora", "Murojaatchi F.I.Sh.", "Manzil va telefon", "Muammo tafsiloti", "Talab qilinayotgan chora", "Sana"],
+      fields: [
+        { key: 'to_whom', label: "Kimga (Idora / Rahbar)", placeholder: "Raqobatni rivojlantirish va iste'molchilar huquqlarini himoya qilish qo'mitasiga" },
+        { key: 'fullname', label: 'Murojaatchi F.I.Sh.', placeholder: "Nazarova Dilnoza Komilovna", shared: 'fullname' },
+        { key: 'address', label: 'Manzil va telefon', placeholder: "Toshkent shahri, Chilonzor tumani, +998 90 123-45-67", shared: 'contact' },
+        { key: 'issue', label: 'Holat va qonunbuzarlik tafsiloti', type: 'textarea', placeholder: "2026-yil 15-noyabr kuni xarid qilingan texnika nosoz chiqqani hamda sotuvchi tomonidan almashtirib berilmayotgani" },
+        { key: 'demand', label: 'Talab qilinayotgan chora', placeholder: "holatni o'rganib chiqib, sifatsiz mahsulotni almashtirish yoki mablag'ni qaytarishda amaliy yordam berishingizni" },
+        { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
+      ],
+      build: function (d) {
+        var to = d.to_whom || "Tegishli nazorat idorasiga";
+        var fn = d.fullname || "Nazarova Dilnoza Komilovna";
+        var adr = d.address || "Toshkent shahri";
+        var iss = (d.issue || "huquqlarim buzilganligi holati").trim().replace(/\.+$/, '');
+        var dem = (d.demand || "qonuniy chora ko'rishingizni").trim().replace(/\.+$/, '');
+        var dt = d.date || todayStr();
+        return {
+          rightHeader: [to, "Manzil: " + adr, fn + "dan"],
+          docTitle: "SHIKOYAT XATI",
+          paragraphs: [
+            "Ushbu xat orqali " + iss + " yuzasidan rasmiy e'tiroz bildiraman.",
+            "Yuqoridagi holatni atroflicha o'rganib chiqib, " + dem + " so'rayman.",
+            "Ilova: chek, shartnoma va tasdiqlovchi dalillar nusxasi."
+          ],
+          footerLeft: "Sana: " + dt,
+          footerRight: "Imzo: ___________ / " + fn
+        };
+      }
+    },
+    {
+      id: 'taklif-xati',
+      cat: 'murojaat',
+      catName: 'Rasmiy murojaatlar',
+      title: 'Taklif xati',
+      desc: "Tashkilot, universitet yoki davlat idorasi faoliyatini takomillashtirish bo'yicha tashabbus va g'oyalarni taqdim etuvchi xat.",
+      situation: "Yangi loyiha, tadbir, raqamli yechim yoki hamkorlik tashabbusini rahbariyatga rasman kiritishda ishlatiladi.",
+      required: ["Kimga (Tashkilot / Rahbar)", "Tashabbuskor F.I.Sh.", "Aloqa ma'lumoti", "Taklif mazmuni va foydasi", "Sana"],
+      fields: [
+        { key: 'to_whom', label: 'Kimga', placeholder: "Yoshlar ishlari agentligi direktoriga" },
+        { key: 'fullname', label: 'Tashabbuskor F.I.Sh. / Jamoa', placeholder: "Rayimov Sherzod, «Alif+» loyihasi jamoasi", shared: 'fullname' },
+        { key: 'contact', label: 'Aloqa ma’lumotlari', placeholder: "+998 90 123-45-67 | info@alifplus.uz", shared: 'contact' },
+        { key: 'proposal', label: 'Taklif g‘oyasi va kutilayotgan natija', type: 'textarea', placeholder: "talabalar va yoshlar o'rtasida savodxonlikni oshirish uchun bepul raqamli hujjatlar va imlo platformasini keng joriy etish" },
+        { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
+      ],
+      build: function (d) {
+        var to = d.to_whom || "Tashkilot rahbariyatiga";
+        var fn = d.fullname || "Rayimov Sherzod";
+        var cnt = d.contact || "+998 90 123-45-67";
+        var prp = (d.proposal || "faoliyat samaradorligini oshiruvchi yangi loyihani joriy etish").trim().replace(/\.+$/, '');
+        var dt = d.date || todayStr();
+        return {
+          rightHeader: [to, "Aloqa: " + cnt, fn + "dan"],
+          docTitle: "TAKLIF XATI",
+          paragraphs: [
+            "Hurmatli rahbariyat!",
+            "Faoliyat sifatini yanada oshirish va zamonaviy yechimlarni tatbiq etish maqsadida " + prp + " bo'yicha o'z taklifimizni taqdim etamiz.",
+            "Ushbu tashabbus amaliyotga joriy etilgan taqdirda vaqt sarfi qisqarishi va foydalanuvchilar uchun qulay muhit yaratilishi kutilmoqda. Loyiha taqdimotini o'tkazishga tayyormiz."
+          ],
+          footerLeft: "Sana: " + dt,
+          footerRight: "Tashabbuskor: ___________ / " + fn
+        };
+      }
+    },
+
+    // ── 6. TASHKILOTLAR ──
+    {
+      id: 'bayonnoma',
+      cat: 'tashkilot',
+      catName: 'Tashkilotlar',
+      title: 'Bayonnoma',
+      desc: "Yig'ilish, majlis yoki kengash muhokamasi, kun tartibi va qabul qilingan qarorlarni rasman qayd etuvchi hujjat.",
+      situation: "Tashkilot yig'ilishlari, talabalar kengashi majlislari yoki komissiya qarorlarini hujjatlashtirishda ishlatiladi.",
+      required: ["Tashkilot nomi", "Bayonnoma raqami", "Rais va Kotib", "Qatnashchilar", "Kun tartibi", "Qabul qilingan qaror", "Sana"],
+      fields: [
+        { key: 'org', label: 'Tashkilot / Kengash nomi', placeholder: "«Grand Debate Club» tashkiliy qo'mitasi", shared: 'org' },
+        { key: 'proto_no', label: 'Bayonnoma raqami', placeholder: "№ 05" },
+        { key: 'chair', label: 'Yig‘ilish raisi F.I.Sh.', placeholder: "Sh. Rayimov", shared: 'fullname' },
+        { key: 'secretary', label: 'Kotib F.I.Sh.', placeholder: "M. Karimova" },
+        { key: 'attendees', label: 'Qatnashchilar', placeholder: "Qo'mita a'zolari (jami 12 nafar)" },
+        { key: 'agenda', label: 'Kun tartibi', placeholder: "Respublika turniriga tayyorgarlik va hakamlar hay'atini tasdiqlash" },
+        { key: 'decision', label: 'Qabul qilingan qaror', type: 'textarea', placeholder: "Turnirni 2026-yil 5-dekabr kuni o'tkazish hamda ro'yxatdan o'tish platformasini ishga tushirish tasdiqlansin" },
+        { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
+      ],
+      build: function (d) {
+        var org = d.org || "Tashkilot yig'ilishi";
+        var no = d.proto_no || "№ 01";
+        var chr = d.chair || "Sh. Rayimov";
+        var sec = d.secretary || "M. Karimova";
+        var att = d.attendees || "Barcha a'zolar";
+        var agn = d.agenda || "Joriy tashkiliy masalalar";
+        var dec = (d.decision || "kun tartibidagi masala ma'qullansin").trim().replace(/\.+$/, '');
+        var dt = d.date || todayStr();
+        return {
+          rightHeader: [org],
+          docTitle: "YIG'ILISH BAYONNOMASI " + no,
+          paragraphs: [
+            "Yig'ilish raisi: " + chr + " | Kotib: " + sec + " | Qatnashdilar: " + att + ".",
+            "KUN TARTIBI: " + agn + ".",
+            "ESHITILDI: Kun tartibidagi masala yuzasidan yig'ilish raisi " + chr + "ning axboroti tinglandi va muhokama qilindi.",
+            "QAROR QILINDI: " + dec + "."
+          ],
+          footerLeft: "Rais: ___________ (" + chr + ")\nSana: " + dt,
+          footerRight: "Kotib: ___________ (" + sec + ")"
+        };
+      }
+    },
+    {
+      id: 'buyruq-loyihasi',
+      cat: 'tashkilot',
+      catName: 'Tashkilotlar',
+      title: 'Buyruq loyihasi',
+      desc: "Tashkilot rahbari nomidan ishga qabul qilish, ta'til berish, xizmat safari yoki vazifa yuklash bo'yicha farmoyish hujjati.",
+      situation: "Kadrlar harakati yoki tashkilot ichki boshqaruv qarorlarini rasmiylashtirishda rahbar imzosiga tayyorlanadi.",
+      required: ["Tashkilot nomi", "Buyruq raqami", "Buyruq mazmuni", "Asos", "Rahbar lavozimi va F.I.Sh.", "Sana"],
+      fields: [
+        { key: 'org', label: 'Tashkilot nomi', placeholder: "«AlifTech» MChJ", shared: 'org' },
+        { key: 'order_no', label: 'Buyruq raqami', placeholder: "№ 24-K" },
+        { key: 'topic', label: 'Buyruq sarlavhasi', placeholder: "Xodimni ishga qabul qilish to'g'risida" },
+        { key: 'body', label: 'Buyruq matni (BUYURAMAN)', type: 'textarea', placeholder: "1. Karimov Jasur Rustamovich 2026-yil 25-noyabrdan loyiha menejeri lavozimiga ishga qabul qilinsin.\n2. Buxgalteriya bo'limiga shtat jadvaliga muvofiq ish haqi to'lash yuklatilsin." },
+        { key: 'basis', label: 'Asos', placeholder: "J. Karimovning arizasi va mehnat shartnomasi" },
+        { key: 'director', label: 'Rahbar lavozimi va F.I.Sh.', placeholder: "Direktor Sh. Rayimov", shared: 'fullname' },
+        { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
+      ],
+      build: function (d) {
+        var org = d.org || "«Tashkilot» MChJ";
+        var no = d.order_no || "№ 01";
+        var top = d.topic || "Tashkiliy masala to'g'risida";
+        var bdy = d.body || "1. Belgilangan vazifalar o'z muddatida ijro etilsin.";
+        var bas = d.basis || "Rahbariyat qarori";
+        var dir = d.director || "Direktor Sh. Rayimov";
+        var dt = d.date || todayStr();
+        return {
+          rightHeader: [org],
+          docTitle: "BUYRUQ " + no + "\n" + top,
+          paragraphs: [
+            "Ish faoliyatini samarali tashkil etish maqsadida BUYURAMAN:",
+            bdy,
+            "Asos: " + bas + "."
+          ],
+          footerLeft: "Sana: " + dt,
+          footerRight: dir + " ___________"
+        };
+      }
+    },
+    {
+      id: 'dalolatnoma',
+      cat: 'tashkilot',
+      catName: 'Tashkilotlar',
+      title: 'Dalolatnoma',
+      desc: "Komissiya yoki mas'ul shaxslar ishtirokida biror voqea, jihozni topshirish-qabul qilish yoki tekshiruv faktini tasdiqlovchi hujjat.",
+      situation: "Texnika/jihozlarni topshirish-qabul qilishda, inventarizatsiyada yoki biror texnik nosozlikni qayd etishda tuziladi.",
+      required: ["Tashkilot nomi", "Dalolatnoma raqami", "Komissiya a'zolari", "Tasdiqlanayotgan holat / obyekt", "Xulosa", "Sana"],
+      fields: [
+        { key: 'org', label: 'Tashkilot nomi', placeholder: "«AlifTech» MChJ", shared: 'org' },
+        { key: 'act_no', label: 'Dalolatnoma raqami', placeholder: "№ 08" },
+        { key: 'commission', label: 'Komissiya raisi va a’zolari', placeholder: "Rais: Sh. Rayimov; A'zolar: A. Valiyev, D. Sobirova" },
+        { key: 'fact', label: 'Tasdiqlanayotgan holat yoki topshirilgan mulk', type: 'textarea', placeholder: "5 dona noutbuk va 2 dona proyektor to'liq ishchi holatda o'quv xonasiga topshirilganligi" },
+        { key: 'conclusion', label: 'Komissiya xulosasi', placeholder: "Jihozlar nuqsonsiz qabul qilindi va foydalanishga yaroqli deb topildi" },
+        { key: 'date', label: 'Sana', placeholder: todayStr(), defaultVal: todayStr() }
+      ],
+      build: function (d) {
+        var org = d.org || "«Tashkilot» MChJ";
+        var no = d.act_no || "№ 01";
+        var com = d.commission || "Rais: Sh. Rayimov; A'zolar: A. Valiyev";
+        var fct = (d.fact || "belgilangan moddiy boyliklar ko'zdan kechirilganligi").trim().replace(/\.+$/, '');
+        var cnc = (d.conclusion || "holat rasman tasdiqlandi").trim().replace(/\.+$/, '');
+        var dt = d.date || todayStr();
+        return {
+          rightHeader: [org],
+          docTitle: "DALOLATNOMA " + no,
+          paragraphs: [
+            "Ushbu dalolatnoma " + dt + " kuni quyidagi tarkibdagi komissiya tomonidan tuzildi: " + com + ".",
+            "Komissiya tomonidan " + fct + " holati tekshirildi va qayd etildi.",
+            "XULOSA: " + cnc + ". Dalolatnoma ikki nusxada tuzilib, imzolandi."
+          ],
+          footerLeft: "Sana: " + dt,
+          footerRight: "Komissiya a'zolari imzolari: ___________"
+        };
+      }
+    }
+  ];
+
+  var PROFILE_KEY = 'alif_doc_builder_profile_v1';
+  var profile = {};
+  try {
+    profile = JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}') || {};
+  } catch (e) { profile = {}; }
+
+  function saveProfile() {
+    try { localStorage.setItem(PROFILE_KEY, JSON.stringify(profile)); } catch (e) {}
+  }
+
+  function convertScript(text, scriptMode) {
+    if (!text) return '';
+    if (window.Alif && typeof window.Alif.convert === 'function') {
+      if (scriptMode === 'oldlat') {
+        var asNew = window.Alif.convert(text, 'auto2new', { smart: false });
+        return window.Alif.convert(asNew, 'new2oldlat', { smart: false });
+      }
+      if (scriptMode === 'cyr') {
+        var asNew2 = window.Alif.convert(text, 'auto2new', { smart: false });
+        return window.Alif.convert(asNew2, 'new2cyr', { smart: false });
+      }
+      return window.Alif.convert(text, 'auto2new', { smart: false });
+    }
+    // Fallback agar converter.js yuklanmagan bo'lsa
+    return text
+      .replace(/([Oo])['ʻ’‘ʼ`]/g, function (_, c) { return c === 'O' ? 'Ö' : 'ö'; })
+      .replace(/([Gg])['ʻ’‘ʼ`]/g, function (_, c) { return c === 'G' ? 'Ğ' : 'ğ'; })
+      .replace(/([Ss])[Hh]/g, function (_, c) { return c === 'S' ? 'Ş' : 'ş'; })
+      .replace(/([Cc])[Hh]/g, function (_, c) { return c === 'C' ? 'Ç' : 'ç'; });
+  }
+
+  function initSmartDocBuilder() {
+    var catBar = document.getElementById('alifDocCatBar');
+    var gridEl = document.getElementById('alifDocCardsGrid');
+    var searchEl = document.getElementById('alifDocSearch');
+    var builderSection = document.getElementById('alifSmartBuilder');
+    var formTitleEl = document.getElementById('alifBuilderTitle');
+    var formSubEl = document.getElementById('alifBuilderSub');
+    var formFieldsEl = document.getElementById('alifBuilderFields');
+    var paperEl = document.getElementById('alifDocPaper');
+    if (!catBar || !gridEl || !formFieldsEl || !paperEl) return;
+
+    var activeCat = 'all';
+    var activeTpl = TEMPLATES[0];
+    var scriptMode = 'newlat'; // newlat | oldlat | cyr
+    var formValues = {};
+
+    function loadTplValues(tpl) {
+      formValues = {};
+      tpl.fields.forEach(function (f) {
+        if (f.shared && profile[f.shared]) {
+          formValues[f.key] = profile[f.shared];
+        } else if (f.defaultVal) {
+          formValues[f.key] = f.defaultVal;
+        } else {
+          formValues[f.key] = '';
         }
-        continue;
-      }
-      if (cls.indexOf("alif-doc-sign-row") !== -1) {
-        var spans = el.querySelectorAll("span");
-        var leftTxt = spans[0] ? (spans[0].innerText.trim() || "________________") : "________________";
-        var rightTxt = spans[1] ? (spans[1].innerText.trim() || "________________") : "________________";
-        bodyXml.push('<w:p><w:pPr><w:spacing w:before="240" w:after="120"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="28"/></w:rPr><w:t xml:space="preserve">' + xmlEsc(leftTxt + "                    " + rightTxt) + '</w:t></w:r></w:p>');
-        continue;
-      }
-      var clone = el.cloneNode(true);
-      clone.querySelectorAll(".alif-doc-blank").forEach(function (b) { b.textContent = "____________________"; });
-      var txt = clone.innerText.replace(/\s+/g, " ").trim();
-      if (!txt) continue;
-      var isTitle = cls.indexOf("alif-doc-paper-title") !== -1;
-      var isCenter = isTitle || style.indexOf("text-align:center") !== -1;
-      var isBold = isTitle || style.indexOf("font-weight:700") !== -1;
-      var noIndent = isCenter || cls.indexOf("no-indent") !== -1;
-      var pPr = '<w:pPr><w:spacing w:after="140" w:line="340" w:lineRule="auto"/>' +
-        (isCenter ? '<w:jc w:val="center"/>' : '<w:jc w:val="both"/>') +
-        (!noIndent ? '<w:ind w:firstLine="720"/>' : '') + '</w:pPr>';
-      var rPr = '<w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="' + (isTitle ? '30' : '28') + '"/>' + (isBold ? '<w:b/>' : '') + '</w:rPr>';
-      bodyXml.push('<w:p>' + pPr + '<w:r>' + rPr + '<w:t xml:space="preserve">' + xmlEsc(txt) + '</w:t></w:r></w:p>');
+      });
     }
 
-    var files = [
-      { name: "[Content_Types].xml", data: enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>') },
-      { name: "_rels/.rels", data: enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>') },
-      { name: "word/document.xml", data: enc.encode('<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>' + bodyXml.join("") + '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="850" w:bottom="1134" w:left="1701"/></w:sectPr></w:body></w:document>') }
-    ];
-
-    var localChunks = [], centralChunks = [], offset = 0;
-    for (var f = 0; f < files.length; f++) {
-      var nameBytes = enc.encode(files[f].name);
-      var content = files[f].data;
-      var crc = crc32(content);
-      var lh = new Uint8Array(30 + nameBytes.length);
-      var lv = new DataView(lh.buffer);
-      lv.setUint32(0, 0x04034b50, true);
-      lv.setUint16(4, 20, true);
-      lv.setUint32(14, crc, true);
-      lv.setUint32(18, content.length, true);
-      lv.setUint32(22, content.length, true);
-      lv.setUint16(26, nameBytes.length, true);
-      lh.set(nameBytes, 30);
-      localChunks.push(lh, content);
-
-      var ch = new Uint8Array(46 + nameBytes.length);
-      var cv = new DataView(ch.buffer);
-      cv.setUint32(0, 0x02014b50, true);
-      cv.setUint16(4, 20, true);
-      cv.setUint16(6, 20, true);
-      cv.setUint32(16, crc, true);
-      cv.setUint32(20, content.length, true);
-      cv.setUint32(24, content.length, true);
-      cv.setUint16(28, nameBytes.length, true);
-      cv.setUint32(42, offset, true);
-      ch.set(nameBytes, 46);
-      centralChunks.push(ch);
-      offset += lh.length + content.length;
+    function escapeHtml(s) {
+      return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
-    var cdSize = centralChunks.reduce(function (s, a) { return s + a.length; }, 0);
-    var eocd = new Uint8Array(22);
-    var ev = new DataView(eocd.buffer);
-    ev.setUint32(0, 0x06054b50, true);
-    ev.setUint16(8, files.length, true);
-    ev.setUint16(10, files.length, true);
-    ev.setUint32(12, cdSize, true);
-    ev.setUint32(16, offset, true);
-    return new Blob(localChunks.concat(centralChunks, [eocd]), {
-      type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+
+    function renderCategories() {
+      catBar.innerHTML = CATEGORIES.map(function (c) {
+        var cls = 'alif-doc-cat-btn' + (c.id === activeCat ? ' is-active' : '');
+        return '<button type="button" class="' + cls + '" data-cat="' + c.id + '">' + c.label + '</button>';
+      }).join('');
+    }
+
+    function renderCards() {
+      var q = (searchEl && searchEl.value || '').trim().toLowerCase();
+      var list = TEMPLATES.filter(function (t) {
+        var matchCat = activeCat === 'all' || t.cat === activeCat;
+        if (!matchCat) return false;
+        if (!q) return true;
+        var hay = (t.title + ' ' + t.catName + ' ' + t.desc + ' ' + t.situation + ' ' + t.required.join(' ')).toLowerCase();
+        return hay.indexOf(q) !== -1;
+      });
+
+      if (!list.length) {
+        gridEl.innerHTML = '<div class="alif-doc-empty">Qidiruv bo‘yicha hujjat topilmadi. Boshqa kalit so‘z kiritib ko‘ring.</div>';
+        return;
+      }
+
+      gridEl.innerHTML = list.map(function (t) {
+        var isSelected = t.id === activeTpl.id;
+        var reqTags = t.required.map(function (r) {
+          return '<span class="alif-doc-req-tag">' + escapeHtml(r) + '</span>';
+        }).join('');
+        return '<article class="alif-doc-card' + (isSelected ? ' is-selected' : '') + '" data-tpl="' + t.id + '">' +
+          '<div class="alif-doc-card-top">' +
+            '<span class="alif-doc-badge">' + escapeHtml(t.catName) + '</span>' +
+            (isSelected ? '<span class="alif-doc-active-dot">Tanlangan</span>' : '') +
+          '</div>' +
+          '<h3 class="alif-doc-card-title">' + escapeHtml(t.title) + '</h3>' +
+          '<p class="alif-doc-card-desc">' + escapeHtml(t.desc) + '</p>' +
+          '<div class="alif-doc-card-sit"><strong>Qachon ishlatiladi:</strong> ' + escapeHtml(t.situation) + '</div>' +
+          '<div class="alif-doc-card-req"><strong>Kerakli ma’lumotlar:</strong><div class="alif-doc-req-list">' + reqTags + '</div></div>' +
+          '<button type="button" class="alif-btn alif-btn-primary alif-doc-open-btn" data-open-tpl="' + t.id + '">Tayyorlash va eksport qilish →</button>' +
+        '</article>';
+      }).join('');
+    }
+
+    function getCompiledDoc() {
+      var rawDoc = activeTpl.build(formValues);
+      return {
+        rightHeader: rawDoc.rightHeader.map(function (line) { return convertScript(line, scriptMode); }),
+        docTitle: convertScript(rawDoc.docTitle, scriptMode),
+        paragraphs: rawDoc.paragraphs.map(function (p) { return convertScript(p, scriptMode); }),
+        footerLeft: convertScript(rawDoc.footerLeft, scriptMode),
+        footerRight: convertScript(rawDoc.footerRight, scriptMode)
+      };
+    }
+
+    function getPlainTextDoc() {
+      var d = getCompiledDoc();
+      var lines = [];
+      if (d.rightHeader.length) {
+        lines.push(d.rightHeader.join('\n'));
+        lines.push('');
+      }
+      lines.push(d.docTitle);
+      lines.push('');
+      d.paragraphs.forEach(function (p) {
+        lines.push(p);
+        lines.push('');
+      });
+      lines.push(d.footerLeft + '          ' + d.footerRight);
+      return lines.join('\n');
+    }
+
+    function renderPreview() {
+      var d = getCompiledDoc();
+      var rhHtml = d.rightHeader.length
+        ? '<div class="alif-paper-right">' + d.rightHeader.map(escapeHtml).join('<br>') + '</div>'
+        : '';
+      var titleHtml = '<div class="alif-paper-title">' + escapeHtml(d.docTitle).replace(/\n/g, '<br>') + '</div>';
+      var bodyHtml = d.paragraphs.map(function (p) {
+        return '<p class="alif-paper-p">' + escapeHtml(p).replace(/\n/g, '<br>') + '</p>';
+      }).join('');
+      var footHtml = '<div class="alif-paper-foot">' +
+        '<div>' + escapeHtml(d.footerLeft).replace(/\n/g, '<br>') + '</div>' +
+        '<div style="text-align:right;">' + escapeHtml(d.footerRight).replace(/\n/g, '<br>') + '</div>' +
+      '</div>';
+
+      paperEl.innerHTML = rhHtml + titleHtml + bodyHtml + footHtml;
+    }
+
+    function renderForm() {
+      if (formTitleEl) formTitleEl.textContent = activeTpl.title;
+      if (formSubEl) formSubEl.textContent = activeTpl.situation;
+
+      formFieldsEl.innerHTML = activeTpl.fields.map(function (f) {
+        var val = escapeHtml(formValues[f.key] || '');
+        var ph = escapeHtml(f.placeholder || '');
+        if (f.type === 'textarea') {
+          return '<div class="alif-b-field">' +
+            '<label for="bf_' + f.key + '">' + escapeHtml(f.label) + '</label>' +
+            '<textarea id="bf_' + f.key + '" data-fkey="' + f.key + '" rows="3" placeholder="' + ph + '">' + val + '</textarea>' +
+          '</div>';
+        }
+        return '<div class="alif-b-field">' +
+          '<label for="bf_' + f.key + '">' + escapeHtml(f.label) + '</label>' +
+          '<input type="text" id="bf_' + f.key + '" data-fkey="' + f.key + '" value="' + val + '" placeholder="' + ph + '" />' +
+        '</div>';
+      }).join('');
+
+      renderPreview();
+    }
+
+    function selectTemplate(tplId, scrollIntoView) {
+      var found = TEMPLATES.find(function (t) { return t.id === tplId; });
+      if (!found) return;
+      activeTpl = found;
+      loadTplValues(activeTpl);
+      renderCards();
+      renderForm();
+      if (scrollIntoView && builderSection) {
+        builderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    catBar.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-cat]');
+      if (!btn) return;
+      activeCat = btn.dataset.cat;
+      renderCategories();
+      renderCards();
     });
+
+    if (searchEl) {
+      searchEl.addEventListener('input', renderCards);
+    }
+
+    gridEl.addEventListener('click', function (e) {
+      var openBtn = e.target.closest('[data-open-tpl]');
+      var card = e.target.closest('[data-tpl]');
+      if (openBtn) {
+        selectTemplate(openBtn.dataset.openTpl, true);
+      } else if (card) {
+        selectTemplate(card.dataset.tpl, true);
+      }
+    });
+
+    formFieldsEl.addEventListener('input', function (e) {
+      var el = e.target.closest('[data-fkey]');
+      if (!el) return;
+      var k = el.dataset.fkey;
+      formValues[k] = el.value;
+      var fDef = activeTpl.fields.find(function (x) { return x.key === k; });
+      if (fDef && fDef.shared) {
+        profile[fDef.shared] = el.value;
+        saveProfile();
+      }
+      renderPreview();
+    });
+
+    // Yozuv rejimi (Yangi lotin / Eski lotin / Kirill)
+    document.querySelectorAll('[data-doc-script]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        scriptMode = btn.dataset.docScript;
+        document.querySelectorAll('[data-doc-script]').forEach(function (b) {
+          b.classList.toggle('is-active', b.dataset.docScript === scriptMode);
+        });
+        renderPreview();
+      });
+    });
+
+    // Namunani to'ldirish / Formani tozalash
+    var fillDemoBtn = document.getElementById('alifDocFillDemo');
+    if (fillDemoBtn) {
+      fillDemoBtn.addEventListener('click', function () {
+        activeTpl.fields.forEach(function (f) {
+          formValues[f.key] = f.placeholder || '';
+        });
+        renderForm();
+      });
+    }
+
+    var clearFormBtn = document.getElementById('alifDocClearForm');
+    if (clearFormBtn) {
+      clearFormBtn.addEventListener('click', function () {
+        profile = {};
+        saveProfile();
+        activeTpl.fields.forEach(function (f) {
+          formValues[f.key] = f.defaultVal || '';
+        });
+        renderForm();
+      });
+    }
+
+    // Eksport: Nusxa olish, .DOCX, .PDF, .TXT
+    var copyBtn = document.getElementById('alifDocCopyBtn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', function () {
+        var txt = getPlainTextDoc();
+        if (navigator.clipboard) navigator.clipboard.writeText(txt);
+        var old = copyBtn.textContent;
+        copyBtn.textContent = '✓ Nusxa olindi';
+        setTimeout(function () { copyBtn.textContent = old; }, 1500);
+      });
+    }
+
+    function downloadBlob(blob, filename) {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () { document.body.removeChild(a); URL.revokeObjectURL(url); }, 250);
+    }
+
+    var txtBtn = document.getElementById('alifDocTxtBtn');
+    if (txtBtn) {
+      txtBtn.addEventListener('click', function () {
+        downloadBlob(new Blob([getPlainTextDoc()], { type: 'text/plain;charset=utf-8' }), activeTpl.id + '_alifplus.txt');
+      });
+    }
+
+    var docxBtn = document.getElementById('alifDocDocxBtn');
+    if (docxBtn) {
+      docxBtn.addEventListener('click', async function () {
+        var d = getCompiledDoc();
+        if (!window.JSZip) {
+          downloadBlob(new Blob([getPlainTextDoc()], { type: 'text/plain;charset=utf-8' }), activeTpl.id + '_alifplus.txt');
+          return;
+        }
+        var esc = function (s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+        var xmlParts = [];
+
+        // O'ng yuqori rekvizitlar (Kimga / Kimdan)
+        d.rightHeader.forEach(function (line) {
+          xmlParts.push('<w:p><w:pPr><w:jc w:val="right"/><w:spacing w:after="40"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="28"/></w:rPr><w:t xml:space="preserve">' + esc(line) + '</w:t></w:r></w:p>');
+        });
+
+        // Markaziy sarlavha
+        xmlParts.push('<w:p><w:pPr><w:jc w:val="center"/><w:spacing w:before="240" w:after="200"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:b/><w:sz w:val="30"/></w:rPr><w:t xml:space="preserve">' + esc(d.docTitle) + '</w:t></w:r></w:p>');
+
+        // Asosiy matn
+        d.paragraphs.forEach(function (p) {
+          p.split(/\n/).forEach(function (subLine) {
+            xmlParts.push('<w:p><w:pPr><w:jc w:val="both"/><w:ind w:firstLine="560"/><w:spacing w:after="140" w:line="320" w:lineRule="auto"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="28"/></w:rPr><w:t xml:space="preserve">' + esc(subLine) + '</w:t></w:r></w:p>');
+          });
+        });
+
+        // Sana va Imzo
+        xmlParts.push('<w:p><w:pPr><w:spacing w:before="280"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman"/><w:sz w:val="28"/></w:rPr><w:t xml:space="preserve">' + esc(d.footerLeft + '          ' + d.footerRight) + '</w:t></w:r></w:p>');
+
+        var zip = new window.JSZip();
+        zip.file('[Content_Types].xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>');
+        zip.file('_rels/.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>');
+        zip.file('word/document.xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>' + xmlParts.join('') + '</w:body></w:document>');
+        var blob = await zip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+        downloadBlob(blob, activeTpl.id + '_alifplus.docx');
+      });
+    }
+
+    var pdfBtn = document.getElementById('alifDocPdfBtn');
+    if (pdfBtn) {
+      pdfBtn.addEventListener('click', function () {
+        var d = getCompiledDoc();
+        var w = window.open('', '_blank', 'width=840,height=720');
+        if (!w) return;
+        var rh = d.rightHeader.length ? '<div style="margin-left:auto;width:54%;margin-bottom:24px;">' + d.rightHeader.map(escapeHtml).join('<br>') + '</div>' : '';
+        var ps = d.paragraphs.map(function (p) { return '<p style="text-indent:28px;text-align:justify;margin:0 0 12px;">' + escapeHtml(p).replace(/\n/g, '<br>') + '</p>'; }).join('');
+        w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>' + escapeHtml(d.docTitle) + '</title><style>body{font-family:"Times New Roman",serif;padding:48px 56px;font-size:14pt;line-height:1.55;color:#111;}</style></head><body>' +
+          rh +
+          '<h2 style="text-align:center;margin:18px 0 20px;font-size:15pt;">' + escapeHtml(d.docTitle).replace(/\n/g, '<br>') + '</h2>' +
+          ps +
+          '<div style="display:flex;justify-content:space-between;margin-top:34px;"><div>' + escapeHtml(d.footerLeft).replace(/\n/g, '<br>') + '</div><div style="text-align:right;">' + escapeHtml(d.footerRight).replace(/\n/g, '<br>') + '</div></div>' +
+        '</body></html>');
+        w.document.close();
+        w.focus();
+        setTimeout(function () { w.print(); }, 250);
+      });
+    }
+
+    loadTplValues(activeTpl);
+    renderCategories();
+    renderCards();
+    renderForm();
   }
 
-  window.downloadAlifDocWord = function () {
-    var p = document.getElementById("alifDocPaper");
-    if (!p) return;
-    var blob = makeDocxBlob(p);
-    var u = URL.createObjectURL(blob);
-    var a = document.createElement("a");
-    a.href = u;
-    a.download = docType + "-alifplus.docx";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(u);
-  };
-  window.printAlifDoc = function () { var p = document.getElementById("alifDocPaper"); if (!p) return; var w = window.open("", "_blank", "width=800,height=900"); if (!w) { window.print(); return; } w.document.write('<html><head><title>Alif+ Hujjat</title><style>body{font-family:"Times New Roman",serif;font-size:14pt;line-height:1.7;padding:20mm 22mm;color:#000;}p{text-indent:1.25cm;text-align:justify;}.no-indent{text-indent:0;}.alif-doc-paper-title{text-align:center;font-weight:bold;letter-spacing:3pt;margin:16pt 0;}.alif-doc-paper-addr{margin-left:50%;margin-bottom:16pt;}.alif-doc-sign-row{display:flex;justify-content:space-between;margin-top:24pt;}.alif-doc-blank{display:inline-block;border-bottom:1px solid #000;min-width:100px;height:1em;}</style></head><body>'+p.innerHTML+'</body></html>'); w.document.close(); w.focus(); setTimeout(function () { w.print(); w.close(); }, 250); };
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { if (document.getElementById("alifDocsSection")) window.selectAlifDoc("tilxat"); });
-  else if (document.getElementById("alifDocsSection")) window.selectAlifDoc("tilxat");
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSmartDocBuilder);
+  } else {
+    initSmartDocBuilder();
+  }
 })();

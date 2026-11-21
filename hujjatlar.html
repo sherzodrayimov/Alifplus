@@ -51,78 +51,67 @@
           <svg class="alif-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
         </button>
       </nav>
-    </div>
-  </header>
-  <main class="alif-main" style="padding-top:16px;">
-<section id="alifDocsSection" class="alif-docs-sec">
-    <div class="alif-container">
-      <div class="alif-docs-wrap">
-        <div class="alif-docs-hero">
-          <span class="alif-trainer-badge">Namunaviy hujjatlar konstruktori</span>
-          <h2 id="alifDocTitle">Tilxat Yoziş</h2>
-          <p id="alifDocSub">Qarz tilxatini töldiring — summa avtomatik söz bilan yoziladi, hujjat yangi, eski lotin va kirill yozuvida, çop etişga tayyor.</p>
-          <div class="alif-docs-tabs">
-            <button type="button" class="alif-doc-tab is-active" data-doc="tilxat" onclick="selectAlifDoc('tilxat')">Tilxat</button>
-            <button type="button" class="alif-doc-tab" data-doc="ishdan" onclick="selectAlifDoc('ishdan')">İşdan böşaş arizasi</button>
-            <button type="button" class="alif-doc-tab" data-doc="tatil" onclick="selectAlifDoc('tatil')">Ta’til arizasi</button>
-            <button type="button" class="alif-doc-tab" data-doc="tushuntirish" onclick="selectAlifDoc('tushuntirish')">Tuşuntiriş xati</button>
-            <button type="button" class="alif-doc-tab" data-doc="tavsifnoma" onclick="selectAlifDoc('tavsifnoma')">Tavsifnoma</button>
-            <button type="button" class="alif-doc-tab" data-doc="buyruq" onclick="selectAlifDoc('buyruq')">Buyruq</button>
-          </div>
-        </div>
-        <div class="alif-docs-grid">
-          <div class="alif-doc-form-card">
-            <div class="alif-doc-card-head">
-              <div class="alif-doc-card-title">Ma’lumotlar</div>
-              <div class="alif-doc-mini-actions">
-                <button type="button" class="alif-doc-sbtn" onclick="fillAlifDocSample()">📄 Namuna</button>
-                <button type="button" class="alif-doc-sbtn" onclick="clearAlifDocForm()" title="Tozalaş">↻</button>
-              </div>
-            </div>
-            <div id="alifDocFormBody"></div>
-          </div>
-          <div class="alif-doc-preview-card">
-            <div class="alif-doc-card-head">
-              <div class="alif-doc-card-title">Hujjat</div>
-              <div class="alif-doc-mini-actions">
-                <div class="alif-doc-script-sw">
-                  <button type="button" class="alif-doc-scbtn is-active" data-sc="yangi" onclick="setAlifDocScript('yangi')">Yangi</button>
-                  <button type="button" class="alif-doc-scbtn" data-sc="eski" onclick="setAlifDocScript('eski')">Eski</button>
-                  <button type="button" class="alif-doc-scbtn" data-sc="kirill" onclick="setAlifDocScript('kirill')">Кирилл</button>
-                </div>
-                <button type="button" class="alif-doc-sbtn" onclick="copyAlifDocText(this)">📋 Nusxalaş</button>
-                <button type="button" class="alif-doc-sbtn" onclick="downloadAlifDocWord()">⬇ Word (.docx)</button>
-                <button type="button" class="alif-doc-sbtn alif-doc-print-btn" onclick="printAlifDoc()">🖨 Çop etiş</button>
-              </div>
-            </div>
-            <div class="alif-doc-paper-stage"><div id="alifDocPaper" class="alif-doc-paper"></div></div>
-            <div id="alifDocNote" class="alif-doc-note"></div>
-          </div>
-        </div>
+  <main>
+    <section class="alif-container" style="padding: 36px 0 18px;">
+      <div class="alif-hero-pill">
+        <span class="alif-hero-pill-dot"></span>
+        <span>6 ta kategoriya · 15 ta rasmiy shablon · Smart Document Builder</span>
       </div>
-    </div>
-  </section>
-  </main>
-<div id="alifExcModal" class="alif-modal" hidden>
-    <div class="alif-modal-backdrop" id="alifExcCloseBg"></div>
-    <div class="alif-modal-box" role="dialog" aria-modal="true" aria-labelledby="alifExcTitle">
-      <div class="alif-modal-head">
-        <h3 id="alifExcTitle">Istisno sözlar röyxati</h3>
-        <button type="button" id="alifExcClose" class="alif-mini-btn">✕</button>
-      </div>
-      <p class="alif-modal-desc">
-        Ögirilmasligi yoki maxsus körinişda qolişi kerak bölgan sözlarni kiriting (masalan: <code>Windows → Windows</code>).
+      <h1 style="font-size:clamp(26px, 4vw, 38px); margin:8px 0;">Aqlli hujjatlar konstruktori</h1>
+      <p style="margin:0; color:var(--muted); max-width:740px;">
+        Kerakli hujjat turini vaziyatiga qarab tanlang, maydonlarni to‘ldiring va tayyor rasmiy hujjatni <b>Yangi lotin (Ö, Ğ, Ş, Ç)</b>, <b>Eski lotin</b> yoki <b>Kirill</b> yozuvida <b>.DOCX</b> hamda <b>.PDF</b> formatida yuklab oling.
       </p>
-      <form id="alifExcForm" class="alif-exc-form">
-        <input type="text" id="alifExcSrc" class="alif-input" placeholder="Asl söz (masalan: YouTube)" required />
-        <input type="text" id="alifExcDst" class="alif-input" placeholder="Natija (böş qolsa özgarmaydi)" />
-        <button type="submit" class="alif-btn alif-btn-primary">Qöşiş</button>
-      </form>
-      <div id="alifExcList" class="alif-exc-list"></div>
-    </div>
-  </div>
+    </section>
 
-  <footer class="alif-footer">
+    <section class="alif-container" style="padding-bottom: 28px;">
+      <div class="alif-doc-filter-bar">
+        <div id="alifDocCatBar" class="alif-doc-cats"></div>
+        <input type="search" id="alifDocSearch" class="alif-input alif-doc-search" placeholder="Hujjat nomi yoki vaziyatni qidiring (masalan: tilxat, CV, ariza)..." />
+      </div>
+      <div id="alifDocCardsGrid" class="alif-doc-grid"></div>
+    </section>
+
+    <section id="alifSmartBuilder" class="alif-container" style="padding: 12px 0 56px;">
+      <div class="alif-card alif-builder-shell">
+        <div class="alif-builder-top">
+          <div>
+            <span class="alif-trainer-badge">Smart Document Builder</span>
+            <h2 id="alifBuilderTitle" style="margin:6px 0 4px; font-size:22px;">O'quv arizasi</h2>
+            <p id="alifBuilderSub" style="margin:0; font-size:13.5px; color:var(--muted);"></p>
+          </div>
+          <div class="alif-builder-script-tabs" role="group" aria-label="Hujjat yozuvi">
+            <button type="button" class="alif-mt-opt is-active" data-doc-script="newlat">Yangi lotin (Ö, Ğ, Ş, Ç)</button>
+            <button type="button" class="alif-mt-opt" data-doc-script="oldlat">Eski lotin (O', G', Sh, Ch)</button>
+            <button type="button" class="alif-mt-opt" data-doc-script="cyr">Kirill (Ў, Ғ, Ш, Ч)</button>
+          </div>
+        </div>
+
+        <div class="alif-builder-grid">
+          <div class="alif-builder-form-col">
+            <div class="alif-builder-form-actions">
+              <button type="button" id="alifDocFillDemo" class="alif-mini-btn">✨ Namunani to‘ldirish</button>
+              <button type="button" id="alifDocClearForm" class="alif-mini-btn alif-mini-danger">Tozalash</button>
+            </div>
+            <div id="alifBuilderFields" class="alif-builder-fields"></div>
+          </div>
+
+          <div class="alif-builder-preview-col">
+            <div class="alif-builder-export-bar">
+              <span style="font-size:13px; font-weight:700; color:var(--muted);">Jonli hujjat ko‘rinishi (A4)</span>
+              <div class="alif-export-btns">
+                <button type="button" id="alifDocCopyBtn" class="alif-mini-btn alif-mini-primary">Nusxa olish</button>
+                <button type="button" id="alifDocDocxBtn" class="alif-mini-btn">.DOCX (Word)</button>
+                <button type="button" id="alifDocPdfBtn" class="alif-mini-btn">.PDF</button>
+                <button type="button" id="alifDocTxtBtn" class="alif-mini-btn">.TXT</button>
+              </div>
+            </div>
+            <div id="alifDocPaper" class="alif-doc-paper"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+<footer class="alif-footer">
     <div class="alif-container">
       <div class="alif-footer-grid">
         <div class="alif-footer-col-brand">
@@ -571,7 +560,7 @@
   </script>
   <script src="web/documents.js"></script>
   <script src="web/trainer.js?v=1"></script>
-  <script src="web/docs-generator.js?v=3"></script>
+  <script src="web/docs-generator.js?v=4"></script>
   <div id="alifGuideModal" class="alif-guide-backdrop" hidden onclick="if(event.target===this)closeAlifMacGuide()">
     <div class="alif-guide-dialog">
       <div class="alif-guide-head">
@@ -773,5 +762,7 @@
   
   
   <script src="web/theme-variants.js"></script>
+  <script src="web/vendor/jszip.min.js"></script>
+  <script src="web/converter.js"></script>
 </body>
 </html>
