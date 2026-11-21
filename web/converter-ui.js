@@ -273,6 +273,9 @@
 
     saveExceptions();
     runConversion();
+    window.addEventListener('alif-smart-ready', function () {
+      if (inputEl.value) runConversion();
+    });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initConverterUI);

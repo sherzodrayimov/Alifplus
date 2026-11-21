@@ -43,7 +43,7 @@
   <header class="alif-topbar">
     <div class="alif-container alif-topbar-inner">
       <a href="../index.html" class="alif-brand">
-        <img src="icon.png" alt="Alif+" style="width:34px; height:34px; border-radius:10px;">
+        <img src="../icon.png" alt="Alif+" style="width:34px; height:34px; border-radius:10px;">
         <span class="alif-brand-text">Alif+</span>
       </a>
       <nav class="alif-nav" aria-label="Asosiy menyu">
@@ -136,6 +136,28 @@
       document.getElementById("fontMinus").addEventListener("click", function () { size = Math.max(15, size - 2); reader.style.fontSize = size + "px"; });
       document.getElementById("fontPlus").addEventListener("click", function () { size = Math.min(28, size + 2); reader.style.fontSize = size + "px"; });
       loadBook(0);
+    })();
+  </script>
+  <script src="smart-engine.js"></script>
+  <script>
+    (function () {
+      function convertReader() {
+        var reader = document.querySelector(".reader");
+        if (!reader || !window.AlifSmartEngine) return;
+        if (!reader.dataset.origHtml) reader.dataset.origHtml = reader.innerHTML;
+        var walker = document.createTreeWalker(reader, NodeFilter.SHOW_TEXT, null, false);
+        var n;
+        while ((n = walker.nextNode())) {
+          var p = n.parentElement;
+          if (!p || /^(SCRIPT|STYLE)$/.test(p.tagName)) continue;
+          if (n.nodeValue && n.nodeValue.trim()) {
+            n.nodeValue = window.AlifSmartEngine.smartConvertText(n.nodeValue);
+          }
+        }
+      }
+      window.addEventListener("alif-smart-ready", convertReader);
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", convertReader);
+      else convertReader();
     })();
   </script>
   <script src="theme-variants.js?v=3"></script>

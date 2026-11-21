@@ -31,7 +31,8 @@
       if ((lo === 's' || lo === 'c') && nx === "'" && (s[i + 2] || '').toLowerCase() === 'h') {
         out += s[i] + s[i + 2]; i += 2; continue;
       }
-      if ((lo === 's' || lo === 'c') && nxLo === 'h') { out += isUpper(s[i]) ? 'Ş' : 'ş'; i++; continue; }
+      if (lo === 's' && nxLo === 'h') { out += isUpper(s[i]) ? 'Ş' : 'ş'; i++; continue; }
+      if (lo === 'c' && nxLo === 'h') { out += isUpper(s[i]) ? 'Ç' : 'ç'; i++; continue; }
       if ((lo === 'o' || lo === 'g') && nx === "'") {
         out += lo === 'o' ? (isUpper(s[i]) ? 'Ö' : 'ö') : (isUpper(s[i]) ? 'Ğ' : 'ğ');
         i++; continue;
@@ -126,7 +127,11 @@
       res[1].split(/\r?\n/).forEach(function (w) { w = norm(w.trim()).toLowerCase(); if (w) lexSet.add(w); });
     }
     if (Array.isArray(res[2]) && res[2].length) suffixes = res[2];
-    return { rejectCount: rejectSet ? rejectSet.size : 0, lexCount: lexSet ? lexSet.size : 0, suffixCount: suffixes.length };
+    var info = { rejectCount: rejectSet ? rejectSet.size : 0, lexCount: lexSet ? lexSet.size : 0, suffixCount: suffixes.length };
+    if (typeof root.dispatchEvent === 'function') {
+      root.dispatchEvent(new CustomEvent('alif-smart-ready', { detail: info }));
+    }
+    return info;
   });
 
   root.AlifSmartEngine = {
