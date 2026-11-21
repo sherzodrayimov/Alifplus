@@ -1811,3 +1811,206 @@ section a[href*=".exe"]:active {
   background-color: #bae6fd !important;
   transform: scale(0.98) !important;
 }
+
+/* ALIF-MOBILE-RESPONSIVE-FIX-START */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .alif-container {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  /* 1. Yuqori navigatsiya va Hero */
+  .alif-topbar-inner {
+    gap: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .alif-nav {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 4px;
+    padding-bottom: 2px;
+  }
+  .alif-nav::-webkit-scrollbar { display: none; }
+  .alif-nav-link {
+    padding: 6px 9px !important;
+    font-size: 12.5px !important;
+  }
+  .alif-hero {
+    padding-top: 22px !important;
+    padding-bottom: 28px !important;
+  }
+  .alif-hero-title {
+    font-size: clamp(25px, 7.2vw, 34px) !important;
+    line-height: 1.22 !important;
+  }
+  .alif-hero-sub {
+    font-size: 14px !important;
+  }
+  .alif-hero-rules {
+    gap: 6px !important;
+  }
+  .alif-rule-chip {
+    padding: 5px 10px !important;
+    font-size: 12.5px !important;
+  }
+  .alif-hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 9px;
+  }
+  .alif-hero-actions a {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  /* 2. Jonli yozuv sahnasi va Klaviatura (siqilmasdan, ixcham balandlikda) */
+  .alif-hero-stage {
+    border-radius: 14px !important;
+    overflow: hidden;
+  }
+  .alif-stage-bar {
+    padding: 9px 12px !important;
+  }
+  .alif-stage-screen {
+    padding: 16px 14px 14px !important;
+    min-height: 96px !important;
+  }
+  .alif-stage-output {
+    font-size: clamp(18px, 5vw, 23px) !important;
+    line-height: 1.45 !important;
+    word-break: break-word;
+  }
+  .alif-mac-kbd {
+    padding: 8px 8px 10px !important;
+    gap: 4px !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .alif-kbd-row {
+    min-width: 530px;
+    gap: 4px !important;
+  }
+  .alif-key {
+    height: 29px !important;
+    font-size: 11px !important;
+    border-radius: 5px !important;
+    border-bottom-width: 2px !important;
+  }
+  .alif-key-dual {
+    padding: 2px 0 3px !important;
+  }
+  .alif-key-dual span:first-child {
+    font-size: 8px !important;
+  }
+  .alif-key-dual span:last-child {
+    font-size: 10px !important;
+  }
+  .alif-key-fn {
+    font-size: 8.5px !important;
+    padding: 0 5px 3px !important;
+  }
+  .alif-key-mod {
+    padding: 2px 5px 3px !important;
+  }
+  .alif-mod-sym {
+    font-size: 8px !important;
+  }
+  .alif-mod-lbl {
+    font-size: 8px !important;
+  }
+  .alif-key-home::after {
+    bottom: 3px !important;
+    width: 8px !important;
+  }
+
+  /* 3. Skrol hikoya kartochkasi */
+  .alif-story-showcase {
+    padding: 18px 16px !important;
+    margin-top: 18px !important;
+  }
+  .alif-story-line {
+    font-size: 18px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* 4. Hujjatlar namunasi (cho'zilib ketishni to'xtatish va ekranga sig'dirish) */
+  .alif-docs-wrap {
+    padding: 16px 12px !important;
+    border-radius: 16px !important;
+  }
+  .alif-docs-hero h2 {
+    font-size: 20px !important;
+  }
+  .alif-docs-tabs {
+    gap: 6px !important;
+  }
+  .alif-doc-tab {
+    padding: 7px 11px !important;
+    font-size: 12.5px !important;
+  }
+  .alif-docs-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 14px !important;
+  }
+  .alif-doc-form-card,
+  .alif-doc-preview-card {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 14px 12px !important;
+    box-sizing: border-box !important;
+  }
+  .alif-doc-row2 {
+    grid-template-columns: 1fr !important;
+  }
+  .alif-doc-paper-stage {
+    padding: 10px !important;
+    overflow-x: hidden !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .alif-doc-paper {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: auto !important;
+    padding: 20px 16px !important;
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  .alif-doc-paper-addr {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-bottom: 14px !important;
+  }
+  .alif-doc-paper-title {
+    font-size: 14.5px !important;
+    letter-spacing: 0.1em !important;
+    margin: 12px 0 !important;
+  }
+  .alif-doc-paper p {
+    text-indent: 18px !important;
+    text-align: left !important;
+  }
+  .alif-doc-sign-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    margin-top: 18px !important;
+  }
+  .alif-doc-blank {
+    min-width: 80px !important;
+  }
+}
+/* ALIF-MOBILE-RESPONSIVE-FIX-END */
