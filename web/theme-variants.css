@@ -281,3 +281,208 @@ input:focus, textarea:focus, select:focus {
 .alif-doc-card-title::before {
   background: var(--accent) !important;
 }
+
+/* ── DESKTOP YUKLAB OLISH TUGMALARI (macOS va Windows — Oq va Tungi rejim) ── */
+#alifDesktopApp a[href*=".dmg"],
+#alifDesktopApp a[download*="mac"],
+#alifDesktopApp .alif-dl-primary {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+  border: 1.5px solid #b45309 !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 20px rgba(180, 83, 9, 0.24) !important;
+}
+#alifDesktopApp a[href*=".dmg"] *,
+#alifDesktopApp a[download*="mac"] *,
+#alifDesktopApp .alif-dl-primary * {
+  color: #ffffff !important;
+}
+#alifDesktopApp a[href*=".dmg"] small,
+#alifDesktopApp a[href*=".dmg"] span:last-child,
+#alifDesktopApp .alif-dl-primary small {
+  color: #fef3c7 !important;
+}
+#alifDesktopApp a[href*=".dmg"]:hover,
+#alifDesktopApp a[download*="mac"]:hover,
+#alifDesktopApp .alif-dl-primary:hover {
+  background: linear-gradient(135deg, #b45309 0%, #92400e 100%) !important;
+  border-color: #92400e !important;
+  color: #ffffff !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 26px rgba(180, 83, 9, 0.34) !important;
+}
+
+/* Windows x64 / x32 tugmalari — Oq fonda */
+#alifDesktopApp a[href*=".exe"],
+#alifDesktopApp .alif-dl-secondary {
+  background: #faf7f2 !important;
+  border: 1.5px solid #e2d9c8 !important;
+  color: #18181b !important;
+  box-shadow: 0 2px 8px rgba(24, 24, 27, 0.04) !important;
+}
+#alifDesktopApp a[href*=".exe"] strong,
+#alifDesktopApp a[href*=".exe"] b,
+#alifDesktopApp a[href*=".exe"] div:first-child,
+#alifDesktopApp a[href*=".exe"] span:first-child {
+  color: #b45309 !important;
+}
+#alifDesktopApp a[href*=".exe"] small,
+#alifDesktopApp a[href*=".exe"] span:last-child,
+#alifDesktopApp a[href*=".exe"] div:last-child {
+  color: #57534e !important;
+}
+#alifDesktopApp a[href*=".exe"]:hover,
+#alifDesktopApp .alif-dl-secondary:hover {
+  background: #fef3c7 !important;
+  border-color: #d97706 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px rgba(217, 119, 6, 0.18) !important;
+}
+#alifDesktopApp a[href*=".exe"]:hover strong,
+#alifDesktopApp a[href*=".exe"]:hover b,
+#alifDesktopApp a[href*=".exe"]:hover div:first-child,
+#alifDesktopApp a[href*=".exe"]:hover span:first-child {
+  color: #92400e !important;
+}
+
+/* Yuklab olish tugmalari — Tungi (Obsidian) rejimda */
+html[data-theme="dark"] #alifDesktopApp a[href*=".dmg"],
+html[data-theme="dark"] #alifDesktopApp a[download*="mac"],
+html[data-theme="dark"] #alifDesktopApp .alif-dl-primary {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  border-color: #fbbf24 !important;
+  color: #09090b !important;
+}
+html[data-theme="dark"] #alifDesktopApp a[href*=".dmg"] *,
+html[data-theme="dark"] #alifDesktopApp a[download*="mac"] *,
+html[data-theme="dark"] #alifDesktopApp .alif-dl-primary * {
+  color: #09090b !important;
+}
+html[data-theme="dark"] #alifDesktopApp a[href*=".dmg"]:hover,
+html[data-theme="dark"] #alifDesktopApp .alif-dl-primary:hover {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+  border-color: #fde68a !important;
+}
+html[data-theme="dark"] #alifDesktopApp a[href*=".exe"],
+html[data-theme="dark"] #alifDesktopApp .alif-dl-secondary {
+  background: #16161a !important;
+  border: 1.5px solid #2c2c34 !important;
+  color: #fafafa !important;
+}
+html[data-theme="dark"] #alifDesktopApp a[href*=".exe"] strong,
+html[data-theme="dark"] #alifDesktopApp a[href*=".exe"] b,
+html[data-theme="dark"] #alifDesktopApp a[href*=".exe"] div:first-child,
+html[data-theme="dark"] #alifDesktopApp a[href*=".exe"] span:first-child {
+  color: #fbbf24 !important;
+}
+html[data-theme="dark"] #alifDesktopApp a[href*=".exe"] small,
+html[data-theme="dark"] #alifDesktopApp a[href*=".exe"] span:last-child,
+html[data-theme="dark"] #alifDesktopApp a[href*=".exe"] div:last-child {
+  color: #a1a1aa !important;
+}
+html[data-theme="dark"] #alifDesktopApp a[href*=".exe"]:hover,
+html[data-theme="dark"] #alifDesktopApp .alif-dl-secondary:hover {
+  background: #231c10 !important;
+  border-color: #f59e0b !important;
+}
+
+/* ── HUJJATLAR KONSTRUKTORI TUGMALARI (Oq va Tungi rejim uyg'unligi) ── */
+#alifDocsSection .alif-hero-pill,
+#alifDocsSection [class*="pill"],
+#alifDocsSection [class*="badge"] {
+  background: #fef3c7 !important;
+  border: 1px solid #f59e0b !important;
+  color: #92400e !important;
+}
+html[data-theme="dark"] #alifDocsSection .alif-hero-pill,
+html[data-theme="dark"] #alifDocsSection [class*="pill"],
+html[data-theme="dark"] #alifDocsSection [class*="badge"] {
+  background: rgba(245, 158, 11, 0.14) !important;
+  border-color: rgba(245, 158, 11, 0.35) !important;
+  color: #fbbf24 !important;
+}
+
+/* Oq fonda hujjat tablari va Yangi/Eski/Kirill tugmalari */
+html:not([data-theme="dark"]) .alif-doc-tab {
+  background: #ffffff !important;
+  border: 1.5px solid #ddd6c7 !important;
+  color: #3f3f46 !important;
+}
+html:not([data-theme="dark"]) .alif-doc-tab:hover {
+  background: #fef3c7 !important;
+  border-color: #d97706 !important;
+  color: #92400e !important;
+}
+html:not([data-theme="dark"]) .alif-doc-tab.is-active {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+  border-color: #b45309 !important;
+  color: #ffffff !important;
+  box-shadow: 0 5px 14px rgba(180, 83, 9, 0.26) !important;
+}
+html:not([data-theme="dark"]) .alif-doc-script-sw {
+  background: #ede8dd !important;
+  border: 1px solid #d6cfc0 !important;
+}
+html:not([data-theme="dark"]) .alif-doc-scbtn {
+  color: #52525b !important;
+}
+html:not([data-theme="dark"]) .alif-doc-scbtn:hover {
+  color: #92400e !important;
+}
+html:not([data-theme="dark"]) .alif-doc-scbtn.is-active {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(180, 83, 9, 0.25) !important;
+}
+html:not([data-theme="dark"]) .alif-doc-sbtn {
+  background: #ffffff !important;
+  border: 1.5px solid #ddd6c7 !important;
+  color: #27272a !important;
+}
+html:not([data-theme="dark"]) .alif-doc-sbtn:hover {
+  background: #fef3c7 !important;
+  border-color: #d97706 !important;
+  color: #92400e !important;
+}
+
+/* Tungi fonda hujjat tablari va Yangi/Eski/Kirill tugmalari */
+html[data-theme="dark"] .alif-doc-tab {
+  background: #16161a !important;
+  border: 1.5px solid #2c2c34 !important;
+  color: #d4d4d8 !important;
+}
+html[data-theme="dark"] .alif-doc-tab:hover {
+  background: #231c10 !important;
+  border-color: #f59e0b !important;
+  color: #fbbf24 !important;
+}
+html[data-theme="dark"] .alif-doc-tab.is-active {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  border-color: #fbbf24 !important;
+  color: #09090b !important;
+  box-shadow: 0 5px 16px rgba(245, 158, 11, 0.34) !important;
+}
+html[data-theme="dark"] .alif-doc-script-sw {
+  background: #16161a !important;
+  border: 1px solid #2c2c34 !important;
+}
+html[data-theme="dark"] .alif-doc-scbtn {
+  color: #a1a1aa !important;
+}
+html[data-theme="dark"] .alif-doc-scbtn:hover {
+  color: #fbbf24 !important;
+}
+html[data-theme="dark"] .alif-doc-scbtn.is-active {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  color: #09090b !important;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3) !important;
+}
+html[data-theme="dark"] .alif-doc-sbtn {
+  background: #16161a !important;
+  border: 1.5px solid #2c2c34 !important;
+  color: #e4e4e7 !important;
+}
+html[data-theme="dark"] .alif-doc-sbtn:hover {
+  background: #231c10 !important;
+  border-color: #f59e0b !important;
+  color: #fbbf24 !important;
+}

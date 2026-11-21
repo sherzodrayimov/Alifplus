@@ -714,7 +714,7 @@ html, body {
   cursor: pointer;
   transition: border-color 0.15s, background 0.15s;
 }
-.alif-diff-card:hover { border-color: #b45309; background: #ecfdf5; }
+.alif-diff-card:hover { border-color: #b45309; background: #fef3c7; }
 .alif-diff-pair { font-size: 14.5px; color: var(--text); }
 .alif-diff-pair strong { color: #b45309; font-size: 16px; }
 .alif-diff-card small { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
@@ -826,7 +826,7 @@ html, body {
 }
 .alif-key-btn:hover {
   border-color: #b45309;
-  background: #ecfdf5;
+  background: #fef3c7;
   color: #b45309;
 }
 
@@ -845,8 +845,8 @@ html, body {
   gap: 8px;
   padding: 5px 14px;
   border-radius: 999px;
-  background: #ecfdf5;
-  border: 1px solid #a7f3d0;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
   color: #065f46;
   font-size: 13px;
   font-weight: 700;
@@ -1390,7 +1390,7 @@ html[data-theme="dark"] .alif-footer {
 .alif-trainer-sec { padding: 18px 0 38px; }
 .alif-trainer-card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 24px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05); }
 .alif-trainer-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 16px; }
-.alif-trainer-badge { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: #ecfdf5; color: #b45309; border: 1px solid #a7f3d0; margin-bottom: 6px; }
+.alif-trainer-badge { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: #fef3c7; color: #b45309; border: 1px solid #fcd34d; margin-bottom: 6px; }
 .alif-trainer-title { margin: 0; font-size: 21px; font-weight: 800; color: var(--text); }
 .alif-mt-toolbar { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--border); }
 .alif-mt-group { display: inline-flex; align-items: center; gap: 4px; }
@@ -1418,7 +1418,7 @@ html[data-theme="dark"] .alif-footer {
 .alif-mt-focus-hint { margin-top: 10px; font-size: 12px; color: #9ca3af; text-align: right; }
 .alif-mt-actions { display: flex; justify-content: center; margin-top: 14px; }
 .alif-trainer-btn { padding: 9px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface-2); color: var(--text); font-size: 13.5px; font-weight: 700; cursor: pointer; }
-.alif-trainer-result { margin-top: 14px; padding: 14px 18px; border-radius: 12px; background: #ecfdf5; border: 1px solid #86efac; color: #065f46; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; font-size: 14.5px; }
+.alif-trainer-result { margin-top: 14px; padding: 14px 18px; border-radius: 12px; background: #fef3c7; border: 1px solid #86efac; color: #065f46; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; font-size: 14.5px; }
 .alif-trainer-result[hidden] { display: none !important; }
 html[data-theme="dark"] .alif-trainer-card { background: #111827 !important; border-color: #283548 !important; }
 html[data-theme="dark"] .alif-mt-toolbar { background: #0f172a !important; border-color: #283548 !important; }
@@ -1449,7 +1449,7 @@ html[data-theme="dark"] .alif-mt-stage { background: #181a1d !important; border-
 .alif-alpha-row[hidden] { display: none !important; }
 .alif-alpha-num { font-size: 12.5px; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
 .alif-alpha-new { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 800; color: var(--text); }
-.alif-alpha-tag { font-size: 10.5px; font-weight: 800; letter-spacing: 0.04em; padding: 2px 8px; border-radius: 999px; background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+.alif-alpha-tag { font-size: 10.5px; font-weight: 800; letter-spacing: 0.04em; padding: 2px 8px; border-radius: 999px; background: #fde68a; color: #065f46; border: 1px solid #6ee7b7; }
 .alif-alpha-old { font-size: 16.5px; font-weight: 500; color: var(--muted); }
 html[data-theme="dark"] .alif-alpha-card, html[data-theme="dark"] .alif-alpha-row { background: #111827 !important; border-color: #283548 !important; }
 html[data-theme="dark"] .alif-law-item, html[data-theme="dark"] .alif-alpha-filters, html[data-theme="dark"] .alif-alpha-row.is-head { background: #0f172a !important; border-color: #283548 !important; }
@@ -1468,7 +1468,7 @@ html[data-theme="dark"] .alif-law-link { color: #fbbf24 !important; }
 .alif-bm-sub { margin: 0 0 16px; font-size: 14px; color: var(--muted); line-height: 1.55; }
 .alif-bm-steps { display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; color: var(--text); }
 .alif-bm-step { display: flex; align-items: center; gap: 10px; }
-.alif-bm-step b { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #ecfdf5; color: #b45309; font-size: 12px; flex-shrink: 0; }
+.alif-bm-step b { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #fef3c7; color: #b45309; font-size: 12px; flex-shrink: 0; }
 .alif-bm-box { padding: 20px; border-radius: 16px; background: var(--surface-2); border: 1.5px dashed #d97706; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
 .alif-bm-drag { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 12px; background: linear-gradient(135deg, #d97706 0%, #b45309 100%); color: #ffffff !important; font-size: 15px; font-weight: 800; text-decoration: none; cursor: grab; box-shadow: 0 10px 24px rgba(217, 119, 6, 0.3); transition: transform 0.15s ease, box-shadow 0.15s ease; }
 .alif-bm-drag:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(217, 119, 6, 0.4); }
@@ -1803,12 +1803,12 @@ html[data-theme="dark"] .alif-doc-tab:not(.is-active):active {
 /* Yuklab olish kartochka tugmalari (.dmg va .exe) */
 section a[href*=".dmg"]:hover,
 section a[href*=".exe"]:hover {
-  background-color: #e0f2fe !important;
+  background-color: #fef3c7 !important;
   border-color: #d97706 !important;
 }
 section a[href*=".dmg"]:active,
 section a[href*=".exe"]:active {
-  background-color: #bae6fd !important;
+  background-color: #fcd34d !important;
   transform: scale(0.98) !important;
 }
 
