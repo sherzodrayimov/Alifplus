@@ -1,36 +1,43 @@
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@500;600;700&family=Space+Grotesk:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
 
 :root {
-  --bg: #f7f5f0;
+  --bg: #faf9f6;
   --surface: #ffffff;
-  --surface-2: #efece4;
+  --surface-2: #f3f2ee;
   --text: #18181b;
   --muted: #52525b;
-  --border: #ddd7ca;
-  --accent: #d97706;
-  --accent-strong: #b45309;
-  --accent-soft: rgba(217, 119, 6, 0.12);
-  --gold-glow: rgba(217, 119, 6, 0.28);
+  --border: #e4e2dc;
+  --indigo: #4338ca;
+  --indigo-hover: #3730a3;
+  --indigo-soft: rgba(67, 56, 202, 0.09);
+  --coral: #e11d48;
+  --coral-soft: rgba(225, 29, 72, 0.1);
+  --teal: #0d9488;
 }
 
-html[data-theme="dark"] {
-  --bg: #09090b;
-  --surface: #121215;
-  --surface-2: #1a1a1f;
-  --text: #fafafa;
-  --muted: #a1a1aa;
-  --border: #27272a;
-  --accent: #f59e0b;
-  --accent-strong: #fbbf24;
-  --accent-soft: rgba(245, 158, 11, 0.15);
-  --gold-glow: rgba(245, 158, 11, 0.34);
+html[data-theme="dark"],
+body[data-theme="dark"] {
+  --bg: #0e1116;
+  --surface: #151921;
+  --surface-2: #1c212b;
+  --text: #f4f4f6;
+  --muted: #9ca3af;
+  --border: #262c38;
+  --indigo: #6366f1;
+  --indigo-hover: #818cf8;
+  --indigo-soft: rgba(99, 102, 241, 0.16);
+  --coral: #fb7185;
+  --coral-soft: rgba(251, 113, 133, 0.16);
+  --teal: #2dd4bf;
 }
 
+/* Silliq, naqshsiz toza qog'oz fon */
 html, body {
   background-color: var(--bg) !important;
+  background-image: none !important;
   color: var(--text) !important;
-  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -38,7 +45,7 @@ h1, h2, h3, h4,
 .alif-brand-text,
 .alif-hero-title,
 .alif-docs-hero h2 {
-  font-family: 'Space Grotesk', sans-serif !important;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif !important;
   letter-spacing: -0.025em;
 }
 
@@ -50,69 +57,64 @@ code, pre,
 
 /* ── TOPBAR VA MENYU ── */
 .alif-topbar {
-  background: rgba(247, 245, 240, 0.86) !important;
+  background: rgba(250, 249, 246, 0.88) !important;
   border-bottom: 1px solid var(--border) !important;
   backdrop-filter: blur(14px);
 }
 html[data-theme="dark"] .alif-topbar {
-  background: rgba(9, 9, 11, 0.86) !important;
+  background: rgba(14, 17, 22, 0.88) !important;
 }
 .alif-nav-link {
   color: var(--muted) !important;
-  transition: color 0.18s ease, background-color 0.18s ease, transform 0.14s ease !important;
+  transition: color 0.16s ease, background-color 0.16s ease, transform 0.12s ease !important;
 }
-.alif-nav-link:hover {
-  color: var(--accent-strong) !important;
-  background: var(--accent-soft) !important;
-}
-.alif-nav-link:active {
-  transform: scale(0.96) !important;
-}
+.alif-nav-link:hover,
 .alif-nav-link.is-scroll-active {
-  color: var(--accent-strong) !important;
-  background: var(--accent-soft) !important;
+  color: var(--indigo) !important;
+  background: var(--indigo-soft) !important;
 }
 .alif-nav-link.is-scroll-active::after {
-  background: var(--accent) !important;
+  background: var(--indigo) !important;
 }
 
-/* ── HERO QISMI VA QOIDA CHIPLARI ── */
+/* ── HERO QISMI VA QOIDA CHIPLARI (Indigo + Marjon urg'u) ── */
 .alif-hero-pill {
-  background: var(--accent-soft) !important;
-  border: 1px solid rgba(217, 119, 6, 0.32) !important;
-  color: var(--accent-strong) !important;
+  background: var(--indigo-soft) !important;
+  border: 1px solid rgba(67, 56, 202, 0.22) !important;
+  color: var(--indigo) !important;
 }
 .alif-hero-pill-dot {
-  background: var(--accent) !important;
-  box-shadow: 0 0 10px var(--accent) !important;
+  background: var(--coral) !important;
+  box-shadow: 0 0 8px var(--coral) !important;
 }
 .alif-hero-accent {
-  color: #b45309 !important;
-  background: linear-gradient(120deg, #92400e 0%, #d97706 100%);
+  background: linear-gradient(125deg, #4338ca 0%, #e11d48 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 html[data-theme="dark"] .alif-hero-accent {
-  background: linear-gradient(120deg, #f59e0b 0%, #fde68a 100%);
+  background: linear-gradient(125deg, #818cf8 0%, #fb7185 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 .alif-rule-chip {
   background: var(--surface) !important;
   border: 1px solid var(--border) !important;
   color: var(--text) !important;
-  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease !important;
+  box-shadow: 0 2px 6px rgba(24, 24, 27, 0.03);
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease !important;
 }
 .alif-rule-chip:hover {
   transform: translateY(-2px);
-  border-color: var(--accent) !important;
-  box-shadow: 0 6px 16px var(--gold-glow) !important;
+  border-color: var(--indigo) !important;
+  box-shadow: 0 6px 16px rgba(67, 56, 202, 0.12) !important;
 }
 .alif-rule-chip b {
-  color: var(--accent-strong) !important;
+  color: var(--coral) !important;
 }
 
-/* ── BARCHA TUGMALAR: HOVER VA BOSILISH (TACTILE GOLD & OBSIDIAN) ── */
+/* ── BARCHA TUGMALAR (Indigo asosiy + jonli taktil bosilish) ── */
 .alif-hero-btn-primary,
 .alif-hero-btn-secondary,
 .alif-doc-tab,
@@ -120,498 +122,168 @@ html[data-theme="dark"] .alif-hero-accent {
 .alif-doc-scbtn,
 .alif-theme-btn,
 .alif-bm-copy,
-button[class*="alif-"],
-a[class*="alif-btn"],
-a[class*="alif-hero-btn"] {
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1),
-              box-shadow 0.22s ease,
-              background-color 0.2s ease,
-              border-color 0.2s ease,
-              color 0.2s ease !important;
+button[class*="alif-"] {
+  transition: transform 0.14s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.2s ease,
+              background-color 0.18s ease,
+              border-color 0.18s ease,
+              color 0.18s ease !important;
 }
 
-/* Asosiy (Primary) tugmalar */
 .alif-hero-btn-primary,
-.alif-doc-print-btn {
-  background: #18181b !important;
-  color: #fbbf24 !important;
-  border: 1.5px solid #d97706 !important;
-  box-shadow: 0 6px 18px rgba(24, 24, 27, 0.18) !important;
+.alif-doc-print-btn,
+#alifDesktopApp a[href*=".dmg"],
+#alifDesktopApp .alif-dl-primary {
+  background: var(--indigo) !important;
+  color: #ffffff !important;
+  border: 1.5px solid var(--indigo) !important;
+  box-shadow: 0 6px 18px rgba(67, 56, 202, 0.22) !important;
 }
-html[data-theme="dark"] .alif-hero-btn-primary,
-html[data-theme="dark"] .alif-doc-print-btn {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
-  color: #09090b !important;
-  border: 1px solid #fbbf24 !important;
-  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.28) !important;
+#alifDesktopApp a[href*=".dmg"] *,
+#alifDesktopApp .alif-dl-primary * {
+  color: #ffffff !important;
+}
+#alifDesktopApp a[href*=".dmg"] small,
+#alifDesktopApp a[href*=".dmg"] span:last-child {
+  color: #e0e7ff !important;
 }
 
-/* Primary hover & oltin nur to'lqini */
-.alif-hero-btn-primary::after,
-.alif-doc-print-btn::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -130%;
-  width: 65%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
-  transform: skewX(-22deg);
-  transition: left 0.55s ease;
-  pointer-events: none;
-}
-.alif-hero-btn-primary:hover::after,
-.alif-doc-print-btn:hover::after {
-  left: 145%;
-}
 .alif-hero-btn-primary:hover,
-.alif-doc-print-btn:hover {
-  background: #27272a !important;
-  color: #fde68a !important;
-  border-color: #f59e0b !important;
+.alif-doc-print-btn:hover,
+#alifDesktopApp a[href*=".dmg"]:hover,
+#alifDesktopApp .alif-dl-primary:hover {
+  background: var(--indigo-hover) !important;
+  border-color: var(--indigo-hover) !important;
+  color: #ffffff !important;
   transform: translateY(-2px) !important;
-  box-shadow: 0 10px 26px rgba(217, 119, 6, 0.28) !important;
-}
-html[data-theme="dark"] .alif-hero-btn-primary:hover,
-html[data-theme="dark"] .alif-doc-print-btn:hover {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
-  color: #09090b !important;
-  border-color: #fde68a !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 12px 30px rgba(245, 158, 11, 0.42) !important;
+  box-shadow: 0 10px 24px rgba(67, 56, 202, 0.32) !important;
 }
 
-/* Ikkilamchi (Secondary) va yordamchi tugmalar */
+/* Ikkilamchi tugmalar va Windows yuklab olish */
 .alif-hero-btn-secondary,
-.alif-doc-sbtn,
+.alif-doc-sbtn:not(.alif-doc-print-btn),
 .alif-theme-btn,
-.alif-bm-copy {
+.alif-bm-copy,
+#alifDesktopApp a[href*=".exe"],
+#alifDesktopApp .alif-dl-secondary {
   background: var(--surface) !important;
   color: var(--text) !important;
   border: 1.5px solid var(--border) !important;
 }
-.alif-hero-btn-secondary:hover,
-.alif-doc-sbtn:hover,
-.alif-theme-btn:hover,
-.alif-bm-copy:hover {
-  background: var(--accent-soft) !important;
-  color: var(--accent-strong) !important;
-  border-color: var(--accent) !important;
-  transform: translateY(-1.5px) !important;
-  box-shadow: 0 6px 16px var(--gold-glow) !important;
+#alifDesktopApp a[href*=".exe"] strong,
+#alifDesktopApp a[href*=".exe"] div:first-child,
+#alifDesktopApp a[href*=".exe"] span:first-child {
+  color: var(--indigo) !important;
+}
+#alifDesktopApp a[href*=".exe"] small,
+#alifDesktopApp a[href*=".exe"] div:last-child,
+#alifDesktopApp a[href*=".exe"] span:last-child {
+  color: var(--muted) !important;
 }
 
-/* Tab tugmalari */
+.alif-hero-btn-secondary:hover,
+.alif-doc-sbtn:not(.alif-doc-print-btn):hover,
+.alif-theme-btn:hover,
+.alif-bm-copy:hover,
+#alifDesktopApp a[href*=".exe"]:hover,
+#alifDesktopApp .alif-dl-secondary:hover {
+  background: var(--indigo-soft) !important;
+  border-color: var(--indigo) !important;
+  color: var(--indigo) !important;
+  transform: translateY(-1.5px) !important;
+  box-shadow: 0 6px 16px rgba(67, 56, 202, 0.12) !important;
+}
+
+/* Hujjatlar konstruktori tablari (Oq va Qora fonda birdek aniq) */
 .alif-doc-tab {
   background: var(--surface) !important;
-  color: var(--muted) !important;
   border: 1.5px solid var(--border) !important;
+  color: var(--muted) !important;
 }
 .alif-doc-tab:hover {
-  background: var(--accent-soft) !important;
-  color: var(--accent-strong) !important;
-  border-color: var(--accent) !important;
-  transform: translateY(-1px) !important;
+  background: var(--indigo-soft) !important;
+  border-color: var(--indigo) !important;
+  color: var(--indigo) !important;
 }
 .alif-doc-tab.is-active,
 .alif-doc-scbtn.is-active {
-  background: #18181b !important;
-  color: #fbbf24 !important;
-  border-color: #d97706 !important;
-  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.25) !important;
+  background: var(--indigo) !important;
+  border-color: var(--indigo) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  box-shadow: 0 5px 15px rgba(67, 56, 202, 0.28) !important;
 }
-html[data-theme="dark"] .alif-doc-tab.is-active,
-html[data-theme="dark"] .alif-doc-scbtn.is-active {
-  background: #f59e0b !important;
-  color: #09090b !important;
-  border-color: #fbbf24 !important;
-  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35) !important;
+.alif-doc-script-sw {
+  background: var(--surface-2) !important;
+  border: 1px solid var(--border) !important;
+}
+.alif-doc-scbtn:not(.is-active) {
+  background: transparent !important;
+  border: none !important;
+  color: var(--muted) !important;
 }
 
-/* Barcha tugmalarning bosilish (Active) momenti */
+/* Bosilgan lahza (:active) effekti */
 .alif-hero-btn-primary:active,
 .alif-hero-btn-secondary:active,
 .alif-doc-tab:active,
 .alif-doc-sbtn:active,
 .alif-doc-scbtn:active,
 .alif-theme-btn:active,
-.alif-bm-copy:active,
 button[class*="alif-"]:active {
-  transform: translateY(1px) scale(0.972) !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18) !important;
+  transform: translateY(1.5px) scale(0.97) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14) !important;
 }
 
-/* ── JONLI KLAVIATURA VA SAHNA DETALLARI ── */
+/* ── JONLI KLAVIATURA VA SKROL HIKOYASI URG'ULARI ── */
+.alif-scroll-bar {
+  background: linear-gradient(90deg, #4338ca, #e11d48) !important;
+}
 .alif-stage-live-dot {
-  background: #f59e0b !important;
-  box-shadow: 0 0 10px #f59e0b !important;
+  background: #fb7185 !important;
+  box-shadow: 0 0 10px #fb7185 !important;
 }
 .alif-stage-caret {
-  color: #fbbf24 !important;
+  color: #fb7185 !important;
 }
 .alif-key-accent {
-  border-color: rgba(245, 158, 11, 0.38) !important;
+  border-color: rgba(251, 113, 133, 0.35) !important;
 }
 .alif-key-accent span:last-child {
-  color: #fbbf24 !important;
+  color: #fda4af !important;
 }
 .alif-key.is-transform-key {
-  background: linear-gradient(180deg, #f59e0b 0%, #b45309 100%) !important;
-  border-color: #fde68a !important;
-  color: #09090b !important;
-  box-shadow: 0 0 22px rgba(245, 158, 11, 0.7) !important;
+  background: linear-gradient(180deg, #e11d48 0%, #be123c 100%) !important;
+  border-color: #fda4af !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 20px rgba(225, 29, 72, 0.65) !important;
 }
 .alif-key.is-transform-key span {
-  color: #09090b !important;
-  font-weight: 800 !important;
+  color: #ffffff !important;
 }
 
-/* ── INPUT VA FORMA ELEMENTLARI FOKUSI ── */
-input:focus, textarea:focus, select:focus {
-  outline: none !important;
-  border-color: var(--accent) !important;
-  box-shadow: 0 0 0 3px var(--accent-soft) !important;
+.alif-story-word.is-converted {
+  color: var(--indigo) !important;
+}
+.alif-story-word.is-kept {
+  text-decoration-color: var(--teal) !important;
+}
+.alif-story-caret {
+  background: var(--coral) !important;
+}
+.alif-story-steps li.is-active {
+  border-color: var(--indigo) !important;
+}
+
+/* Forma elementlari va mayda detallar */
+.alif-doc-card-title::before {
+  background: var(--indigo) !important;
 }
 .alif-doc-check input {
-  accent-color: #d97706 !important;
+  accent-color: var(--indigo) !important;
 }
-.alif-doc-card-title::before {
-  background: var(--accent) !important;
-}
-
-/* ── DESKTOP YUKLAB OLISH TUGMALARI (macOS va Windows — Oq va Tungi rejim) ── */
-#alifDesktopApp a[href*=".dmg"],
-#alifDesktopApp a[download*="mac"],
-#alifDesktopApp .alif-dl-primary {
-  background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
-  border: 1.5px solid #b45309 !important;
-  color: #ffffff !important;
-  box-shadow: 0 8px 20px rgba(180, 83, 9, 0.24) !important;
-}
-#alifDesktopApp a[href*=".dmg"] *,
-#alifDesktopApp a[download*="mac"] *,
-#alifDesktopApp .alif-dl-primary * {
-  color: #ffffff !important;
-}
-#alifDesktopApp a[href*=".dmg"] small,
-#alifDesktopApp a[href*=".dmg"] span:last-child,
-#alifDesktopApp .alif-dl-primary small {
-  color: #fef3c7 !important;
-}
-#alifDesktopApp a[href*=".dmg"]:hover,
-#alifDesktopApp a[download*="mac"]:hover,
-#alifDesktopApp .alif-dl-primary:hover {
-  background: linear-gradient(135deg, #b45309 0%, #92400e 100%) !important;
-  border-color: #92400e !important;
-  color: #ffffff !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 12px 26px rgba(180, 83, 9, 0.34) !important;
-}
-
-/* Windows x64 / x32 tugmalari — Oq fonda */
-#alifDesktopApp a[href*=".exe"],
-#alifDesktopApp .alif-dl-secondary {
-  background: #faf7f2 !important;
-  border: 1.5px solid #e2d9c8 !important;
-  color: #18181b !important;
-  box-shadow: 0 2px 8px rgba(24, 24, 27, 0.04) !important;
-}
-#alifDesktopApp a[href*=".exe"] strong,
-#alifDesktopApp a[href*=".exe"] b,
-#alifDesktopApp a[href*=".exe"] div:first-child,
-#alifDesktopApp a[href*=".exe"] span:first-child {
-  color: #b45309 !important;
-}
-#alifDesktopApp a[href*=".exe"] small,
-#alifDesktopApp a[href*=".exe"] span:last-child,
-#alifDesktopApp a[href*=".exe"] div:last-child {
-  color: #57534e !important;
-}
-#alifDesktopApp a[href*=".exe"]:hover,
-#alifDesktopApp .alif-dl-secondary:hover {
-  background: #fef3c7 !important;
-  border-color: #d97706 !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 20px rgba(217, 119, 6, 0.18) !important;
-}
-#alifDesktopApp a[href*=".exe"]:hover strong,
-#alifDesktopApp a[href*=".exe"]:hover b,
-#alifDesktopApp a[href*=".exe"]:hover div:first-child,
-#alifDesktopApp a[href*=".exe"]:hover span:first-child {
-  color: #92400e !important;
-}
-
-/* Yuklab olish tugmalari — Tungi (Obsidian) rejimda */
-html[data-theme="dark"] #alifDesktopApp a[href*=".dmg"],
-html[data-theme="dark"] #alifDesktopApp a[download*="mac"],
-html[data-theme="dark"] #alifDesktopApp .alif-dl-primary {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
-  border-color: #fbbf24 !important;
-  color: #09090b !important;
-}
-html[data-theme="dark"] #alifDesktopApp a[href*=".dmg"] *,
-html[data-theme="dark"] #alifDesktopApp a[download*="mac"] *,
-html[data-theme="dark"] #alifDesktopApp .alif-dl-primary * {
-  color: #09090b !important;
-}
-html[data-theme="dark"] #alifDesktopApp a[href*=".dmg"]:hover,
-html[data-theme="dark"] #alifDesktopApp .alif-dl-primary:hover {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
-  border-color: #fde68a !important;
-}
-html[data-theme="dark"] #alifDesktopApp a[href*=".exe"],
-html[data-theme="dark"] #alifDesktopApp .alif-dl-secondary {
-  background: #16161a !important;
-  border: 1.5px solid #2c2c34 !important;
-  color: #fafafa !important;
-}
-html[data-theme="dark"] #alifDesktopApp a[href*=".exe"] strong,
-html[data-theme="dark"] #alifDesktopApp a[href*=".exe"] b,
-html[data-theme="dark"] #alifDesktopApp a[href*=".exe"] div:first-child,
-html[data-theme="dark"] #alifDesktopApp a[href*=".exe"] span:first-child {
-  color: #fbbf24 !important;
-}
-html[data-theme="dark"] #alifDesktopApp a[href*=".exe"] small,
-html[data-theme="dark"] #alifDesktopApp a[href*=".exe"] span:last-child,
-html[data-theme="dark"] #alifDesktopApp a[href*=".exe"] div:last-child {
-  color: #a1a1aa !important;
-}
-html[data-theme="dark"] #alifDesktopApp a[href*=".exe"]:hover,
-html[data-theme="dark"] #alifDesktopApp .alif-dl-secondary:hover {
-  background: #231c10 !important;
-  border-color: #f59e0b !important;
-}
-
-/* ── HUJJATLAR KONSTRUKTORI TUGMALARI (Oq va Tungi rejim uyg'unligi) ── */
-#alifDocsSection .alif-hero-pill,
-#alifDocsSection [class*="pill"],
-#alifDocsSection [class*="badge"] {
-  background: #fef3c7 !important;
-  border: 1px solid #f59e0b !important;
-  color: #92400e !important;
-}
-html[data-theme="dark"] #alifDocsSection .alif-hero-pill,
-html[data-theme="dark"] #alifDocsSection [class*="pill"],
-html[data-theme="dark"] #alifDocsSection [class*="badge"] {
-  background: rgba(245, 158, 11, 0.14) !important;
-  border-color: rgba(245, 158, 11, 0.35) !important;
-  color: #fbbf24 !important;
-}
-
-/* Oq fonda hujjat tablari va Yangi/Eski/Kirill tugmalari */
-html:not([data-theme="dark"]) .alif-doc-tab {
-  background: #ffffff !important;
-  border: 1.5px solid #ddd6c7 !important;
-  color: #3f3f46 !important;
-}
-html:not([data-theme="dark"]) .alif-doc-tab:hover {
-  background: #fef3c7 !important;
-  border-color: #d97706 !important;
-  color: #92400e !important;
-}
-html:not([data-theme="dark"]) .alif-doc-tab.is-active {
-  background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
-  border-color: #b45309 !important;
-  color: #ffffff !important;
-  box-shadow: 0 5px 14px rgba(180, 83, 9, 0.26) !important;
-}
-html:not([data-theme="dark"]) .alif-doc-script-sw {
-  background: #ede8dd !important;
-  border: 1px solid #d6cfc0 !important;
-}
-html:not([data-theme="dark"]) .alif-doc-scbtn {
-  color: #52525b !important;
-}
-html:not([data-theme="dark"]) .alif-doc-scbtn:hover {
-  color: #92400e !important;
-}
-html:not([data-theme="dark"]) .alif-doc-scbtn.is-active {
-  background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
-  color: #ffffff !important;
-  box-shadow: 0 2px 8px rgba(180, 83, 9, 0.25) !important;
-}
-html:not([data-theme="dark"]) .alif-doc-sbtn {
-  background: #ffffff !important;
-  border: 1.5px solid #ddd6c7 !important;
-  color: #27272a !important;
-}
-html:not([data-theme="dark"]) .alif-doc-sbtn:hover {
-  background: #fef3c7 !important;
-  border-color: #d97706 !important;
-  color: #92400e !important;
-}
-
-/* Tungi fonda hujjat tablari va Yangi/Eski/Kirill tugmalari */
-html[data-theme="dark"] .alif-doc-tab {
-  background: #16161a !important;
-  border: 1.5px solid #2c2c34 !important;
-  color: #d4d4d8 !important;
-}
-html[data-theme="dark"] .alif-doc-tab:hover {
-  background: #231c10 !important;
-  border-color: #f59e0b !important;
-  color: #fbbf24 !important;
-}
-html[data-theme="dark"] .alif-doc-tab.is-active {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
-  border-color: #fbbf24 !important;
-  color: #09090b !important;
-  box-shadow: 0 5px 16px rgba(245, 158, 11, 0.34) !important;
-}
-html[data-theme="dark"] .alif-doc-script-sw {
-  background: #16161a !important;
-  border: 1px solid #2c2c34 !important;
-}
-html[data-theme="dark"] .alif-doc-scbtn {
-  color: #a1a1aa !important;
-}
-html[data-theme="dark"] .alif-doc-scbtn:hover {
-  color: #fbbf24 !important;
-}
-html[data-theme="dark"] .alif-doc-scbtn.is-active {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
-  color: #09090b !important;
-  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3) !important;
-}
-html[data-theme="dark"] .alif-doc-sbtn {
-  background: #16161a !important;
-  border: 1.5px solid #2c2c34 !important;
-  color: #e4e4e7 !important;
-}
-html[data-theme="dark"] .alif-doc-sbtn:hover {
-  background: #231c10 !important;
-  border-color: #f59e0b !important;
-  color: #fbbf24 !important;
-}
-
-/* ── QORA FONDA (DARK MODE) FAOL VA BOSILGAN TUGMALARNI YORQIN OLTIN QILISH ── */
-html[data-theme="dark"] #alifDocsSection .alif-doc-tab,
-body[data-theme="dark"] #alifDocsSection .alif-doc-tab {
-  background: #16161b !important;
-  border: 1.5px solid #2e2e38 !important;
-  color: #d4d4d8 !important;
-}
-
-html[data-theme="dark"] #alifDocsSection .alif-doc-tab:hover,
-body[data-theme="dark"] #alifDocsSection .alif-doc-tab:hover {
-  background: #241d11 !important;
-  border-color: #f59e0b !important;
-  color: #fde68a !important;
-}
-
-html[data-theme="dark"] #alifDocsSection .alif-doc-tab.is-active,
-body[data-theme="dark"] #alifDocsSection .alif-doc-tab.is-active,
-html[data-theme="dark"] #alifDocsSection .alif-doc-scbtn.is-active,
-body[data-theme="dark"] #alifDocsSection .alif-doc-scbtn.is-active,
-html[data-theme="dark"] #alifDocsSection .alif-doc-print-btn,
-body[data-theme="dark"] #alifDocsSection .alif-doc-print-btn,
-html[data-theme="dark"] .is-active,
-body[data-theme="dark"] .is-active {
-  background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%) !important;
-  border: 1.5px solid #fde68a !important;
-  color: #09090b !important;
-  font-weight: 800 !important;
-  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.25), 0 6px 18px rgba(245, 158, 11, 0.42) !important;
-}
-
-html[data-theme="dark"] #alifDocsSection .alif-doc-tab.is-active *,
-body[data-theme="dark"] #alifDocsSection .alif-doc-tab.is-active *,
-html[data-theme="dark"] #alifDocsSection .alif-doc-scbtn.is-active *,
-body[data-theme="dark"] #alifDocsSection .alif-doc-scbtn.is-active *,
-html[data-theme="dark"] #alifDocsSection .alif-doc-print-btn *,
-body[data-theme="dark"] #alifDocsSection .alif-doc-print-btn * {
-  color: #09090b !important;
-}
-
-html[data-theme="dark"] #alifDocsSection .alif-doc-script-sw,
-body[data-theme="dark"] #alifDocsSection .alif-doc-script-sw {
-  background: #141418 !important;
-  border: 1.5px solid #2e2e38 !important;
-}
-
-html[data-theme="dark"] #alifDocsSection .alif-doc-scbtn:not(.is-active),
-body[data-theme="dark"] #alifDocsSection .alif-doc-scbtn:not(.is-active) {
-  background: transparent !important;
-  border: none !important;
-  color: #a1a1aa !important;
-}
-
-html[data-theme="dark"] #alifDocsSection .alif-doc-sbtn:not(.alif-doc-print-btn),
-body[data-theme="dark"] #alifDocsSection .alif-doc-sbtn:not(.alif-doc-print-btn) {
-  background: #18181e !important;
-  border: 1.5px solid #32323d !important;
-  color: #f4f4f5 !important;
-}
-
-html[data-theme="dark"] #alifDocsSection .alif-doc-sbtn:not(.alif-doc-print-btn):hover,
-body[data-theme="dark"] #alifDocsSection .alif-doc-sbtn:not(.alif-doc-print-btn):hover {
-  background: #261e11 !important;
-  border-color: #f59e0b !important;
-  color: #fbbf24 !important;
-}
-
-/* Har ikki rejimda tugma bosilgan lahza (:active) effekti */
-html[data-theme="dark"] button:active,
-body[data-theme="dark"] button:active,
-html[data-theme="dark"] .alif-doc-tab:active,
-html[data-theme="dark"] .alif-doc-sbtn:active,
-html[data-theme="dark"] .alif-doc-scbtn:active {
-  transform: translateY(1.5px) scale(0.965) !important;
-  background: #f59e0b !important;
-  color: #09090b !important;
-  border-color: #fde68a !important;
-  box-shadow: 0 0 16px rgba(251, 191, 36, 0.55) !important;
-}
-
-/* ── 1-VARIANT: MILLIY GIRIH VA GEOMETRIK NAQSH ORQA FONI ── */
-.alif-girih-bg {
-  position: fixed;
-  inset: -120px 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.065;
-  background-repeat: repeat;
-  background-size: 160px 160px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160' fill='none'%3E%3Cg stroke='%23b45309' stroke-width='1'%3E%3Crect x='24' y='24' width='112' height='112'/%3E%3Crect x='24' y='24' width='112' height='112' transform='rotate(45 80 80)'/%3E%3Cpolygon points='80,14 96,46 130,30 114,64 146,80 114,96 130,130 96,114 80,146 64,114 30,130 46,96 14,80 46,64 30,30 64,46'/%3E%3Ccircle cx='80' cy='80' r='18'/%3E%3Cpath d='M0 80H14M146 80H160M80 0V14M80 146V160M0 0L24 24M160 0L136 24M0 160L24 136M160 160L136 136'/%3E%3C/g%3E%3C/svg%3E");
-  will-change: transform;
-  transition: opacity 0.3s ease;
-}
-
-html[data-theme="dark"] .alif-girih-bg,
-body[data-theme="dark"] .alif-girih-bg {
-  opacity: 0.085;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160' fill='none'%3E%3Cg stroke='%23f59e0b' stroke-width='1'%3E%3Crect x='24' y='24' width='112' height='112'/%3E%3Crect x='24' y='24' width='112' height='112' transform='rotate(45 80 80)'/%3E%3Cpolygon points='80,14 96,46 130,30 114,64 146,80 114,96 130,130 96,114 80,146 64,114 30,130 46,96 14,80 46,64 30,30 64,46'/%3E%3Ccircle cx='80' cy='80' r='18'/%3E%3Cpath d='M0 80H14M146 80H160M80 0V14M80 146V160M0 0L24 24M160 0L136 24M0 160L24 136M160 160L136 136'/%3E%3C/g%3E%3C/svg%3E");
-}
-
-.alif-girih-vignette {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: radial-gradient(circle at 50% 28%, rgba(247, 245, 240, 0.72) 0%, rgba(247, 245, 240, 0.15) 68%, rgba(217, 119, 6, 0.05) 100%);
-}
-
-html[data-theme="dark"] .alif-girih-vignette,
-body[data-theme="dark"] .alif-girih-vignette {
-  background: radial-gradient(circle at 50% 28%, rgba(9, 9, 11, 0.74) 0%, rgba(9, 9, 11, 0.18) 68%, rgba(245, 158, 11, 0.06) 100%);
-}
-
-header.alif-topbar,
-main.alif-main,
-footer {
-  position: relative;
-  z-index: 1;
-}
-
-@media (max-width: 768px) {
-  .alif-girih-bg {
-    background-size: 120px 120px;
-    opacity: 0.05;
-  }
-  html[data-theme="dark"] .alif-girih-bg {
-    opacity: 0.07;
-  }
+input:focus, textarea:focus, select:focus {
+  outline: none !important;
+  border-color: var(--indigo) !important;
+  box-shadow: 0 0 0 3px var(--indigo-soft) !important;
 }

@@ -5,13 +5,13 @@
   left: 0;
   height: 3px;
   width: 0%;
-  background: linear-gradient(90deg, #d97706, #fbbf24, #f59e0b);
+  background: linear-gradient(90deg, #4338ca, #818cf8, #6366f1);
   z-index: 9999;
   pointer-events: none;
   transition: width 0.08s linear;
 }
 .alif-nav-link.is-scroll-active {
-  color: #d97706 !important;
+  color: #4338ca !important;
   position: relative;
 }
 .alif-nav-link.is-scroll-active::after {
@@ -22,7 +22,7 @@
   bottom: -4px;
   height: 2px;
   border-radius: 2px;
-  background: #d97706;
+  background: #4338ca;
 }
 .alif-story-showcase {
   margin: 28px auto 0;
@@ -40,7 +40,7 @@ html[data-theme="dark"] .alif-story-showcase {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #d97706;
+  color: #4338ca;
   margin-bottom: 10px;
 }
 .alif-story-line {
@@ -54,17 +54,17 @@ html[data-theme="dark"] .alif-story-showcase {
   transition: color 0.25s ease, transform 0.25s ease;
 }
 .alif-story-word.is-converted {
-  color: #d97706;
+  color: #4338ca;
 }
 .alif-story-word.is-kept {
-  text-decoration: underline wavy rgba(217, 119, 6, 0.7);
+  text-decoration: underline wavy rgba(67, 56, 202, 0.7);
   text-underline-offset: 5px;
 }
 .alif-story-caret {
   display: inline-block;
   width: 2px;
   height: 1.05em;
-  background: #d97706;
+  background: #4338ca;
   vertical-align: text-bottom;
   margin: 0 1px;
   opacity: 0;
@@ -90,7 +90,7 @@ html[data-theme="dark"] .alif-story-showcase {
 }
 .alif-story-steps li.is-active {
   opacity: 1;
-  border-color: #d97706;
+  border-color: #4338ca;
   transform: translateY(-2px);
 }
 @media (prefers-reduced-motion: reduce) {
