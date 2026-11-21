@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Matn va Word/PDF konverteri — Alif+</title>
   <meta name="description" content="Kirill va eski lotin matnlarini, Word (.docx) hamda PDF hujjatlarni yangi özbek alifbosiga (Ö, Ğ, Ş, Ç) bepul ögiriş." />
-  <link rel="canonical" href="https://sherzodrayimov.github.io/Alifplus/konverter.html" />
+  <link rel="canonical" href="https://alifplus.uz/konverter.html" />
   <meta property="og:title" content="Matn va Word/PDF konverteri — Alif+" />
   <meta property="og:description" content="Kirill va eski lotin matnlarini, Word (.docx) hamda PDF hujjatlarni yangi özbek alifbosiga (Ö, Ğ, Ş, Ç) bepul ögiriş." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://sherzodrayimov.github.io/Alifplus/konverter.html" />
-  <meta property="og:image" content="https://sherzodrayimov.github.io/Alifplus/icon.png" />
+  <meta property="og:url" content="https://alifplus.uz/konverter.html" />
+  <meta property="og:image" content="https://alifplus.uz/icon.png" />
   <link rel="stylesheet" href="web/converter.css?v=26" />
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
@@ -31,6 +31,9 @@
   </script>
   <link rel="stylesheet" href="web/scroll-fx.css" />
   <link rel="stylesheet" href="web/theme-variants.css?v=20261122" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:site_name" content="Alif+" />
+  <meta property="og:locale" content="uz_UZ" />
 </head>
 <body>
   <header class="alif-topbar">
@@ -90,7 +93,7 @@
         </div>
 
         <div id="alifDropzone" class="alif-dropzone" tabindex="0" role="button" aria-label="Word, PDF yoki TXT fayl yuklaş">
-          <input type="file" id="alifFileInput" multiple accept=".txt,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden />
+          <input type="file" id="alifFileInput" multiple accept=".txt,.docx,.pdf,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden / aria-label="Word yoki PDF fayl tanlash">
           <div class="alif-dropzone-content">
             <span class="alif-drop-icon">📄</span>
             <div>
@@ -134,7 +137,7 @@
               class="alif-textarea"
               placeholder="Matnni şu yerga yozing yoki nusxalab qöying...&#10;Masalan: O'zbekiston Respublikasi — shahar va qishloqlar chiroyli."
               spellcheck="false"
-            ></textarea>
+             aria-label="O'girish uchun matnni kiriting"></textarea>
             <div class="alif-pane-foot">
               <span id="alifInputStats">0 belgi • 0 söz</span>
             </div>
@@ -153,7 +156,7 @@
               class="alif-textarea alif-textarea-out"
               placeholder="Ögirilgan matn şu yerda avtomatik paydo böladi..."
               readonly
-            ></textarea>
+             aria-label="O'girilgan natija matni"></textarea>
             <div class="alif-pane-foot alif-export-bar">
               <span id="alifOutputStats">0 belgi • 0 özgariş</span>
               <div class="alif-export-btns">
@@ -208,8 +211,8 @@
         Ögirilmasligi yoki maxsus körinişda qolişi kerak bölgan sözlarni kiriting (masalan: <code>Windows → Windows</code>).
       </p>
       <form id="alifExcForm" class="alif-exc-form">
-        <input type="text" id="alifExcSrc" class="alif-input" placeholder="Asl söz (masalan: YouTube)" required />
-        <input type="text" id="alifExcDst" class="alif-input" placeholder="Natija (böş qolsa özgarmaydi)" />
+        <input type="text" id="alifExcSrc" class="alif-input" placeholder="Asl söz (masalan: YouTube)" required / aria-label="Istisno qilinadigan asl so'z">
+        <input type="text" id="alifExcDst" class="alif-input" placeholder="Natija (böş qolsa özgarmaydi)" / aria-label="Istisno natija shakli">
         <button type="submit" class="alif-btn alif-btn-primary">Qöşiş</button>
       </form>
       <div id="alifExcList" class="alif-exc-list"></div>
@@ -230,11 +233,11 @@
         <div class="alif-footer-col">
           <h4 class="alif-footer-heading">SAHIFA</h4>
           <ul class="alif-footer-links">
-            <li><a href="#alifAlphabet" onclick="openAlifAbout(); return false;">Yangi alifbo haqida</a></li>
-            <li><a href="#alifHero" onclick="openAlifTyping(); return false;">Harflarni yoziş usullari</a></li>
+            <li><a href="alifbo.html" onclick="openAlifAbout(); return false;">Yangi alifbo haqida</a></li>
+            <li><a href="#" onclick="openAlifTyping(); return false;">Harflarni yoziş usullari</a></li>
             <li><a href="konverter.html">Hujjat ögiriş</a></li>
             <li><a href="ilovalar.html">Yuklab oliş</a></li>
-            <li><a href="#privacy" onclick="document.getElementById('alifPrivacyModal').hidden=false; return false;">Maxfiylik siyosati</a></li>
+            <li><a href="index.html#privacy" onclick="document.getElementById('alifPrivacyModal').hidden=false; return false;">Maxfiylik siyosati</a></li>
           </ul>
         </div>
 
@@ -470,7 +473,7 @@
             <span class="alif-method-badge">3-usul · Sinab köriş</span>
             <strong>Şu yerning özida yozib köring yoki nusxa oling</strong>
           </div>
-          <input type="text" id="alifTypingSandbox" class="alif-input alif-sandbox-input" placeholder="Masalan: O'zbekiston, shahar, tog', chiroyli deb yozing..." autocomplete="off" />
+          <input type="text" id="alifTypingSandbox" class="alif-input alif-sandbox-input" placeholder="Masalan: O'zbekiston, shahar, tog', chiroyli deb yozing..." autocomplete="off" / aria-label="Yangi alifboda yozish mashq maydoni">
           <div class="alif-quick-copy-row">
             <button type="button" class="alif-key-btn" onclick="copyTypingChar('Ö')">Ö</button>
             <button type="button" class="alif-key-btn" onclick="copyTypingChar('ö')">ö</button>

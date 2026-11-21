@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://sherzodrayimov.github.io/Alifplus/sitemap.xml
+Sitemap: https://alifplus.uz/sitemap.xml

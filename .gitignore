@@ -4,3 +4,8 @@ macos/build/
 windows/dist/
 *.o
 *.obj
+generated_images/
+exports/
+*.cdr
+*.hfs
+__pycache__/

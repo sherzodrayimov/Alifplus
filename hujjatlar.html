@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Namuna hujjatlar konstruktori — Alif+</title>
   <meta name="description" content="Tilxat, ariza, tuşuntiriş xati, tavsifnoma va buyruqlarni yangi lotin, eski lotin va kirill yozuvida avtomatik tayyorlaş." />
-  <link rel="canonical" href="https://sherzodrayimov.github.io/Alifplus/hujjatlar.html" />
+  <link rel="canonical" href="https://alifplus.uz/hujjatlar.html" />
   <meta property="og:title" content="Namuna hujjatlar konstruktori — Alif+" />
   <meta property="og:description" content="Tilxat, ariza, tuşuntiriş xati, tavsifnoma va buyruqlarni yangi lotin, eski lotin va kirill yozuvida avtomatik tayyorlaş." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://sherzodrayimov.github.io/Alifplus/hujjatlar.html" />
-  <meta property="og:image" content="https://sherzodrayimov.github.io/Alifplus/icon.png" />
+  <meta property="og:url" content="https://alifplus.uz/hujjatlar.html" />
+  <meta property="og:image" content="https://alifplus.uz/icon.png" />
   <link rel="stylesheet" href="web/converter.css?v=26" />
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
@@ -31,6 +31,9 @@
   </script>
   <link rel="stylesheet" href="web/scroll-fx.css" />
   <link rel="stylesheet" href="web/theme-variants.css?v=20261122" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="og:site_name" content="Alif+" />
+  <meta property="og:locale" content="uz_UZ" />
 </head>
 <body>
   <header class="alif-topbar">
@@ -70,7 +73,7 @@
     <section class="alif-container" style="padding-bottom: 28px;">
       <div class="alif-doc-filter-bar">
         <div id="alifDocCatBar" class="alif-doc-cats"></div>
-        <input type="search" id="alifDocSearch" class="alif-input alif-doc-search" placeholder="Hujjat nomi yoki vaziyatni qidiring (masalan: tilxat, CV, ariza)..." />
+        <input type="search" id="alifDocSearch" class="alif-input alif-doc-search" placeholder="Hujjat nomi yoki vaziyatni qidiring (masalan: tilxat, CV, ariza)..." / aria-label="Hujjat nomi yoki vaziyatni qidirish">
       </div>
       <div id="alifDocCardsGrid" class="alif-doc-grid"></div>
     </section>
@@ -210,11 +213,11 @@
         <div class="alif-footer-col">
           <h4 class="alif-footer-heading">SAHIFA</h4>
           <ul class="alif-footer-links">
-            <li><a href="#alifAlphabet" onclick="openAlifAbout(); return false;">Yangi alifbo haqida</a></li>
-            <li><a href="#alifHero" onclick="openAlifTyping(); return false;">Harflarni yoziş usullari</a></li>
+            <li><a href="alifbo.html" onclick="openAlifAbout(); return false;">Yangi alifbo haqida</a></li>
+            <li><a href="#" onclick="openAlifTyping(); return false;">Harflarni yoziş usullari</a></li>
             <li><a href="konverter.html">Hujjat ögiriş</a></li>
             <li><a href="ilovalar.html">Yuklab oliş</a></li>
-            <li><a href="#privacy" onclick="document.getElementById('alifPrivacyModal').hidden=false; return false;">Maxfiylik siyosati</a></li>
+            <li><a href="index.html#privacy" onclick="document.getElementById('alifPrivacyModal').hidden=false; return false;">Maxfiylik siyosati</a></li>
           </ul>
         </div>
 
@@ -450,7 +453,7 @@
             <span class="alif-method-badge">3-usul · Sinab köriş</span>
             <strong>Şu yerning özida yozib köring yoki nusxa oling</strong>
           </div>
-          <input type="text" id="alifTypingSandbox" class="alif-input alif-sandbox-input" placeholder="Masalan: O'zbekiston, shahar, tog', chiroyli deb yozing..." autocomplete="off" />
+          <input type="text" id="alifTypingSandbox" class="alif-input alif-sandbox-input" placeholder="Masalan: O'zbekiston, shahar, tog', chiroyli deb yozing..." autocomplete="off" / aria-label="Yangi alifboda yozish mashq maydoni">
           <div class="alif-quick-copy-row">
             <button type="button" class="alif-key-btn" onclick="copyTypingChar('Ö')">Ö</button>
             <button type="button" class="alif-key-btn" onclick="copyTypingChar('ö')">ö</button>
