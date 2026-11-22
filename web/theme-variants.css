@@ -2151,3 +2151,5 @@ html, body {
     display: flex;
   }
 }
+
+#alifMobileCharBar { display: none !important; }

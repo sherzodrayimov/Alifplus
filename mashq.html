@@ -97,7 +97,7 @@
           </div>
         </div>
         <div class="alif-mt-status-bar"><div class="alif-mt-counter" id="trCounter">30s</div><div class="alif-mt-live-stats"><span>Tezlik: <strong id="trWpm">0 WPM</strong></span><span>Aniqlik: <strong id="trAcc">100%</strong></span><span>Rekord: <strong id="trBest" class="is-best">—</strong></span></div></div>
-        <div class="alif-mt-stage" id="trStage" onclick="focusAlifTrainer()"><input type="text" id="trHiddenInput" class="alif-mt-hidden-input" autocomplete="off" spellcheck="false" / aria-label="Mashq matnini kiritish maydoni"><div class="alif-mt-viewport"><div class="alif-mt-words" id="trWords"></div></div><div class="alif-mt-focus-hint">Yozishni boshlash uchun bosing (o', g', sh, ch → o', g', sh, ch)</div></div>
+        <div class="alif-mt-stage" id="trStage" onclick="focusAlifTrainer()"><input type="text" id="trHiddenInput" class="alif-mt-hidden-input" autocomplete="off" spellcheck="false" / aria-label="Mashq matnini kiritish maydoni"><div class="alif-mt-viewport"><div class="alif-mt-words" id="trWords"></div></div><div class="alif-mt-focus-hint">Yozishni boshlash uchun bosing (o', g', sh, ch → ö, ğ, ş, ç)</div></div>
         <div class="alif-mt-actions"><button type="button" class="alif-trainer-btn" onclick="resetAlifTrainer()">↻ Yangilash (Tab)</button></div>
         <div id="trResultBanner" class="alif-trainer-result" hidden><div id="trResultText"></div><button type="button" class="alif-hero-btn-primary" onclick="resetAlifTrainer()">Yana bir sinov →</button></div>
       </div>
@@ -803,32 +803,6 @@
   <script src="core/alif-core.js"></script>
   <script src="web/nav-drawer.js?v=20261122j"></script>
   <script src="web/telegram-compat.js?v=20261122j"></script>
-  <script>
-    (function () {
-      var target = document.querySelector('#mashqInput, #alifTrainerInput, textarea, input[type="text"]');
-      if (!target || document.getElementById('alifMobileCharBar')) return;
-      var bar = document.createElement('div');
-      bar.id = 'alifMobileCharBar';
-      bar.style.cssText = 'display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px;';
-      ['ö', 'ğ', 'ş', 'ç', 'Ö', 'Ğ', 'Ş', 'Ç'].forEach(function (ch) {
-        var b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'alif-mini-btn';
-        b.textContent = ch;
-        b.style.cssText = 'min-width:38px;height:38px;font-size:16px;font-weight:800;';
-        b.addEventListener('click', function () {
-          var start = target.selectionStart || target.value.length;
-          var end = target.selectionEnd || target.value.length;
-          target.value = target.value.slice(0, start) + ch + target.value.slice(end);
-          target.focus();
-          try { target.setSelectionRange(start + 1, start + 1); } catch (e) {}
-          target.dispatchEvent(new Event('input', { bubbles: true }));
-        });
-        bar.appendChild(b);
-      });
-      target.parentNode.insertBefore(bar, target.nextSibling);
-    })();
-  </script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
