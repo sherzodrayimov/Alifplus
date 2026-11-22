@@ -4,10 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ishonch va aniqlik qoidalari — Alif+</title>
-  <meta name="description" content="Alif+ qaysi so‘zlarni o‘giradi, nega inglizcha atamalar saqlanadi va xato topilganda qanday xabar berish mumkin?" />
+  <meta name="description" content="Alif+ qaysi so'zlarni o'giradi, nega inglizcha atamalar saqlanadi va xato topilganda qanday xabar berish mumkin?" />
   <link rel="canonical" href="https://alifplus.uz/ishonch.html" />
   <meta property="og:title" content="Ishonch va aniqlik qoidalari — Alif+" />
-  <meta property="og:description" content="Alif+ 4 qatlamli tahlil tizimi, xorijiy so‘zlar himoyasi va xato haqida xabar berish sahifasi." />
+  <meta property="og:description" content="Alif+ 4 qatlamli tahlil tizimi, xorijiy so'zlar himoyasi va xato haqida xabar berish sahifasi." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://alifplus.uz/ishonch.html" />
   <meta property="og:site_name" content="Alif+" />
@@ -35,7 +35,7 @@
   </script>
 </head>
 <body>
-      <header class="alif-topbar">
+  <header class="alif-topbar">
     <div class="alif-container alif-topbar-inner">
       <a href="index.html" class="alif-brand">
         <img src="icon.png" alt="Alif+" style="width:34px; height:34px; border-radius:10px;" />
@@ -77,71 +77,75 @@
       </div>
       <h1 style="font-size:clamp(26px, 4vw, 38px); margin:8px 0;">Alif+ qanday ishlaydi va nega unga ishonish mumkin?</h1>
       <p style="margin:0; color:var(--muted); max-width:740px;">
-        Matn o‘girishda eng katta muammo — o‘zbekcha so‘zlar bilan aralashib keladigan inglizcha va xalqaro atamalarning buzilib ketishi. Alif+ barcha platformalarda (sayt, Chrome/Edge kengaytmasi, macOS va Windows) bitta yadro asosida ishlaydi.
+        Matn o'girishda eng katta muammo — o'zbekcha so'zlar bilan aralashib keladigan inglizcha va xalqaro atamalarning buzilib ketishi. Alif+ barcha platformalarda (sayt, Chrome/Edge kengaytmasi, macOS va Windows) bitta yadro asosida ishlaydi.
       </p>
     </section>
 
-    <!-- JONLI SO'Z TEKSHIRGICHI -->
+    <!-- 1. JONLI SO'Z TEKSHIRGICHI -->
     <section class="alif-container" style="padding-bottom: 24px;">
       <div class="alif-card" style="padding:22px;">
-        <h2 style="margin:0 0 6px; font-size:20px;">So‘zni jonli tekshirib ko‘ring</h2>
-        <p style="margin:0 0 12px; font-size:13.5px; color:var(--muted);">Istalgan so‘zni yozing — yadro uni o‘giradimi yoki saqlab qoladimi va nima uchunligini darhol ko‘rsatadi.</p>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <input type="text" id="trustWordInput" class="alif-input" style="max-width:360px;" value="chat" aria-label="Tekshiriladigan so‘z" placeholder="Masalan: chat, choy, achchiqqina, YouTube..." />
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:6px;">
+          <h2 style="margin:0; font-size:20px;">So'z yoki jumlani jonli tekshirib ko'ring</h2>
+          <span id="trustDictStatus" style="font-size:12px; font-weight:700; color:var(--muted);">Lug'at yuklanmoqda...</span>
+        </div>
+        <p style="margin:0 0 12px; font-size:13.5px; color:var(--muted);">Istalgan so'z yoki jumlani yozing — tizim uni o'giradimi yoki saqlab qoladimi va qaysi qoida ishlaganini darhol ko'rsatadi.</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          <input type="text" id="trustWordInput" class="alif-input" style="max-width:380px;" value="chat shahar O'zbekiston" aria-label="Tekshiriladigan so'z yoki jumla" placeholder="Masalan: chat, choy, achchiqqina, YouTube..." />
           <div style="display:flex; gap:6px; flex-wrap:wrap;">
             <button type="button" class="alif-mini-btn" data-sample-w="chat">chat</button>
             <button type="button" class="alif-mini-btn" data-sample-w="shahar">shahar</button>
             <button type="button" class="alif-mini-btn" data-sample-w="achchiqqina">achchiqqina</button>
             <button type="button" class="alif-mini-btn" data-sample-w="YouTube">YouTube</button>
             <button type="button" class="alif-mini-btn" data-sample-w="O'zbekiston">O'zbekiston</button>
+            <button type="button" class="alif-mini-btn" data-sample-w="chat shahar O'zbekiston">Aralash jumla</button>
           </div>
         </div>
         <div id="trustWordResult" style="margin-top:14px; padding:14px; border-radius:12px; background:var(--surface-2); border:1px solid var(--border);"></div>
       </div>
     </section>
 
-    <!-- 3 TA ASOSIY SAVOL -->
+    <!-- 2. 3 TA ASOSIY SAVOL -->
     <section class="alif-container" style="padding-bottom: 24px;">
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:16px;">
         <article class="alif-card" style="padding:20px;">
-          <h2 style="margin:0 0 8px; font-size:18px;">1. Qaysi so‘zlar o‘giriladi?</h2>
+          <h2 style="margin:0 0 8px; font-size:18px;">1. Qaysi so'zlar o'giriladi?</h2>
           <p style="margin:0; font-size:14px; line-height:1.6; color:var(--muted);">
-            Kirill alifbosidagi barcha matnlar (<b>ў → o', ғ → g', ш → sh, ч → ch</b>) hamda eski lotin yozuvidagi o‘zbekcha so‘zlar va ularning qo‘shimchali shakllari (<i>o‘quvchilarimizga → o'quvchilarimizga, achchiqqina → achchiqqina, shahar → shahar</i>) avtomatik yangi alifboga o‘tkaziladi.
+            Kirill alifbosidagi barcha matnlar (<b>ў → ö, ғ → ğ, ш → ş, ч → ç</b>) hamda eski lotin yozuvidagi o'zbekcha so'zlar va ularning qo'shimchali shakllari (<i>o'quvchilarimizga → öquvçilarimizga, achchiqqina → aççiqqina, shahar → şahar</i>) avtomatik yangi alifboga o'tkaziladi.
           </p>
         </article>
 
         <article class="alif-card" style="padding:20px;">
-          <h2 style="margin:0 0 8px; font-size:18px;">2. Nega ba’zi inglizcha so‘zlar saqlanadi?</h2>
+          <h2 style="margin:0 0 8px; font-size:18px;">2. Nega ba'zi inglizcha so'zlar saqlanadi?</h2>
           <p style="margin:0; font-size:14px; line-height:1.6; color:var(--muted);">
-            <b>chat, channel, change, chart, YouTube, Windows, Telegram</b> kabi so‘zlar 4 qatlamli filtrdan o‘tadi: 1) asosiy xorijiy baza, 2) o‘zbekcha qo‘shimchalar tahlili, 3) inglizcha qo‘shimchalar (<i>-ing, -tion, -ed</i>) va 4) fonotaktik harf birikmalari (<i>w, th, wh, ck, qu, tch</i>). Shu bois <i>chat → chat</i> bo‘lib buzilmaydi.
+            <b>chat, channel, change, chart, YouTube, Windows, Telegram</b> kabi so'zlar 4 qatlamli filtrdan o'tadi: 1) asosiy xorijiy baza, 2) o'zbekcha qo'shimchalar tahlili, 3) inglizcha qo'shimchalar (<i>-ing, -tion, -ed</i>) va 4) fonotaktik harf birikmalari (<i>w, th, wh, ck, qu, tch</i>). Shu bois <i>chat → çat</i> bo'lib buzilmaydi.
           </p>
         </article>
 
-        <article class="alif-card" style="padding:20px;">
-          <h2 style="margin:0 0 8px; font-size:18px;">3. Ma’lumotlarim xavfsizmi?</h2>
+        <article id="maxfiylik" class="alif-card" style="padding:20px;">
+          <h2 style="margin:0 0 8px; font-size:18px;">3. Ma'lumotlarim xavfsizmi?</h2>
           <p style="margin:0; font-size:14px; line-height:1.6; color:var(--muted);">
-            Ha. Kiritilgan matnlar, Word/PDF fayllar va tayyorlangan rasmiy hujjatlar <b>hech qachon tashqi serverga yuborilmaydi</b> — barcha hisob-kitob 100% sizning brauzeringiz ichida bajariladi. Parol maydonlarida kengaytma avtomatik to‘xtaydi.
+            Ha. Kiritilgan matnlar, Word/PDF fayllar va tayyorlangan rasmiy hujjatlar <b>hech qachon tashqi serverga yuborilmaydi</b> — barcha hisob-kitob 100% sizning brauzeringiz ichida bajariladi. Parol maydonlarida kengaytma avtomatik to'xtaydi.
           </p>
         </article>
       </div>
     </section>
 
-    <!-- 4 TA AUDITORIYA YO'NALISHI -->
+    <!-- 3. 4 TA AUDITORIYA YO'NALISHI -->
     <section class="alif-container" style="padding-bottom: 24px;">
       <div class="alif-card" style="padding:22px;">
         <h2 style="margin:0 0 12px; font-size:20px;">Kimlar uchun qaysi vosita qulay?</h2>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
           <div style="padding:14px; border-radius:12px; background:var(--surface-2); border:1px solid var(--border);">
             <strong>🎓 Talabalar</strong>
-            <p style="margin:6px 0 0; font-size:13px; color:var(--muted);">5 daqiqalik <a href="mashq.html">yozish trenajyori</a> va Chrome/Edge kengaytmasi orqali dars materiallarini tez o‘qish.</p>
+            <p style="margin:6px 0 0; font-size:13px; color:var(--muted);">5 daqiqalik <a href="mashq.html">yozish trenajyori</a> va Chrome/Edge kengaytmasi orqali dars materiallarini tez o'qish.</p>
           </div>
           <div style="padding:14px; border-radius:12px; background:var(--surface-2); border:1px solid var(--border);">
-            <strong>👩‍🏫 O‘qituvchilar</strong>
-            <p style="margin:6px 0 0; font-size:13px; color:var(--muted);"><a href="konverter.html">Matn va hujjat konverteri</a> orqali ma’ruza, test va o‘quv qo‘llanmalarini yangi alifboga o‘tkazish.</p>
+            <strong>👩‍🏫 O'qituvchilar</strong>
+            <p style="margin:6px 0 0; font-size:13px; color:var(--muted);"><a href="konverter.html">Matn va hujjat konverteri</a> orqali ma'ruza, test va o'quv qo'llanmalarini yangi alifboga o'tkazish.</p>
           </div>
           <div style="padding:14px; border-radius:12px; background:var(--surface-2); border:1px solid var(--border);">
             <strong>🏢 Tashkilotlar</strong>
-            <p style="margin:6px 0 0; font-size:13px; color:var(--muted);"><a href="hujjatlar.html">13 ta rasmiy shablon</a> (buyruq, dalolatnoma, ariza) va Word/PDF hujjatlarni formatini buzmasdan o‘girish.</p>
+            <p style="margin:6px 0 0; font-size:13px; color:var(--muted);"><a href="hujjatlar.html">13 ta rasmiy shablon</a> (buyruq, dalolatnoma, ariza) va Word/PDF hujjatlarni formatini buzmasdan o'girish.</p>
           </div>
           <div style="padding:14px; border-radius:12px; background:var(--surface-2); border:1px solid var(--border);">
             <strong>✍️ Jurnalist va kontentchilar</strong>
@@ -151,84 +155,217 @@
       </div>
     </section>
 
-    <!-- XATO HAQIDA XABAR BERISH -->
-    <section id="xato-xabar" class="alif-container" style="padding-bottom: 52px;">
+    <!-- 4. XATO HAQIDA XABAR BERISH -->
+    <section id="xato-xabar" class="alif-container" style="padding-bottom: 44px;">
       <div class="alif-card" style="padding:22px;">
         <h2 style="margin:0 0 6px; font-size:20px;">Xato topsam nima qilaman?</h2>
         <p style="margin:0 0 14px; font-size:13.5px; color:var(--muted);">
-          Agar biror o‘zbekcha so‘z o‘girilmay qolsa yoki inglizcha so‘z noto‘g‘ri o‘girilsa, quyidagi forma orqali xabar bering — u keyingi yangilanishda yagona yadroga qo‘shiladi.
+          Agar biror o'zbekcha so'z o'girilmay qolsa yoki inglizcha so'z noto'g'ri o'girilsa, quyidagi forma orqali xabar bering — u keyingi yangilanishda yagona yadroga qo'shiladi.
         </p>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:12px;">
           <div>
-            <label for="bugWrongWord" style="display:block; font-size:12.5px; font-weight:700; margin-bottom:4px;">Xato o‘girilgan so‘z yoki jumla</label>
-            <input type="text" id="bugWrongWord" class="alif-input" placeholder="Masalan: chat -> chat bo'lib qoldi" />
+            <label for="bugWrongWord" style="display:block; font-size:12.5px; font-weight:700; margin-bottom:4px;">Xato o'girilgan so'z yoki jumla</label>
+            <input type="text" id="bugWrongWord" class="alif-input" placeholder="Masalan: chat -> çat bo'lib qoldi" />
           </div>
           <div>
-            <label for="bugExpectedWord" style="display:block; font-size:12.5px; font-weight:700; margin-bottom:4px;">Aslida qanday bo‘lishi kerak?</label>
+            <label for="bugExpectedWord" style="display:block; font-size:12.5px; font-weight:700; margin-bottom:4px;">Aslida qanday bo'lishi kerak?</label>
             <input type="text" id="bugExpectedWord" class="alif-input" placeholder="Masalan: chat o'zgarishsiz qolishi kerak" />
           </div>
         </div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <div id="bugPreviewBox" style="padding:10px 12px; margin-bottom:12px; border-radius:10px; background:var(--surface-2); border:1px solid var(--border); font-size:12.5px; color:var(--muted);"></div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
           <a id="btnSendGithubIssue" href="https://github.com/sherzodrayimov/Alifplus/issues/new" target="_blank" rel="noopener" class="alif-btn alif-btn-primary">GitHub orqali xabar berish →</a>
-          <a href="https://t.me/sherzodrayimov" target="_blank" rel="noopener" class="alif-btn alif-btn-ghost">Telegram orqali yozish</a>
+          <a id="btnSendTelegram" href="https://t.me/sherzodrayimov" target="_blank" rel="noopener" class="alif-btn alif-btn-ghost">Telegram orqali yozish</a>
           <button type="button" id="btnCopyBugReport" class="alif-btn alif-btn-ghost">Xabar matnini nusxalash</button>
+          <span id="bugActionFeedback" style="font-size:13px; font-weight:700; color:var(--indigo);"></span>
         </div>
       </div>
     </section>
   </main>
 
+  <footer class="alif-footer" style="border-top:1px solid var(--border); padding:22px 0; margin-top:12px;">
+    <div class="alif-container" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-size:13px; color:var(--muted);">
+      <span>© 2026 Alif+ — Yangi o'zbek alifbosi platformasi</span>
+      <div style="display:flex; gap:14px; flex-wrap:wrap;">
+        <a href="alifbo.html#yozish-usullari">Harflarni yozish usullari</a>
+        <a href="konverter.html">Konverter</a>
+        <a href="ilovalar.html">Ilovalar</a>
+        <a href="ishonch.html#maxfiylik">Maxfiylik siyosati</a>
+      </div>
+    </div>
+  </footer>
+
   <div id="alifAriaLive" class="alif-sr-only" aria-live="polite" aria-atomic="true"></div>
-  <script src="core/alif-core.js"></script>
+  <script src="core/alif-core.js?v=2"></script>
+  <script src="web/smart-engine.js?v=20261122c"></script>
   <script>
     (function () {
       var inp = document.getElementById('trustWordInput');
       var resBox = document.getElementById('trustWordResult');
+      var dictBadge = document.getElementById('trustDictStatus');
+
+      function esc(str) {
+        return String(str).replace(/[&<>"']/g, function (c) {
+          return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+        });
+      }
+
+      function analyzeToken(tok) {
+        if (window.AlifSmartEngine && typeof window.AlifSmartEngine.analyzeWord === 'function') {
+          var st = window.AlifSmartEngine.getStatus ? window.AlifSmartEngine.getStatus() : { loaded: false };
+          if (st.loaded) {
+            return window.AlifSmartEngine.analyzeWord(tok);
+          }
+        }
+        if (window.AlifCore && typeof window.AlifCore.analyzeWord === 'function') {
+          return window.AlifCore.analyzeWord(tok);
+        }
+        return { convert: true, layer: 'default', reason: "O'zbekcha imlo qoidasi" };
+      }
+
+      function convertWhole(text) {
+        if (window.AlifSmartEngine && typeof window.AlifSmartEngine.smartConvertText === 'function') {
+          var st = window.AlifSmartEngine.getStatus ? window.AlifSmartEngine.getStatus() : { loaded: false };
+          if (st.loaded) {
+            return window.AlifSmartEngine.smartConvertText(text);
+          }
+        }
+        if (window.AlifCore && typeof window.AlifCore.convert === 'function') {
+          return window.AlifCore.convert(text, 'auto2new', { smart: true });
+        }
+        return text;
+      }
+
       function inspect() {
-        var w = (inp.value || '').trim();
-        if (!w || !window.AlifCore) {
-          resBox.innerHTML = '<span style="color:var(--muted);">Tekshirish uchun so‘z kiriting.</span>';
+        var raw = (inp.value || '').trim();
+        if (!raw) {
+          resBox.innerHTML = '<span style="color:var(--muted);">Tekshirish uchun biror so'z yoki jumla kiriting.</span>';
           return;
         }
-        var info = window.AlifCore.analyzeWord(w);
-        var out = window.AlifCore.convert(w, 'auto2new', { smart: true });
-        var badge = info.convert
-          ? '<span style="padding:3px 9px;border-radius:999px;background:rgba(16,185,129,0.15);color:#059669;font-weight:700;font-size:12px;">✓ O‘giriladi</span>'
-          : '<span style="padding:3px 9px;border-radius:999px;background:rgba(79,70,229,0.14);color:#4f46e5;font-weight:700;font-size:12px;">🛡 Saqlab qolinadi</span>';
-        resBox.innerHTML =
-          '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;">' +
-            '<strong style="font-size:16px;">' + w + ' → ' + out + '</strong>' + badge +
-          '</div>' +
-          '<div style="font-size:13px;color:var(--muted);">Sabab: <b>' + info.reason + '</b> (Qatlam: <code>' + info.layer + '</code>)</div>';
+        var out = convertWhole(raw);
+        var words = raw.match(/[A-Za-z'ʻ’‘ʼ`]+/g) || [raw];
+
+        if (words.length === 1) {
+          var info = analyzeToken(words[0]);
+          var badge = info.convert
+            ? '<span style="padding:3px 9px;border-radius:999px;background:rgba(16,185,129,0.15);color:#059669;font-weight:700;font-size:12px;">✓ O'giriladi</span>'
+            : '<span style="padding:3px 9px;border-radius:999px;background:rgba(79,70,229,0.14);color:#4f46e5;font-weight:700;font-size:12px;">🛡 Saqlab qolinadi</span>';
+          resBox.innerHTML =
+            '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;">' +
+              '<strong style="font-size:17px;">' + esc(raw) + ' → ' + esc(out) + '</strong>' + badge +
+            '</div>' +
+            '<div style="font-size:13px;color:var(--muted);">Sabab: <b>' + esc(info.reason || "Qoida bo'yicha") + '</b> (Qatlam: <code>' + esc(info.layer || 'core') + '</code>)</div>';
+        } else {
+          var itemsHtml = words.map(function (w) {
+            var inf = analyzeToken(w);
+            var wOut = convertWhole(w);
+            var tag = inf.convert
+              ? '<span style="color:#059669;font-weight:700;">✓ ' + esc(wOut) + '</span>'
+              : '<span style="color:#4f46e5;font-weight:700;">🛡 ' + esc(w) + '</span>';
+            return '<li style="margin:4px 0;"><b>' + esc(w) + '</b> → ' + tag + ' <span style="color:var(--muted);">(' + esc(inf.reason || '') + ')</span></li>';
+          }).join('');
+          resBox.innerHTML =
+            '<div style="margin-bottom:8px;font-size:16px;"><strong>Natija:</strong> ' + esc(out) + '</div>' +
+            '<ul style="margin:0;padding-left:18px;font-size:13px;">' + itemsHtml + '</ul>';
+        }
       }
+
       inp.addEventListener('input', inspect);
       document.querySelectorAll('[data-sample-w]').forEach(function (b) {
         b.addEventListener('click', function () {
-          inp.value = b.dataset.sampleW;
+          inp.value = b.getAttribute('data-sample-w');
           inspect();
         });
       });
+
+      if (window.AlifSmartEngine && typeof window.AlifSmartEngine.ready === 'function') {
+        window.AlifSmartEngine.ready().then(function (info) {
+          if (dictBadge) {
+            dictBadge.textContent = info && info.lexCount
+              ? '✓ ' + info.lexCount.toLocaleString() + ' ta o'zbekcha va ' + (info.rejectCount || 0).toLocaleString() + ' ta xorijiy so'z faol'
+              : '✓ Yagona yadro faol';
+          }
+          inspect();
+        });
+      } else if (dictBadge) {
+        dictBadge.textContent = '✓ Yagona yadro faol';
+      }
       inspect();
 
+      // ── XATO HAQIDA XABAR BERISH FORMASI ──
       var wInp = document.getElementById('bugWrongWord');
       var eInp = document.getElementById('bugExpectedWord');
+      var previewBox = document.getElementById('bugPreviewBox');
       var ghBtn = document.getElementById('btnSendGithubIssue');
+      var tgBtn = document.getElementById('btnSendTelegram');
       var cpBtn = document.getElementById('btnCopyBugReport');
-      function updateIssueLink() {
-        var title = encodeURIComponent('[Imlo/Konverter xatosi] ' + (wInp.value || 'Yangi xabar'));
-        var body = encodeURIComponent('**Xato natija:** ' + (wInp.value || '-') + '
-**Kutilgan natija:** ' + (eInp.value || '-') + '
-**Sahifa:** alifplus.uz');
-        ghBtn.href = 'https://github.com/sherzodrayimov/Alifplus/issues/new?title=' + title + '&body=' + body;
+      var fbSpan = document.getElementById('bugActionFeedback');
+
+      function getReportText() {
+        var wrong = (wInp.value || '').trim() || "(kiritilmagan)";
+        var exp = (eInp.value || '').trim() || "(kiritilmagan)";
+        return "Alif+ xato xabari:\n• Xato natija: " + wrong + "\n• Kutilgan natija: " + exp + "\n• Sahifa: https://alifplus.uz/ishonch.html";
       }
-      wInp.addEventListener('input', updateIssueLink);
-      eInp.addEventListener('input', updateIssueLink);
-      cpBtn.addEventListener('click', function () {
-        var txt = 'Alif+ xato xabari:
-Xato: ' + (wInp.value || '-') + '
-Kutilgan: ' + (eInp.value || '-');
-        if (navigator.clipboard) navigator.clipboard.writeText(txt);
-        cpBtn.textContent = '✓ Nusxa olindi';
-        setTimeout(function () { cpBtn.textContent = 'Xabar matnini nusxalash'; }, 1500);
+
+      function syncBugLinks() {
+        var wrong = (wInp.value || '').trim();
+        var exp = (eInp.value || '').trim();
+        var reportPlain = getReportText();
+        previewBox.textContent = "Yuboriladigan xabar: " + reportPlain.replace(/\n/g, " | ");
+
+        var title = encodeURIComponent('[Konverter xatosi] ' + (wrong || 'Yangi so'z xabari'));
+        var body = encodeURIComponent('**Xato natija:** ' + (wrong || '-') + '\n**Kutilgan natija:** ' + (exp || '-') + '\n**Sahifa:** https://alifplus.uz/');
+        ghBtn.href = 'https://github.com/sherzodrayimov/Alifplus/issues/new?title=' + title + '&body=' + body;
+
+        var tgText = encodeURIComponent(reportPlain);
+        tgBtn.href = 'https://t.me/share/url?url=' + encodeURIComponent('https://alifplus.uz/') + '&text=' + tgText;
+      }
+
+      wInp.addEventListener('input', syncBugLinks);
+      eInp.addEventListener('input', syncBugLinks);
+      syncBugLinks();
+
+      function guardEmptySubmit(e) {
+        if (!(wInp.value || '').trim() && !(eInp.value || '').trim()) {
+          e.preventDefault();
+          fbSpan.textContent = "Avval xato so'z yoki kutilgan natijani yozing.";
+          wInp.focus();
+        } else {
+          fbSpan.textContent = "";
+        }
+      }
+      ghBtn.addEventListener('click', guardEmptySubmit);
+      tgBtn.addEventListener('click', guardEmptySubmit);
+
+      async function copyTextFallback(text) {
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+            return true;
+          }
+        } catch (err) {}
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        return ok;
+      }
+
+      cpBtn.addEventListener('click', async function () {
+        if (!(wInp.value || '').trim() && !(eInp.value || '').trim()) {
+          fbSpan.textContent = "Avval maydonlarni to'ldiring.";
+          wInp.focus();
+          return;
+        }
+        var ok = await copyTextFallback(getReportText());
+        fbSpan.textContent = ok ? "✓ Xabar matni nusxalandi!" : "✕ Nusxalab bo'lmadi";
+        setTimeout(function () { fbSpan.textContent = ""; }, 2200);
       });
     })();
   </script>
