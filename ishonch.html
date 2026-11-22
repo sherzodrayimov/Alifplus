@@ -198,175 +198,149 @@
   <div id="alifAriaLive" class="alif-sr-only" aria-live="polite" aria-atomic="true"></div>
   <script src="core/alif-core.js?v=2"></script>
   <script src="web/smart-engine.js?v=20261122c"></script>
-  <script>
+    <script>
     (function () {
       var inp = document.getElementById('trustWordInput');
       var resBox = document.getElementById('trustWordResult');
-      var dictBadge = document.getElementById('trustDictStatus');
+      var statusEl = document.getElementById('trustDictStatus');
 
-      function esc(str) {
-        return String(str).replace(/[&<>"']/g, function (c) {
-          return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
-        });
+      var PRESERVED_WORDS = {
+        'chat': "Inglizcha atama — yangi alifboga o'girilmaydi (çat emas, chat)",
+        'channel': "Inglizcha so'z — saqlab qolinadi",
+        'change': "Inglizcha so'z — saqlab qolinadi",
+        'chart': "Inglizcha so'z — saqlab qolinadi",
+        'youtube': "Xalqaro brend nomi — asl yozuvi saqlanadi",
+        'windows': "Xalqaro brend nomi — asl yozuvi saqlanadi",
+        'macos': "Xalqaro brend nomi — asl yozuvi saqlanadi",
+        'telegram': "Xalqaro brend nomi — asl yozuvi saqlanadi",
+        'github': "Xalqaro brend nomi — asl yozuvi saqlanadi",
+        'word': "Xalqaro dastur nomi — asl yozuvi saqlanadi",
+        'excel': "Xalqaro dastur nomi — asl yozuvi saqlanadi",
+        'pdf': "Xalqaro format nomi — asl yozuvi saqlanadi"
+      };
+
+      function esc(s) {
+        return String(s == null ? '' : s)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
       }
 
-      function analyzeToken(tok) {
-        if (window.AlifSmartEngine && typeof window.AlifSmartEngine.analyzeWord === 'function') {
-          var st = window.AlifSmartEngine.getStatus ? window.AlifSmartEngine.getStatus() : { loaded: false };
-          if (st.loaded) {
-            return window.AlifSmartEngine.analyzeWord(tok);
+      function convertSingleWordToNewLat(word) {
+        var low = word.toLowerCase();
+        if (Object.prototype.hasOwnProperty.call(PRESERVED_WORDS, low)) {
+          return { text: word, converted: false, reason: PRESERVED_WORDS[low] };
+        }
+        if (/[wW]/.test(word) && !/^[OoGg]['’‘`]?[Ww]/.test(word)) {
+          return { text: word, converted: false, reason: "Xorijiy harf (w) ishtirok etgan so'z — saqlab qolinadi" };
+        }
+
+        var out = '';
+        for (var i = 0; i < word.length; i++) {
+          var ch = word[i];
+          var next = word[i + 1] || '';
+          var pair2 = (ch + next).toLowerCase();
+
+          if (pair2 === "o'") {
+            out += (ch === 'O') ? 'Ö' : 'ö';
+            i += 1;
+            continue;
           }
-        }
-        if (window.AlifCore && typeof window.AlifCore.analyzeWord === 'function') {
-          return window.AlifCore.analyzeWord(tok);
-        }
-        return { convert: true, layer: 'default', reason: "O'zbekcha imlo qoidasi" };
-      }
-
-      function convertWhole(text) {
-        if (window.AlifSmartEngine && typeof window.AlifSmartEngine.smartConvertText === 'function') {
-          var st = window.AlifSmartEngine.getStatus ? window.AlifSmartEngine.getStatus() : { loaded: false };
-          if (st.loaded) {
-            return window.AlifSmartEngine.smartConvertText(text);
+          if (pair2 === "g'") {
+            out += (ch === 'G') ? 'Ğ' : 'ğ';
+            i += 1;
+            continue;
           }
-        }
-        if (window.AlifCore && typeof window.AlifCore.convert === 'function') {
-          return window.AlifCore.convert(text, 'auto2new', { smart: true });
-        }
-        return text;
-      }
-
-      function inspect() {
-        var raw = (inp.value || '').trim();
-        if (!raw) {
-          resBox.innerHTML = '<span style="color:var(--muted);">Tekshirish uchun biror so'z yoki jumla kiriting.</span>';
-          return;
-        }
-        var out = convertWhole(raw);
-        var words = raw.match(/[A-Za-z'ʻ’‘ʼ`]+/g) || [raw];
-
-        if (words.length === 1) {
-          var info = analyzeToken(words[0]);
-          var badge = info.convert
-            ? '<span style="padding:3px 9px;border-radius:999px;background:rgba(16,185,129,0.15);color:#059669;font-weight:700;font-size:12px;">✓ O'giriladi</span>'
-            : '<span style="padding:3px 9px;border-radius:999px;background:rgba(79,70,229,0.14);color:#4f46e5;font-weight:700;font-size:12px;">🛡 Saqlab qolinadi</span>';
-          resBox.innerHTML =
-            '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;">' +
-              '<strong style="font-size:17px;">' + esc(raw) + ' → ' + esc(out) + '</strong>' + badge +
-            '</div>' +
-            '<div style="font-size:13px;color:var(--muted);">Sabab: <b>' + esc(info.reason || "Qoida bo'yicha") + '</b> (Qatlam: <code>' + esc(info.layer || 'core') + '</code>)</div>';
-        } else {
-          var itemsHtml = words.map(function (w) {
-            var inf = analyzeToken(w);
-            var wOut = convertWhole(w);
-            var tag = inf.convert
-              ? '<span style="color:#059669;font-weight:700;">✓ ' + esc(wOut) + '</span>'
-              : '<span style="color:#4f46e5;font-weight:700;">🛡 ' + esc(w) + '</span>';
-            return '<li style="margin:4px 0;"><b>' + esc(w) + '</b> → ' + tag + ' <span style="color:var(--muted);">(' + esc(inf.reason || '') + ')</span></li>';
-          }).join('');
-          resBox.innerHTML =
-            '<div style="margin-bottom:8px;font-size:16px;"><strong>Natija:</strong> ' + esc(out) + '</div>' +
-            '<ul style="margin:0;padding-left:18px;font-size:13px;">' + itemsHtml + '</ul>';
-        }
-      }
-
-      inp.addEventListener('input', inspect);
-      document.querySelectorAll('[data-sample-w]').forEach(function (b) {
-        b.addEventListener('click', function () {
-          inp.value = b.getAttribute('data-sample-w');
-          inspect();
-        });
-      });
-
-      if (window.AlifSmartEngine && typeof window.AlifSmartEngine.ready === 'function') {
-        window.AlifSmartEngine.ready().then(function (info) {
-          if (dictBadge) {
-            dictBadge.textContent = info && info.lexCount
-              ? '✓ ' + info.lexCount.toLocaleString() + ' ta o'zbekcha va ' + (info.rejectCount || 0).toLocaleString() + ' ta xorijiy so'z faol'
-              : '✓ Yagona yadro faol';
+          if (pair2 === 'sh') {
+            var afterSh = word[i + 2] || '';
+            var isUpperSh = (ch === 'S') && (next === 'H' || (afterSh && afterSh === afterSh.toUpperCase() && afterSh !== afterSh.toLowerCase()));
+            out += isUpperSh ? 'Ş' : (ch === 'S' ? 'Ş' : 'ş');
+            i += 1;
+            continue;
           }
-          inspect();
-        });
-      } else if (dictBadge) {
-        dictBadge.textContent = '✓ Yagona yadro faol';
-      }
-      inspect();
-
-      // ── XATO HAQIDA XABAR BERISH FORMASI ──
-      var wInp = document.getElementById('bugWrongWord');
-      var eInp = document.getElementById('bugExpectedWord');
-      var previewBox = document.getElementById('bugPreviewBox');
-      var ghBtn = document.getElementById('btnSendGithubIssue');
-      var tgBtn = document.getElementById('btnSendTelegram');
-      var cpBtn = document.getElementById('btnCopyBugReport');
-      var fbSpan = document.getElementById('bugActionFeedback');
-
-      function getReportText() {
-        var wrong = (wInp.value || '').trim() || "(kiritilmagan)";
-        var exp = (eInp.value || '').trim() || "(kiritilmagan)";
-        return "Alif+ xato xabari:\n• Xato natija: " + wrong + "\n• Kutilgan natija: " + exp + "\n• Sahifa: https://alifplus.uz/ishonch.html";
-      }
-
-      function syncBugLinks() {
-        var wrong = (wInp.value || '').trim();
-        var exp = (eInp.value || '').trim();
-        var reportPlain = getReportText();
-        previewBox.textContent = "Yuboriladigan xabar: " + reportPlain.replace(/\n/g, " | ");
-
-        var title = encodeURIComponent('[Konverter xatosi] ' + (wrong || 'Yangi so'z xabari'));
-        var body = encodeURIComponent('**Xato natija:** ' + (wrong || '-') + '\n**Kutilgan natija:** ' + (exp || '-') + '\n**Sahifa:** https://alifplus.uz/');
-        ghBtn.href = 'https://github.com/sherzodrayimov/Alifplus/issues/new?title=' + title + '&body=' + body;
-
-        var tgText = encodeURIComponent(reportPlain);
-        tgBtn.href = 'https://t.me/share/url?url=' + encodeURIComponent('https://alifplus.uz/') + '&text=' + tgText;
-      }
-
-      wInp.addEventListener('input', syncBugLinks);
-      eInp.addEventListener('input', syncBugLinks);
-      syncBugLinks();
-
-      function guardEmptySubmit(e) {
-        if (!(wInp.value || '').trim() && !(eInp.value || '').trim()) {
-          e.preventDefault();
-          fbSpan.textContent = "Avval xato so'z yoki kutilgan natijani yozing.";
-          wInp.focus();
-        } else {
-          fbSpan.textContent = "";
+          if (pair2 === 'ch') {
+            var afterCh = word[i + 2] || '';
+            var isUpperCh = (ch === 'C') && (next === 'H' || (afterCh && afterCh === afterCh.toUpperCase() && afterCh !== afterCh.toLowerCase()));
+            out += isUpperCh ? 'Ç' : (ch === 'C' ? 'Ç' : 'ç');
+            i += 1;
+            continue;
+          }
+          if (ch === 'Ў') out += 'Ö';
+          else if (ch === 'ў') out += 'ö';
+          else if (ch === 'Ғ') out += 'Ğ';
+          else if (ch === 'ғ') out += 'ğ';
+          else if (ch === 'Ш') out += 'Ş';
+          else if (ch === 'ш') out += 'ş';
+          else if (ch === 'Ч') out += 'Ç';
+          else if (ch === 'ч') out += 'ç';
+          else out += ch;
         }
-      }
-      ghBtn.addEventListener('click', guardEmptySubmit);
-      tgBtn.addEventListener('click', guardEmptySubmit);
 
-      async function copyTextFallback(text) {
+        var changed = out !== word;
+        return {
+          text: out,
+          converted: changed,
+          reason: changed
+            ? "O'zbekcha imlo qoidasi bo'yicha yangi alifboga o'girildi"
+            : "Qo'shimcha harf o'zgarishi talab etilmadi"
+        };
+      }
+
+      function renderResult() {
+        if (!inp || !resBox) return;
         try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(text);
-            return true;
+          var raw = (inp.value || '').trim();
+          if (!raw) {
+            resBox.innerHTML = '<span style="color:var(--muted);">Tekshirish uchun so\'z yozing yoki yuqoridagi misol tugmasini bosing.</span>';
+            return;
           }
-        } catch (err) {}
-        var ta = document.createElement('textarea');
-        ta.value = text;
-        ta.setAttribute('readonly', '');
-        ta.style.position = 'fixed';
-        ta.style.opacity = '0';
-        document.body.appendChild(ta);
-        ta.select();
-        var ok = false;
-        try { ok = document.execCommand('copy'); } catch (e) {}
-        document.body.removeChild(ta);
-        return ok;
+          var tokens = raw.split(/\s+/);
+          if (tokens.length === 1) {
+            var r = convertSingleWordToNewLat(tokens[0]);
+            var pill = r.converted
+              ? '<span style="padding:3px 10px;border-radius:999px;background:rgba(16,185,129,0.16);color:#059669;font-size:12px;font-weight:700;">✓ O\'giriladi</span>'
+              : '<span style="padding:3px 10px;border-radius:999px;background:rgba(79,70,229,0.15);color:#4f46e5;font-size:12px;font-weight:700;">🛡 Saqlab qolinadi</span>';
+            resBox.innerHTML =
+              '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;">' +
+                '<span style="font-size:17px;font-weight:800;color:var(--text);">' + esc(tokens[0]) + ' → ' + esc(r.text) + '</span>' +
+                pill +
+              '</div>' +
+              '<div style="font-size:13px;color:var(--muted);">' + esc(r.reason) + '</div>';
+          } else {
+            var convertedParts = tokens.map(function (t) { return convertSingleWordToNewLat(t).text; });
+            var listHtml = tokens.map(function (t) {
+              var info = convertSingleWordToNewLat(t);
+              var badge = info.converted
+                ? '<span style="color:#059669;font-weight:700;">✓ ' + esc(info.text) + '</span>'
+                : '<span style="color:#4f46e5;font-weight:700;">🛡 ' + esc(info.text) + '</span>';
+              return '<li style="margin:4px 0;"><b>' + esc(t) + '</b> → ' + badge + ' <span style="color:var(--muted);">(' + esc(info.reason) + ')</span></li>';
+            }).join('');
+            resBox.innerHTML =
+              '<div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px;">Natija: ' + esc(convertedParts.join(' ')) + '</div>' +
+              '<ul style="margin:0;padding-left:18px;font-size:13px;">' + listHtml + '</ul>';
+          }
+          if (statusEl) statusEl.textContent = '✓ Jonli tahlil faol';
+        } catch (err) {
+          resBox.innerHTML = '<span style="color:#dc2626;">Tahlil xatosi: ' + esc(err && err.message ? err.message : err) + '</span>';
+        }
       }
 
-      cpBtn.addEventListener('click', async function () {
-        if (!(wInp.value || '').trim() && !(eInp.value || '').trim()) {
-          fbSpan.textContent = "Avval maydonlarni to'ldiring.";
-          wInp.focus();
-          return;
-        }
-        var ok = await copyTextFallback(getReportText());
-        fbSpan.textContent = ok ? "✓ Xabar matni nusxalandi!" : "✕ Nusxalab bo'lmadi";
-        setTimeout(function () { fbSpan.textContent = ""; }, 2200);
+      if (inp) {
+        inp.addEventListener('input', renderResult);
+        inp.addEventListener('keyup', renderResult);
+      }
+
+      document.querySelectorAll('[data-sample-w]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (inp) {
+            inp.value = btn.getAttribute('data-sample-w') || '';
+            renderResult();
+          }
+        });
       });
+
+      renderResult();
     })();
   </script>
 </body>
