@@ -1980,3 +1980,94 @@ html, body {
     word-break: break-word !important;
   }
 }
+
+/* ── Bosh sahifadagi virtual klaviatura: 1:1 Desktop QWERTY ko'rinishi (360px - 430px) ── */
+@media (max-width: 860px) {
+  .alif-mock-window,
+  .alif-hero-preview,
+  .alif-demo-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .alif-mock-body,
+  .alif-hero-preview-body {
+    padding: 12px 10px !important;
+  }
+
+  .alif-kbd-demo,
+  .alif-hero-kbd,
+  .alif-mock-kbd,
+  .alif-kbd {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 8px 6px !important;
+    border-radius: 12px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .alif-kbd-row,
+  .alif-hero-kbd-row,
+  .alif-mock-kbd-row {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-bottom: 4px !important;
+    box-sizing: border-box !important;
+  }
+
+  .alif-kbd-row:last-child,
+  .alif-hero-kbd-row:last-child,
+  .alif-mock-kbd-row:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  .alif-kbd-key,
+  .alif-hero-kbd-key,
+  .alif-mock-kbd-key,
+  .alif-kbd kbd,
+  .alif-kbd button,
+  .alif-kbd span[data-key] {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    width: auto !important;
+    max-width: none !important;
+    height: 32px !important;
+    padding: 0 1px !important;
+    border-radius: 6px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: clamp(10.5px, 3vw, 13px) !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+    touch-action: manipulation !important;
+  }
+
+  /* Probel (Space) va keng maxsus tugmalar mutanosib kenglikda qoladi */
+  .alif-kbd-key.is-space,
+  .alif-kbd-space,
+  [data-key=" "],
+  [data-key="Space"] {
+    flex: 4.5 1 0 !important;
+  }
+
+  .alif-kbd-key.is-wide,
+  .alif-kbd-wide {
+    flex: 1.45 1 0 !important;
+    font-size: clamp(9.5px, 2.5vw, 11.5px) !important;
+  }
+}
+
