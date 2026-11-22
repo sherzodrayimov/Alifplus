@@ -866,5 +866,21 @@
   <script src="core/alif-core.js"></script>
   <script src="web/converter.js?v=20261122c"></script>
   <div id="alifAriaLive" class="alif-sr-only" aria-live="polite" aria-atomic="true"></div>
+  <script>
+    (function() {
+      var cb = document.getElementById("alifNavCheckbox");
+      if (cb) cb.checked = false;
+      window.addEventListener("pageshow", function() {
+        var c = document.getElementById("alifNavCheckbox");
+        if (c) c.checked = false;
+      });
+      document.querySelectorAll(".alif-nav .alif-nav-link").forEach(function(a) {
+        a.addEventListener("click", function() {
+          var c = document.getElementById("alifNavCheckbox");
+          if (c) c.checked = false;
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
