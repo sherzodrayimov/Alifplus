@@ -1928,3 +1928,55 @@ body.alif-drawer-locked {
 #alifDocPaper {
   scroll-margin-top: 76px;
 }
+
+/* ── TELEGRAM WEBVIEW VA MOBIL (360-430PX) CHUQUR HIMOYA ── */
+html, body {
+  overflow-x: hidden;
+  overflow-x: clip;
+  max-width: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Telegram iOS WebView auto-zoom va safe-area tuzatishi */
+@media (max-width: 860px) {
+  input[type="text"],
+  input[type="search"],
+  input[type="email"],
+  input[type="number"],
+  input[type="date"],
+  textarea,
+  select,
+  .alif-input,
+  .alif-textarea,
+  .alif-select {
+    font-size: 16px !important;
+  }
+
+  body > #alifPrimaryNav.is-drawer-open,
+  #alifPrimaryNav.is-drawer-open {
+    height: 100vh !important;
+    height: 100dvh !important;
+    padding-top: max(18px, env(safe-area-inset-top)) !important;
+    padding-bottom: max(32px, env(safe-area-inset-bottom)) !important;
+  }
+
+  /* Alifbo jadvali 360px ekranda siqilib qolmasligi uchun */
+  .alif-table-wrap,
+  table {
+    max-width: 100%;
+  }
+
+  /* Hujjatlar A4 qog'ozi mobil ekrandan toshib ketmasligi uchun */
+  #alifDocPaper,
+  .alif-doc-paper {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    padding: 16px 14px !important;
+    font-size: 13.5px !important;
+    line-height: 1.55 !important;
+    box-sizing: border-box !important;
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+  }
+}

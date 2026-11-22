@@ -2,7 +2,7 @@
 <html lang="uz">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Ishonch va aniqlik qoidalari — Alif+</title>
   <meta name="description" content="Alif+ qaysi so'zlarni o'giradi, nega inglizcha atamalar saqlanadi va xato topilganda qanday xabar berish mumkin?" />
   <link rel="canonical" href="https://alifplus.uz/ishonch.html" />
@@ -13,14 +13,15 @@
   <meta property="og:site_name" content="Alif+" />
   <meta property="og:locale" content="uz_UZ" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" href="web/converter.css?v=26" />
-  <link rel="stylesheet" href="web/scroll-fx.css" />
-  <link rel="stylesheet" href="web/theme-variants.css?v=20261122g" />
+  <link rel="stylesheet" href="web/converter.css?v=20261122h" />
+  <link rel="stylesheet" href="web/scroll-fx.css?v=20261122h" />
+  <link rel="stylesheet" href="web/theme-variants.css?v=20261122h" />
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png" />
   <link rel="apple-touch-icon" href="icon.png" />
-  <script id="alifThemeScript">
+    <script id="alifThemeScript">
     (function() {
-      var saved = localStorage.getItem("alif_theme");
+      var saved = null;
+      try { saved = localStorage.getItem("alif_theme"); } catch (e) {}
       var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
       if (saved === "dark" || (!saved && prefersDark)) {
         document.documentElement.setAttribute("data-theme", "dark");
@@ -29,7 +30,7 @@
         var isDark = document.documentElement.getAttribute("data-theme") === "dark";
         var next = isDark ? "light" : "dark";
         document.documentElement.setAttribute("data-theme", next);
-        localStorage.setItem("alif_theme", next);
+        try { localStorage.setItem("alif_theme", next); } catch (e) {}
       };
     })();
   </script>
@@ -347,6 +348,7 @@
       renderResult();
     })();
   </script>
-  <script src="web/nav-drawer.js?v=2"></script>
+  <script src="web/nav-drawer.js?v=20261122h"></script>
+  <script src="web/telegram-compat.js?v=20261122h"></script>
 </body>
 </html>

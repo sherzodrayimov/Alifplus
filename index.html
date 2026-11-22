@@ -2,7 +2,7 @@
 <html lang="uz">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Alif+ — Yangi o'zbek alifbosi platformasi (O', G', Sh, Ch)</title>
   <meta name="description" content="Yangi özbek lotin alifbosi (Ö, Ğ, Ş, Ç) uçun konverter, hujjatlar konstruktori, tez yoziş trenajyori hamda macOS/Windows dasturlari." />
   <link rel="canonical" href="https://alifplus.uz/" />
@@ -11,12 +11,13 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://alifplus.uz/" />
   <meta property="og:image" content="https://alifplus.uz/icon.png" />
-  <link rel="stylesheet" href="web/converter.css?v=26" />
+  <link rel="stylesheet" href="web/converter.css?v=20261122h" />
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
-  <script id="alifThemeScript">
+    <script id="alifThemeScript">
     (function() {
-      var saved = localStorage.getItem("alif_theme");
+      var saved = null;
+      try { saved = localStorage.getItem("alif_theme"); } catch (e) {}
       var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
       if (saved === "dark" || (!saved && prefersDark)) {
         document.documentElement.setAttribute("data-theme", "dark");
@@ -25,12 +26,12 @@
         var isDark = document.documentElement.getAttribute("data-theme") === "dark";
         var next = isDark ? "light" : "dark";
         document.documentElement.setAttribute("data-theme", next);
-        localStorage.setItem("alif_theme", next);
+        try { localStorage.setItem("alif_theme", next); } catch (e) {}
       };
     })();
   </script>
-  <link rel="stylesheet" href="web/scroll-fx.css" />
-  <link rel="stylesheet" href="web/theme-variants.css?v=20261122g" />
+  <link rel="stylesheet" href="web/scroll-fx.css?v=20261122h" />
+  <link rel="stylesheet" href="web/theme-variants.css?v=20261122h" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:site_name" content="Alif+" />
   <meta property="og:locale" content="uz_UZ" />
@@ -1007,6 +1008,7 @@
     })();
   </script>
   <script src="core/alif-core.js"></script>
-  <script src="web/nav-drawer.js?v=2"></script>
+  <script src="web/nav-drawer.js?v=20261122h"></script>
+  <script src="web/telegram-compat.js?v=20261122h"></script>
 </body>
 </html>

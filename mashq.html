@@ -2,7 +2,7 @@
 <html lang="uz">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Tez yozish trenajyori — Alif+</title>
   <meta name="description" content="Yangi özbek alifbosida (Ö, Ğ, Ş, Ç) tez va xatosiz yozişni maşq qiliş trenajyori." />
   <link rel="canonical" href="https://alifplus.uz/mashq.html" />
@@ -11,12 +11,13 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://alifplus.uz/mashq.html" />
   <meta property="og:image" content="https://alifplus.uz/icon.png" />
-  <link rel="stylesheet" href="web/converter.css?v=26" />
+  <link rel="stylesheet" href="web/converter.css?v=20261122h" />
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
-  <script id="alifThemeScript">
+    <script id="alifThemeScript">
     (function() {
-      var saved = localStorage.getItem("alif_theme");
+      var saved = null;
+      try { saved = localStorage.getItem("alif_theme"); } catch (e) {}
       var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
       if (saved === "dark" || (!saved && prefersDark)) {
         document.documentElement.setAttribute("data-theme", "dark");
@@ -25,12 +26,12 @@
         var isDark = document.documentElement.getAttribute("data-theme") === "dark";
         var next = isDark ? "light" : "dark";
         document.documentElement.setAttribute("data-theme", next);
-        localStorage.setItem("alif_theme", next);
+        try { localStorage.setItem("alif_theme", next); } catch (e) {}
       };
     })();
   </script>
-  <link rel="stylesheet" href="web/scroll-fx.css" />
-  <link rel="stylesheet" href="web/theme-variants.css?v=20261122g" />
+  <link rel="stylesheet" href="web/scroll-fx.css?v=20261122h" />
+  <link rel="stylesheet" href="web/theme-variants.css?v=20261122h" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:site_name" content="Alif+" />
   <meta property="og:locale" content="uz_UZ" />
@@ -798,6 +799,33 @@
   <script src="web/theme-variants.js?v=20261122"></script>
   <div id="alifAriaLive" class="alif-sr-only" aria-live="polite" aria-atomic="true"></div>
   <script src="core/alif-core.js"></script>
-  <script src="web/nav-drawer.js?v=2"></script>
+  <script src="web/nav-drawer.js?v=20261122h"></script>
+  <script src="web/telegram-compat.js?v=20261122h"></script>
+  <script>
+    (function () {
+      var target = document.querySelector('#mashqInput, #alifTrainerInput, textarea, input[type="text"]');
+      if (!target || document.getElementById('alifMobileCharBar')) return;
+      var bar = document.createElement('div');
+      bar.id = 'alifMobileCharBar';
+      bar.style.cssText = 'display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px;';
+      ['ö', 'ğ', 'ş', 'ç', 'Ö', 'Ğ', 'Ş', 'Ç'].forEach(function (ch) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'alif-mini-btn';
+        b.textContent = ch;
+        b.style.cssText = 'min-width:38px;height:38px;font-size:16px;font-weight:800;';
+        b.addEventListener('click', function () {
+          var start = target.selectionStart || target.value.length;
+          var end = target.selectionEnd || target.value.length;
+          target.value = target.value.slice(0, start) + ch + target.value.slice(end);
+          target.focus();
+          try { target.setSelectionRange(start + 1, start + 1); } catch (e) {}
+          target.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+        bar.appendChild(b);
+      });
+      target.parentNode.insertBefore(bar, target.nextSibling);
+    })();
+  </script>
 </body>
 </html>
