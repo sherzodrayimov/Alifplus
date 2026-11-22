@@ -1634,95 +1634,383 @@ body::after,
   }
 }
 
-/* ── MOBIL MENYU: HERO USTIGA TUSHMASLIGI VA TO'LIQ FON KAFOLATI ── */
+/* ── MOBIL VA DESKTOP YAGONA NAVIGATSIYA, DRAWER VA RESPONSIV TUZATISHLAR ── */
 html, body, .alif-main {
   overflow-x: clip;
   max-width: 100%;
 }
 
-.alif-nav-checkbox {
-  position: fixed;
-  opacity: 0;
-  pointer-events: none;
-  width: 0;
-  height: 0;
+html.alif-drawer-locked,
+body.alif-drawer-locked {
+  overflow: hidden !important;
+  height: 100dvh !important;
 }
 
-@media (max-width: 860px) {
+.alif-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1200;
+}
+
+.alif-topbar-inner {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  min-height: 60px;
+}
+
+.alif-brand {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  flex-shrink: 0 !important;
+}
+
+.alif-topbar-actions {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-left: auto !important;
+  flex-shrink: 0 !important;
+}
+
+/* Desktop navigatsiya */
+@media (min-width: 861px) {
   .alif-nav {
+    display: flex !important;
+    align-items: center !important;
+    margin-left: auto !important;
+  }
+  .alif-drawer-links {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+  .alif-drawer-head,
+  .alif-drawer-script-box,
+  .alif-mobile-menu-btn,
+  .alif-mobile-bm-box {
     display: none !important;
+  }
+  .alif-topbar-actions {
+    margin-left: 10px !important;
+  }
+}
+
+/* Desktop script dropdown */
+.alif-script-dd {
+  position: relative;
+  display: inline-block;
+}
+.alif-script-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 11px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.alif-script-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 172px;
+  padding: 6px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.16);
+  display: none;
+  flex-direction: column;
+  gap: 3px;
+  z-index: 2500;
+}
+.alif-script-dd.is-open .alif-script-menu {
+  display: flex;
+}
+.alif-script-opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.alif-script-opt.is-active {
+  background: rgba(79, 70, 229, 0.12);
+  color: var(--indigo, #4f46e5);
+  font-weight: 700;
+}
+.alif-opt-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  padding: 2px 5px;
+  border-radius: 6px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 11px;
+  font-weight: 800;
+}
+.alif-script-opt.is-active .alif-opt-badge {
+  background: var(--indigo, #4f46e5);
+  border-color: var(--indigo, #4f46e5);
+  color: #ffffff;
+}
+
+/* Mobil ko'rinish (360px - 860px) */
+@media (max-width: 860px) {
+  .alif-desktop-only {
+    display: none !important;
+  }
+
+  .alif-mobile-menu-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    height: 38px !important;
+    padding: 0 12px !important;
+    border-radius: 10px !important;
+    border: 1px solid var(--border) !important;
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+  }
+
+  /* Yopiq holatda menyu yashirin */
+  #alifPrimaryNav {
+    display: none !important;
+  }
+
+  /* Ochiq holatda to'liq ekranli qattiq panel */
+  #alifPrimaryNav.is-drawer-open {
+    display: flex !important;
     position: fixed !important;
     inset: 0 !important;
-    top: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    left: 0 !important;
     width: 100vw !important;
     height: 100dvh !important;
     margin: 0 !important;
-    padding: 20px 20px 36px !important;
-    background-color: var(--surface, #ffffff) !important;
+    padding: 18px 20px 36px !important;
     background: var(--surface, #ffffff) !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    opacity: 1 !important;
-    visibility: visible !important;
     z-index: 2147483000 !important;
     flex-direction: column !important;
     align-items: stretch !important;
     justify-content: flex-start !important;
-    gap: 8px !important;
+    gap: 14px !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
-  }
-
-  input.alif-nav-checkbox:checked ~ nav.alif-nav,
-  input.alif-nav-checkbox:checked + nav.alif-nav {
-    display: flex !important;
   }
 
   .alif-drawer-head {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    padding: 4px 2px 14px !important;
-    margin-bottom: 8px !important;
+    padding-bottom: 12px !important;
     border-bottom: 1px solid var(--border) !important;
+  }
+
+  .alif-drawer-title {
     font-size: 17px !important;
     font-weight: 800 !important;
     color: var(--text) !important;
-    background: transparent !important;
   }
 
   .alif-drawer-close {
     display: inline-flex !important;
     align-items: center !important;
-    justify-content: center !important;
-    width: 38px !important;
-    height: 38px !important;
+    gap: 5px !important;
+    height: 36px !important;
+    padding: 0 12px !important;
     border-radius: 10px !important;
     border: 1px solid var(--border) !important;
     background: var(--surface-2) !important;
     color: var(--text) !important;
-    font-size: 18px !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
     cursor: pointer !important;
   }
 
-  nav.alif-nav .alif-nav-link {
+  .alif-drawer-links {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+
+  #alifPrimaryNav .alif-nav-link {
     display: flex !important;
     align-items: center !important;
     width: 100% !important;
-    padding: 13px 16px !important;
+    padding: 13px 14px !important;
     border-radius: 12px !important;
     font-size: 16px !important;
     font-weight: 700 !important;
     color: var(--text) !important;
     background: transparent !important;
-    opacity: 1 !important;
   }
 
-  nav.alif-nav .alif-nav-link.is-page-active {
+  #alifPrimaryNav .alif-nav-link.is-page-active {
     background: rgba(79, 70, 229, 0.12) !important;
     color: var(--indigo, #4f46e5) !important;
   }
+
+  .alif-drawer-script-box {
+    display: block !important;
+    margin-top: 6px !important;
+    padding: 14px !important;
+    border-radius: 14px !important;
+    background: var(--surface-2) !important;
+    border: 1px solid var(--border) !important;
+  }
+
+  .alif-drawer-script-label {
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+    color: var(--muted) !important;
+    margin-bottom: 8px !important;
+  }
+
+  .alif-drawer-script-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  .alif-drawer-script-btn {
+    padding: 10px 6px !important;
+    border-radius: 10px !important;
+    border: 1px solid var(--border) !important;
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    text-align: center !important;
+  }
+
+  .alif-drawer-script-btn.is-active {
+    background: var(--indigo, #4f46e5) !important;
+    border-color: var(--indigo, #4f46e5) !important;
+    color: #ffffff !important;
+  }
+
+  /* Hero CTA tugmalari hech qachon chap/o'ngdan kesilmasin */
+  .alif-hero-actions,
+  .alif-hero-cta {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .alif-hero-actions .alif-btn,
+  .alif-hero-cta .alif-btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    white-space: normal !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  /* Virtual klaviatura 360px - 430px ekranga to'liq sig'ishi */
+  .alif-kbd-demo,
+  .alif-hero-kbd,
+  .alif-mock-kbd {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    padding: 8px 6px !important;
+  }
+
+  .alif-kbd-row,
+  .alif-hero-kbd-row {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    gap: 3px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .alif-kbd-key,
+  .alif-hero-kbd-key {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    padding: 7px 1px !important;
+    font-size: clamp(10px, 2.9vw, 13px) !important;
+    text-align: center !important;
+    overflow: hidden !important;
+  }
+
+  /* Bookmarklet mobil yordamchisi */
+  .alif-mobile-bm-box {
+    display: block !important;
+    margin-top: 10px !important;
+    padding: 12px !important;
+    border-radius: 12px !important;
+    background: var(--surface-2) !important;
+    border: 1px solid var(--border) !important;
+  }
+}
+
+/* Konverter fayl akkordeoni */
+.alif-file-accordion {
+  margin-top: 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  overflow: hidden;
+}
+.alif-file-accordion-sum {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 18px;
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+}
+.alif-file-accordion-sum::-webkit-details-marker {
+  display: none;
+}
+.alif-acc-hint {
+  font-size: 12px;
+  color: var(--indigo, #4f46e5);
+  font-weight: 700;
+}
+
+/* Hujjatlar konstruktori silliq scroll chegarasi */
+#alifDocFormCard,
+#alifDocFields,
+#alifDocPaper {
+  scroll-margin-top: 76px;
 }
