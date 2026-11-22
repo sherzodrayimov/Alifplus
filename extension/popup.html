@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <title>Alif+</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <img src="icons/icon48.png" alt="Alif+" width="26" height="26" />
+      <span>Alif+</span>
+    </div>
+    <span class="ver">v2.0</span>
+  </header>
+
+  <section class="actions">
+    <button type="button" id="btnSel" class="btn primary">Tanlangan matnni o‘girish <kbd>Alt+Shift+A</kbd></button>
+    <div class="row">
+      <button type="button" id="btnPage" class="btn">Sahifani o‘girish</button>
+      <button type="button" id="btnRestore" class="btn ghost">Asl holat</button>
+    </div>
+    <label class="toggle-row">
+      <span>Yozayotganda avto-almashtirish</span>
+      <input type="checkbox" id="chkAutoType" />
+    </label>
+  </section>
+
+  <section class="mini-box">
+    <textarea id="txtIn" rows="3" placeholder="Tezkor o‘girish uchun matn yozing..."></textarea>
+    <textarea id="txtOut" rows="3" readonly placeholder="Natija (Ö, Ğ, Ş, Ç)..."></textarea>
+    <div class="row">
+      <button type="button" id="btnCopy" class="btn small">Nusxa olish</button>
+      <a href="https://alifplus.uz/ishonch.html" target="_blank" class="link">Qanday ishlaydi?</a>
+    </div>
+  </section>
+
+  <script src="alif-core.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

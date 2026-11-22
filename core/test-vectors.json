@@ -1,0 +1,50 @@
+[
+  {
+    "dir": "auto2new",
+    "smart": true,
+    "in": "chat shahar O'zbekiston",
+    "out": "chat şahar Özbekiston"
+  },
+  {
+    "dir": "auto2new",
+    "smart": true,
+    "in": "choy, shampoo, shake, chart, charter, change",
+    "out": "çoy, shampoo, shake, chart, charter, change"
+  },
+  {
+    "dir": "auto2new",
+    "smart": true,
+    "in": "o'quvchilarimizga yaxshi sharoit",
+    "out": "öquvçilarimizga yaxşi şaroit"
+  },
+  {
+    "dir": "auto2new",
+    "smart": true,
+    "in": "Ўзбекистон Республикаси, Тошкент шаҳри",
+    "out": "Özbekiston Respublikasi, Toşkent şahri"
+  },
+  {
+    "dir": "auto2new",
+    "smart": true,
+    "in": "achchiqqina choy va eshikka qarash",
+    "out": "aççiqqina çoy va eşikka qaraş"
+  },
+  {
+    "dir": "auto2new",
+    "smart": true,
+    "in": "YouTube, Telegram, Windows va Chrome",
+    "out": "YouTube, Telegram, Windows va Chrome"
+  },
+  {
+    "dir": "new2oldlat",
+    "smart": false,
+    "in": "Özbekiston, Ğalaba, Şahar, Çiroyli",
+    "out": "O'zbekiston, G'alaba, Shahar, Chiroyli"
+  },
+  {
+    "dir": "new2cyr",
+    "smart": false,
+    "in": "Özbekiston, Ğalaba, Şahar, Çiroyli, ta'lim",
+    "out": "Ўзбекистон, Ғалаба, Шаҳар, Чиройли, таълим"
+  }
+]

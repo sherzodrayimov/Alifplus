@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "Alif+ — Yangi o'zbek alifbosi (Ö, Ğ, Ş, Ç)",
+  "short_name": "Alif+",
+  "version": "2.0.0",
+  "description": "Tanlangan matnni, veb-sahifani yoki yozayotgan matningizni bir tugmada yangi o'zbek alifbosiga (Ö, Ğ, Ş, Ç) o'giring.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Alif+ (Alt+Shift+A)",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "storage",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "alif-core.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "convert-selection": {
+      "suggested_key": {
+        "default": "Alt+Shift+A",
+        "mac": "Alt+Shift+A"
+      },
+      "description": "Tanlangan matnni yangi o'zbek alifbosiga o'girish"
+    }
+  }
+}

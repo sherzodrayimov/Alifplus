@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ishonch va aniqlik qoidalari — Alif+</title>
+  <meta name="description" content="Alif+ qaysi so‘zlarni o‘giradi, nega inglizcha atamalar saqlanadi va xato topilganda qanday xabar berish mumkin?" />
+  <link rel="canonical" href="https://alifplus.uz/ishonch.html" />
+  <meta property="og:title" content="Ishonch va aniqlik qoidalari — Alif+" />
+  <meta property="og:description" content="Alif+ 4 qatlamli tahlil tizimi, xorijiy so‘zlar himoyasi va xato haqida xabar berish sahifasi." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://alifplus.uz/ishonch.html" />
+  <meta property="og:site_name" content="Alif+" />
+  <meta property="og:locale" content="uz_UZ" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="web/converter.css?v=26" />
+  <link rel="stylesheet" href="web/scroll-fx.css" />
+  <link rel="stylesheet" href="web/theme-variants.css?v=20261122c" />
+  <link rel="icon" type="image/png" sizes="32x32" href="icon.png" />
+  <link rel="apple-touch-icon" href="icon.png" />
+  <script id="alifThemeScript">
+    (function() {
+      var saved = localStorage.getItem("alif_theme");
+      var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (saved === "dark" || (!saved && prefersDark)) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+      window.toggleAlifTheme = function() {
+        var isDark = document.documentElement.getAttribute("data-theme") === "dark";
+        var next = isDark ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("alif_theme", next);
+      };
+    })();
+  </script>
+</head>
+<body>
+  <header class="alif-topbar">
+    <div class="alif-container alif-topbar-inner">
+      <a href="index.html" class="alif-brand">
+        <img src="icon.png" alt="Alif+" style="width:34px; height:34px; border-radius:10px;" />
+        <span class="alif-brand-text">Alif+</span>
+      </a>
+      <input type="checkbox" id="alifNavCheckbox" class="alif-nav-checkbox" aria-hidden="true" />
+      <div class="alif-topbar-actions">
+        <button type="button" id="alifThemeToggle" class="alif-theme-btn" onclick="toggleAlifTheme()" aria-label="Kundalik yoki tungi rejim">
+          <svg class="alif-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="alif-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+        <label for="alifNavCheckbox" class="alif-nav-burger-label" aria-label="Menyuni ochish">☰</label>
+      </div>
+      <nav class="alif-nav" aria-label="Asosiy menyu">
+        <div class="alif-drawer-head"><span>Bo‘limlar</span><label for="alifNavCheckbox" class="alif-drawer-close" aria-label="Menyuni yopish">✕</label></div>
+        <a href="index.html" class="alif-nav-link">Bosh sahifa</a>
+        <a href="alifbo.html" class="alif-nav-link">Alifbo</a>
+        <a href="konverter.html" class="alif-nav-link">Konverter</a>
+        <a href="hujjatlar.html" class="alif-nav-link">Hujjatlar</a>
+        <a href="mashq.html" class="alif-nav-link">Mashq</a>
+        <a href="ilovalar.html" class="alif-nav-link">Ilovalar</a>
+        <a href="ishonch.html" class="alif-nav-link is-page-active" aria-current="page">Ishonch</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="alif-main">
+    <section class="alif-container" style="padding: 36px 0 18px;">
+      <div class="alif-hero-pill">
+        <span class="alif-hero-pill-dot"></span>
+        <span>Yagona yadro · Shaffof qoidalar · Oflayn maxfiylik</span>
+      </div>
+      <h1 style="font-size:clamp(26px, 4vw, 38px); margin:8px 0;">Alif+ qanday ishlaydi va nega unga ishonish mumkin?</h1>
+      <p style="margin:0; color:var(--muted); max-width:740px;">
+        Matn o‘girishda eng katta muammo — o‘zbekcha so‘zlar bilan aralashib keladigan inglizcha va xalqaro atamalarning buzilib ketishi. Alif+ barcha platformalarda (sayt, Chrome/Edge kengaytmasi, macOS va Windows) bitta yadro asosida ishlaydi.
+      </p>
+    </section>
+
+    <!-- JONLI SO'Z TEKSHIRGICHI -->
+    <section class="alif-container" style="padding-bottom: 24px;">
+      <div class="alif-card" style="padding:22px;">
+        <h2 style="margin:0 0 6px; font-size:20px;">So‘zni jonli tekshirib ko‘ring</h2>
+        <p style="margin:0 0 12px; font-size:13.5px; color:var(--muted);">Istalgan so‘zni yozing — yadro uni o‘giradimi yoki saqlab qoladimi va nima uchunligini darhol ko‘rsatadi.</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <input type="text" id="trustWordInput" class="alif-input" style="max-width:360px;" value="chat" aria-label="Tekshiriladigan so‘z" placeholder="Masalan: chat, choy, achchiqqina, YouTube..." />
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button type="button" class="alif-mini-btn" data-sample-w="chat">chat</button>
+            <button type="button" class="alif-mini-btn" data-sample-w="shahar">shahar</button>
+            <button type="button" class="alif-mini-btn" data-sample-w="achchiqqina">achchiqqina</button>
+            <button type="button" class="alif-mini-btn" data-sample-w="YouTube">YouTube</button>
+            <button type="button" class="alif-mini-btn" data-sample-w="O'zbekiston">O'zbekiston</button>
+          </div>
+        </div>
+        <div id="trustWordResult" style="margin-top:14px; padding:14px; border-radius:12px; background:var(--surface-2); border:1px solid var(--border);"></div>
+      </div>
+    </section>
+
+    <!-- 3 TA ASOSIY SAVOL -->
+    <section class="alif-container" style="padding-bottom: 24px;">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:16px;">
+        <article class="alif-card" style="padding:20px;">
+          <h2 style="margin:0 0 8px; font-size:18px;">1. Qaysi so‘zlar o‘giriladi?</h2>
+          <p style="margin:0; font-size:14px; line-height:1.6; color:var(--muted);">
+            Kirill alifbosidagi barcha matnlar (<b>ў → ö, ғ → ğ, ш → ş, ч → ç</b>) hamda eski lotin yozuvidagi o‘zbekcha so‘zlar va ularning qo‘shimchali shakllari (<i>o‘quvchilarimizga → öquvçilarimizga, achchiqqina → aççiqqina, shahar → şahar</i>) avtomatik yangi alifboga o‘tkaziladi.
+          </p>
+        </article>
+
+        <article class="alif-card" style="padding:20px;">
+          <h2 style="margin:0 0 8px; font-size:18px;">2. Nega ba’zi inglizcha so‘zlar saqlanadi?</h2>
+          <p style="margin:0; font-size:14px; line-height:1.6; color:var(--muted);">
+            <b>chat, channel, change, chart, YouTube, Windows, Telegram</b> kabi so‘zlar 4 qatlamli filtrdan o‘tadi: 1) asosiy xorijiy baza, 2) o‘zbekcha qo‘shimchalar tahlili, 3) inglizcha qo‘shimchalar (<i>-ing, -tion, -ed</i>) va 4) fonotaktik harf birikmalari (<i>w, th, wh, ck, qu, tch</i>). Shu bois <i>chat → çat</i> bo‘lib buzilmaydi.
+          </p>
+        </article>
+
+        <article class="alif-card" style="padding:20px;">
+          <h2 style="margin:0 0 8px; font-size:18px;">3. Ma’lumotlarim xavfsizmi?</h2>
+          <p style="margin:0; font-size:14px; line-height:1.6; color:var(--muted);">
+            Ha. Kiritilgan matnlar, Word/PDF fayllar va tayyorlangan rasmiy hujjatlar <b>hech qachon tashqi serverga yuborilmaydi</b> — barcha hisob-kitob 100% sizning brauzeringiz ichida bajariladi. Parol maydonlarida kengaytma avtomatik to‘xtaydi.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4 TA AUDITORIYA YO'NALISHI -->
+    <section class="alif-container" style="padding-bottom: 24px;">
+      <div class="alif-card" style="padding:22px;">
+        <h2 style="margin:0 0 12px; font-size:20px;">Kimlar uchun qaysi vosita qulay?</h2>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
+          <div style="padding:14px; border-radius:12px; background:var(--surface-2); border:1px solid var(--border);">
+            <strong>🎓 Talabalar</strong>
+            <p style="margin:6px 0 0; font-size:13px; color:var(--muted);">5 daqiqalik <a href="mashq.html">yozish trenajyori</a> va Chrome/Edge kengaytmasi orqali dars materiallarini tez o‘qish.</p>
+          </div>
+          <div style="padding:14px; border-radius:12px; background:var(--surface-2); border:1px solid var(--border);">
+            <strong>👩‍🏫 O‘qituvchilar</strong>
+            <p style="margin:6px 0 0; font-size:13px; color:var(--muted);"><a href="konverter.html">Matn va hujjat konverteri</a> orqali ma’ruza, test va o‘quv qo‘llanmalarini yangi alifboga o‘tkazish.</p>
+          </div>
+          <div style="padding:14px; border-radius:12px; background:var(--surface-2); border:1px solid var(--border);">
+            <strong>🏢 Tashkilotlar</strong>
+            <p style="margin:6px 0 0; font-size:13px; color:var(--muted);"><a href="hujjatlar.html">13 ta rasmiy shablon</a> (buyruq, dalolatnoma, ariza) va Word/PDF hujjatlarni formatini buzmasdan o‘girish.</p>
+          </div>
+          <div style="padding:14px; border-radius:12px; background:var(--surface-2); border:1px solid var(--border);">
+            <strong>✍️ Jurnalist va kontentchilar</strong>
+            <p style="margin:6px 0 0; font-size:13px; color:var(--muted);">Brauzer kengaytmasining <code>Alt+Shift+A</code> tugmasi orqali maqola va postlarni bir soniyada tayyorlash.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- XATO HAQIDA XABAR BERISH -->
+    <section id="xato-xabar" class="alif-container" style="padding-bottom: 52px;">
+      <div class="alif-card" style="padding:22px;">
+        <h2 style="margin:0 0 6px; font-size:20px;">Xato topsam nima qilaman?</h2>
+        <p style="margin:0 0 14px; font-size:13.5px; color:var(--muted);">
+          Agar biror o‘zbekcha so‘z o‘girilmay qolsa yoki inglizcha so‘z noto‘g‘ri o‘girilsa, quyidagi forma orqali xabar bering — u keyingi yangilanishda yagona yadroga qo‘shiladi.
+        </p>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:12px;">
+          <div>
+            <label for="bugWrongWord" style="display:block; font-size:12.5px; font-weight:700; margin-bottom:4px;">Xato o‘girilgan so‘z yoki jumla</label>
+            <input type="text" id="bugWrongWord" class="alif-input" placeholder="Masalan: chat -> çat bo'lib qoldi" />
+          </div>
+          <div>
+            <label for="bugExpectedWord" style="display:block; font-size:12.5px; font-weight:700; margin-bottom:4px;">Aslida qanday bo‘lishi kerak?</label>
+            <input type="text" id="bugExpectedWord" class="alif-input" placeholder="Masalan: chat o'zgarishsiz qolishi kerak" />
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a id="btnSendGithubIssue" href="https://github.com/sherzodrayimov/Alifplus/issues/new" target="_blank" rel="noopener" class="alif-btn alif-btn-primary">GitHub orqali xabar berish →</a>
+          <a href="https://t.me/sherzodrayimov" target="_blank" rel="noopener" class="alif-btn alif-btn-ghost">Telegram orqali yozish</a>
+          <button type="button" id="btnCopyBugReport" class="alif-btn alif-btn-ghost">Xabar matnini nusxalash</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="alifAriaLive" class="alif-sr-only" aria-live="polite" aria-atomic="true"></div>
+  <script src="core/alif-core.js"></script>
+  <script>
+    (function () {
+      var inp = document.getElementById('trustWordInput');
+      var resBox = document.getElementById('trustWordResult');
+      function inspect() {
+        var w = (inp.value || '').trim();
+        if (!w || !window.AlifCore) {
+          resBox.innerHTML = '<span style="color:var(--muted);">Tekshirish uchun so‘z kiriting.</span>';
+          return;
+        }
+        var info = window.AlifCore.analyzeWord(w);
+        var out = window.AlifCore.convert(w, 'auto2new', { smart: true });
+        var badge = info.convert
+          ? '<span style="padding:3px 9px;border-radius:999px;background:rgba(16,185,129,0.15);color:#059669;font-weight:700;font-size:12px;">✓ O‘giriladi</span>'
+          : '<span style="padding:3px 9px;border-radius:999px;background:rgba(79,70,229,0.14);color:#4f46e5;font-weight:700;font-size:12px;">🛡 Saqlab qolinadi</span>';
+        resBox.innerHTML =
+          '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px;">' +
+            '<strong style="font-size:16px;">' + w + ' → ' + out + '</strong>' + badge +
+          '</div>' +
+          '<div style="font-size:13px;color:var(--muted);">Sabab: <b>' + info.reason + '</b> (Qatlam: <code>' + info.layer + '</code>)</div>';
+      }
+      inp.addEventListener('input', inspect);
+      document.querySelectorAll('[data-sample-w]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          inp.value = b.dataset.sampleW;
+          inspect();
+        });
+      });
+      inspect();
+
+      var wInp = document.getElementById('bugWrongWord');
+      var eInp = document.getElementById('bugExpectedWord');
+      var ghBtn = document.getElementById('btnSendGithubIssue');
+      var cpBtn = document.getElementById('btnCopyBugReport');
+      function updateIssueLink() {
+        var title = encodeURIComponent('[Imlo/Konverter xatosi] ' + (wInp.value || 'Yangi xabar'));
+        var body = encodeURIComponent('**Xato natija:** ' + (wInp.value || '-') + '
+**Kutilgan natija:** ' + (eInp.value || '-') + '
+**Sahifa:** alifplus.uz');
+        ghBtn.href = 'https://github.com/sherzodrayimov/Alifplus/issues/new?title=' + title + '&body=' + body;
+      }
+      wInp.addEventListener('input', updateIssueLink);
+      eInp.addEventListener('input', updateIssueLink);
+      cpBtn.addEventListener('click', function () {
+        var txt = 'Alif+ xato xabari:
+Xato: ' + (wInp.value || '-') + '
+Kutilgan: ' + (eInp.value || '-');
+        if (navigator.clipboard) navigator.clipboard.writeText(txt);
+        cpBtn.textContent = '✓ Nusxa olindi';
+        setTimeout(function () { cpBtn.textContent = 'Xabar matnini nusxalash'; }, 1500);
+      });
+    })();
+  </script>
+</body>
+</html>
