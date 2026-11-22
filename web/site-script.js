@@ -2,11 +2,11 @@
   'use strict';
 
   var STORAGE_KEY = 'alif_site_script';
+  var THEME_KEY = 'alif_theme';
   var VALID_MODES = { newlat: 'Yangi', oldlat: 'Eski', cyr: 'Кирилл' };
   var origTextMap = new WeakMap();
   var origAttrMap = new WeakMap();
   var currentMode = 'newlat';
-  var observer = null;
   var isApplying = false;
   var origTitle = null;
 
@@ -32,6 +32,14 @@
   ].join(',');
 
   var BRAND_RE = /(Alif\+|macOS|Windows|iOS|Android|Chrome|Edge|GitHub|Telegram|Instagram|YouTube|Word|Excel|PDF|DOCX|TXT|ZIP|HTML|CSS|JSON|Smart Document Builder|Developer mode|Load unpacked|Alt\+Shift\+A|Ctrl\+Z|Cmd\+Z|v2\.0)/g;
+
+  // Yagona ishonchli Kundalik/Tungi rejim almashtirgichi
+  window.toggleAlifTheme = function () {
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    var next = isDark ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+  };
 
   function transformText(raw, mode) {
     if (!raw || mode === 'newlat') return raw;
@@ -125,10 +133,6 @@
     });
   }
 
-  function revealBody() {
-    document.documentElement.classList.remove('alif-script-pending');
-  }
-
   function setSiteScript(mode) {
     if (!VALID_MODES[mode]) mode = 'newlat';
     currentMode = mode;
@@ -138,7 +142,7 @@
     closeDropdown();
 
     if (!window.AlifCore) {
-      revealBody();
+      document.documentElement.classList.remove('alif-script-pending');
       return;
     }
 
@@ -151,40 +155,48 @@
       }
     } finally {
       isApplying = false;
-      revealBody();
+      document.documentElement.classList.remove('alif-script-pending');
     }
   }
 
-  function initSwitcher() {
-    var saved = 'newlat';
-    try {
-      var st = localStorage.getItem(STORAGE_KEY);
-      if (st && VALID_MODES[st]) saved = st;
-    } catch (e) {}
-
-    // Dropdown ochish / yopish va variant tanlash
-    document.addEventListener('click', function (e) {
-      var trigger = e.target.closest('.alif-script-trigger');
-      if (trigger) {
+  function bindControls() {
+    var themeBtn = document.getElementById('alifThemeToggle');
+    if (themeBtn && !themeBtn.dataset.bound) {
+      themeBtn.dataset.bound = '1';
+      themeBtn.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        var dd = trigger.closest('.alif-script-dd');
+        window.toggleAlifTheme();
+      });
+    }
+
+    var triggerBtn = document.getElementById('alifScriptTriggerBtn');
+    var dd = document.getElementById('alifScriptDropdown');
+    if (triggerBtn && dd && !triggerBtn.dataset.bound) {
+      triggerBtn.dataset.bound = '1';
+      triggerBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         var willOpen = !dd.classList.contains('is-open');
         closeDropdown();
         if (willOpen) {
           dd.classList.add('is-open');
-          trigger.setAttribute('aria-expanded', 'true');
+          triggerBtn.setAttribute('aria-expanded', 'true');
         }
-        return;
-      }
+      });
+    }
 
-      var optBtn = e.target.closest('[data-site-script]');
-      if (optBtn) {
+    document.querySelectorAll('[data-site-script]').forEach(function (optBtn) {
+      if (optBtn.dataset.bound) return;
+      optBtn.dataset.bound = '1';
+      optBtn.addEventListener('click', function (e) {
         e.preventDefault();
+        e.stopPropagation();
         setSiteScript(optBtn.getAttribute('data-site-script'));
-        return;
-      }
+      });
+    });
 
+    document.addEventListener('click', function (e) {
       if (!e.target.closest('.alif-script-dd')) {
         closeDropdown();
       }
@@ -194,10 +206,15 @@
       if (e.key === 'Escape') closeDropdown();
     });
 
+    var saved = 'newlat';
+    try {
+      var st = localStorage.getItem(STORAGE_KEY);
+      if (st && VALID_MODES[st]) saved = st;
+    } catch (e) {}
     setSiteScript(saved);
 
     if (typeof MutationObserver !== 'undefined' && document.body) {
-      observer = new MutationObserver(function (mutations) {
+      var observer = new MutationObserver(function (mutations) {
         if (isApplying || currentMode === 'newlat') return;
         isApplying = true;
         try {
@@ -218,8 +235,8 @@
 
   window.setAlifSiteScript = setSiteScript;
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSwitcher);
+    document.addEventListener('DOMContentLoaded', bindControls);
   } else {
-    initSwitcher();
+    bindControls();
   }
 })();

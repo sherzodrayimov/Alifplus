@@ -1657,3 +1657,24 @@ html.alif-script-pending body {
     font-size: 12px;
   }
 }
+
+/* ── TOPBAR OVERFLOW VA DROPDOWN KAFOLATI ── */
+.alif-topbar,
+.alif-topbar-inner {
+  overflow: visible !important;
+}
+.alif-topbar-actions {
+  position: relative !important;
+  z-index: 1600 !important;
+  pointer-events: auto !important;
+}
+.alif-script-dd,
+.alif-script-trigger,
+.alif-theme-btn {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 1601;
+}
+.alif-script-menu {
+  z-index: 2500 !important;
+}
