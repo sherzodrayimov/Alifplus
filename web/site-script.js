@@ -33,7 +33,82 @@
 
   var BRAND_RE = /(Alif\+|macOS|Windows|iOS|Android|Chrome|Edge|GitHub|Telegram|Instagram|YouTube|Word|Excel|PDF|DOCX|TXT|ZIP|HTML|CSS|JSON|Smart Document Builder|Developer mode|Load unpacked|Alt\+Shift\+A|Ctrl\+Z|Cmd\+Z|v2\.0)/g;
 
-  // Yagona ishonchli Kundalik/Tungi rejim almashtirgichi
+  // Avtonom fallback konverter (AlifCore yuklanmagan taqdirda ham 100% ishlashi uchun)
+  function fallbackNewToOld(text) {
+    var out = '';
+    for (var i = 0; i < text.length; i++) {
+      var ch = text[i];
+      var next = text[i + 1] || '';
+      var nu = next && next !== next.toLowerCase() && next === next.toUpperCase();
+      if (ch === 'Ö') out += "O'";
+      else if (ch === 'ö') out += "o'";
+      else if (ch === 'Ğ') out += "G'";
+      else if (ch === 'ğ') out += "g'";
+      else if (ch === 'Ş') out += nu ? 'SH' : 'Sh';
+      else if (ch === 'ş') out += 'sh';
+      else if (ch === 'Ç') out += nu ? 'CH' : 'Ch';
+      else if (ch === 'ç') out += 'ch';
+      else if (ch === 'Ñ') out += nu ? 'NG' : 'Ng';
+      else if (ch === 'ñ') out += 'ng';
+      else out += ch;
+    }
+    return out;
+  }
+
+  function fallbackOldToCyr(text) {
+    var s = text.replace(/[ʻ’‘ʼ`´]/g, "'");
+    var stems = ["ta'lim", "ta'mir", "ta'min", "ta'kid", "ta'sir", "ta'rif", "e'lon", "e'tibor", "she'r", "me'mor", "me'yor", "sa'nat", "san'at", "ma'no", "ma'lum", "ma'naviy", "ma'rifat", "mas'ul", "ma'qul", "mo'jiza", "a'lo", "a'zo", "va'da", "qat'iy"];
+    s = s.replace(/\b([A-Za-z']+)/g, function (w) {
+      var low = w.toLowerCase();
+      for (var k = 0; k < stems.length; k++) {
+        if (low.indexOf(stems[k]) === 0) return w.replace("'", '\uE000');
+      }
+      return w;
+    });
+    var SINGLE = {
+      'A': 'А', 'a': 'а', 'B': 'Б', 'b': 'б', 'D': 'Д', 'd': 'д', 'F': 'Ф', 'f': 'ф',
+      'G': 'Г', 'g': 'г', 'H': 'Ҳ', 'h': 'ҳ', 'I': 'И', 'i': 'и', 'J': 'Ж', 'j': 'ж',
+      'K': 'К', 'k': 'к', 'L': 'Л', 'l': 'л', 'M': 'М', 'm': 'м', 'N': 'Н', 'n': 'н',
+      'O': 'О', 'o': 'о', 'P': 'П', 'p': 'п', 'Q': 'Қ', 'q': 'қ', 'R': 'Р', 'r': 'р',
+      'S': 'С', 's': 'с', 'T': 'Т', 't': 'т', 'U': 'У', 'u': 'у', 'V': 'В', 'v': 'в',
+      'X': 'Х', 'x': 'х', 'Y': 'Й', 'y': 'й', 'Z': 'З', 'z': 'з', 'C': 'Ц', 'c': 'ц'
+    };
+    var out = '';
+    for (var i = 0; i < s.length; i++) {
+      var ch = s[i];
+      var next = s[i + 1] || '';
+      var pair = (ch + next).toLowerCase();
+      if (pair === "o'") { out += ch === 'O' ? 'Ў' : 'ў'; i++; continue; }
+      if (pair === "g'") { out += ch === 'G' ? 'Ғ' : 'ғ'; i++; continue; }
+      if (pair === 'sh') { out += ch === 'S' ? 'Ш' : 'ш'; i++; continue; }
+      if (pair === 'ch') { out += ch === 'C' ? 'Ч' : 'ч'; i++; continue; }
+      if (pair === 'yo') { out += ch === 'Y' ? 'Ё' : 'ё'; i++; continue; }
+      if (pair === 'yu') { out += ch === 'Y' ? 'Ю' : 'ю'; i++; continue; }
+      if (pair === 'ya') { out += ch === 'Y' ? 'Я' : 'я'; i++; continue; }
+      if (pair === 'ye') { out += ch === 'Y' ? 'Е' : 'е'; i++; continue; }
+      if (pair === 'ts') { out += ch === 'T' ? 'Ц' : 'ц'; i++; continue; }
+      if (ch === '\uE000' || ch === "'") { out += 'ъ'; continue; }
+      if (ch === 'E' || ch === 'e') {
+        var prev = i > 0 ? s[i - 1] : '';
+        var atStart = !prev || !/[A-Za-z'\uE000]/.test(prev);
+        out += atStart ? (ch === 'E' ? 'Э' : 'э') : (ch === 'E' ? 'Е' : 'е');
+        continue;
+      }
+      out += Object.prototype.hasOwnProperty.call(SINGLE, ch) ? SINGLE[ch] : ch;
+    }
+    return out;
+  }
+
+  function convertSafe(text, dir) {
+    if (window.AlifCore && typeof window.AlifCore.convert === 'function') {
+      return window.AlifCore.convert(text, dir, { smart: true });
+    }
+    if (dir === 'auto2new') return text;
+    if (dir === 'new2oldlat') return fallbackNewToOld(text);
+    if (dir === 'new2cyr') return fallbackOldToCyr(fallbackNewToOld(text));
+    return text;
+  }
+
   window.toggleAlifTheme = function () {
     var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     var next = isDark ? 'light' : 'dark';
@@ -42,14 +117,13 @@
   };
 
   function transformText(raw, mode) {
-    if (!raw || mode === 'newlat') return raw;
-    if (!raw.trim() || !window.AlifCore) return raw;
+    if (!raw || mode === 'newlat' || !raw.trim()) return raw;
     var trimmed = raw.trim();
     if (/^(https?:\/\/|www\.|mailto:|[\w.-]+@[\w.-]+|v?\d+\.\d+)/i.test(trimmed)) return raw;
 
-    var asNewLat = window.AlifCore.convert(raw, 'auto2new', { smart: true });
+    var asNewLat = convertSafe(raw, 'auto2new');
     if (mode === 'oldlat') {
-      return window.AlifCore.convert(asNewLat, 'new2oldlat');
+      return convertSafe(asNewLat, 'new2oldlat');
     }
     if (mode === 'cyr') {
       var stashed = [];
@@ -58,7 +132,7 @@
         stashed.push(m);
         return '\uE100' + idx + '\uE101';
       });
-      var cyr = window.AlifCore.convert(masked, 'new2cyr');
+      var cyr = convertSafe(masked, 'new2cyr');
       return cyr.replace(/\uE100(\d+)\uE101/g, function (_m, i) {
         return stashed[Number(i)] || '';
       });
@@ -75,8 +149,7 @@
   }
 
   function applyToSubtree(rootNode, mode) {
-    if (!rootNode || !window.AlifCore) return;
-
+    if (!rootNode) return;
     var walker = document.createTreeWalker(rootNode, NodeFilter.SHOW_TEXT, null, false);
     var node;
     while ((node = walker.nextNode())) {
@@ -115,9 +188,8 @@
 
   function updateDropdownUI(mode) {
     var labelText = VALID_MODES[mode] || 'Yangi';
-    document.querySelectorAll('#alifScriptCurrentLabel').forEach(function (el) {
-      el.textContent = labelText;
-    });
+    var lbl = document.getElementById('alifScriptCurrentLabel');
+    if (lbl) lbl.textContent = labelText;
     document.querySelectorAll('[data-site-script]').forEach(function (btn) {
       var active = btn.getAttribute('data-site-script') === mode;
       btn.classList.toggle('is-active', active);
@@ -126,11 +198,10 @@
   }
 
   function closeDropdown() {
-    document.querySelectorAll('.alif-script-dd').forEach(function (dd) {
-      dd.classList.remove('is-open');
-      var trigger = dd.querySelector('.alif-script-trigger');
-      if (trigger) trigger.setAttribute('aria-expanded', 'false');
-    });
+    var dd = document.getElementById('alifScriptDropdown');
+    if (dd) dd.classList.remove('is-open');
+    var trigger = document.getElementById('alifScriptTriggerBtn');
+    if (trigger) trigger.setAttribute('aria-expanded', 'false');
   }
 
   function setSiteScript(mode) {
@@ -140,11 +211,6 @@
     document.documentElement.setAttribute('data-site-script', mode);
     updateDropdownUI(mode);
     closeDropdown();
-
-    if (!window.AlifCore) {
-      document.documentElement.classList.remove('alif-script-pending');
-      return;
-    }
 
     isApplying = true;
     try {
@@ -158,6 +224,8 @@
       document.documentElement.classList.remove('alif-script-pending');
     }
   }
+
+  window.setAlifSiteScript = setSiteScript;
 
   function bindControls() {
     var themeBtn = document.getElementById('alifThemeToggle');
@@ -178,25 +246,30 @@
         e.preventDefault();
         e.stopPropagation();
         var willOpen = !dd.classList.contains('is-open');
-        closeDropdown();
         if (willOpen) {
           dd.classList.add('is-open');
           triggerBtn.setAttribute('aria-expanded', 'true');
+        } else {
+          closeDropdown();
         }
       });
     }
 
+    // Har bir menyu bandiga ham pointerdown, ham click biriktirish (Safari focus/blur poygasini oldini oladi)
     document.querySelectorAll('[data-site-script]').forEach(function (optBtn) {
       if (optBtn.dataset.bound) return;
       optBtn.dataset.bound = '1';
-      optBtn.addEventListener('click', function (e) {
+      var selectMode = function (e) {
         e.preventDefault();
         e.stopPropagation();
-        setSiteScript(optBtn.getAttribute('data-site-script'));
-      });
+        var chosen = optBtn.getAttribute('data-site-script');
+        setSiteScript(chosen);
+      };
+      optBtn.addEventListener('pointerdown', selectMode);
+      optBtn.addEventListener('click', selectMode);
     });
 
-    document.addEventListener('click', function (e) {
+    document.addEventListener('pointerdown', function (e) {
       if (!e.target.closest('.alif-script-dd')) {
         closeDropdown();
       }
@@ -233,7 +306,6 @@
     }
   }
 
-  window.setAlifSiteScript = setSiteScript;
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', bindControls);
   } else {

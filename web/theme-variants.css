@@ -1678,3 +1678,13 @@ html.alif-script-pending body {
 .alif-script-menu {
   z-index: 2500 !important;
 }
+
+.alif-script-opt > *,
+.alif-script-trigger > * {
+  pointer-events: none !important;
+}
+.alif-script-opt {
+  position: relative;
+  z-index: 2501;
+  cursor: pointer !important;
+}
