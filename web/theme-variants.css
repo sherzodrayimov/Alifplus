@@ -1539,3 +1539,44 @@ body::after,
   cursor: pointer;
   user-select: none;
 }
+
+/* ── SAYT YOZUVI ALMASHTIRGICHI (YANGI / ESKI / KIRILL) ── */
+.alif-script-switcher {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  border-radius: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  gap: 2px;
+}
+.alif-ss-btn {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 5px 8px;
+  border-radius: 7px;
+  cursor: pointer;
+  line-height: 1;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.alif-ss-btn:hover {
+  color: var(--text);
+}
+.alif-ss-btn.is-active {
+  background: var(--indigo, #4f46e5);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25);
+}
+@media (max-width: 480px) {
+  .alif-brand-text {
+    display: none;
+  }
+  .alif-ss-btn {
+    font-size: 11px;
+    padding: 4px 6px;
+  }
+}
