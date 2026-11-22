@@ -11,7 +11,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://alifplus.uz/hujjatlar.html" />
   <meta property="og:image" content="https://alifplus.uz/icon.png" />
-  <link rel="stylesheet" href="web/converter.css?v=20261122h" />
+  <link rel="stylesheet" href="web/converter.css?v=20261122j" />
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
     <script id="alifThemeScript">
@@ -30,8 +30,8 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="web/scroll-fx.css?v=20261122h" />
-  <link rel="stylesheet" href="web/theme-variants.css?v=20261122h" />
+  <link rel="stylesheet" href="web/scroll-fx.css?v=20261122j" />
+  <link rel="stylesheet" href="web/theme-variants.css?v=20261122j" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:site_name" content="Alif+" />
   <meta property="og:locale" content="uz_UZ" />
@@ -77,6 +77,8 @@
       }
     })();
   </script>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#4f46e5" />
 </head>
 <body>
           <header class="alif-topbar">
@@ -913,53 +915,104 @@
   <script src="core/alif-core.js"></script>
   <script src="web/converter.js?v=20261122c"></script>
   <div id="alifAriaLive" class="alif-sr-only" aria-live="polite" aria-atomic="true"></div>
-  <script src="web/nav-drawer.js?v=20261122h"></script>
-  <script>
+  <script src="web/nav-drawer.js?v=20261122j"></script>
+  <script src="web/telegram-compat.js?v=20261122j"></script>
+  <script id="alifHujjatMobileFlow">
     (function () {
-      function scrollToDocEditor() {
-        var editorTarget =
-          document.getElementById('alifDocFormCard') ||
-          document.getElementById('alifDocFields') ||
-          document.getElementById('alifDocPaper') ||
-          document.querySelector('.alif-doc-editor, .alif-doc-workspace, [data-doc-editor]');
-        if (!editorTarget) return;
-        editorTarget.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        setTimeout(function () {
-          var firstInput = editorTarget.querySelector('input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), select:not([disabled])');
-          if (firstInput) {
-            try { firstInput.focus({ preventScroll: true }); } catch (e) { firstInput.focus(); }
-          }
-        }, 380);
+      var mainEl = document.querySelector('main');
+      if (!mainEl) return;
+
+      // Shablon ro'yxati, forma va A4 qog'oz bloklarini aniqlash
+      var gridEl = document.querySelector('#alifDocGrid, .alif-doc-grid, .alif-tpl-grid');
+      var fieldsEl = document.getElementById('alifDocFields');
+      var paperEl = document.getElementById('alifDocPaper');
+
+      var templatesBlock = gridEl ? (gridEl.closest('section, .alif-card') || gridEl) : null;
+      var formBlock = fieldsEl ? (fieldsEl.closest('.alif-card, section') || fieldsEl) : null;
+      var previewBlock = paperEl ? (paperEl.closest('.alif-card, section') || paperEl) : null;
+
+      if (!templatesBlock || !formBlock) return;
+
+      templatesBlock.classList.add('alif-huj-step-panel');
+      templatesBlock.setAttribute('data-huj-panel', 'templates');
+
+      formBlock.classList.add('alif-huj-step-panel');
+      formBlock.setAttribute('data-huj-panel', 'form');
+
+      if (previewBlock && previewBlock !== formBlock) {
+        previewBlock.classList.add('alif-huj-step-panel');
+        previewBlock.setAttribute('data-huj-panel', 'preview');
       }
 
+      // Mobil 3-bosqichli tab panelini yaratish
+      var tabBar = document.createElement('div');
+      tabBar.id = 'alifHujMobileTabs';
+      tabBar.className = 'alif-huj-mobile-tabs';
+      tabBar.setAttribute('role', 'tablist');
+      tabBar.innerHTML =
+        '<button type="button" class="alif-huj-tab is-active" role="tab" aria-selected="true" data-huj-tab="templates">1. Shablon</button>' +
+        '<button type="button" class="alif-huj-tab" role="tab" aria-selected="false" data-huj-tab="form">2. To\'ldirish</button>' +
+        '<button type="button" class="alif-huj-tab" role="tab" aria-selected="false" data-huj-tab="preview">3. Tayyor hujjat</button>';
+
+      templatesBlock.parentNode.insertBefore(tabBar, templatesBlock);
+
+      // Forma ostiga mobil "Keyingi qadam: Tayyor hujjatni ko'rish" tugmasini qo'shish
+      var nextBtnWrap = document.createElement('div');
+      nextBtnWrap.className = 'alif-huj-mobile-next';
+      nextBtnWrap.innerHTML =
+        '<button type="button" class="alif-btn alif-btn-primary" style="width:100%;" id="alifHujGoPreviewBtn">Tayyor hujjatni ko\'rish va yuklash →</button>';
+      formBlock.appendChild(nextBtnWrap);
+
+      function activateStep(step, shouldScrollAndFocus) {
+        document.documentElement.setAttribute('data-huj-step', step);
+        tabBar.querySelectorAll('.alif-huj-tab').forEach(function (t) {
+          var active = t.getAttribute('data-huj-tab') === step;
+          t.classList.toggle('is-active', active);
+          t.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+
+        if (shouldScrollAndFocus) {
+          tabBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (step === 'form') {
+            setTimeout(function () {
+              var firstInp = formBlock.querySelector('input:not([type="hidden"]):not([disabled]), textarea:not([disabled])');
+              if (firstInp) {
+                try { firstInp.focus({ preventScroll: true }); } catch (e) { firstInp.focus(); }
+              }
+            }, 260);
+          }
+        }
+      }
+
+      tabBar.addEventListener('click', function (e) {
+        var btn = e.target.closest('[data-huj-tab]');
+        if (!btn) return;
+        activateStep(btn.getAttribute('data-huj-tab'), true);
+      });
+
+      document.getElementById('alifHujGoPreviewBtn').addEventListener('click', function () {
+        activateStep('preview', true);
+      });
+
+      // Shablon kartasi tanlanganda avtomatik 2-bosqichga ("To'ldirish") o'tish
       document.addEventListener('click', function (e) {
-        var cardTrigger = e.target.closest(
-          '.alif-doc-card, [data-doc-id], [data-template-id], .alif-tpl-card, .alif-tpl-btn'
-        );
-        if (cardTrigger) {
-          setTimeout(scrollToDocEditor, 80);
+        var card = e.target.closest('.alif-doc-card, [data-doc-id], [data-template-id], .alif-tpl-card, .alif-tpl-btn');
+        if (card) {
+          setTimeout(function () {
+            activateStep('form', true);
+          }, 60);
         }
       });
 
-      // Muharrir tepasiga "Shablonlarga qaytish" tugmasini qo'shish
-      var editorBox = document.getElementById('alifDocFields') || document.getElementById('alifDocPaper');
-      if (editorBox && !document.getElementById('alifBackToTemplatesBtn')) {
-        var wrap = editorBox.closest('.alif-card') || editorBox.parentElement;
-        if (wrap) {
-          var backBar = document.createElement('div');
-          backBar.style.cssText = 'display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);';
-          backBar.innerHTML =
-            '<span style="font-size:12.5px;font-weight:700;color:var(--muted);">Hujjat maydonlarini to'ldiring</span>' +
-            '<button type="button" id="alifBackToTemplatesBtn" class="alif-mini-btn">↑ Shablonlar ro'yxati</button>';
-          wrap.insertBefore(backBar, wrap.firstChild);
-          document.getElementById('alifBackToTemplatesBtn').addEventListener('click', function () {
-            var listTop = document.querySelector('.alif-doc-grid, .alif-tpl-grid, #alifDocCatalog, main');
-            if (listTop) listTop.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          });
-        }
-      }
+      activateStep('templates', false);
     })();
   </script>
-  <script src="web/telegram-compat.js?v=20261122h"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/sw.js').catch(function () {});
+      });
+    }
+  </script>
 </body>
 </html>

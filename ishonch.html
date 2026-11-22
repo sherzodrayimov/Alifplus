@@ -13,9 +13,9 @@
   <meta property="og:site_name" content="Alif+" />
   <meta property="og:locale" content="uz_UZ" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" href="web/converter.css?v=20261122h" />
-  <link rel="stylesheet" href="web/scroll-fx.css?v=20261122h" />
-  <link rel="stylesheet" href="web/theme-variants.css?v=20261122h" />
+  <link rel="stylesheet" href="web/converter.css?v=20261122j" />
+  <link rel="stylesheet" href="web/scroll-fx.css?v=20261122j" />
+  <link rel="stylesheet" href="web/theme-variants.css?v=20261122j" />
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png" />
   <link rel="apple-touch-icon" href="icon.png" />
     <script id="alifThemeScript">
@@ -34,6 +34,8 @@
       };
     })();
   </script>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#4f46e5" />
 </head>
 <body>
       <header class="alif-topbar">
@@ -348,7 +350,14 @@
       renderResult();
     })();
   </script>
-  <script src="web/nav-drawer.js?v=20261122h"></script>
-  <script src="web/telegram-compat.js?v=20261122h"></script>
+  <script src="web/nav-drawer.js?v=20261122j"></script>
+  <script src="web/telegram-compat.js?v=20261122j"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/sw.js').catch(function () {});
+      });
+    }
+  </script>
 </body>
 </html>

@@ -11,7 +11,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://alifplus.uz/konverter.html" />
   <meta property="og:image" content="https://alifplus.uz/icon.png" />
-  <link rel="stylesheet" href="web/converter.css?v=20261122h" />
+  <link rel="stylesheet" href="web/converter.css?v=20261122j" />
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
     <script id="alifThemeScript">
@@ -30,11 +30,13 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="web/scroll-fx.css?v=20261122h" />
-  <link rel="stylesheet" href="web/theme-variants.css?v=20261122h" />
+  <link rel="stylesheet" href="web/scroll-fx.css?v=20261122j" />
+  <link rel="stylesheet" href="web/theme-variants.css?v=20261122j" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:site_name" content="Alif+" />
   <meta property="og:locale" content="uz_UZ" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#4f46e5" />
 </head>
 <body>
           <header class="alif-topbar">
@@ -779,7 +781,7 @@
   <script src="web/konverter-pro.js?v=20261122c"></script>
   <script src="web/theme-variants.js?v=20261122"></script>
   <div id="alifAriaLive" class="alif-sr-only" aria-live="polite" aria-atomic="true"></div>
-  <script src="web/nav-drawer.js?v=20261122h"></script>
+  <script src="web/nav-drawer.js?v=20261122j"></script>
   <script>
     (function () {
       var dropEl = document.getElementById('alifDropZone') || document.querySelector('.alif-dropzone, [data-file-upload]');
@@ -807,6 +809,65 @@
       }
     })();
   </script>
-  <script src="web/telegram-compat.js?v=20261122h"></script>
+  <script src="web/telegram-compat.js?v=20261122j"></script>
+  <script id="alifKonvMobileBar">
+    (function () {
+      var outEl = document.getElementById('alifOutput');
+      if (!outEl || document.getElementById('alifStickyCopyBar')) return;
+
+      var bar = document.createElement('div');
+      bar.id = 'alifStickyCopyBar';
+      bar.className = 'alif-konv-sticky-bar';
+      bar.innerHTML =
+        '<button type="button" id="alifStickyCopyBtn" class="alif-btn alif-btn-primary" style="flex:1;">Natijadan nusxa olish</button>' +
+        '<button type="button" id="alifStickyJumpOutBtn" class="alif-btn alif-btn-ghost">Natijani ko\'rish ↓</button>';
+      document.body.appendChild(bar);
+
+      function syncBarVisibility() {
+        var hasText = Boolean((outEl.value || outEl.textContent || '').trim());
+        bar.classList.toggle('is-visible', hasText && window.innerWidth <= 860);
+      }
+
+      outEl.addEventListener('input', syncBarVisibility);
+      setInterval(syncBarVisibility, 700);
+      window.addEventListener('resize', syncBarVisibility);
+
+      document.getElementById('alifStickyJumpOutBtn').addEventListener('click', function () {
+        outEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+
+      document.getElementById('alifStickyCopyBtn').addEventListener('click', async function () {
+        var btn = this;
+        var txt = (outEl.value !== undefined ? outEl.value : outEl.textContent) || '';
+        if (!txt.trim()) return;
+        var ok = false;
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(txt);
+            ok = true;
+          }
+        } catch (e) {}
+        if (!ok) {
+          var ta = document.createElement('textarea');
+          ta.value = txt;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          try { ok = document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta);
+        }
+        btn.textContent = ok ? '✓ Nusxa olindi!' : 'Nusxalab bo\'lmadi';
+        setTimeout(function () { btn.textContent = 'Natijadan nusxa olish'; }, 1600);
+      });
+    })();
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/sw.js').catch(function () {});
+      });
+    }
+  </script>
 </body>
 </html>

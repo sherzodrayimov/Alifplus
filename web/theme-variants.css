@@ -2071,3 +2071,83 @@ html, body {
   }
 }
 
+/* ── HUJJATLAR 3-BOSQICHLI MOBIL TABLAR, KONVERTER STICKY BAR VA PWA ── */
+@media (min-width: 861px) {
+  .alif-huj-mobile-tabs,
+  .alif-huj-mobile-next,
+  .alif-konv-sticky-bar,
+  .alif-mobile-only-sec {
+    display: none !important;
+  }
+}
+
+@media (max-width: 860px) {
+  .alif-huj-mobile-tabs {
+    position: sticky;
+    top: 60px;
+    z-index: 900;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    padding: 6px;
+    margin: 0 12px 14px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+    scroll-margin-top: 68px;
+  }
+
+  .alif-huj-tab {
+    padding: 9px 4px;
+    border: none;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .alif-huj-tab.is-active {
+    background: var(--indigo, #4f46e5);
+    color: #ffffff;
+  }
+
+  html[data-huj-step="templates"] [data-huj-panel="form"],
+  html[data-huj-step="templates"] [data-huj-panel="preview"],
+  html[data-huj-step="form"] [data-huj-panel="templates"],
+  html[data-huj-step="form"] [data-huj-panel="preview"],
+  html[data-huj-step="preview"] [data-huj-panel="templates"],
+  html[data-huj-step="preview"] [data-huj-panel="form"] {
+    display: none !important;
+  }
+
+  .alif-huj-mobile-next {
+    display: block;
+    margin-top: 14px;
+  }
+
+  /* Konverter pastki tezkor nusxa olish paneli */
+  .alif-konv-sticky-bar {
+    position: fixed;
+    left: 10px;
+    right: 10px;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    z-index: 1100;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.2);
+  }
+
+  .alif-konv-sticky-bar.is-visible {
+    display: flex;
+  }
+}

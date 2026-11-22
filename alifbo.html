@@ -11,7 +11,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://alifplus.uz/alifbo.html" />
   <meta property="og:image" content="https://alifplus.uz/icon.png" />
-  <link rel="stylesheet" href="web/converter.css?v=20261122h" />
+  <link rel="stylesheet" href="web/converter.css?v=20261122j" />
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
     <script id="alifThemeScript">
@@ -30,11 +30,13 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="web/scroll-fx.css?v=20261122h" />
-  <link rel="stylesheet" href="web/theme-variants.css?v=20261122h" />
+  <link rel="stylesheet" href="web/scroll-fx.css?v=20261122j" />
+  <link rel="stylesheet" href="web/theme-variants.css?v=20261122j" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:site_name" content="Alif+" />
   <meta property="og:locale" content="uz_UZ" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#4f46e5" />
 </head>
 <body>
           <header class="alif-topbar">
@@ -839,7 +841,14 @@
   <script src="web/theme-variants.js?v=20261122"></script>
   <div id="alifAriaLive" class="alif-sr-only" aria-live="polite" aria-atomic="true"></div>
   <script src="core/alif-core.js"></script>
-  <script src="web/nav-drawer.js?v=20261122h"></script>
-  <script src="web/telegram-compat.js?v=20261122h"></script>
+  <script src="web/nav-drawer.js?v=20261122j"></script>
+  <script src="web/telegram-compat.js?v=20261122j"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/sw.js').catch(function () {});
+      });
+    }
+  </script>
 </body>
 </html>
