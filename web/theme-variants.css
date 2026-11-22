@@ -1540,13 +1540,29 @@ body::after,
   user-select: none;
 }
 
-/* ── SAYT YOZUVI DROPDOWN VA O'NG CHET BOSHQARUVLARI ── */
-html.alif-script-pending body {
-  opacity: 0 !important;
+/* ── 1. HERO VA BIRINCHI EKRAN 0MS DARHOL KO'RINISHI (KECHIKISHSIZ) ── */
+.alif-hero,
+.alif-hero *,
+.alif-main > section:first-child,
+.alif-main > section:first-child *,
+.alif-reveal,
+[data-reveal] {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* ── 2. TOPBAR VA O'NG CHETDA TEMA TUGMASI ── */
+.alif-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1200;
 }
 .alif-topbar-inner {
   display: flex !important;
   align-items: center !important;
+  justify-content: space-between !important;
   gap: 14px !important;
 }
 .alif-nav {
@@ -1556,135 +1572,64 @@ html.alif-script-pending body {
   display: inline-flex !important;
   align-items: center !important;
   gap: 8px !important;
-  margin-left: 8px !important;
+  margin-left: 10px !important;
   flex-shrink: 0 !important;
 }
+
+/* ── 3. MOBIL MENYU: HERO USTIGA TUSHMASLIGI UCHUN TO'LIQ EKRANLI ALOHIDA PANEL ── */
 @media (max-width: 860px) {
   .alif-topbar-actions {
     margin-left: auto !important;
   }
-}
-.alif-script-dd {
-  position: relative;
-  display: inline-block;
-}
-.alif-script-trigger {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 36px;
-  padding: 0 11px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  font-size: 12.5px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease;
-  white-space: nowrap;
-}
-.alif-script-trigger:hover,
-.alif-script-dd.is-open .alif-script-trigger {
-  border-color: var(--indigo, #4f46e5);
-  color: var(--indigo, #4f46e5);
-}
-.alif-script-menu {
-  position: absolute;
-  top: calc(100% + 6px);
-  right: 0;
-  min-width: 176px;
-  padding: 6px;
-  border-radius: 12px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.16);
-  display: none;
-  flex-direction: column;
-  gap: 3px;
-  z-index: 1500;
-}
-.alif-script-dd.is-open .alif-script-menu {
-  display: flex;
-}
-.alif-script-opt {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 8px 10px;
-  border: none;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--text);
-  font-size: 13px;
-  font-weight: 600;
-  text-align: left;
-  cursor: pointer;
-  transition: background 0.12s ease;
-}
-.alif-script-opt:hover {
-  background: var(--surface-2);
-}
-.alif-script-opt.is-active {
-  background: rgba(79, 70, 229, 0.12);
-  color: var(--indigo, #4f46e5);
-  font-weight: 700;
-}
-.alif-opt-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 34px;
-  padding: 2px 5px;
-  border-radius: 6px;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  font-size: 11px;
-  font-weight: 800;
-}
-.alif-script-opt.is-active .alif-opt-badge {
-  background: var(--indigo, #4f46e5);
-  border-color: var(--indigo, #4f46e5);
-  color: #ffffff;
-}
-@media (max-width: 480px) {
-  .alif-brand-text {
-    display: none;
+  .alif-nav {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    margin: 0 !important;
+    padding: 20px 22px 32px !important;
+    background: var(--surface, #ffffff) !important;
+    z-index: 9999 !important;
+    display: none !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    overflow-y: auto !important;
+    box-shadow: none !important;
   }
-  .alif-script-trigger {
-    padding: 0 8px;
-    font-size: 12px;
+  .alif-nav-checkbox:checked ~ .alif-nav {
+    display: flex !important;
   }
-}
-
-/* ── TOPBAR OVERFLOW VA DROPDOWN KAFOLATI ── */
-.alif-topbar,
-.alif-topbar-inner {
-  overflow: visible !important;
-}
-.alif-topbar-actions {
-  position: relative !important;
-  z-index: 1600 !important;
-  pointer-events: auto !important;
-}
-.alif-script-dd,
-.alif-script-trigger,
-.alif-theme-btn {
-  pointer-events: auto !important;
-  position: relative;
-  z-index: 1601;
-}
-.alif-script-menu {
-  z-index: 2500 !important;
-}
-
-.alif-script-opt > *,
-.alif-script-trigger > * {
-  pointer-events: none !important;
-}
-.alif-script-opt {
-  position: relative;
-  z-index: 2501;
-  cursor: pointer !important;
+  .alif-drawer-head {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding-bottom: 14px !important;
+    margin-bottom: 8px !important;
+    border-bottom: 1px solid var(--border) !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+  }
+  .alif-drawer-close {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 10px !important;
+    border: 1px solid var(--border) !important;
+    background: var(--surface-2) !important;
+    font-size: 18px !important;
+    cursor: pointer !important;
+  }
+  .alif-nav .alif-nav-link {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    padding: 13px 16px !important;
+    border-radius: 12px !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+  }
 }

@@ -15,7 +15,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="stylesheet" href="web/converter.css?v=26" />
   <link rel="stylesheet" href="web/scroll-fx.css" />
-  <link rel="stylesheet" href="web/theme-variants.css?v=20261122d" />
+  <link rel="stylesheet" href="web/theme-variants.css?v=20261122e" />
   <link rel="icon" type="image/png" sizes="32x32" href="icon.png" />
   <link rel="apple-touch-icon" href="icon.png" />
   <script id="alifThemeScript">
@@ -33,19 +33,9 @@
       };
     })();
   </script>
-  <script id="alifScriptPreload">
-    (function() {
-      var m = localStorage.getItem("alif_site_script");
-      if (m && m !== "newlat") {
-        document.documentElement.setAttribute("data-site-script", m);
-        document.documentElement.classList.add("alif-script-pending");
-        setTimeout(function() { document.documentElement.classList.remove("alif-script-pending"); }, 220);
-      }
-    })();
-  </script>
 </head>
 <body>
-    <header class="alif-topbar">
+      <header class="alif-topbar">
     <div class="alif-container alif-topbar-inner">
       <a href="index.html" class="alif-brand">
         <img src="icon.png" alt="Alif+" style="width:34px; height:34px; border-radius:10px;" />
@@ -55,7 +45,10 @@
       <input type="checkbox" id="alifNavCheckbox" class="alif-nav-checkbox" aria-hidden="true" />
 
       <nav class="alif-nav" aria-label="Asosiy menyu">
-        <div class="alif-drawer-head"><span>Bo‘limlar</span><label for="alifNavCheckbox" class="alif-drawer-close" aria-label="Menyuni yopish">✕</label></div>
+        <div class="alif-drawer-head">
+          <span>Bo'limlar</span>
+          <label for="alifNavCheckbox" class="alif-drawer-close" aria-label="Menyuni yopish">✕</label>
+        </div>
         <a href="index.html" class="alif-nav-link">Bosh sahifa</a>
         <a href="alifbo.html" class="alif-nav-link">Alifbo</a>
         <a href="konverter.html" class="alif-nav-link">Konverter</a>
@@ -65,30 +58,8 @@
         <a href="ishonch.html" class="alif-nav-link is-page-active" aria-current="page">Ishonch</a>
       </nav>
 
-      <div class="alif-topbar-actions" data-no-script-switch>
-        <div class="alif-script-dd" id="alifScriptDropdown">
-          <button type="button" id="alifScriptTriggerBtn" class="alif-script-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Sayt yozuvini tanlash" title="Sayt yozuvini o‘zgartirish">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-            <span id="alifScriptCurrentLabel">Yangi</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-          </button>
-          <div class="alif-script-menu" role="listbox" aria-label="Yozuv turlari">
-            <button type="button" class="alif-script-opt is-active" role="option" aria-selected="true" data-site-script="newlat" onclick="window.setAlifSiteScript && window.setAlifSiteScript(\'newlat\')">
-              <span class="alif-opt-badge">Ö Ğ</span>
-              <span>Yangi alifbo</span>
-            </button>
-            <button type="button" class="alif-script-opt" role="option" aria-selected="false" data-site-script="oldlat" onclick="window.setAlifSiteScript && window.setAlifSiteScript(\'oldlat\')">
-              <span class="alif-opt-badge">O' G'</span>
-              <span>Eski lotin</span>
-            </button>
-            <button type="button" class="alif-script-opt" role="option" aria-selected="false" data-site-script="cyr" onclick="window.setAlifSiteScript && window.setAlifSiteScript(\'cyr\')">
-              <span class="alif-opt-badge">Ў Ғ</span>
-              <span>Кирилл</span>
-            </button>
-          </div>
-        </div>
-
-        <button type="button" id="alifThemeToggle" class="alif-theme-btn" aria-label="Kundalik yoki tungi rejim" title="Kundalik / Tungi rejim">
+      <div class="alif-topbar-actions">
+        <button type="button" id="alifThemeToggle" class="alif-theme-btn" onclick="toggleAlifTheme()" aria-label="Kundalik yoki tungi rejim" title="Kundalik / Tungi rejim">
           <svg class="alif-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
           <svg class="alif-icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
         </button>
@@ -135,14 +106,14 @@
         <article class="alif-card" style="padding:20px;">
           <h2 style="margin:0 0 8px; font-size:18px;">1. Qaysi so‘zlar o‘giriladi?</h2>
           <p style="margin:0; font-size:14px; line-height:1.6; color:var(--muted);">
-            Kirill alifbosidagi barcha matnlar (<b>ў → ö, ғ → ğ, ш → ş, ч → ç</b>) hamda eski lotin yozuvidagi o‘zbekcha so‘zlar va ularning qo‘shimchali shakllari (<i>o‘quvchilarimizga → öquvçilarimizga, achchiqqina → aççiqqina, shahar → şahar</i>) avtomatik yangi alifboga o‘tkaziladi.
+            Kirill alifbosidagi barcha matnlar (<b>ў → o', ғ → g', ш → sh, ч → ch</b>) hamda eski lotin yozuvidagi o‘zbekcha so‘zlar va ularning qo‘shimchali shakllari (<i>o‘quvchilarimizga → o'quvchilarimizga, achchiqqina → achchiqqina, shahar → shahar</i>) avtomatik yangi alifboga o‘tkaziladi.
           </p>
         </article>
 
         <article class="alif-card" style="padding:20px;">
           <h2 style="margin:0 0 8px; font-size:18px;">2. Nega ba’zi inglizcha so‘zlar saqlanadi?</h2>
           <p style="margin:0; font-size:14px; line-height:1.6; color:var(--muted);">
-            <b>chat, channel, change, chart, YouTube, Windows, Telegram</b> kabi so‘zlar 4 qatlamli filtrdan o‘tadi: 1) asosiy xorijiy baza, 2) o‘zbekcha qo‘shimchalar tahlili, 3) inglizcha qo‘shimchalar (<i>-ing, -tion, -ed</i>) va 4) fonotaktik harf birikmalari (<i>w, th, wh, ck, qu, tch</i>). Shu bois <i>chat → çat</i> bo‘lib buzilmaydi.
+            <b>chat, channel, change, chart, YouTube, Windows, Telegram</b> kabi so‘zlar 4 qatlamli filtrdan o‘tadi: 1) asosiy xorijiy baza, 2) o‘zbekcha qo‘shimchalar tahlili, 3) inglizcha qo‘shimchalar (<i>-ing, -tion, -ed</i>) va 4) fonotaktik harf birikmalari (<i>w, th, wh, ck, qu, tch</i>). Shu bois <i>chat → chat</i> bo‘lib buzilmaydi.
           </p>
         </article>
 
@@ -190,7 +161,7 @@
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:12px;">
           <div>
             <label for="bugWrongWord" style="display:block; font-size:12.5px; font-weight:700; margin-bottom:4px;">Xato o‘girilgan so‘z yoki jumla</label>
-            <input type="text" id="bugWrongWord" class="alif-input" placeholder="Masalan: chat -> çat bo'lib qoldi" />
+            <input type="text" id="bugWrongWord" class="alif-input" placeholder="Masalan: chat -> chat bo'lib qoldi" />
           </div>
           <div>
             <label for="bugExpectedWord" style="display:block; font-size:12.5px; font-weight:700; margin-bottom:4px;">Aslida qanday bo‘lishi kerak?</label>
@@ -208,7 +179,6 @@
 
   <div id="alifAriaLive" class="alif-sr-only" aria-live="polite" aria-atomic="true"></div>
   <script src="core/alif-core.js"></script>
-  <script src="web/site-script.js?v=4"></script>
   <script>
     (function () {
       var inp = document.getElementById('trustWordInput');
