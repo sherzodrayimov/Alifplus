@@ -34,6 +34,48 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:site_name" content="Alif+" />
   <meta property="og:locale" content="uz_UZ" />
+  <script id="alifHujjatFastBoot">
+    (function () {
+      // 1) Barcha kartochka va bo'limlarni 0ms da darhol ko'rsatish
+      var style = document.createElement('style');
+      style.textContent =
+        '#hujjatlar-main, #hujjatlar-main *, .alif-doc-card, .alif-tpl-card, #alifDocGrid, #alifDocFields, #alifDocPaper {' +
+        '  opacity: 1 !important; visibility: visible !important; transform: none !important; animation: none !important;' +
+        '}';
+      document.head.appendChild(style);
+
+      // 2) Lug'at fayllari uchun tezkor sessionStorage/memory kesh (qayta ochilganda 0ms)
+      var origFetch = window.fetch;
+      if (typeof origFetch === 'function') {
+        var memCache = {};
+        window.fetch = function (resource, init) {
+          var url = typeof resource === 'string' ? resource : (resource && resource.url) || '';
+          if (url.indexOf('uzbek_lexicon.txt') !== -1 || url.indexOf('english_reject.txt') !== -1) {
+            if (memCache[url]) {
+              return Promise.resolve(new Response(memCache[url], { status: 200 }));
+            }
+            try {
+              var cached = sessionStorage.getItem('alif_cache_' + url);
+              if (cached) {
+                memCache[url] = cached;
+                return Promise.resolve(new Response(cached, { status: 200 }));
+              }
+            } catch (e) {}
+            return origFetch.apply(this, arguments).then(function (resp) {
+              if (resp && resp.ok) {
+                resp.clone().text().then(function (txt) {
+                  memCache[url] = txt;
+                  try { sessionStorage.setItem('alif_cache_' + url, txt); } catch (e) {}
+                });
+              }
+              return resp;
+            });
+          }
+          return origFetch.apply(this, arguments);
+        };
+      }
+    })();
+  </script>
 </head>
 <body>
           <header class="alif-topbar">
