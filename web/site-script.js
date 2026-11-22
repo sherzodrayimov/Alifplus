@@ -2,12 +2,13 @@
   'use strict';
 
   var STORAGE_KEY = 'alif_site_script';
-  var VALID_MODES = { newlat: true, oldlat: true, cyr: true };
+  var VALID_MODES = { newlat: 'Yangi', oldlat: 'Eski', cyr: 'Кирилл' };
   var origTextMap = new WeakMap();
   var origAttrMap = new WeakMap();
   var currentMode = 'newlat';
   var observer = null;
   var isApplying = false;
+  var origTitle = null;
 
   var SKIP_TAGS = new Set([
     'SCRIPT', 'STYLE', 'NOSCRIPT', 'CODE', 'PRE', 'KBD', 'SAMP',
@@ -16,7 +17,7 @@
 
   var SKIP_SELECTORS = [
     '[data-no-script-switch]',
-    '.alif-script-switcher',
+    '.alif-script-dd',
     '#alifDocPaper',
     '#alifQuickInput',
     '#alifQuickOutput',
@@ -30,19 +31,15 @@
     '[data-doc-script]'
   ].join(',');
 
-  // Kirillchaga o'tganda texnik va brend atamalarni saqlab qolish
   var BRAND_RE = /(Alif\+|macOS|Windows|iOS|Android|Chrome|Edge|GitHub|Telegram|Instagram|YouTube|Word|Excel|PDF|DOCX|TXT|ZIP|HTML|CSS|JSON|Smart Document Builder|Developer mode|Load unpacked|Alt\+Shift\+A|Ctrl\+Z|Cmd\+Z|v2\.0)/g;
 
   function transformText(raw, mode) {
-    if (!raw || !raw.trim() || !window.AlifCore) return raw;
+    if (!raw || mode === 'newlat') return raw;
+    if (!raw.trim() || !window.AlifCore) return raw;
     var trimmed = raw.trim();
     if (/^(https?:\/\/|www\.|mailto:|[\w.-]+@[\w.-]+|v?\d+\.\d+)/i.test(trimmed)) return raw;
 
-    // 1-bosqich: asl matnni aniq Yangi lotinga keltirish (chat, YouTube himoyalangan holda)
     var asNewLat = window.AlifCore.convert(raw, 'auto2new', { smart: true });
-    if (mode === 'newlat') {
-      return asNewLat;
-    }
     if (mode === 'oldlat') {
       return window.AlifCore.convert(asNewLat, 'new2oldlat');
     }
@@ -72,7 +69,6 @@
   function applyToSubtree(rootNode, mode) {
     if (!rootNode || !window.AlifCore) return;
 
-    // Text tugunlari
     var walker = document.createTreeWalker(rootNode, NodeFilter.SHOW_TEXT, null, false);
     var node;
     while ((node = walker.nextNode())) {
@@ -82,16 +78,15 @@
         origTextMap.set(node, node.nodeValue);
       }
       var baseStr = origTextMap.get(node);
-      var nextStr = transformText(baseStr, mode);
+      var nextStr = mode === 'newlat' ? baseStr : transformText(baseStr, mode);
       if (node.nodeValue !== nextStr) {
         node.nodeValue = nextStr;
       }
     }
 
-    // Placeholder va aria-label atributlari
     if (rootNode.querySelectorAll) {
       rootNode.querySelectorAll('input[placeholder], textarea[placeholder], [aria-label]').forEach(function (el) {
-        if (el.closest && el.closest('.alif-script-switcher')) return;
+        if (el.closest && el.closest('[data-no-script-switch], .alif-script-dd')) return;
         var saved = origAttrMap.get(el);
         if (!saved) {
           saved = {
@@ -101,22 +96,37 @@
           origAttrMap.set(el, saved);
         }
         if (saved.placeholder) {
-          el.setAttribute('placeholder', transformText(saved.placeholder, mode));
+          el.setAttribute('placeholder', mode === 'newlat' ? saved.placeholder : transformText(saved.placeholder, mode));
         }
         if (saved.ariaLabel) {
-          el.setAttribute('aria-label', transformText(saved.ariaLabel, mode));
+          el.setAttribute('aria-label', mode === 'newlat' ? saved.ariaLabel : transformText(saved.ariaLabel, mode));
         }
       });
     }
   }
 
-  var origTitle = null;
-  function updateButtons(mode) {
+  function updateDropdownUI(mode) {
+    var labelText = VALID_MODES[mode] || 'Yangi';
+    document.querySelectorAll('#alifScriptCurrentLabel').forEach(function (el) {
+      el.textContent = labelText;
+    });
     document.querySelectorAll('[data-site-script]').forEach(function (btn) {
       var active = btn.getAttribute('data-site-script') === mode;
       btn.classList.toggle('is-active', active);
-      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
     });
+  }
+
+  function closeDropdown() {
+    document.querySelectorAll('.alif-script-dd').forEach(function (dd) {
+      dd.classList.remove('is-open');
+      var trigger = dd.querySelector('.alif-script-trigger');
+      if (trigger) trigger.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function revealBody() {
+    document.documentElement.classList.remove('alif-script-pending');
   }
 
   function setSiteScript(mode) {
@@ -124,18 +134,24 @@
     currentMode = mode;
     try { localStorage.setItem(STORAGE_KEY, mode); } catch (e) {}
     document.documentElement.setAttribute('data-site-script', mode);
-    updateButtons(mode);
+    updateDropdownUI(mode);
+    closeDropdown();
 
-    if (!window.AlifCore) return;
+    if (!window.AlifCore) {
+      revealBody();
+      return;
+    }
+
     isApplying = true;
     try {
       if (origTitle === null) origTitle = document.title;
-      document.title = transformText(origTitle, mode);
+      document.title = mode === 'newlat' ? origTitle : transformText(origTitle, mode);
       if (document.body) {
         applyToSubtree(document.body, mode);
       }
     } finally {
       isApplying = false;
+      revealBody();
     }
   }
 
@@ -146,17 +162,39 @@
       if (st && VALID_MODES[st]) saved = st;
     } catch (e) {}
 
+    // Dropdown ochish / yopish va variant tanlash
     document.addEventListener('click', function (e) {
-      var btn = e.target.closest('[data-site-script]');
-      if (!btn) return;
-      setSiteScript(btn.getAttribute('data-site-script'));
+      var trigger = e.target.closest('.alif-script-trigger');
+      if (trigger) {
+        e.preventDefault();
+        e.stopPropagation();
+        var dd = trigger.closest('.alif-script-dd');
+        var willOpen = !dd.classList.contains('is-open');
+        closeDropdown();
+        if (willOpen) {
+          dd.classList.add('is-open');
+          trigger.setAttribute('aria-expanded', 'true');
+        }
+        return;
+      }
+
+      var optBtn = e.target.closest('[data-site-script]');
+      if (optBtn) {
+        e.preventDefault();
+        setSiteScript(optBtn.getAttribute('data-site-script'));
+        return;
+      }
+
+      if (!e.target.closest('.alif-script-dd')) {
+        closeDropdown();
+      }
     });
 
-    if (saved !== 'newlat') {
-      setSiteScript(saved);
-    } else {
-      updateButtons('newlat');
-    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeDropdown();
+    });
+
+    setSiteScript(saved);
 
     if (typeof MutationObserver !== 'undefined' && document.body) {
       observer = new MutationObserver(function (mutations) {
